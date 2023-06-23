@@ -1,0 +1,43 @@
+{
+  "name": "fond-of-oryx/checkout-rest-api-country-connector",
+  "description": "",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Pascal Fischer",
+      "email": "p-fischer@gmx.net"
+    }
+  ],
+  "require": {
+    "php": ">=8.0",
+    "fond-of-oryx/product-country-restriction-checkout-connector": "^2.0",
+    "spryker/checkout-rest-api-extension": "^1.5",
+    "spryker/glossary-storage": "^1.10.0",
+    "spryker/locale": "^2.0 || ^3.0 || ^4.0"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-latest",
+    "fond-of-codeception/spryker": "^2.0.0",
+    "spryker/code-sniffer": "*",
+    "spryker-sdk/phpstan-spryker": "*"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "FondOfOryx\\": "src/FondOfKudu/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "FondOfOryx\\": "tests/FondOfKudu/",
+      "Generated\\": "src/Generated/"
+    }
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  }
+}
