@@ -5,6 +5,7 @@
 
     <transfer name="RestCheckoutData">
         <property name="countries" singular="country" type="Country[]"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
     <transfer name="RestCheckoutRequestAttributes">
@@ -20,9 +21,23 @@
         <property name="iso2Code" type="string"/>
     </transfer>
 
-    <transfer name="Quote"/>
+
 
     <transfer name="Country">
         <property name="iso2code" type="string"/>
     </transfer>
+
+    <transfer name="BlacklistedCountryCollection">
+        <property name="blacklistedCountries" singular="blacklistedCountry" type="BlacklistedCountry[]"/>
+    </transfer>
+
+    <transfer name="BlacklistedCountry">
+        <property name="iso2code" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="countries" singular="country" type="array"/>
+    </transfer>
+
+    <transfer name="Quote"/>
 </transfers>

@@ -2,12 +2,19 @@
 
 namespace FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade;
 
-use Generated\Shared\Transfer\CountryCollectionTransfer;
+use Generated\Shared\Transfer\CountryTransfer;
 
 interface CheckoutRestApiCountryConnectorToCountryFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\CountryCollectionTransfer
+     * Specification:
+     * - Reads country from persistence for provided ISO 2 country code
+     *
+     * @api
+     *
+     * @param string $iso2Code
+     *
+     * @return \Generated\Shared\Transfer\CountryTransfer
      */
-    public function getAvailableCountries(): CountryCollectionTransfer;
+    public function getCountryByIso2Code($iso2Code): CountryTransfer;
 }

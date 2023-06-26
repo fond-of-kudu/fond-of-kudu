@@ -4,24 +4,39 @@ namespace FondOfKudu\Zed\CheckoutRestApiCountryConnector\Business\Expander;
 
 use FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToCountryFacadeInterface;
 use FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToProductCountryRestrictionCheckoutConnectorFacadeInterface;
+use FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToStoreFacadeInterface;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 
 class CheckoutDataExpander implements CheckoutDataExpanderInterface
 {
-    private $productCountryRestrictionCheckoutConnectorFacade;
+    /**
+     * @var \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToProductCountryRestrictionCheckoutConnectorFacadeInterface
+     */
+    protected $productCountryRestrictionCheckoutConnectorFacade;
 
-    private CheckoutRestApiCountryConnectorToCountryFacadeInterface $countryFacade;
+    /**
+     * @var \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
+     * @var \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToCountryFacadeInterface
+     */
+    protected $countryFacade;
 
     /**
      * @param \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToProductCountryRestrictionCheckoutConnectorFacadeInterface $productCountryRestrictionCheckoutConnectorFacade
+     * @param \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToStoreFacadeInterface $storeFacade
      * @param \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToCountryFacadeInterface $countryFacade
      */
     public function __construct(
         CheckoutRestApiCountryConnectorToProductCountryRestrictionCheckoutConnectorFacadeInterface $productCountryRestrictionCheckoutConnectorFacade,
+        CheckoutRestApiCountryConnectorToStoreFacadeInterface $storeFacade,
         CheckoutRestApiCountryConnectorToCountryFacadeInterface $countryFacade
     ) {
         $this->productCountryRestrictionCheckoutConnectorFacade = $productCountryRestrictionCheckoutConnectorFacade;
+        $this->storeFacade = $storeFacade;
         $this->countryFacade = $countryFacade;
     }
 
@@ -35,21 +50,24 @@ class CheckoutDataExpander implements CheckoutDataExpanderInterface
         RestCheckoutDataTransfer $restCheckoutDataTransfer,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestCheckoutDataTransfer {
-        $blacklistedCountryCollectionTransfer = $this->productCountryRestrictionCheckoutConnectorFacade
-            ->getBlacklistedCountryCollectionByQuote($restCheckoutDataTransfer->getQuote());
-
-        foreach ($blacklistedCountryCollectionTransfer->getBlacklistedCountries() as $blacklistedCountryTransfer) {
-            $foo = $blacklistedCountryTransfer;
-        }
-
         if (!$restCheckoutDataTransfer->getQuote()) {
             return $restCheckoutDataTransfer;
         }
 
-        $countriesCollectionTransfer = $this->countryFacade->getAvailableCountries();
+        $blacklistedCountryIso2Codes = [];
+        $blacklistedCountryCollectionTransfer = $this->productCountryRestrictionCheckoutConnectorFacade
+            ->getBlacklistedCountryCollectionByQuote($restCheckoutDataTransfer->getQuote());
 
-        foreach ($countriesCollectionTransfer->getCountries() as $country) {
-            $restCheckoutDataTransfer->addCountry($country);
+        foreach ($blacklistedCountryCollectionTransfer->getBlacklistedCountries() as $blacklistedCountryTransfer) {
+            $blacklistedCountryIso2Codes[] = $blacklistedCountryTransfer->getIso2code();
+        }
+
+        foreach ($this->storeFacade->getCurrentStore()->getCountries() as $iso2Code) {
+            if (in_array($iso2Code, $blacklistedCountryIso2Codes)) {
+                continue;
+            }
+
+            $restCheckoutDataTransfer->addCountry($this->countryFacade->getCountryByIso2Code($iso2Code));
         }
 
         return $restCheckoutDataTransfer;

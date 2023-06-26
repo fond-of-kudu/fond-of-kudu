@@ -13,7 +13,8 @@
     "fond-of-oryx/product-country-restriction-checkout-connector": "^2.0",
     "spryker/checkout-rest-api-extension": "^1.5",
     "spryker/glossary-storage": "^1.10.0",
-    "spryker/locale": "^2.0 || ^3.0 || ^4.0"
+    "spryker/locale": "^2.0 || ^3.0 || ^4.0",
+    "spryker/country": "^3.1.0 || ^4.0"
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",
