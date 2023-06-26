@@ -11,7 +11,7 @@
   "require": {
     "php": ">=8.0",
     "ext-json": "*",
-    "codeception/codeception": "5.0.7"
+    "codeception/codeception": "5.0.10"
   },
   "require-dev": {
     "fond-of-codeception/spryker": "^2.1.1",
