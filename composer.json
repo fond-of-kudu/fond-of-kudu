@@ -8,12 +8,6 @@
       "email": "p-fischer@gmx.net"
     }
   ],
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/fond-of/payone"
-    }
-  ],
   "require": {
     "php": ">=8.0",
     "ext-json": "*",
