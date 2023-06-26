@@ -8,7 +8,10 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class CheckoutRestApiCountryConnectorToProductCountryRestrictionCheckoutConnectorFacadeBridge implements CheckoutRestApiCountryConnectorToProductCountryRestrictionCheckoutConnectorFacadeInterface
 {
-    private ProductCountryRestrictionCheckoutConnectorFacadeInterface $productCountryRestrictionCheckoutConnectorFacade;
+    /**
+     * @var \FondOfOryx\Zed\ProductCountryRestrictionCheckoutConnector\Business\ProductCountryRestrictionCheckoutConnectorFacadeInterface
+     */
+    protected $productCountryRestrictionCheckoutConnectorFacade;
 
     /**
      * @param \FondOfOryx\Zed\ProductCountryRestrictionCheckoutConnector\Business\ProductCountryRestrictionCheckoutConnectorFacadeInterface $productCountryRestrictionCheckoutConnectorFacade
