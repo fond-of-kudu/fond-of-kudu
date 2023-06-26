@@ -1,5 +1,5 @@
 {
-  "name": "fond-of-oryx/checkout-rest-api-country-connector",
+  "name": "fond-of-kudu/checkout-rest-api-country-connector",
   "description": "",
   "license": "MIT",
   "authors": [
@@ -26,12 +26,12 @@
   "prefer-stable": true,
   "autoload": {
     "psr-4": {
-      "FondOfOryx\\": "src/FondOfKudu/"
+      "FondOfKudu\\": "src/FondOfKudu/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "FondOfOryx\\": "tests/FondOfKudu/",
+      "FondOfKudu\\": "tests/FondOfKudu/",
       "Generated\\": "src/Generated/"
     }
   },
