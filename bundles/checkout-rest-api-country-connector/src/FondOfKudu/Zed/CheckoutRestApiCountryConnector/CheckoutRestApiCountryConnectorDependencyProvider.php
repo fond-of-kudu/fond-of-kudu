@@ -25,6 +25,11 @@ class CheckoutRestApiCountryConnectorDependencyProvider extends AbstractBundleDe
      */
     public const FACADE_STORE = 'FACADE_STORE';
 
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
@@ -35,6 +40,11 @@ class CheckoutRestApiCountryConnectorDependencyProvider extends AbstractBundleDe
         return $container;
     }
 
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addCountryFacade(Container $container): Container
     {
         $container->set(static::FACADE_COUNTRY, function (Container $container) {
