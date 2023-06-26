@@ -1,0 +1,14 @@
+
+{
+  "pathToSplitshLite": "/usr/local/bin/splitsh-lite",
+  "pathToTempDirectory": "/home/dandelion/project/tmp/",
+  "repositories": {
+  },
+  "vcs": {
+    "owner": {
+      "name": "fond-of-kudu",
+      "type": "organisation"
+    },
+    "token": "<GITHUB_TOKEN>"
+  }
+}

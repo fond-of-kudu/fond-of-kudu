@@ -1,0 +1,42 @@
+{
+  "name": "fond-of-kudu/fond-of-kudu",
+  "description": "FOND OF Kudu Monorepo (B2C)",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Pascal Fischer",
+      "email": "p-fischer@gmx.net"
+    }
+  ],
+  "require": {
+    "php": ">=8.0",
+    "ext-json": "*",
+    "codeception/codeception": "5.0.7"
+  },
+  "require-dev": {
+    "fond-of-codeception/spryker": "^2.1.1",
+    "fond-of-spryker/conditional-availability-sales-connector": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/silex": "*",
+    "spryker-sdk/phpstan-spryker": "*"
+  },
+  "replace": {
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Generated\\": "src/Generated/",
+      "Orm\\Zed\\": "src/Orm/Zed/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  }
+}
