@@ -3,7 +3,7 @@
   "pathToSplitshLite": "/usr/local/bin/splitsh-lite",
   "pathToTempDirectory": "/home/dandelion/project/tmp/",
   "repositories": {
-    "api-auth": {
+    "checkout-rest-api-country-connector": {
       "path": "bundles/checkout-rest-api-country-connector",
       "version": "1.0.0-beta.1"
     }
