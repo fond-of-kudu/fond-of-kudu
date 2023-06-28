@@ -21,10 +21,8 @@
         <property name="iso2Code" type="string"/>
     </transfer>
 
-
-
     <transfer name="Country">
-        <property name="iso2code" type="string"/>
+        <property name="iso2Code" type="string"/>
     </transfer>
 
     <transfer name="BlacklistedCountryCollection">
