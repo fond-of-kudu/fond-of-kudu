@@ -3,7 +3,6 @@
 namespace FondOfKudu\Zed\CheckoutRestApiCountryConnector\Business;
 
 use Codeception\Test\Unit;
-use FondOfKudu\Zed\CheckoutRestApiCountryConnector\CheckoutRestApiCountryConnectorDependencyProvider;
 use FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToCountryFacadeBridge;
 use FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToProductCountryRestrictionCheckoutConnectorFacadeBridge;
 use FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToStoreFacadeBridge;
@@ -12,22 +11,22 @@ use Spryker\Zed\Kernel\Container;
 class CheckoutRestApiCountryConnectorBusinessFactoryTest extends Unit
 {
     /**
-     * @var Container|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Spryker\Zed\Kernel\Container|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $containerMock;
 
     /**
-     * @var CheckoutRestApiCountryConnectorToStoreFacadeBridge|\PHPUnit\Framework\MockObject\MockObject
+     * @var \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToStoreFacadeBridge|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $storeFacadeMock;
 
     /**
-     * @var CheckoutRestApiCountryConnectorToProductCountryRestrictionCheckoutConnectorFacadeBridge|\PHPUnit\Framework\MockObject\MockObject
+     * @var \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToProductCountryRestrictionCheckoutConnectorFacadeBridge|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $productCountryRestrictionCheckoutConnectorFacadeMock;
 
     /**
-     * @var CheckoutRestApiCountryConnectorBusinessFactory
+     * @var \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Business\CheckoutRestApiCountryConnectorBusinessFactory
      */
     protected $factory;
 
@@ -75,7 +74,7 @@ class CheckoutRestApiCountryConnectorBusinessFactoryTest extends Unit
             ->willReturnOnConsecutiveCalls(
                 $this->productCountryRestrictionCheckoutConnectorFacadeMock,
                 $this->storeFacadeMock,
-                $this->countryFacadeMock
+                $this->countryFacadeMock,
             );
 
         $this->factory->createCheckoutDataExpander();

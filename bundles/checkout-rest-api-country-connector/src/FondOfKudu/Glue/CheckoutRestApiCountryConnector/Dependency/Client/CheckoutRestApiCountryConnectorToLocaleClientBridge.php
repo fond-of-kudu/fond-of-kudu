@@ -9,7 +9,7 @@ class CheckoutRestApiCountryConnectorToLocaleClientBridge implements CheckoutRes
     /**
      * @var \Spryker\Client\Locale\LocaleClientInterface
      */
-    private LocaleClientInterface $localeClient;
+    private $localeClient;
 
     /**
      * @param \Spryker\Client\Locale\LocaleClientInterface $localeClient
