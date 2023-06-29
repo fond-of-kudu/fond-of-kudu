@@ -27,7 +27,7 @@ class CheckoutRestApiCountryConnectorBusinessFactory extends AbstractBusinessFac
     /**
      * @return \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToCountryFacadeInterface
      */
-    public function getCountryFacade(): CheckoutRestApiCountryConnectorToCountryFacadeInterface
+    protected function getCountryFacade(): CheckoutRestApiCountryConnectorToCountryFacadeInterface
     {
         return $this->getProvidedDependency(CheckoutRestApiCountryConnectorDependencyProvider::FACADE_COUNTRY);
     }
