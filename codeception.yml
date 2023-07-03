@@ -1,6 +1,7 @@
 namespace: fond-of-kudu/fond-of-kudu
 
 include:
+  - bundles/checkout-rest-api-country-connector
 
 suites:
   unit:
