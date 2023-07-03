@@ -1,6 +1,6 @@
 {
   "name": "fond-of-kudu/checkout-rest-api-country-connector",
-  "description": "",
+  "description": "provide the country selection for the endpoint checkout-data",
   "license": "MIT",
   "authors": [
     {
@@ -17,8 +17,9 @@
     "spryker/locale": "^2.0.0 || ^3.0.0 || ^4.0.0"
   },
   "require-dev": {
-    "fond-of-codeception/spryker": "^2.0.0",
-    "spryker/code-sniffer": "*"
+    "fond-of-codeception/spryker": "*",
+    "spryker/code-sniffer": "*",
+    "spryker-sdk/phpstan-spryker": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
