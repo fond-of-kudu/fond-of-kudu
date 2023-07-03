@@ -17,10 +17,8 @@
     "spryker/locale": "^2.0.0 || ^3.0.0 || ^4.0.0"
   },
   "require-dev": {
-    "roave/security-advisories": "dev-latest",
-    "fond-of-codeception/spryker": "*",
-    "spryker/code-sniffer": "*",
-    "spryker-sdk/phpstan-spryker": "*"
+    "fond-of-codeception/spryker": "^2.0.0",
+    "spryker/code-sniffer": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,

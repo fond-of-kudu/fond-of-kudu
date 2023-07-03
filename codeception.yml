@@ -1,4 +1,4 @@
-namespace: fond-of-kudu/fond-of-kudu
+namespace: fond-of-impala/fond-of-kudu
 
 include:
   - bundles/checkout-rest-api-country-connector
@@ -43,9 +43,5 @@ env:
           generate_ide_auto_completion: true
           ide_auto_completion_source_directories:
             './bundles/*/src/': '*/*/'
-            './vendor/fond-of-spryker/*/src/': '*/*/'
+            './vendor/fond-of-kudu/*/src/': '*/*/'
           supported_source_identifiers:
-            - erp-delivery-note
-            - erp-invoice
-            - erp-order
-            - page
