@@ -18,7 +18,8 @@
     "fond-of-oryx/product-country-restriction-checkout-connector": "^2.0.1"
   },
   "require-dev": {
-    "fond-of-codeception/spryker": "^2.1.1",
+    "fond-of-codeception/spryker": "*",
+    "rector/rector": "*",
     "spryker/code-sniffer": "*",
     "spryker-sdk/phpstan-spryker": "*"
   },
