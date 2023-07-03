@@ -42,9 +42,5 @@ env:
           generate_ide_auto_completion: true
           ide_auto_completion_source_directories:
             './bundles/*/src/': '*/*/'
-            './vendor/fond-of-spryker/*/src/': '*/*/'
+            './vendor/fond-of-kudu/*/src/': '*/*/'
           supported_source_identifiers:
-            - erp-delivery-note
-            - erp-invoice
-            - erp-order
-            - page

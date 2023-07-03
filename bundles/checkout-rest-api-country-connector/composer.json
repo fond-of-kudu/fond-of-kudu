@@ -10,17 +10,15 @@
   ],
   "require": {
     "php": ">=8.0",
-    "fond-of-oryx/product-country-restriction-checkout-connector": "^2.0.0",
+    "fond-of-oryx/product-country-restriction-checkout-connector": "^2.0.1",
     "spryker/checkout-rest-api-extension": "^1.5.0",
     "spryker/country": "^3.1.0 || ^4.0.0",
     "spryker/glossary-storage": "^1.0.0",
     "spryker/locale": "^2.0.0 || ^3.0.0 || ^4.0.0"
   },
   "require-dev": {
-    "roave/security-advisories": "dev-latest",
     "fond-of-codeception/spryker": "^2.0.0",
-    "spryker/code-sniffer": "*",
-    "spryker-sdk/phpstan-spryker": "*"
+    "spryker/code-sniffer": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
