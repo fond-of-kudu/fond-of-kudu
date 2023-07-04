@@ -15,6 +15,8 @@
     "spryker/locale": "^2.0.0 || ^3.0.0 || ^4.0.0",
     "spryker/country": "^3.1.0 || ^4.0.0",
     "spryker/product-storage-extension": "^1.0.0",
+    "spryker/storage": "^3.20.0",
+    "spryker/synchronization": "^1.16",
     "fond-of-oryx/product-country-restriction-checkout-connector": "^2.0.1"
   },
   "require-dev": {

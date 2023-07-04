@@ -4,7 +4,7 @@ namespace FondOfKudu\Client\ProductImageStorageConnector\Expander;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 
-interface ProductViewImageExpanderInterface
+interface ProductViewImageCustomSetsExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
