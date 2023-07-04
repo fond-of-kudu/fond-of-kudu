@@ -14,6 +14,7 @@
     "spryker/glossary-storage": "^1.0.0",
     "spryker/locale": "^2.0.0 || ^3.0.0 || ^4.0.0",
     "spryker/country": "^3.1.0 || ^4.0.0",
+    "spryker/product-storage-extension": "^1.0.0",
     "fond-of-oryx/product-country-restriction-checkout-connector": "^2.0.1"
   },
   "require-dev": {
@@ -23,18 +24,21 @@
     "spryker-sdk/phpstan-spryker": "*"
   },
   "replace": {
-    "fond-of-kudu/checkout-rest-api-country-connector": "*"
+    "fond-of-kudu/checkout-rest-api-country-connector": "*",
+    "fond-of-kudu/product-image-storage-connector": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "autoload": {
     "psr-4": {
+      "FondOfKudu\\Client\\ProductImageStorageConnector\\": "bundles/product-image-storage-connector/src/FondOfKudu/Client/ProductImageStorageConnector",
       "FondOfKudu\\Glue\\CheckoutRestApiCountryConnector\\": "bundles/checkout-rest-api-country-connector/src/FondOfKudu/Glue/CheckoutRestApiCountryConnector",
       "FondOfKudu\\Zed\\CheckoutRestApiCountryConnector\\": "bundles/checkout-rest-api-country-connector/src/FondOfKudu/Zed/CheckoutRestApiCountryConnector"
     }
   },
   "autoload-dev": {
     "psr-4": {
+      "FondOfKudu\\Client\\ProductImageStorageConnector\\": "bundles/product-image-storage-connector/tests/FondOfKudu/Client/ProductImageStorageConnector",
       "FondOfKudu\\Glue\\CheckoutRestApiCountryConnector\\": "bundles/checkout-rest-api-country-connector/tests/FondOfKudu/Glue/CheckoutRestApiCountryConnector",
       "FondOfKudu\\Zed\\CheckoutRestApiCountryConnector\\": "bundles/checkout-rest-api-country-connector/tests/FondOfKudu/Zed/CheckoutRestApiCountryConnector",
       "Generated\\": "src/Generated/",
