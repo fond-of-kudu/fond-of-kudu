@@ -12,6 +12,9 @@ class ProductImageStorageConnectorToProductImageStorageClientBridge implements P
      */
     protected $imageStorageClient;
 
+    /**
+     * @param \Spryker\Client\ProductImageStorage\ProductImageStorageClientInterface $imageStorageClient
+     */
     public function __construct(ProductImageStorageClientInterface $imageStorageClient)
     {
         $this->imageStorageClient = $imageStorageClient;
