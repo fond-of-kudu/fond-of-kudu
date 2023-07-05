@@ -35,6 +35,7 @@
   "autoload": {
     "psr-4": {
       "FondOfKudu\\Client\\ProductImageStorageConnector\\": "bundles/product-image-storage-connector/src/FondOfKudu/Client/ProductImageStorageConnector",
+      "FondOfKudu\\Shared\\ProductImageStorageConnector\\": "bundles/product-image-storage-connector/src/FondOfKudu/Shared/ProductImageStorageConnector",
       "FondOfKudu\\Glue\\CheckoutRestApiCountryConnector\\": "bundles/checkout-rest-api-country-connector/src/FondOfKudu/Glue/CheckoutRestApiCountryConnector",
       "FondOfKudu\\Zed\\CheckoutRestApiCountryConnector\\": "bundles/checkout-rest-api-country-connector/src/FondOfKudu/Zed/CheckoutRestApiCountryConnector"
     }

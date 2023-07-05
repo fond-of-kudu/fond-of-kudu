@@ -2,6 +2,7 @@
 
 namespace FondOfKudu\Client\ProductImageStorageConnector\Expander;
 
+use ArrayObject;
 use FondOfKudu\Client\ProductImageStorageConnector\Dependency\Client\ProductImageStorageConnectorToProductImageStorageClientInterface;
 use FondOfKudu\Client\ProductImageStorageConnector\ProductImageStorageConnectorConfig;
 use FondOfKudu\Shared\ProductImageStorageConnector\ProductImageStorageConnectorConstants;
@@ -61,7 +62,7 @@ class ProductViewImageCustomSetsExpander implements ProductViewImageCustomSetsEx
      * @param string $locale
      * @param string $imageSetName
      *
-     * @return \Generated\Shared\Transfer\ProductImageStorageTransfer[]|null
+     * @return \Generated\Shared\Transfer\ProductImageStorageTransfer|null
      */
     protected function getImages(ProductViewTransfer $productViewTransfer, $locale, $imageSetName)
     {
@@ -76,19 +77,22 @@ class ProductViewImageCustomSetsExpander implements ProductViewImageCustomSetsEx
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductImageSetStorageTransfer[] $imageSetStorageCollection
+     * @param \ArrayObject<\Generated\Shared\Transfer\ProductImageSetStorageTransfer> $imageSetStorageCollection
      * @param string $imageSetName
      *
-     * @return \Generated\Shared\Transfer\ProductImageStorageTransfer[]|null
+     * @return ProductImageStorageTransfer|null
      */
-    protected function getImageSetImages($imageSetStorageCollection, $imageSetName): ?ProductImageStorageTransfer
+    protected function getImageSetImages(
+        ArrayObject $imageSetStorageCollection,
+        string $imageSetName
+    ): ?ProductImageStorageTransfer
     {
-        foreach ($imageSetStorageCollection as $productImageSetStorageTransfer) {
+        foreach ($imageSetStorageCollection as $index => $productImageSetStorageTransfer) {
             if ($productImageSetStorageTransfer->getName() !== $imageSetName) {
                 continue;
             }
 
-            return $productImageSetStorageTransfer->getImages();
+            return $imageSetStorageCollection[$index]->getImages();
         }
 
         if ($imageSetName !== ProductImageStorageConnectorConstants::DEFAULT_IMAGE_SET_NAME) {
