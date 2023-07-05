@@ -30,6 +30,6 @@ class ProductImageStorageConnectorToProductImageStorageClientBridge implements P
         int $idProductAbstract,
         string $locale
     ): ?ProductAbstractImageStorageTransfer {
-        return $this->findProductImageAbstractStorageTransfer($idProductAbstract, $locale);
+        return $this->imageStorageClient->findProductImageAbstractStorageTransfer($idProductAbstract, $locale);
     }
 }
