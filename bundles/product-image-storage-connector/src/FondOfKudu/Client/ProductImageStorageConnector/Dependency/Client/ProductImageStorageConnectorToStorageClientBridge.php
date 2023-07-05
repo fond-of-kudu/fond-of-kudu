@@ -4,7 +4,7 @@ namespace FondOfKudu\Client\ProductImageStorageConnector\Dependency\Client;
 
 use Spryker\Client\Storage\StorageClientInterface;
 
-class ProductImageStorageConnectorToStorageBridge implements ProductImageStorageConnectorToStorageInterface
+class ProductImageStorageConnectorToStorageClientBridge implements ProductImageStorageConnectorToStorageClientInterface
 {
     protected StorageClientInterface $storageClient;
 

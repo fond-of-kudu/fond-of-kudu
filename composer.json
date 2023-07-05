@@ -17,7 +17,8 @@
     "spryker/product-storage-extension": "^1.0.0",
     "spryker/storage": "^3.20.0",
     "spryker/synchronization": "^1.16",
-    "fond-of-oryx/product-country-restriction-checkout-connector": "^2.0.1"
+    "fond-of-oryx/product-country-restriction-checkout-connector": "^2.0.1",
+    "spryker/product-image-storage": "^1.15"
   },
   "require-dev": {
     "fond-of-codeception/spryker": "*",

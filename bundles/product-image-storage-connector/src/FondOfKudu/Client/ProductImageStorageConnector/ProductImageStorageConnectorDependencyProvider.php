@@ -2,8 +2,10 @@
 
 namespace FondOfKudu\Client\ProductImageStorageConnector;
 
-use FondOfKudu\Client\ProductImageStorageConnector\Dependency\Client\ProductImageStorageConnectorToStorageBridge;
-use FondOfKudu\Client\ProductImageStorageConnector\Dependency\Client\ProductImageStorageConnectorToStorageInterface;
+use FondOfKudu\Client\ProductImageStorageConnector\Dependency\Client\ProductImageStorageConnectorToProductImageStorageClientBridge;
+use FondOfKudu\Client\ProductImageStorageConnector\Dependency\Client\ProductImageStorageConnectorToProductImageStorageClientInterface;
+use FondOfKudu\Client\ProductImageStorageConnector\Dependency\Client\ProductImageStorageConnectorToStorageClientBridge;
+use FondOfKudu\Client\ProductImageStorageConnector\Dependency\Client\ProductImageStorageConnectorToStorageClientInterface;
 use FondOfKudu\Client\ProductImageStorageConnector\Dependency\Service\ProductImageStorageConnectorToSynchronizationServiceBridge;
 use FondOfKudu\Client\ProductImageStorageConnector\Dependency\Service\ProductImageStorageConnectorToSynchronizationServiceInterface;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
@@ -22,6 +24,11 @@ class ProductImageStorageConnectorDependencyProvider extends AbstractDependencyP
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
     /**
+     * @var string
+     */
+    public const CLIENT_PRODUCT_IMAGE_STORAGE = 'CLIENT_PRODUCT_IMAGE_STORAGE';
+
+    /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
@@ -30,6 +37,7 @@ class ProductImageStorageConnectorDependencyProvider extends AbstractDependencyP
     {
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
+        $container = $this->addProductImageStorageClient($container);
 
         return $container;
     }
@@ -43,7 +51,7 @@ class ProductImageStorageConnectorDependencyProvider extends AbstractDependencyP
     {
         $container[static::CLIENT_STORAGE] = static fn (
             Container $container
-        ): ProductImageStorageConnectorToStorageInterface => new ProductImageStorageConnectorToStorageBridge(
+        ): ProductImageStorageConnectorToStorageClientInterface => new ProductImageStorageConnectorToStorageClientBridge(
             $container->getLocator()->storage()->client(),
         );
 
@@ -55,12 +63,28 @@ class ProductImageStorageConnectorDependencyProvider extends AbstractDependencyP
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function addSynchronizationService(Container $container): Container
+    protected function addSynchronizationService(Container $container): Container
     {
         $container[static::SERVICE_SYNCHRONIZATION] = static fn (
             Container $container
         ): ProductImageStorageConnectorToSynchronizationServiceInterface => new ProductImageStorageConnectorToSynchronizationServiceBridge(
             $container->getLocator()->synchronization()->service(),
+        );
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductImageStorageClient(Container $container): Container
+    {
+        $container[static::CLIENT_PRODUCT_IMAGE_STORAGE] = static fn (
+            Container $container
+        ): ProductImageStorageConnectorToProductImageStorageClientInterface => new ProductImageStorageConnectorToProductImageStorageClientBridge(
+            $container->getLocator()->productImageStorage()->client(),
         );
 
         return $container;

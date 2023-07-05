@@ -2,7 +2,7 @@
 
 namespace FondOfKudu\Client\ProductImageStorageConnector\Dependency\Client;
 
-interface ProductImageStorageConnectorToStorageInterface
+interface ProductImageStorageConnectorToStorageClientInterface
 {
     /**
      * @param string $key

@@ -2,20 +2,28 @@
 
 namespace FondOfKudu\Client\ProductImageStorageConnector\Expander;
 
+use FondOfKudu\Client\ProductImageStorageConnector\Dependency\Client\ProductImageStorageConnectorToProductImageStorageClientInterface;
 use FondOfKudu\Client\ProductImageStorageConnector\ProductImageStorageConnectorConfig;
 use FondOfKudu\Shared\ProductImageStorageConnector\ProductImageStorageConnectorConstants;
+use Generated\Shared\Transfer\ProductImageStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 
 class ProductViewImageCustomSetsExpander implements ProductViewImageCustomSetsExpanderInterface
 {
     protected ProductImageStorageConnectorConfig $config;
 
+    protected ProductImageStorageConnectorToProductImageStorageClientInterface $connectorToProductImageStorageClient;
+
     /**
      * @param \FondOfKudu\Client\ProductImageStorageConnector\ProductImageStorageConnectorConfig $config
+     * @param \FondOfKudu\Client\ProductImageStorageConnector\Dependency\Client\ProductImageStorageConnectorToProductImageStorageClientInterface $connectorToProductImageStorageClient
      */
-    public function __construct(ProductImageStorageConnectorConfig $config)
-    {
+    public function __construct(
+        ProductImageStorageConnectorConfig $config,
+        ProductImageStorageConnectorToProductImageStorageClientInterface $connectorToProductImageStorageClient
+    ) {
         $this->config = $config;
+        $this->connectorToProductImageStorageClient = $connectorToProductImageStorageClient;
     }
 
     /**
@@ -57,7 +65,7 @@ class ProductViewImageCustomSetsExpander implements ProductViewImageCustomSetsEx
      */
     protected function getImages(ProductViewTransfer $productViewTransfer, $locale, $imageSetName)
     {
-        $productAbstractImageSetCollection = $this->productAbstractImageSetReader
+        $productAbstractImageSetCollection = $this->connectorToProductImageStorageClient
             ->findProductImageAbstractStorageTransfer($productViewTransfer->getIdProductAbstract(), $locale);
 
         if (!$productAbstractImageSetCollection) {
@@ -65,5 +73,35 @@ class ProductViewImageCustomSetsExpander implements ProductViewImageCustomSetsEx
         }
 
         return $this->getImageSetImages($productAbstractImageSetCollection->getImageSets(), $imageSetName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductImageSetStorageTransfer[] $imageSetStorageCollection
+     * @param string $imageSetName
+     *
+     * @return \Generated\Shared\Transfer\ProductImageStorageTransfer[]|null
+     */
+    protected function getImageSetImages($imageSetStorageCollection, $imageSetName): ?ProductImageStorageTransfer
+    {
+        foreach ($imageSetStorageCollection as $productImageSetStorageTransfer) {
+            if ($productImageSetStorageTransfer->getName() !== $imageSetName) {
+                continue;
+            }
+
+            return $productImageSetStorageTransfer->getImages();
+        }
+
+        if ($imageSetName !== ProductImageStorageConnectorConstants::DEFAULT_IMAGE_SET_NAME) {
+            return $this->getImageSetImages(
+                $imageSetStorageCollection,
+                ProductImageStorageConnectorConstants::DEFAULT_IMAGE_SET_NAME,
+            );
+        }
+
+        if (isset($imageSetStorageCollection[0])) {
+            return $imageSetStorageCollection[0]->getImages();
+        }
+
+        return null;
     }
 }
