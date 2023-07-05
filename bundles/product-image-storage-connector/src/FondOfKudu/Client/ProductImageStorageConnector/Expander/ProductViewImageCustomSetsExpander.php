@@ -80,13 +80,12 @@ class ProductViewImageCustomSetsExpander implements ProductViewImageCustomSetsEx
      * @param \ArrayObject<\Generated\Shared\Transfer\ProductImageSetStorageTransfer> $imageSetStorageCollection
      * @param string $imageSetName
      *
-     * @return ProductImageStorageTransfer|null
+     * @return \Generated\Shared\Transfer\ProductImageStorageTransfer|null
      */
     protected function getImageSetImages(
         ArrayObject $imageSetStorageCollection,
         string $imageSetName
-    ): ?ProductImageStorageTransfer
-    {
+    ): ?ProductImageStorageTransfer {
         foreach ($imageSetStorageCollection as $index => $productImageSetStorageTransfer) {
             if ($productImageSetStorageTransfer->getName() !== $imageSetName) {
                 continue;
