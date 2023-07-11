@@ -1,19 +1,19 @@
-Zed:
+zed:
   - bundles/**/src/FondOfKudu/Zed/**
 
-Yves:
+yves:
   - bundles/**/src/FondOfKudu/Yves/**
 
-Glue:
+glue:
   - bundles/**/src/FondOfKudu/Glue/**
 
-Client:
+client:
   - bundles/**/src/FondOfKudu/Client/**
 
-Service:
+service:
   - bundles/**/src/FondOfKudu/Service/**
 
-Tests:
+tests:
   - bundles/**/tests/FondOfKudu/**
 
 composer:
@@ -23,5 +23,13 @@ composer:
 github:
   - .github/**
 
-Version:
+version:
   - dandelion.json
+
+### packages
+
+checkout-rest-api-country-connector:
+  - bundles/checkout-rest-api-country-connector/**
+
+product-image-storage-connector:
+  - bundles/product-image-storage-connector/**
