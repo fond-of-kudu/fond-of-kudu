@@ -29,15 +29,15 @@ class ProductViewImageCustomSetsExpander implements ProductViewImageCustomSetsEx
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param string $locale
-     * @param string $imageSetName
+     * @param array<string, mixed> $productData
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandProductViewImageData(
+    public function expandProductViewTransfer(
         ProductViewTransfer $productViewTransfer,
-        string $locale,
-        string $imageSetName
+        array $productData,
+        string $localeName
     ): ProductViewTransfer {
         $imageSetNamesArray = $this->config->getImageSets();
         $images = [];
@@ -47,7 +47,7 @@ class ProductViewImageCustomSetsExpander implements ProductViewImageCustomSetsEx
         }
 
         foreach ($imageSetNamesArray as $imageSetName) {
-            $images[strtoupper($imageSetName)] = $this->getImages($productViewTransfer, $locale, $imageSetName);
+            $images[strtoupper($imageSetName)] = $this->getImages($productViewTransfer, $localeName, $imageSetName);
         }
 
         if (count($images) > 0) {

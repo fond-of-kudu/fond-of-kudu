@@ -2,13 +2,16 @@
 
 namespace FondOfKudu\Client\ProductImageStorageConnector;
 
+use FondOfKudu\Client\ProductImageStorageConnector\Dependency\Client\ProductImageStorageConnectorToLocaleClientInterface;
 use FondOfKudu\Client\ProductImageStorageConnector\Dependency\Client\ProductImageStorageConnectorToProductImageStorageClientInterface;
 use FondOfKudu\Client\ProductImageStorageConnector\Expander\ProductViewImageCustomSetsExpander;
 use FondOfKudu\Client\ProductImageStorageConnector\Expander\ProductViewImageCustomSetsExpanderInterface;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductImageStorage\Dependency\Client\ProductImageStorageToStorageInterface;
 use Spryker\Client\ProductImageStorage\Dependency\Service\ProductImageStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductImageStorage\Storage\ProductAbstractImageStorageReader;
 use Spryker\Client\ProductImageStorage\Storage\ProductImageStorageKeyGenerator;
+use Spryker\Client\ProductImageStorage\Storage\ProductImageStorageKeyGeneratorInterface;
 
 /**
  * @method \FondOfKudu\Client\ProductImageStorageConnector\ProductImageStorageConnectorConfig getConfig()
@@ -38,25 +41,25 @@ class ProductImageStorageConnectorFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductImageStorage\Dependency\Client\ProductImageStorageToStorageInterface
-     */
-    public function getStorageClient()
-    {
-        return $this->getProvidedDependency(ProductImageStorageConnectorDependencyProvider::CLIENT_STORAGE);
-    }
-
-    /**
      * @return \Spryker\Client\ProductImageStorage\Storage\ProductImageStorageKeyGeneratorInterface
      */
-    public function createProductImageStorageKeyGenerator()
+    public function createProductImageStorageKeyGenerator(): ProductImageStorageKeyGeneratorInterface
     {
         return new ProductImageStorageKeyGenerator($this->getSynchronizationService());
     }
 
     /**
+     * @return \Spryker\Client\ProductImageStorage\Dependency\Client\ProductImageStorageToStorageInterface
+     */
+    protected function getStorageClient(): ProductImageStorageToStorageInterface
+    {
+        return $this->getProvidedDependency(ProductImageStorageConnectorDependencyProvider::CLIENT_STORAGE);
+    }
+
+    /**
      * @return \Spryker\Client\ProductImageStorage\Dependency\Service\ProductImageStorageToSynchronizationServiceInterface
      */
-    public function getSynchronizationService(): ProductImageStorageToSynchronizationServiceInterface
+    protected function getSynchronizationService(): ProductImageStorageToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(ProductImageStorageConnectorDependencyProvider::SERVICE_SYNCHRONIZATION);
     }
@@ -64,8 +67,16 @@ class ProductImageStorageConnectorFactory extends AbstractFactory
     /**
      * @return \FondOfKudu\Client\ProductImageStorageConnector\Dependency\Client\ProductImageStorageConnectorToProductImageStorageClientInterface
      */
-    public function getProductImageStorageClient(): ProductImageStorageConnectorToProductImageStorageClientInterface
+    protected function getProductImageStorageClient(): ProductImageStorageConnectorToProductImageStorageClientInterface
     {
         return $this->getProvidedDependency(ProductImageStorageConnectorDependencyProvider::CLIENT_PRODUCT_IMAGE_STORAGE);
+    }
+
+    /**
+     * @return \FondOfKudu\Client\ProductImageStorageConnector\Dependency\Client\ProductImageStorageConnectorToLocaleClientInterface
+     */
+    protected function getLocaleClient(): ProductImageStorageConnectorToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(ProductImageStorageConnectorDependencyProvider::CLIENT_LOCALE);
     }
 }
