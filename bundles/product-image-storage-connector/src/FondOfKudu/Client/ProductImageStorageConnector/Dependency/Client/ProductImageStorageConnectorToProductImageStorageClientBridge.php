@@ -10,14 +10,14 @@ class ProductImageStorageConnectorToProductImageStorageClientBridge implements P
     /**
      * @var \Spryker\Client\ProductImageStorage\ProductImageStorageClientInterface
      */
-    protected $imageStorageClient;
+    protected ProductImageStorageClientInterface $productImageStorageClient;
 
     /**
-     * @param \Spryker\Client\ProductImageStorage\ProductImageStorageClientInterface $imageStorageClient
+     * @param \Spryker\Client\ProductImageStorage\ProductImageStorageClientInterface $productImageStorageClient
      */
-    public function __construct(ProductImageStorageClientInterface $imageStorageClient)
+    public function __construct(ProductImageStorageClientInterface $productImageStorageClient)
     {
-        $this->imageStorageClient = $imageStorageClient;
+        $this->productImageStorageClient = $productImageStorageClient;
     }
 
     /**
@@ -30,6 +30,6 @@ class ProductImageStorageConnectorToProductImageStorageClientBridge implements P
         int $idProductAbstract,
         string $locale
     ): ?ProductAbstractImageStorageTransfer {
-        return $this->imageStorageClient->findProductImageAbstractStorageTransfer($idProductAbstract, $locale);
+        return $this->productImageStorageClient->findProductImageAbstractStorageTransfer($idProductAbstract, $locale);
     }
 }
