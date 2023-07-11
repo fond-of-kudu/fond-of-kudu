@@ -2,7 +2,6 @@
 
 namespace FondOfKudu\Client\ProductImageStorageConnector;
 
-use FondOfKudu\Client\ProductImageStorageConnector\Dependency\Client\ProductImageStorageConnectorToLocaleClientInterface;
 use FondOfKudu\Client\ProductImageStorageConnector\Dependency\Client\ProductImageStorageConnectorToProductImageStorageClientInterface;
 use FondOfKudu\Client\ProductImageStorageConnector\Expander\ProductViewImageCustomSetsExpander;
 use FondOfKudu\Client\ProductImageStorageConnector\Expander\ProductViewImageCustomSetsExpanderInterface;
@@ -70,13 +69,5 @@ class ProductImageStorageConnectorFactory extends AbstractFactory
     protected function getProductImageStorageClient(): ProductImageStorageConnectorToProductImageStorageClientInterface
     {
         return $this->getProvidedDependency(ProductImageStorageConnectorDependencyProvider::CLIENT_PRODUCT_IMAGE_STORAGE);
-    }
-
-    /**
-     * @return \FondOfKudu\Client\ProductImageStorageConnector\Dependency\Client\ProductImageStorageConnectorToLocaleClientInterface
-     */
-    protected function getLocaleClient(): ProductImageStorageConnectorToLocaleClientInterface
-    {
-        return $this->getProvidedDependency(ProductImageStorageConnectorDependencyProvider::CLIENT_LOCALE);
     }
 }

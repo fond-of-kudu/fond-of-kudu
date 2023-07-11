@@ -2,8 +2,6 @@
 
 namespace FondOfKudu\Client\ProductImageStorageConnector;
 
-use FondOfKudu\Client\ProductImageStorageConnector\Dependency\Client\ProductImageStorageConnectorToLocaleClientBridge;
-use FondOfKudu\Client\ProductImageStorageConnector\Dependency\Client\ProductImageStorageConnectorToLocaleClientInterface;
 use FondOfKudu\Client\ProductImageStorageConnector\Dependency\Client\ProductImageStorageConnectorToProductImageStorageClientBridge;
 use FondOfKudu\Client\ProductImageStorageConnector\Dependency\Client\ProductImageStorageConnectorToProductImageStorageClientInterface;
 use FondOfKudu\Client\ProductImageStorageConnector\Dependency\Client\ProductImageStorageConnectorToStorageClientBridge;
@@ -29,11 +27,6 @@ class ProductImageStorageConnectorDependencyProvider extends AbstractDependencyP
      * @var string
      */
     public const CLIENT_PRODUCT_IMAGE_STORAGE = 'CLIENT_PRODUCT_IMAGE_STORAGE';
-
-    /**
-     * @var string
-     */
-    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -92,22 +85,6 @@ class ProductImageStorageConnectorDependencyProvider extends AbstractDependencyP
             Container $container
         ): ProductImageStorageConnectorToProductImageStorageClientInterface => new ProductImageStorageConnectorToProductImageStorageClientBridge(
             $container->getLocator()->productImageStorage()->client(),
-        );
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addLocaleClient(Container $container): Container
-    {
-        $container[static::CLIENT_LOCALE] = static fn (
-            Container $container
-        ): ProductImageStorageConnectorToLocaleClientInterface => new ProductImageStorageConnectorToLocaleClientBridge(
-            $container->getLocator()->locale()->client(),
         );
 
         return $container;

@@ -1,0 +1,27 @@
+Zed:
+  - bundles/**/src/FondOfKudu/Zed/**
+
+Yves:
+  - bundles/**/src/FondOfKudu/Yves/**
+
+Glue:
+  - bundles/**/src/FondOfKudu/Glue/**
+
+Client:
+  - bundles/**/src/FondOfKudu/Client/**
+
+Service:
+  - bundles/**/src/FondOfKudu/Service/**
+
+Tests:
+  - bundles/**/tests/FondOfKudu/**
+
+composer:
+  - composer.json
+  - bundles/**/src/FondOfKudu/composer.json
+
+github:
+  - .github/**
+
+Version:
+  - dandelion.json
