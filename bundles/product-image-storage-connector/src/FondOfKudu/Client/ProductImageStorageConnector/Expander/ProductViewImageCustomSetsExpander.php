@@ -6,13 +6,19 @@ use ArrayObject;
 use FondOfKudu\Client\ProductImageStorageConnector\Dependency\Client\ProductImageStorageConnectorToProductImageStorageClientInterface;
 use FondOfKudu\Client\ProductImageStorageConnector\ProductImageStorageConnectorConfig;
 use FondOfKudu\Shared\ProductImageStorageConnector\ProductImageStorageConnectorConstants;
-use Generated\Shared\Transfer\ProductImageStorageTransfer;
+use Generated\Shared\Transfer\ProductImageSetStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 
 class ProductViewImageCustomSetsExpander implements ProductViewImageCustomSetsExpanderInterface
 {
+    /**
+     * @var \FondOfKudu\Client\ProductImageStorageConnector\ProductImageStorageConnectorConfig
+     */
     protected ProductImageStorageConnectorConfig $config;
 
+    /**
+     * @var \FondOfKudu\Client\ProductImageStorageConnector\Dependency\Client\ProductImageStorageConnectorToProductImageStorageClientInterface
+     */
     protected ProductImageStorageConnectorToProductImageStorageClientInterface $connectorToProductImageStorageClient;
 
     /**
@@ -29,25 +35,29 @@ class ProductViewImageCustomSetsExpander implements ProductViewImageCustomSetsEx
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param string $locale
-     * @param string $imageSetName
+     * @param array<string, mixed> $productData
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandProductViewImageData(
+    public function expandProductViewTransfer(
         ProductViewTransfer $productViewTransfer,
-        string $locale,
-        string $imageSetName
+        array $productData,
+        string $localeName
     ): ProductViewTransfer {
-        $imageSetNamesArray = $this->config->getImageSets();
+        $imageSetNames = $this->config->getImageSets();
         $images = [];
 
-        if ($this->config->allwaysDefaultImageSet() === true && !in_array(ProductImageStorageConnectorConstants::DEFAULT_IMAGE_SET_NAME, $imageSetNamesArray)) {
-            array_push($imageSetNamesArray, ProductImageStorageConnectorConstants::DEFAULT_IMAGE_SET_NAME);
+        if ($this->config->allwaysDefaultImageSet() === true && !in_array(ProductImageStorageConnectorConstants::DEFAULT_IMAGE_SET_NAME, $imageSetNames)) {
+            array_push($imageSetNames, ProductImageStorageConnectorConstants::DEFAULT_IMAGE_SET_NAME);
         }
 
-        foreach ($imageSetNamesArray as $imageSetName) {
-            $images[strtoupper($imageSetName)] = $this->getImages($productViewTransfer, $locale, $imageSetName);
+        foreach ($imageSetNames as $imageSetName) {
+            $images[strtoupper($imageSetName)] = $this->getImages(
+                $productViewTransfer,
+                $localeName,
+                $imageSetName,
+            )->getImages();
         }
 
         if (count($images) > 0) {
@@ -62,10 +72,13 @@ class ProductViewImageCustomSetsExpander implements ProductViewImageCustomSetsEx
      * @param string $locale
      * @param string $imageSetName
      *
-     * @return \Generated\Shared\Transfer\ProductImageStorageTransfer|null
+     * @return \Generated\Shared\Transfer\ProductImageSetStorageTransfer|null
      */
-    protected function getImages(ProductViewTransfer $productViewTransfer, $locale, $imageSetName)
-    {
+    protected function getImages(
+        ProductViewTransfer $productViewTransfer,
+        string $locale,
+        string $imageSetName
+    ): ?ProductImageSetStorageTransfer {
         $productAbstractImageSetCollection = $this->connectorToProductImageStorageClient
             ->findProductImageAbstractStorageTransfer($productViewTransfer->getIdProductAbstract(), $locale);
 
@@ -80,18 +93,18 @@ class ProductViewImageCustomSetsExpander implements ProductViewImageCustomSetsEx
      * @param \ArrayObject<\Generated\Shared\Transfer\ProductImageSetStorageTransfer> $imageSetStorageCollection
      * @param string $imageSetName
      *
-     * @return \Generated\Shared\Transfer\ProductImageStorageTransfer|null
+     * @return \Generated\Shared\Transfer\ProductImageSetStorageTransfer|null
      */
     protected function getImageSetImages(
         ArrayObject $imageSetStorageCollection,
         string $imageSetName
-    ): ?ProductImageStorageTransfer {
+    ): ?ProductImageSetStorageTransfer {
         foreach ($imageSetStorageCollection as $index => $productImageSetStorageTransfer) {
             if ($productImageSetStorageTransfer->getName() !== $imageSetName) {
                 continue;
             }
 
-            return $imageSetStorageCollection[$index]->getImages();
+            return $productImageSetStorageTransfer;
         }
 
         if ($imageSetName !== ProductImageStorageConnectorConstants::DEFAULT_IMAGE_SET_NAME) {
@@ -101,8 +114,8 @@ class ProductViewImageCustomSetsExpander implements ProductViewImageCustomSetsEx
             );
         }
 
-        if (isset($imageSetStorageCollection[0])) {
-            return $imageSetStorageCollection[0]->getImages();
+        if ($imageSetStorageCollection->offsetExists(0)) {
+            return $imageSetStorageCollection->offsetGet(0);
         }
 
         return null;

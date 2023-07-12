@@ -8,14 +8,14 @@ interface ProductViewImageCustomSetsExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param string $locale
-     * @param string $imageSetName
+     * @param array<string, mixed> $productData
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandProductViewImageData(
+    public function expandProductViewTransfer(
         ProductViewTransfer $productViewTransfer,
-        string $locale,
-        string $imageSetName
+        array $productData,
+        string $localeName
     ): ProductViewTransfer;
 }

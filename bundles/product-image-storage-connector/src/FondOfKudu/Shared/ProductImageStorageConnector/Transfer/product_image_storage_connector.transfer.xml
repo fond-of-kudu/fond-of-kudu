@@ -13,5 +13,10 @@
         <property name="imageSets" singular="imageSet" type="[]"/>
     </transfer>
 
+    <transfer name="ProductImageSetStorage">
+        <property name="name" type="string"/>
+        <property name="images" singular="image" type="ProductImageStorage[]"/>
+    </transfer>
+
     <transfer name="ProductAbstractImageStorage"/>
 </transfers>

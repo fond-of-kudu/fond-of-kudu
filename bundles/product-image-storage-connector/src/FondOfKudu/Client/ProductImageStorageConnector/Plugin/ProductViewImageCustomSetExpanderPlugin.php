@@ -23,6 +23,8 @@ class ProductViewImageCustomSetExpanderPlugin extends AbstractPlugin implements 
         array $productData,
         $localeName
     ): ProductViewTransfer {
-        return $productViewTransfer;
+        return $this->getFactory()
+            ->createProductViewImageCustomSetsExpander()
+            ->expandProductViewTransfer($productViewTransfer, $productData, $localeName);
     }
 }

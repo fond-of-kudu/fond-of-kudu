@@ -11,9 +11,7 @@
   "require": {
     "php": ">=8.0",
     "spryker/product-image-storage": "^1.15",
-    "spryker/product-storage-extension": "^1.0.0",
-    "spryker/storage": "^3.20.0",
-    "spryker/synchronization": "^1.16"
+    "spryker/product-storage-extension": "^1.0.0"
   },
   "require-dev": {
     "fond-of-codeception/spryker": "*",
