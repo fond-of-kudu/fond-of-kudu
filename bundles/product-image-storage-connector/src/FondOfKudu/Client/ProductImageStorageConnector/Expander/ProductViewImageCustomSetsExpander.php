@@ -79,27 +79,27 @@ class ProductViewImageCustomSetsExpander implements ProductViewImageCustomSetsEx
         string $locale,
         string $imageSetName
     ): ?ProductImageSetStorageTransfer {
-        $productAbstractImageSetCollection = $this->connectorToProductImageStorageClient
+        $productAbstractImageStorageTransfer = $this->connectorToProductImageStorageClient
             ->findProductImageAbstractStorageTransfer($productViewTransfer->getIdProductAbstract(), $locale);
 
-        if (!$productAbstractImageSetCollection) {
+        if (!$productAbstractImageStorageTransfer) {
             return null;
         }
 
-        return $this->getImageSetImages($productAbstractImageSetCollection->getImageSets(), $imageSetName);
+        return $this->getImageSetImages($productAbstractImageStorageTransfer->getImageSets(), $imageSetName);
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\ProductImageSetStorageTransfer> $imageSetStorageCollection
+     * @param \ArrayObject<\Generated\Shared\Transfer\ProductImageSetStorageTransfer> $ProductImageSetStorageTransferCollection
      * @param string $imageSetName
      *
      * @return \Generated\Shared\Transfer\ProductImageSetStorageTransfer|null
      */
     protected function getImageSetImages(
-        ArrayObject $imageSetStorageCollection,
+        ArrayObject $ProductImageSetStorageTransferCollection,
         string $imageSetName
     ): ?ProductImageSetStorageTransfer {
-        foreach ($imageSetStorageCollection as $index => $productImageSetStorageTransfer) {
+        foreach ($ProductImageSetStorageTransferCollection as $productImageSetStorageTransfer) {
             if ($productImageSetStorageTransfer->getName() !== $imageSetName) {
                 continue;
             }
@@ -109,13 +109,13 @@ class ProductViewImageCustomSetsExpander implements ProductViewImageCustomSetsEx
 
         if ($imageSetName !== ProductImageStorageConnectorConstants::DEFAULT_IMAGE_SET_NAME) {
             return $this->getImageSetImages(
-                $imageSetStorageCollection,
+                $ProductImageSetStorageTransferCollection,
                 ProductImageStorageConnectorConstants::DEFAULT_IMAGE_SET_NAME,
             );
         }
 
-        if ($imageSetStorageCollection->offsetExists(0)) {
-            return $imageSetStorageCollection->offsetGet(0);
+        if ($ProductImageSetStorageTransferCollection->offsetExists(0)) {
+            return $ProductImageSetStorageTransferCollection->offsetGet(0);
         }
 
         return null;
