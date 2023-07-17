@@ -33,3 +33,6 @@ checkout-rest-api-country-connector:
 
 product-image-storage-connector:
   - bundles/product-image-storage-connector/**
+
+country-zipcode-restriction:
+  - country-zipcode-restriction/**

@@ -7,6 +7,10 @@
       "path": "bundles/checkout-rest-api-country-connector",
       "version": "1.0.1"
     },
+    "country-zipcode-restriction": {
+      "path": "bundles/country-zipcode-restriction",
+      "version": "1.0.0-alpha.0"
+    },
     "product-image-storage-connector": {
       "path": "bundles/product-image-storage-connector",
       "version": "1.0.0"
