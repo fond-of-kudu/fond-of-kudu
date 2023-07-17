@@ -14,7 +14,7 @@ class CountryZipcodeRestrictionDateImportPlugin extends AbstractPlugin implement
      *
      * @return void
      */
-    public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): void
+    public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
     {
         // TODO: Implement import() method.
     }
