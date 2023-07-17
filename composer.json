@@ -10,15 +10,16 @@
   ],
   "require": {
     "php": ">=8.0",
+    "fond-of-oryx/product-country-restriction-checkout-connector": "^2.0.1",
     "spryker/checkout-rest-api-extension": "^1.5.0",
+    "spryker/country": "^3.1.0 || ^4.0.0",
+    "spryker/data-import": "^1.21",
     "spryker/glossary-storage": "^1.0.0",
     "spryker/locale": "^2.0.0 || ^3.0.0 || ^4.0.0",
-    "spryker/country": "^3.1.0 || ^4.0.0",
+    "spryker/product-image-storage": "^1.15",
     "spryker/product-storage-extension": "^1.0.0",
     "spryker/storage": "^3.20.0",
-    "spryker/synchronization": "^1.16",
-    "fond-of-oryx/product-country-restriction-checkout-connector": "^2.0.1",
-    "spryker/product-image-storage": "^1.15"
+    "spryker/synchronization": "^1.16"
   },
   "require-dev": {
     "fond-of-codeception/spryker": "*",
@@ -28,12 +29,15 @@
   },
   "replace": {
     "fond-of-kudu/checkout-rest-api-country-connector": "*",
+    "fond-of-kudu/country-zipcode-restriction": "*",
     "fond-of-kudu/product-image-storage-connector": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "autoload": {
     "psr-4": {
+      "FondOfKudu\\Zed\\CountryZipcodeRestriction\\": "bundles/country-zipcode-restriction/src/FondOfKudu/Zed/CountryZipcodeRestriction",
+      "FondOfKudu\\Shared\\CountryZipcodeRestriction\\": "bundles/country-zipcode-restriction/src/FondOfKudu/Shared/CountryZipcodeRestriction",
       "FondOfKudu\\Client\\ProductImageStorageConnector\\": "bundles/product-image-storage-connector/src/FondOfKudu/Client/ProductImageStorageConnector",
       "FondOfKudu\\Shared\\ProductImageStorageConnector\\": "bundles/product-image-storage-connector/src/FondOfKudu/Shared/ProductImageStorageConnector",
       "FondOfKudu\\Glue\\CheckoutRestApiCountryConnector\\": "bundles/checkout-rest-api-country-connector/src/FondOfKudu/Glue/CheckoutRestApiCountryConnector",
@@ -42,6 +46,7 @@
   },
   "autoload-dev": {
     "psr-4": {
+      "FondOfKudu\\Zed\\CountryZipcodeRestriction\\": "bundles/country-zipcode-restriction/tests/FondOfKudu/Zed/CountryZipcodeRestriction",
       "FondOfKudu\\Client\\ProductImageStorageConnector\\": "bundles/product-image-storage-connector/tests/FondOfKudu/Client/ProductImageStorageConnector",
       "FondOfKudu\\Glue\\CheckoutRestApiCountryConnector\\": "bundles/checkout-rest-api-country-connector/tests/FondOfKudu/Glue/CheckoutRestApiCountryConnector",
       "FondOfKudu\\Zed\\CheckoutRestApiCountryConnector\\": "bundles/checkout-rest-api-country-connector/tests/FondOfKudu/Zed/CheckoutRestApiCountryConnector",
@@ -52,6 +57,7 @@
   "config": {
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true
-    }
+    },
+    "sort-packages": true
   }
 }
