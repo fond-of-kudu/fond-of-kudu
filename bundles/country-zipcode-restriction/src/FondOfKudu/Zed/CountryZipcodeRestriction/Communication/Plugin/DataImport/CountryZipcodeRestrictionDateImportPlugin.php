@@ -4,6 +4,7 @@ namespace FondOfKudu\Zed\CountryZipcodeRestriction\Communication\Plugin\DataImpo
 
 use FondOfKudu\Zed\CountryZipcodeRestriction\CountryZipcodeRestrictionConfig;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
+use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -15,11 +16,12 @@ class CountryZipcodeRestrictionDateImportPlugin extends AbstractPlugin implement
     /**
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
-    {
-        $this->getFacade()->import($dataImporterConfigurationTransfer);
+    public function import(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterReportTransfer {
+        return $this->getFacade()->import($dataImporterConfigurationTransfer);
     }
 
     /**

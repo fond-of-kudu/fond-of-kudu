@@ -4,6 +4,7 @@ namespace FondOfKudu\Zed\CountryZipcodeRestriction\Business;
 
 use Generated\Shared\Transfer\CountryZipcodeRestrictionTransfer;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
+use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -25,9 +26,11 @@ class CountryZipcodeRestrictionFacade extends AbstractFacade implements CountryZ
     /**
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): void
-    {
+    public function import(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterReportTransfer {
+        return new DataImporterReportTransfer();
     }
 }
