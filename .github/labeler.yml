@@ -36,3 +36,6 @@ product-image-storage-connector:
 
 country-zipcode-restriction:
   - country-zipcode-restriction/**
+
+country-zipcode-restriction-import:
+  - country-zipcode-restriction-import/**
