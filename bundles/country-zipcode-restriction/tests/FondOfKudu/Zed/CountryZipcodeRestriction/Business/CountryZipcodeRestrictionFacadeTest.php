@@ -1,10 +1,10 @@
 <?php
 
-namespace FondOfKudu\Zed\CountryZipcodeRestriction\Communication\Plugin\DataImport;
+namespace FondOfKudu\Zed\CountryZipcodeRestriction\Business;
 
 use Codeception\Test\Unit;
 
-class CountryZipcodeRestrictionTest extends Unit
+class CountryZipcodeRestrictionFacadeTest extends Unit
 {
     /**
      * @return void
