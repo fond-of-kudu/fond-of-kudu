@@ -2,7 +2,7 @@
 
 namespace FondOfKudu\Zed\CountryZipcodeRestrictionImport\Communication\Plugin\DataImport;
 
-use FondOfKudu\Zed\CountryZipcodeRestriction\CountryZipcodeRestrictionConfig;
+use FondOfKudu\Zed\CountryZipcodeRestrictionImport\CountryZipcodeRestrictionImportConfig;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface;
@@ -29,6 +29,6 @@ class CountryZipcodeRestrictionDataImportPlugin extends AbstractPlugin implement
      */
     public function getImportType(): string
     {
-        return CountryZipcodeRestrictionConfig::IMPORT_TYPE_COUNTRY_ZIPCODE_RESTRICTION;
+        return CountryZipcodeRestrictionImportConfig::IMPORT_TYPE_COUNTRY_ZIPCODE_RESTRICTION;
     }
 }
