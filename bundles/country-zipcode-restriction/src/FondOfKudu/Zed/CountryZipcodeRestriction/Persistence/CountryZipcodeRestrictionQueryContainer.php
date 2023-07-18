@@ -2,11 +2,11 @@
 
 namespace FondOfKudu\Zed\CountryZipcodeRestriction\Persistence;
 
-use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method \FondOfKudu\Zed\CountryZipcodeRestriction\Persistence\CountryZipcodeRestrictionPersistenceFactory getFactory()
  */
-class CountryZipcodeRestrictionRepository extends AbstractRepository implements CountryZipcodeRestrictionRepositoryInterface
+class CountryZipcodeRestrictionQueryContainer extends AbstractQueryContainer implements CountryZipcodeRestrictionQueryContainerInterface
 {
 }

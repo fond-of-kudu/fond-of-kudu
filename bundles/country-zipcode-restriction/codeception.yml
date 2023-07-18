@@ -1,4 +1,4 @@
-namespace: fond-of-kudu/country-zipcode-restriction
+namespace: fond-of-kudu/country-zipcode-restriction-import
 
 suites:
   unit:

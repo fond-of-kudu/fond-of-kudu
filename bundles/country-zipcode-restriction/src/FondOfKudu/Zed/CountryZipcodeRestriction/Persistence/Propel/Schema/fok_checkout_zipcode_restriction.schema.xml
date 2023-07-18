@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed"
           xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
-          namespace="Orm\Zed\CreditMemo\Persistence" package="src.Orm.Zed.CountryZipcodeRestriction.Persistence">
+          namespace="Orm\Zed\CountryZipcodeRestriction\Persistence" package="src.Orm.Zed.CountryZipcodeRestriction.Persistence">
 
-    <table name="fok_country_zipcode_restriction" phpName="CountryZipcodeRestriction" identifierQuoting="true">
+    <table name="fok_country_zipcode_restriction" phpName="FokCountryZipcodeRestriction" identifierQuoting="true">
         <column name="id_country_zipcode_restriction" required="true" type="INTEGER" primaryKey="true"/>
         <column name="fk_country" required="true" type="INTEGER"/>
         <column name="zipcode" required="true" type="VARCHAR" size="20"/>
