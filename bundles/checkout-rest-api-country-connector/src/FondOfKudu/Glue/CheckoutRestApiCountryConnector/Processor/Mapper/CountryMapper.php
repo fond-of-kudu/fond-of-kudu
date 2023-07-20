@@ -49,6 +49,7 @@ class CountryMapper implements CountryMapperInterface
             $countryTranslationKey = sprintf('countries.iso.%s', strtoupper($countryTransfer->getIso2Code()));
 
             $countryRestCheckoutDataResponseAttributesTransfer = (new CountryRestCheckoutDataResponseAttributesTransfer())
+                ->setIdCountry($countryTransfer->getIdCountry())
                 ->setName($this->glossaryStorageClient->translate($countryTranslationKey, $this->localeClient->getCurrentLocale()))
                 ->setIso2Code($countryTransfer->getIso2Code());
 
