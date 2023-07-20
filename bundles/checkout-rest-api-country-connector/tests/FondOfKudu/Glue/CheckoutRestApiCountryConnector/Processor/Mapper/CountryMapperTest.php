@@ -89,6 +89,10 @@ class CountryMapperTest extends Unit
             ->willReturn([$this->countryTransferMock, $this->countryTransferMock]);
 
         $this->countryTransferMock->expects(static::atLeastOnce())
+            ->method('getIdCountry')
+            ->willReturnOnConsecutiveCalls(11, 22);
+
+        $this->countryTransferMock->expects(static::atLeastOnce())
             ->method('getIso2Code')
             ->willReturnOnConsecutiveCalls('DE', 'FR');
 
