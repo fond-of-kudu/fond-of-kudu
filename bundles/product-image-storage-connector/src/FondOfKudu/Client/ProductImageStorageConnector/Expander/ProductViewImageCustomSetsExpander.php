@@ -53,11 +53,17 @@ class ProductViewImageCustomSetsExpander implements ProductViewImageCustomSetsEx
         }
 
         foreach ($imageSetNames as $imageSetName) {
-            $images[strtoupper($imageSetName)] = $this->getImages(
+            $productImageStorageTransfer = $this->getImages(
                 $productViewTransfer,
                 $localeName,
                 $imageSetName,
-            )->getImages();
+            );
+
+            if ($productImageStorageTransfer === null) {
+                continue;
+            }
+
+            $images[strtoupper($imageSetName)] = $productImageStorageTransfer->getImages();
         }
 
         if (count($images) > 0) {
