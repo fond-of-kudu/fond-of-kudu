@@ -121,4 +121,79 @@ class ProductViewImageCustomSetsExpanderTest extends Unit
 
         static::assertEquals($productViewTransfer, $this->productViewTransferMock);
     }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductViewTransferNoImagesSets(): void
+    {
+        $this->configMock->expects(static::atLeastOnce())
+            ->method('getImageSets')
+            ->willReturn([
+                ProductImageStorageConnectorConstants::IMAGE_SET_ADDITIONAL,
+                ProductImageStorageConnectorConstants::IMAGE_SET_THUMBNAIL,
+                ProductImageStorageConnectorConstants::IMAGE_SET_BASEIMAGE,
+                ProductImageStorageConnectorConstants::IMAGE_SET_HOVERIMAGE,
+                ProductImageStorageConnectorConstants::IMAGE_SET_SETIMAGE,
+            ]);
+
+        $this->productViewTransferMock->expects(static::atLeastOnce())
+            ->method('getIdProductAbstract')
+            ->willReturn(99);
+
+        $this->connectorToProductImageStorageClientMock->expects(static::atLeastOnce())
+            ->method('findProductImageAbstractStorageTransfer')
+            ->with(99, 'de_DE')
+            ->wilLReturn(null);
+
+        $productViewTransfer = $this->expander->expandProductViewTransfer($this->productViewTransferMock, [], 'de_DE');
+
+        static::assertEquals($productViewTransfer, $this->productViewTransferMock);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductViewTransferWithinDefault(): void
+    {
+        $configImageSets = [
+            ProductImageStorageConnectorConstants::IMAGE_SET_ADDITIONAL,
+            ProductImageStorageConnectorConstants::IMAGE_SET_THUMBNAIL,
+            ProductImageStorageConnectorConstants::IMAGE_SET_BASEIMAGE,
+            ProductImageStorageConnectorConstants::IMAGE_SET_HOVERIMAGE,
+            ProductImageStorageConnectorConstants::IMAGE_SET_SETIMAGE,
+        ];
+
+        $this->configMock->expects(static::atLeastOnce())
+            ->method('getImageSets')
+            ->willReturn($configImageSets);
+
+        $this->configMock->expects(static::atLeastOnce())
+            ->method('allwaysDefaultImageSet')
+            ->willReturn(true);
+
+        $this->productViewTransferMock->expects(static::atLeastOnce())
+            ->method('getIdProductAbstract')
+            ->willReturn(99);
+
+        $this->connectorToProductImageStorageClientMock->expects(static::atLeastOnce())
+            ->method('findProductImageAbstractStorageTransfer')
+            ->with(99, 'de_DE')
+            ->willReturn($this->productAbstractImageStorageTransferMock);
+
+        $arrayObject = new ArrayObject();
+        $arrayObject->append($this->productImageSetStorageTransferMock);
+
+        $this->productAbstractImageStorageTransferMock->expects(static::atLeastOnce())
+            ->method('getImageSets')
+            ->willReturn($arrayObject);
+
+        $this->productImageSetStorageTransferMock->expects(static::atLeastOnce())
+            ->method('getName')
+            ->willReturn(ProductImageStorageConnectorConstants::IMAGE_SET_ADDITIONAL);
+
+        $productViewTransfer = $this->expander->expandProductViewTransfer($this->productViewTransferMock, [], 'de_DE');
+
+        static::assertEquals($productViewTransfer, $this->productViewTransferMock);
+    }
 }
