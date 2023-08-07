@@ -42,3 +42,6 @@ country-zipcode-restriction:
 
 checkout-data-product-country-filter:
   - checkout-data-product-country-filter/**
+
+checkout-data-gift-cart-payment-country-filter:
+  - checkout-data-gift-cart-payment-country-filter/**

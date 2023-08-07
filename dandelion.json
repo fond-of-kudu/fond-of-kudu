@@ -2,6 +2,10 @@
   "pathToSplitshLite": "/usr/local/bin/splitsh-lite",
   "pathToTempDirectory": "/home/dandelion/project/tmp/",
   "repositories": {
+    "checkout-data-gift-cart-payment-country-filter": {
+      "path": "checkout-data-gift-cart-payment-country-filter",
+      "version": "1.0.0-alpha.0"
+    },
     "checkout-data-product-country-filter": {
       "path": "checkout-data-product-country-filter",
       "version": "1.0.0-alpha.0"
