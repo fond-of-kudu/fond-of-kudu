@@ -29,6 +29,7 @@
   },
   "replace": {
     "fond-of-kudu/checkout-rest-api-country-connector": "*",
+    "fond-of-kudu/checkout-data-gift-cart-payment-country-filter": "*",
     "fond-of-kudu/checkout-rest-api-country-extension": "*",
     "fond-of-kudu/checkout-data-product-country-filter": "*",
     "fond-of-kudu/country-zipcode-restriction": "*",
@@ -45,7 +46,9 @@
       "FondOfKudu\\Glue\\CheckoutRestApiCountryConnector\\": "bundles/checkout-rest-api-country-connector/src/FondOfKudu/Glue/CheckoutRestApiCountryConnector",
       "FondOfKudu\\Zed\\CheckoutRestApiCountryConnector\\": "bundles/checkout-rest-api-country-connector/src/FondOfKudu/Zed/CheckoutRestApiCountryConnector",
       "FondOfKudu\\Zed\\CheckoutRestApiCountryExtension\\": "bundles/checkout-rest-api-country-extension/src/FondOfKudu/Zed/CheckoutRestApiCountryExtension",
-      "FondOfKudu\\Zed\\CheckoutDataProductCountryFilter\\": "bundles/checkout-data-product-country-filter/src/FondOfKudu/Zed/CheckoutDataProductCountryFilter"
+      "FondOfKudu\\Zed\\CheckoutDataProductCountryFilter\\": "bundles/checkout-data-product-country-filter/src/FondOfKudu/Zed/CheckoutDataProductCountryFilter",
+      "FondOfKudu\\Shared\\CheckoutDataGiftCartPaymentCountryFilter\\": "bundles/checkout-data-gift-cart-payment-country-filter/src/FondOfKudu/Shared/CheckoutDataGiftCartPaymentCountryFilter",
+      "FondOfKudu\\Zed\\CheckoutDataGiftCartPaymentCountryFilter\\": "bundles/checkout-data-gift-cart-payment-country-filter/src/FondOfKudu/Zed/CheckoutDataGiftCartPaymentCountryFilter"
     }
   },
   "autoload-dev": {
@@ -55,6 +58,7 @@
       "FondOfKudu\\Glue\\CheckoutRestApiCountryConnector\\": "bundles/checkout-rest-api-country-connector/tests/FondOfKudu/Glue/CheckoutRestApiCountryConnector",
       "FondOfKudu\\Zed\\CheckoutRestApiCountryConnector\\": "bundles/checkout-rest-api-country-connector/tests/FondOfKudu/Zed/CheckoutRestApiCountryConnector",
       "FondOfKudu\\Zed\\CheckoutDataProductCountryFilter\\": "bundles/checkout-data-product-country-filter/tests/FondOfKudu/Zed/CheckoutDataProductCountryFilter",
+      "FondOfKudu\\Zed\\CheckoutDataGiftCartPaymentCountryFilter\\": "bundles/checkout-data-gift-cart-payment-country-filter/tests/FondOfKudu/Zed/CheckoutDataGiftCartPaymentCountryFilter",
       "Generated\\": "src/Generated/",
       "Orm\\Zed\\": "src/Orm/Zed/"
     }
