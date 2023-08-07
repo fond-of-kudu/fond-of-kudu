@@ -1,0 +1,40 @@
+{
+  "name": "fond-of-kudu/checkout-data-product-country-filter",
+  "description": "filter the country list in checkout-data by products",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Pascal Fischer",
+      "email": "p-fischer@gmx.net"
+    }
+  ],
+  "require": {
+    "php": ">=8.0",
+    "fond-of-kudu/checkout-rest-api-country-extension": "^1.0.0",
+    "fond-of-oryx/product-country-restriction-checkout-connector": "2.0.1"
+  },
+  "require-dev": {
+    "fond-of-codeception/spryker": "*",
+    "spryker/code-sniffer": "*",
+    "spryker-sdk/phpstan-spryker": "*"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "FondOfKudu\\": "src/FondOfKudu/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "FondOfKudu\\": "tests/FondOfKudu/",
+      "Generated\\": "src/Generated/"
+    }
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  }
+}

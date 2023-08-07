@@ -30,6 +30,7 @@
   "replace": {
     "fond-of-kudu/checkout-rest-api-country-connector": "*",
     "fond-of-kudu/checkout-rest-api-country-extension": "*",
+    "fond-of-kudu/checkout-data-product-country-filter": "*",
     "fond-of-kudu/country-zipcode-restriction": "*",
     "fond-of-kudu/product-image-storage-connector": "*"
   },
@@ -43,7 +44,8 @@
       "FondOfKudu\\Shared\\ProductImageStorageConnector\\": "bundles/product-image-storage-connector/src/FondOfKudu/Shared/ProductImageStorageConnector",
       "FondOfKudu\\Glue\\CheckoutRestApiCountryConnector\\": "bundles/checkout-rest-api-country-connector/src/FondOfKudu/Glue/CheckoutRestApiCountryConnector",
       "FondOfKudu\\Zed\\CheckoutRestApiCountryConnector\\": "bundles/checkout-rest-api-country-connector/src/FondOfKudu/Zed/CheckoutRestApiCountryConnector",
-      "FondOfKudu\\Zed\\CheckoutRestApiCountryExtension\\": "bundles/checkout-rest-api-country-extension/src/FondOfKudu/Zed/CheckoutRestApiCountryExtension"
+      "FondOfKudu\\Zed\\CheckoutRestApiCountryExtension\\": "bundles/checkout-rest-api-country-extension/src/FondOfKudu/Zed/CheckoutRestApiCountryExtension",
+      "FondOfKudu\\Zed\\CheckoutDataProductCountryFilter\\": "bundles/checkout-data-product-country-filter/src/FondOfKudu/Zed/CheckoutDataProductCountryFilter"
     }
   },
   "autoload-dev": {
@@ -52,6 +54,7 @@
       "FondOfKudu\\Client\\ProductImageStorageConnector\\": "bundles/product-image-storage-connector/tests/FondOfKudu/Client/ProductImageStorageConnector",
       "FondOfKudu\\Glue\\CheckoutRestApiCountryConnector\\": "bundles/checkout-rest-api-country-connector/tests/FondOfKudu/Glue/CheckoutRestApiCountryConnector",
       "FondOfKudu\\Zed\\CheckoutRestApiCountryConnector\\": "bundles/checkout-rest-api-country-connector/tests/FondOfKudu/Zed/CheckoutRestApiCountryConnector",
+      "FondOfKudu\\Zed\\CheckoutDataProductCountryFilter\\": "bundles/checkout-data-product-country-filter/tests/FondOfKudu/Zed/CheckoutDataProductCountryFilter",
       "Generated\\": "src/Generated/",
       "Orm\\Zed\\": "src/Orm/Zed/"
     }

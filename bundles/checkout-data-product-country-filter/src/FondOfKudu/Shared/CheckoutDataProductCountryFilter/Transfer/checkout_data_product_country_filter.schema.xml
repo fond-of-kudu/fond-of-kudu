@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 https://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="BlacklistedCountryCollection">
+        <property name="blacklistedCountries" singular="blacklistedCountry" type="BlacklistedCountry[]"/>
+    </transfer>
+
+    <transfer name="BlacklistedCountry">
+        <property name="iso2Code" type="string"/>
+    </transfer>
+
+    <transfer name="RestCheckoutData">
+        <property name="countries" singular="country" type="Country[]"/>
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="Country">
+        <property name="iso2Code" type="string"/>
+    </transfer>
+
+    <transfer name="Quote"/>
+    <transfer name="RestCheckoutRequestAttributes"/>
+</transfers>
