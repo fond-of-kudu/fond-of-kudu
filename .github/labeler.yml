@@ -39,3 +39,6 @@ product-image-storage-connector:
 
 country-zipcode-restriction:
   - country-zipcode-restriction/**
+
+checkout-data-product-country-filter:
+  - checkout-data-product-country-filter/**
