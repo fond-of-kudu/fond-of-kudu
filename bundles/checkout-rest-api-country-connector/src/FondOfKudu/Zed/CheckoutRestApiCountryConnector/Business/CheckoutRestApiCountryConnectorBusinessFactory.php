@@ -6,7 +6,6 @@ use FondOfKudu\Zed\CheckoutRestApiCountryConnector\Business\Expander\CheckoutDat
 use FondOfKudu\Zed\CheckoutRestApiCountryConnector\Business\Expander\CheckoutDataExpanderInterface;
 use FondOfKudu\Zed\CheckoutRestApiCountryConnector\CheckoutRestApiCountryConnectorDependencyProvider;
 use FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToCountryFacadeInterface;
-use FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToProductCountryRestrictionCheckoutConnectorFacadeInterface;
 use FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToStoreFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -18,9 +17,9 @@ class CheckoutRestApiCountryConnectorBusinessFactory extends AbstractBusinessFac
     public function createCheckoutDataExpander(): CheckoutDataExpanderInterface
     {
         return new CheckoutDataExpander(
-            $this->getProductCountryRestrictionCheckoutConnectorFacade(),
             $this->getStoreFacade(),
             $this->getCountryFacade(),
+            $this->getCheckoutRestApiCountryFilterPlugins(),
         );
     }
 
@@ -33,18 +32,20 @@ class CheckoutRestApiCountryConnectorBusinessFactory extends AbstractBusinessFac
     }
 
     /**
-     * @return \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToProductCountryRestrictionCheckoutConnectorFacadeInterface
-     */
-    protected function getProductCountryRestrictionCheckoutConnectorFacade(): CheckoutRestApiCountryConnectorToProductCountryRestrictionCheckoutConnectorFacadeInterface
-    {
-        return $this->getProvidedDependency(CheckoutRestApiCountryConnectorDependencyProvider::FACADE_PRODUCT_COUNTRY_RESTRICTION_CHECKOUT_CONNECTOR);
-    }
-
-    /**
      * @return \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToStoreFacadeInterface
      */
     protected function getStoreFacade(): CheckoutRestApiCountryConnectorToStoreFacadeInterface
     {
         return $this->getProvidedDependency(CheckoutRestApiCountryConnectorDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return array<\FondOfKudu\Zed\CheckoutRestApiCountryExtension\Dependency\Plugin\CheckoutRestApiCountryFilterPluginInterface>
+     */
+    protected function getCheckoutRestApiCountryFilterPlugins(): array
+    {
+        return $this->getProvidedDependency(
+            CheckoutRestApiCountryConnectorDependencyProvider::CHECKOUT_REST_API_COUNTRY_FILTER_PLUGINS,
+        );
     }
 }

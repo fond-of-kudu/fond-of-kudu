@@ -3,18 +3,12 @@
 namespace FondOfKudu\Zed\CheckoutRestApiCountryConnector\Business\Expander;
 
 use FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToCountryFacadeInterface;
-use FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToProductCountryRestrictionCheckoutConnectorFacadeInterface;
 use FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToStoreFacadeInterface;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 
 class CheckoutDataExpander implements CheckoutDataExpanderInterface
 {
-    /**
-     * @var \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToProductCountryRestrictionCheckoutConnectorFacadeInterface
-     */
-    protected $productCountryRestrictionCheckoutConnectorFacade;
-
     /**
      * @var \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToStoreFacadeInterface
      */
@@ -26,18 +20,23 @@ class CheckoutDataExpander implements CheckoutDataExpanderInterface
     protected $countryFacade;
 
     /**
-     * @param \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToProductCountryRestrictionCheckoutConnectorFacadeInterface $productCountryRestrictionCheckoutConnectorFacade
+     * @var array<\FondOfKudu\Zed\CheckoutRestApiCountryExtension\Dependency\Plugin\CheckoutRestApiCountryFilterPluginInterface>
+     */
+    protected $checkoutRestApiCountryFilterPlugins;
+
+    /**
      * @param \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToStoreFacadeInterface $storeFacade
      * @param \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToCountryFacadeInterface $countryFacade
+     * @param array<\FondOfKudu\Zed\CheckoutRestApiCountryExtension\Dependency\Plugin\CheckoutRestApiCountryFilterPluginInterface> $checkoutRestApiCountryFilterPlugins
      */
     public function __construct(
-        CheckoutRestApiCountryConnectorToProductCountryRestrictionCheckoutConnectorFacadeInterface $productCountryRestrictionCheckoutConnectorFacade,
         CheckoutRestApiCountryConnectorToStoreFacadeInterface $storeFacade,
-        CheckoutRestApiCountryConnectorToCountryFacadeInterface $countryFacade
+        CheckoutRestApiCountryConnectorToCountryFacadeInterface $countryFacade,
+        array $checkoutRestApiCountryFilterPlugins
     ) {
-        $this->productCountryRestrictionCheckoutConnectorFacade = $productCountryRestrictionCheckoutConnectorFacade;
         $this->storeFacade = $storeFacade;
         $this->countryFacade = $countryFacade;
+        $this->checkoutRestApiCountryFilterPlugins = $checkoutRestApiCountryFilterPlugins;
     }
 
     /**
@@ -54,19 +53,27 @@ class CheckoutDataExpander implements CheckoutDataExpanderInterface
             return $restCheckoutDataTransfer;
         }
 
-        $blacklistedCountryIso2Codes = [];
-        $blacklistedCountryCollectionTransfer = $this->productCountryRestrictionCheckoutConnectorFacade
-            ->getBlacklistedCountryCollectionByQuote($restCheckoutDataTransfer->getQuote());
+        $restCheckoutDataTransfer = $this->addCountriesToRestCheckoutData($restCheckoutDataTransfer);
 
-        foreach ($blacklistedCountryCollectionTransfer->getBlacklistedCountries() as $blacklistedCountryTransfer) {
-            $blacklistedCountryIso2Codes[] = $blacklistedCountryTransfer->getIso2code();
+        foreach ($this->checkoutRestApiCountryFilterPlugins as $plugin) {
+            $restCheckoutDataTransfer = $plugin->filter(
+                $restCheckoutDataTransfer,
+                $restCheckoutRequestAttributesTransfer,
+            );
         }
 
-        foreach ($this->storeFacade->getCurrentStore()->getCountries() as $iso2Code) {
-            if (in_array($iso2Code, $blacklistedCountryIso2Codes)) {
-                continue;
-            }
+        return $restCheckoutDataTransfer;
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCheckoutDataTransfer
+     */
+    protected function addCountriesToRestCheckoutData(
+        RestCheckoutDataTransfer $restCheckoutDataTransfer
+    ): RestCheckoutDataTransfer {
+        foreach ($this->storeFacade->getCurrentStore()->getCountries() as $iso2Code) {
             $restCheckoutDataTransfer->addCountry($this->countryFacade->getCountryByIso2Code($iso2Code));
         }
 
