@@ -8,7 +8,7 @@
     },
     "checkout-data-product-country-filter": {
       "path": "bundles/checkout-data-product-country-filter",
-      "version": "1.0.0-alpha.0"
+      "version": "1.0.0"
     },
     "checkout-rest-api-country-connector": {
       "path": "bundles/checkout-rest-api-country-connector",
