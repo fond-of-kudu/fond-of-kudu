@@ -13,7 +13,18 @@ interface CheckoutRestApiCountryConnectorFacadeInterface
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataTransfer
      */
-    public function expandCheckoutDataWithCountries(
+    public function expandCheckoutDataWithProductFilteredCountries(
+        RestCheckoutDataTransfer $restCheckoutDataTransfer,
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+    ): RestCheckoutDataTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCheckoutDataTransfer
+     */
+    public function expandCheckoutDataWithGiftCardFilteredCountries(
         RestCheckoutDataTransfer $restCheckoutDataTransfer,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestCheckoutDataTransfer;

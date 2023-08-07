@@ -8,7 +8,7 @@ use FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRes
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 
-class CheckoutDataExpander implements CheckoutDataExpanderInterface
+class CountryProductFilterCountryCheckoutDataExpander implements CountryCheckoutDataExpanderInterface
 {
     /**
      * @var \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToProductCountryRestrictionCheckoutConnectorFacadeInterface
@@ -54,6 +54,7 @@ class CheckoutDataExpander implements CheckoutDataExpanderInterface
             return $restCheckoutDataTransfer;
         }
 
+        $countries =
         $blacklistedCountryIso2Codes = [];
         $blacklistedCountryCollectionTransfer = $this->productCountryRestrictionCheckoutConnectorFacade
             ->getBlacklistedCountryCollectionByQuote($restCheckoutDataTransfer->getQuote());

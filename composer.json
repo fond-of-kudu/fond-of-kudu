@@ -10,6 +10,7 @@
   ],
   "require": {
     "php": ">=8.0",
+    "fond-of-oryx/gift-card-restriction": "^2.0",
     "fond-of-oryx/product-country-restriction-checkout-connector": "^2.0.1",
     "spryker/checkout-rest-api-extension": "^1.5.0",
     "spryker/country": "^3.1.0 || ^4.0.0",

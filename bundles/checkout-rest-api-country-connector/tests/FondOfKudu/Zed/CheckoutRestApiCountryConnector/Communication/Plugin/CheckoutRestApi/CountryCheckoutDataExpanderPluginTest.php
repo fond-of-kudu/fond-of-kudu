@@ -25,7 +25,7 @@ class CountryCheckoutDataExpanderPluginTest extends Unit
     protected $checkoutRestApiCountryConnectorFacadeMock;
 
     /**
-     * @var \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Communication\Plugin\CheckoutRestApi\CountryCheckoutDataExpanderPlugin
+     * @var \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Communication\Plugin\CheckoutRestApi\CountryProductFilterCheckoutDataExpanderPlugin
      */
     protected $plugin;
 
@@ -46,7 +46,7 @@ class CountryCheckoutDataExpanderPluginTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->plugin = new CountryCheckoutDataExpanderPlugin();
+        $this->plugin = new CountryProductFilterCheckoutDataExpanderPlugin();
         $this->plugin->setFacade($this->checkoutRestApiCountryConnectorFacadeMock);
     }
 
@@ -56,7 +56,7 @@ class CountryCheckoutDataExpanderPluginTest extends Unit
     public function testExpandCheckoutData(): void
     {
         $this->checkoutRestApiCountryConnectorFacadeMock->expects(static::atLeastOnce())
-            ->method('expandCheckoutDataWithCountries')
+            ->method('expandCheckoutDataWithProductFilteredCountries')
             ->with(
                 $this->restCheckoutDataTransferMock,
                 $this->restCheckoutRequestAttributesTransferMock,

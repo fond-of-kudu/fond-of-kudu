@@ -39,5 +39,9 @@
         <property name="countries" singular="country" type="array"/>
     </transfer>
 
-    <transfer name="Quote"/>
+    <transfer name="Quote">
+        <property name="giftCards" singular="giftCard" type="GiftCard[]"/>
+    </transfer>
+
+    <transfer name="GiftCard"/>
 </transfers>
