@@ -3,7 +3,7 @@
 namespace FondOfKudu\Zed\CheckoutRestApiCountryConnector\Business;
 
 use Codeception\Test\Unit;
-use FondOfKudu\Zed\CheckoutRestApiCountryConnector\Business\Expander\CountryProductFilterCountryCheckoutDataExpander;
+use FondOfKudu\Zed\CheckoutRestApiCountryConnector\Business\Expander\CheckoutDataExpander;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 
@@ -20,7 +20,7 @@ class CheckoutRestApiCountryConnectorFacadeTest extends Unit
     protected $restCheckoutRequestAttributesTransferMock;
 
     /**
-     * @var \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Business\Expander\CountryProductFilterCountryCheckoutDataExpander|\PHPUnit\Framework\MockObject\MockObject
+     * @var \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Business\Expander\CheckoutDataExpander|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $checkoutDataExpanderMock;
 
@@ -47,7 +47,7 @@ class CheckoutRestApiCountryConnectorFacadeTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->checkoutDataExpanderMock = $this->getMockBuilder(CountryProductFilterCountryCheckoutDataExpander::class)
+        $this->checkoutDataExpanderMock = $this->getMockBuilder(CheckoutDataExpander::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -65,7 +65,7 @@ class CheckoutRestApiCountryConnectorFacadeTest extends Unit
     public function testExpandCheckoutDataWithCountries(): void
     {
         $this->factoryMock->expects(static::atLeastOnce())
-            ->method('createCountryProductFilterCheckoutDataExpander')
+            ->method('createCheckoutDataExpander')
             ->willReturn($this->checkoutDataExpanderMock);
 
         $this->checkoutDataExpanderMock->expects(static::atLeastOnce())
@@ -73,7 +73,7 @@ class CheckoutRestApiCountryConnectorFacadeTest extends Unit
             ->with($this->restCheckoutDataTransferMock, $this->restCheckoutRequestAttributesTransferMock)
             ->willReturn($this->restCheckoutDataTransferMock);
 
-        $restCheckoutDataTransfer = $this->facade->expandCheckoutDataWithProductFilteredCountries(
+        $restCheckoutDataTransfer = $this->facade->expandCheckoutDataWithCountries(
             $this->restCheckoutDataTransferMock,
             $this->restCheckoutRequestAttributesTransferMock,
         );

@@ -5,7 +5,7 @@ namespace FondOfKudu\Zed\CheckoutRestApiCountryConnector\Business\Expander;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 
-interface CountryCheckoutDataExpanderInterface
+interface CheckoutDataExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer

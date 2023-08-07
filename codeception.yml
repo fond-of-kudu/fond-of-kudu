@@ -2,6 +2,8 @@ namespace: fond-of-kudu/fond-of-kudu
 
 include:
   - bundles/checkout-rest-api-country-connector
+  - bundles/country-zipcode-restriction
+  - bundles/product-image-storage-connector
 
 suites:
   unit:

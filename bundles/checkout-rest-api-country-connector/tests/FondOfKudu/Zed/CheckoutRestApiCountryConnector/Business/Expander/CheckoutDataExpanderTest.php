@@ -67,7 +67,7 @@ class CheckoutDataExpanderTest extends Unit
     protected $countryTransferMock;
 
     /**
-     * @var \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Business\Expander\CountryProductFilterCountryCheckoutDataExpander
+     * @var \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Business\Expander\CheckoutDataExpander
      */
     protected $expander;
 
@@ -116,7 +116,7 @@ class CheckoutDataExpanderTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->expander = new CountryProductFilterCountryCheckoutDataExpander(
+        $this->expander = new CheckoutDataExpander(
             $this->productCountryRestrictionCheckoutConnectorFacadeMock,
             $this->storeFacadeMock,
             $this->countryFacadeMock,

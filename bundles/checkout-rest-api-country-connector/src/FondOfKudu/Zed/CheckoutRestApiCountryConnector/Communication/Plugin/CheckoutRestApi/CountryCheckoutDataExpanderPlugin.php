@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Business\CheckoutRestApiCountryConnectorFacade getFacade()
  */
-class CountryProductFilterCheckoutDataExpanderPlugin extends AbstractPlugin implements CheckoutDataExpanderPluginInterface
+class CountryCheckoutDataExpanderPlugin extends AbstractPlugin implements CheckoutDataExpanderPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
@@ -22,7 +22,7 @@ class CountryProductFilterCheckoutDataExpanderPlugin extends AbstractPlugin impl
         RestCheckoutDataTransfer $restCheckoutDataTransfer,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestCheckoutDataTransfer {
-        return $this->getFacade()->expandCheckoutDataWithProductFilteredCountries(
+        return $this->getFacade()->expandCheckoutDataWithCountries(
             $restCheckoutDataTransfer,
             $restCheckoutRequestAttributesTransfer,
         );

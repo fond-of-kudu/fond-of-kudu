@@ -17,25 +17,12 @@ class CheckoutRestApiCountryConnectorFacade extends AbstractFacade implements Ch
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataTransfer
      */
-    public function expandCheckoutDataWithProductFilteredCountries(
+    public function expandCheckoutDataWithCountries(
         RestCheckoutDataTransfer $restCheckoutDataTransfer,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestCheckoutDataTransfer {
         return $this->getFactory()
-            ->createCountryProductFilterCheckoutDataExpander()
+            ->createCheckoutDataExpander()
             ->expandCheckoutDataWithCountries($restCheckoutDataTransfer, $restCheckoutRequestAttributesTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestCheckoutDataTransfer
-     */
-    public function expandCheckoutDataWithGiftCardFilteredCountries(
-        RestCheckoutDataTransfer $restCheckoutDataTransfer,
-        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-    ): RestCheckoutDataTransfer {
-        return $restCheckoutDataTransfer;
     }
 }

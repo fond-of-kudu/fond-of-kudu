@@ -77,6 +77,6 @@ class CheckoutRestApiCountryConnectorBusinessFactoryTest extends Unit
                 $this->countryFacadeMock,
             );
 
-        $this->factory->createCountryProductFilterCheckoutDataExpander();
+        $this->factory->createCheckoutDataExpander();
     }
 }
