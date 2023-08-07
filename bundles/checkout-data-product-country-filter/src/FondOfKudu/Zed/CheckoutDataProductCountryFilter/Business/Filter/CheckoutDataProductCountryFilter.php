@@ -2,6 +2,7 @@
 
 namespace FondOfKudu\Zed\CheckoutDataProductCountryFilter\Business\Filter;
 
+use ArrayObject;
 use FondOfKudu\Zed\CheckoutDataProductCountryFilter\Dependency\Facade\CheckoutDataProductCountryFilterToProductCountryRestrictionCheckoutConnectorFacadeInterface;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
@@ -36,7 +37,7 @@ class CheckoutDataProductCountryFilter implements CheckoutDataProductCountryFilt
             return $restCheckoutDataTransfer;
         }
 
-        $availableCountries = new \ArrayObject();
+        $availableCountries = new ArrayObject();
         $blacklistedCountryIso2Codes = [];
         $blacklistedCountryCollectionTransfer = $this->productCountryRestrictionCheckoutConnectorFacade
             ->getBlacklistedCountryCollectionByQuote($restCheckoutDataTransfer->getQuote());
