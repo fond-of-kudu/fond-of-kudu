@@ -3,7 +3,6 @@
 namespace FondOfKudu\Zed\CheckoutRestApiCountryConnector;
 
 use FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToCountryFacadeBridge;
-use FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToProductCountryRestrictionCheckoutConnectorFacadeBridge;
 use FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToStoreFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -18,12 +17,12 @@ class CheckoutRestApiCountryConnectorDependencyProvider extends AbstractBundleDe
     /**
      * @var string
      */
-    public const FACADE_PRODUCT_COUNTRY_RESTRICTION_CHECKOUT_CONNECTOR = 'FACADE_PRODUCT_COUNTRY_RESTRICTION_CHECKOUT_CONNECTOR';
+    public const FACADE_STORE = 'FACADE_STORE';
 
     /**
      * @var string
      */
-    public const FACADE_STORE = 'FACADE_STORE';
+    public const CHECKOUT_REST_API_COUNTRY_FILTER_PLUGINS = 'CHECKOUT_REST_API_COUNTRY_FILTER_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -34,8 +33,8 @@ class CheckoutRestApiCountryConnectorDependencyProvider extends AbstractBundleDe
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addCountryFacade($container);
-        $container = $this->addProductCountryRestrictionCheckoutConnectorFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addCheckoutRestApiCountryFilterPlugins($container);
 
         return $container;
     }
@@ -59,12 +58,10 @@ class CheckoutRestApiCountryConnectorDependencyProvider extends AbstractBundleDe
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductCountryRestrictionCheckoutConnectorFacade(Container $container): Container
+    protected function addStoreFacade(Container $container): Container
     {
-        $container->set(static::FACADE_PRODUCT_COUNTRY_RESTRICTION_CHECKOUT_CONNECTOR, function (Container $container) {
-            return new CheckoutRestApiCountryConnectorToProductCountryRestrictionCheckoutConnectorFacadeBridge(
-                $container->getLocator()->productCountryRestrictionCheckoutConnector()->facade(),
-            );
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new CheckoutRestApiCountryConnectorToStoreFacadeBridge($container->getLocator()->store()->facade());
         });
 
         return $container;
@@ -75,12 +72,20 @@ class CheckoutRestApiCountryConnectorDependencyProvider extends AbstractBundleDe
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addStoreFacade(Container $container): Container
+    protected function addCheckoutRestApiCountryFilterPlugins(Container $container): Container
     {
-        $container->set(static::FACADE_STORE, function (Container $container) {
-            return new CheckoutRestApiCountryConnectorToStoreFacadeBridge($container->getLocator()->store()->facade());
+        $container->set(static::CHECKOUT_REST_API_COUNTRY_FILTER_PLUGINS, function () {
+            return $this->getCheckoutRestApiCountryFilterPlugins();
         });
 
         return $container;
+    }
+
+    /**
+     * @return array<\FondOfKudu\Zed\CheckoutRestApiCountryExtension\Dependency\Plugin\CheckoutRestApiCountryFilterPluginInterface>
+     */
+    protected function getCheckoutRestApiCountryFilterPlugins(): array
+    {
+        return [];
     }
 }

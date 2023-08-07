@@ -4,7 +4,7 @@
   "repositories": {
     "checkout-rest-api-country-connector": {
       "path": "bundles/checkout-rest-api-country-connector",
-      "version": "1.0.2"
+      "version": "2.0.0"
     },
     "checkout-rest-api-country-extension": {
       "path": "bundles/checkout-rest-api-country-extension",

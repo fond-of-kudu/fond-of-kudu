@@ -4,10 +4,7 @@ namespace FondOfKudu\Zed\CheckoutRestApiCountryConnector\Business\Expander;
 
 use Codeception\Test\Unit;
 use FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToCountryFacadeBridge;
-use FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToProductCountryRestrictionCheckoutConnectorFacadeBridge;
 use FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToStoreFacadeBridge;
-use Generated\Shared\Transfer\BlacklistedCountryCollectionTransfer;
-use Generated\Shared\Transfer\BlacklistedCountryTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
@@ -16,11 +13,6 @@ use Generated\Shared\Transfer\StoreTransfer;
 
 class CheckoutDataExpanderTest extends Unit
 {
-    /**
-     * @var \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToProductCountryRestrictionCheckoutConnectorFacadeBridge|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $productCountryRestrictionCheckoutConnectorFacadeMock;
-
     /**
      * @var \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Dependency\Facade\CheckoutRestApiCountryConnectorToStoreFacadeBridge|\PHPUnit\Framework\MockObject\MockObject
      */
@@ -47,16 +39,6 @@ class CheckoutDataExpanderTest extends Unit
     protected $quoteTransferMock;
 
     /**
-     * @var \Generated\Shared\Transfer\BlacklistedCountryCollectionTransfer|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $blacklistedCountryCollectionTransferMock;
-
-    /**
-     * @var \Generated\Shared\Transfer\BlacklistedCountryTransfer|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $blacklistedCountryTransferMock;
-
-    /**
      * @var \Generated\Shared\Transfer\StoreTransfer|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $storeTransferMock;
@@ -76,10 +58,6 @@ class CheckoutDataExpanderTest extends Unit
      */
     protected function _before(): void
     {
-        $this->productCountryRestrictionCheckoutConnectorFacadeMock = $this->getMockBuilder(CheckoutRestApiCountryConnectorToProductCountryRestrictionCheckoutConnectorFacadeBridge::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
         $this->storeFacadeMock = $this->getMockBuilder(CheckoutRestApiCountryConnectorToStoreFacadeBridge::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -100,14 +78,6 @@ class CheckoutDataExpanderTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->blacklistedCountryCollectionTransferMock = $this->getMockBuilder(BlacklistedCountryCollectionTransfer::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->blacklistedCountryTransferMock = $this->getMockBuilder(BlacklistedCountryTransfer::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
         $this->countryTransferMock = $this->getMockBuilder(CountryTransfer::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -117,9 +87,9 @@ class CheckoutDataExpanderTest extends Unit
             ->getMock();
 
         $this->expander = new CheckoutDataExpander(
-            $this->productCountryRestrictionCheckoutConnectorFacadeMock,
             $this->storeFacadeMock,
             $this->countryFacadeMock,
+            [],
         );
     }
 
@@ -132,26 +102,13 @@ class CheckoutDataExpanderTest extends Unit
             ->method('getQuote')
             ->willReturn($this->quoteTransferMock);
 
-        $this->productCountryRestrictionCheckoutConnectorFacadeMock->expects(static::atLeastOnce())
-            ->method('getBlacklistedCountryCollectionByQuote')
-            ->with($this->quoteTransferMock)
-            ->willReturn($this->blacklistedCountryCollectionTransferMock);
-
-        $this->blacklistedCountryCollectionTransferMock->expects(static::atLeastOnce())
-            ->method('getBlacklistedCountries')
-            ->willReturn([$this->blacklistedCountryTransferMock]);
-
-        $this->blacklistedCountryTransferMock->expects(static::atLeastOnce())
-            ->method('getIso2code')
-            ->willReturn('CH');
-
         $this->storeFacadeMock->expects(static::atLeastOnce())
             ->method('getCurrentStore')
             ->willReturn($this->storeTransferMock);
 
         $this->storeTransferMock->expects(static::atLeastOnce())
             ->method('getCountries')
-            ->willReturn(['DE', 'CH']);
+            ->willReturn(['DE']);
 
         $this->countryFacadeMock->expects(static::atLeastOnce())
             ->method('getCountryByIso2Code')

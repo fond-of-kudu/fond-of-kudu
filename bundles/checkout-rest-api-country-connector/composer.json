@@ -10,7 +10,7 @@
   ],
   "require": {
     "php": ">=8.0",
-    "fond-of-oryx/product-country-restriction-checkout-connector": "^2.0.1",
+    "fond-of-kudu/checkout-rest-api-country-extension": "^1.0.0",
     "spryker/checkout-rest-api-extension": "^1.5.0",
     "spryker/country": "^3.1.0 || ^4.0.0",
     "spryker/glossary-storage": "^1.0.0",
