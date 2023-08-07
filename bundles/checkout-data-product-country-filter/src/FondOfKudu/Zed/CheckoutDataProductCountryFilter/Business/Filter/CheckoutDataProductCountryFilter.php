@@ -42,6 +42,10 @@ class CheckoutDataProductCountryFilter implements CheckoutDataProductCountryFilt
         $blacklistedCountryCollectionTransfer = $this->productCountryRestrictionCheckoutConnectorFacade
             ->getBlacklistedCountryCollectionByQuote($restCheckoutDataTransfer->getQuote());
 
+        if ($blacklistedCountryCollectionTransfer->getBlacklistedCountries()->count() === 0) {
+            return $restCheckoutDataTransfer;
+        }
+
         foreach ($blacklistedCountryCollectionTransfer->getBlacklistedCountries() as $blacklistedCountryTransfer) {
             $blacklistedCountryIso2Codes[] = $blacklistedCountryTransfer->getIso2code();
         }
