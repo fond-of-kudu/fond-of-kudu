@@ -1,4 +1,3 @@
-
 {
   "pathToSplitshLite": "/usr/local/bin/splitsh-lite",
   "pathToTempDirectory": "/home/dandelion/project/tmp/",
@@ -6,6 +5,10 @@
     "checkout-rest-api-country-connector": {
       "path": "bundles/checkout-rest-api-country-connector",
       "version": "1.0.2"
+    },
+    "checkout-rest-api-country-extension": {
+      "path": "bundles/checkout-rest-api-country-extension",
+      "version": "1.0.0"
     },
     "country-zipcode-restriction": {
       "path": "bundles/country-zipcode-restriction",
