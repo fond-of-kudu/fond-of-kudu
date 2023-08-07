@@ -1,4 +1,4 @@
-namespace: fond-of-kudu/checkout-rest-api-country-connector
+namespace: fond-of-kudu/checkout-data-product-country-filter
 
 suites:
   unit:
