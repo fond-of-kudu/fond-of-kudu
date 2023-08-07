@@ -2,6 +2,8 @@
 
 ## What it does
 
+Modules provides plugin interface to filter checkout-data countries
+
 ## Installation
 
 ```
