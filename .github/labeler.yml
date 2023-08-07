@@ -31,6 +31,9 @@ version:
 checkout-rest-api-country-connector:
   - bundles/checkout-rest-api-country-connector/**
 
+checkout-rest-api-country-extension:
+  - bundles/checkout-rest-api-country-extension/**
+
 product-image-storage-connector:
   - bundles/product-image-storage-connector/**
 
