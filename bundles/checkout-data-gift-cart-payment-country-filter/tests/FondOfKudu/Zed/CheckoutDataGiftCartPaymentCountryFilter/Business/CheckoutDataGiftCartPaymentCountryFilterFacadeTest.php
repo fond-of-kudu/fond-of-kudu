@@ -8,7 +8,6 @@ use FondOfKudu\Zed\CheckoutDataGiftCartPaymentCountryFilter\Business\Filter\Chec
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
-use function Symfony\Component\Translation\t;
 
 class CheckoutDataGiftCartPaymentCountryFilterFacadeTest extends Unit
 {
@@ -23,17 +22,17 @@ class CheckoutDataGiftCartPaymentCountryFilterFacadeTest extends Unit
     protected RestCheckoutRequestAttributesTransfer|MockObject $restCheckoutRequestAttributesTransferMock;
 
     /**
-     * @var CheckoutDataGiftCartPaymentCountryFilterBusinessFactory|MockObject
+     * @var \FondOfKudu\Zed\CheckoutDataGiftCartPaymentCountryFilter\Business\CheckoutDataGiftCartPaymentCountryFilterBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
     protected CheckoutDataGiftCartPaymentCountryFilterBusinessFactory|MockObject $checkoutDataGiftCartPaymentCountryFilterBusinessFactoryMock;
 
     /**
-     * @var CheckoutDataGiftCartPaymentCountryFilterInterface|MockObject
+     * @var \FondOfKudu\Zed\CheckoutDataGiftCartPaymentCountryFilter\Business\Filter\CheckoutDataGiftCartPaymentCountryFilterInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected CheckoutDataGiftCartPaymentCountryFilterInterface|MockObject $checkoutDataGiftCartPaymentCountryFilterMock;
 
     /**
-     * @var CheckoutDataGiftCartPaymentCountryFilterFacadeInterface
+     * @var \FondOfKudu\Zed\CheckoutDataGiftCartPaymentCountryFilter\Business\CheckoutDataGiftCartPaymentCountryFilterFacadeInterface
      */
     protected CheckoutDataGiftCartPaymentCountryFilterFacadeInterface $checkoutDataGiftCartPaymentCountryFilterFacade;
 
@@ -82,7 +81,7 @@ class CheckoutDataGiftCartPaymentCountryFilterFacadeTest extends Unit
 
         $restCheckoutDataTransfer = $this->checkoutDataGiftCartPaymentCountryFilterFacade->filter(
             $this->restCheckoutDataTransferMock,
-            $this->restCheckoutRequestAttributesTransferMock
+            $this->restCheckoutRequestAttributesTransferMock,
         );
 
         static::assertEquals($restCheckoutDataTransfer, $this->restCheckoutDataTransferMock);

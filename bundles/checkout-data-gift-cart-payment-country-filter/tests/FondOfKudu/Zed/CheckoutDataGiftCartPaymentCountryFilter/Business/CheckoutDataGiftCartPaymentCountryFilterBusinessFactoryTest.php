@@ -10,12 +10,12 @@ use PHPUnit\Framework\MockObject\MockObject;
 class CheckoutDataGiftCartPaymentCountryFilterBusinessFactoryTest extends Unit
 {
     /**
-     * @var CheckoutDataGiftCartPaymentCountryFilterBusinessFactory
+     * @var \FondOfKudu\Zed\CheckoutDataGiftCartPaymentCountryFilter\Business\CheckoutDataGiftCartPaymentCountryFilterBusinessFactory
      */
     protected CheckoutDataGiftCartPaymentCountryFilterBusinessFactory $checkoutDataGiftCartPaymentCountryFilterBusinessFactory;
 
     /**
-     * @var CheckoutDataGiftCartPaymentCountryFilterConfig|MockObject
+     * @var \FondOfKudu\Zed\CheckoutDataGiftCartPaymentCountryFilter\CheckoutDataGiftCartPaymentCountryFilterConfig|\PHPUnit\Framework\MockObject\MockObject
      */
     protected CheckoutDataGiftCartPaymentCountryFilterConfig|MockObject $checkoutDataGiftCartPaymentCountryFilterConfigMock;
 

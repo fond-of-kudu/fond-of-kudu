@@ -23,12 +23,12 @@ class CheckoutDataGiftCartPaymentCountryFilterPluginTest extends Unit
     protected RestCheckoutRequestAttributesTransfer|MockObject $restCheckoutRequestAttributesTransferMock;
 
     /**
-     * @var CheckoutDataGiftCartPaymentCountryFilterFacadeInterface|MockObject
+     * @var \FondOfKudu\Zed\CheckoutDataGiftCartPaymentCountryFilter\Business\CheckoutDataGiftCartPaymentCountryFilterFacadeInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected CheckoutDataGiftCartPaymentCountryFilterFacadeInterface|MockObject $checkoutDataGiftCartPaymentCountryFilterFacadeMock;
 
     /**
-     * @var CheckoutRestApiCountryFilterPluginInterface
+     * @var \FondOfKudu\Zed\CheckoutRestApiCountryExtension\Dependency\Plugin\CheckoutRestApiCountryFilterPluginInterface
      */
     protected CheckoutRestApiCountryFilterPluginInterface $checkoutDataGiftCartPaymentCountryFilterPlugin;
 
@@ -68,7 +68,7 @@ class CheckoutDataGiftCartPaymentCountryFilterPluginTest extends Unit
 
         $restCheckoutDataTransferMock = $this->checkoutDataGiftCartPaymentCountryFilterPlugin->filter(
             $this->restCheckoutDataTransferMock,
-            $this->restCheckoutRequestAttributesTransferMock
+            $this->restCheckoutRequestAttributesTransferMock,
         );
 
         static::assertEquals($restCheckoutDataTransferMock, $this->restCheckoutDataTransferMock);

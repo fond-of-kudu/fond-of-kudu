@@ -13,7 +13,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 class CheckoutDataGiftCartPaymentCountryFilterTest extends Unit
 {
     /**
-     * @var CheckoutDataGiftCartPaymentCountryFilterConfig|MockObject
+     * @var \FondOfKudu\Zed\CheckoutDataGiftCartPaymentCountryFilter\CheckoutDataGiftCartPaymentCountryFilterConfig|\PHPUnit\Framework\MockObject\MockObject
      */
     protected CheckoutDataGiftCartPaymentCountryFilterConfig|MockObject $checkoutDataGiftCartPaymentCountryFilterConfigMock;
 
@@ -38,7 +38,7 @@ class CheckoutDataGiftCartPaymentCountryFilterTest extends Unit
     protected CountryTransfer|MockObject $countryTransferMock;
 
     /**
-     * @var CheckoutDataGiftCartPaymentCountryFilterInterface
+     * @var \FondOfKudu\Zed\CheckoutDataGiftCartPaymentCountryFilter\Business\Filter\CheckoutDataGiftCartPaymentCountryFilterInterface
      */
     protected CheckoutDataGiftCartPaymentCountryFilterInterface $checkoutDataGiftCartPaymentCountryFilter;
 
@@ -73,7 +73,7 @@ class CheckoutDataGiftCartPaymentCountryFilterTest extends Unit
             ->getMock();
 
         $this->checkoutDataGiftCartPaymentCountryFilter = new CheckoutDataGiftCartPaymentCountryFilter(
-            $this->checkoutDataGiftCartPaymentCountryFilterConfigMock
+            $this->checkoutDataGiftCartPaymentCountryFilterConfigMock,
         );
     }
 
@@ -91,7 +91,7 @@ class CheckoutDataGiftCartPaymentCountryFilterTest extends Unit
 
         $restCheckoutDataTransfer = $this->checkoutDataGiftCartPaymentCountryFilter->filter(
             $this->restCheckoutDataTransferMock,
-            $this->restCheckoutRequestAttributesTransferMock
+            $this->restCheckoutRequestAttributesTransferMock,
         );
 
         static::assertEquals($restCheckoutDataTransfer, $this->restCheckoutDataTransferMock);
@@ -115,7 +115,7 @@ class CheckoutDataGiftCartPaymentCountryFilterTest extends Unit
 
         $restCheckoutDataTransfer = $this->checkoutDataGiftCartPaymentCountryFilter->filter(
             $this->restCheckoutDataTransferMock,
-            $this->restCheckoutRequestAttributesTransferMock
+            $this->restCheckoutRequestAttributesTransferMock,
         );
 
         static::assertEquals($restCheckoutDataTransfer, $this->restCheckoutDataTransferMock);
@@ -148,7 +148,7 @@ class CheckoutDataGiftCartPaymentCountryFilterTest extends Unit
 
         $restCheckoutDataTransfer = $this->checkoutDataGiftCartPaymentCountryFilter->filter(
             $this->restCheckoutDataTransferMock,
-            $this->restCheckoutRequestAttributesTransferMock
+            $this->restCheckoutRequestAttributesTransferMock,
         );
 
         static::assertEquals($restCheckoutDataTransfer, $this->restCheckoutDataTransferMock);
