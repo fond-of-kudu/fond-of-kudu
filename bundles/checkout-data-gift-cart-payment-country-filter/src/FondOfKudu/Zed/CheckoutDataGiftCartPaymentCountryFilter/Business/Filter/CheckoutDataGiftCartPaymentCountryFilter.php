@@ -3,6 +3,7 @@
 namespace FondOfKudu\Zed\CheckoutDataGiftCartPaymentCountryFilter\Business\Filter;
 
 use ArrayObject;
+use FondOfKudu\Shared\CheckoutDataGiftCartPaymentCountryFilter\CheckoutDataGiftCartPaymentCountryFilterConstants;
 use FondOfKudu\Zed\CheckoutDataGiftCartPaymentCountryFilter\CheckoutDataGiftCartPaymentCountryFilterConfig;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
@@ -34,7 +35,7 @@ class CheckoutDataGiftCartPaymentCountryFilter implements CheckoutDataGiftCartPa
     ): RestCheckoutDataTransfer {
         $availableCountries = new ArrayObject();
 
-        if (!$restCheckoutDataTransfer->getQuote()) {
+        if (!$restCheckoutDataTransfer->getQuote() || !$this->hasGiftCardPaymentMethod($restCheckoutDataTransfer)) {
             return $restCheckoutDataTransfer;
         }
 
@@ -53,5 +54,21 @@ class CheckoutDataGiftCartPaymentCountryFilter implements CheckoutDataGiftCartPa
         }
 
         return $restCheckoutDataTransfer->setCountries($availableCountries);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
+     *
+     * @return bool
+     */
+    protected function hasGiftCardPaymentMethod(RestCheckoutDataTransfer $restCheckoutDataTransfer): bool
+    {
+        foreach ($restCheckoutDataTransfer->getQuote()->getPayments() as $paymentTransfer) {
+            if ($paymentTransfer->getPaymentMethod() === CheckoutDataGiftCartPaymentCountryFilterConstants::PAYMENT_METHOD_GIFT_CARD) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
