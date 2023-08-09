@@ -13,4 +13,9 @@ interface CheckoutDataGiftCartPaymentCountryFilterConstants
      * @var array
      */
     public const BLACKLISTED_COUNTRIES_VALUE = [];
+
+    /**
+     * @var string
+     */
+    public const PAYMENT_METHOD_GIFT_CARD = 'GiftCard';
 }

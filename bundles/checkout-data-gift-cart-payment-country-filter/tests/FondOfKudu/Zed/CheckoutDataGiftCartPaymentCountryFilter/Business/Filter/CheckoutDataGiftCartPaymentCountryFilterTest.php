@@ -3,8 +3,10 @@
 namespace FondOfKudu\Zed\CheckoutDataGiftCartPaymentCountryFilter\Business\Filter;
 
 use Codeception\Test\Unit;
+use FondOfKudu\Shared\CheckoutDataGiftCartPaymentCountryFilter\CheckoutDataGiftCartPaymentCountryFilterConstants;
 use FondOfKudu\Zed\CheckoutDataGiftCartPaymentCountryFilter\CheckoutDataGiftCartPaymentCountryFilterConfig;
 use Generated\Shared\Transfer\CountryTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
@@ -36,6 +38,11 @@ class CheckoutDataGiftCartPaymentCountryFilterTest extends Unit
      * @var \Generated\Shared\Transfer\CountryTransfer|\PHPUnit\Framework\MockObject\MockObject
      */
     protected CountryTransfer|MockObject $countryTransferMock;
+
+    /**
+     * @var \Generated\Shared\Transfer\PaymentTransfer|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected PaymentTransfer|MockObject $paymentTransferMock;
 
     /**
      * @var \FondOfKudu\Zed\CheckoutDataGiftCartPaymentCountryFilter\Business\Filter\CheckoutDataGiftCartPaymentCountryFilterInterface
@@ -72,6 +79,11 @@ class CheckoutDataGiftCartPaymentCountryFilterTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->paymentTransferMock = $this
+            ->getMockBuilder(PaymentTransfer::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->checkoutDataGiftCartPaymentCountryFilter = new CheckoutDataGiftCartPaymentCountryFilter(
             $this->checkoutDataGiftCartPaymentCountryFilterConfigMock,
         );
@@ -100,11 +112,19 @@ class CheckoutDataGiftCartPaymentCountryFilterTest extends Unit
     /**
      * @return void
      */
-    public function testFilterNoBlacklistetCountries(): void
+    public function testFilterNoBlacklistedCountries(): void
     {
         $this->restCheckoutDataTransferMock->expects(static::atLeastOnce())
             ->method('getQuote')
             ->willReturn($this->quoteTransferMock);
+
+        $this->quoteTransferMock->expects(static::atLeastOnce())
+            ->method('getPayments')
+            ->willReturn([$this->paymentTransferMock]);
+
+        $this->paymentTransferMock->expects(static::atLeastOnce())
+            ->method('getPaymentMethod')
+            ->willReturn(CheckoutDataGiftCartPaymentCountryFilterConstants::PAYMENT_METHOD_GIFT_CARD);
 
         $this->checkoutDataGiftCartPaymentCountryFilterConfigMock->expects(static::atLeastOnce())
             ->method('getBlacklistedCountries')
@@ -130,6 +150,14 @@ class CheckoutDataGiftCartPaymentCountryFilterTest extends Unit
             ->method('getQuote')
             ->willReturn($this->quoteTransferMock);
 
+        $this->quoteTransferMock->expects(static::atLeastOnce())
+            ->method('getPayments')
+            ->willReturn([$this->paymentTransferMock]);
+
+        $this->paymentTransferMock->expects(static::atLeastOnce())
+            ->method('getPaymentMethod')
+            ->willReturn(CheckoutDataGiftCartPaymentCountryFilterConstants::PAYMENT_METHOD_GIFT_CARD);
+
         $this->checkoutDataGiftCartPaymentCountryFilterConfigMock->expects(static::atLeastOnce())
             ->method('getBlacklistedCountries')
             ->willReturn(['CN']);
@@ -145,6 +173,27 @@ class CheckoutDataGiftCartPaymentCountryFilterTest extends Unit
         $this->restCheckoutDataTransferMock->expects(static::atLeastOnce())
             ->method('setCountries')
             ->willReturnSelf();
+
+        $restCheckoutDataTransfer = $this->checkoutDataGiftCartPaymentCountryFilter->filter(
+            $this->restCheckoutDataTransferMock,
+            $this->restCheckoutRequestAttributesTransferMock,
+        );
+
+        static::assertEquals($restCheckoutDataTransfer, $this->restCheckoutDataTransferMock);
+    }
+
+    /**
+     * @return void
+     */
+    public function filterNoGiftCard(): void
+    {
+        $this->restCheckoutDataTransferMock->expects(static::atLeastOnce())
+            ->method('getQuote')
+            ->willReturn($this->quoteTransferMock);
+
+        $this->quoteTransferMock->expects(static::atLeastOnce())
+            ->method('getPayments')
+            ->willReturn([]);
 
         $restCheckoutDataTransfer = $this->checkoutDataGiftCartPaymentCountryFilter->filter(
             $this->restCheckoutDataTransferMock,
