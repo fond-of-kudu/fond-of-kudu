@@ -27,7 +27,7 @@
       "version": "1.0.1"
     },
     "oms-order-confirmation": {
-      "path": "oms-order-confirmation",
+      "path": "bundles/oms-order-confirmation",
       "version": "1.0.0"
     }
   },
