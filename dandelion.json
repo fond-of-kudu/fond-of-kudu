@@ -25,6 +25,10 @@
     "product-image-storage-connector": {
       "path": "bundles/product-image-storage-connector",
       "version": "1.0.1"
+    },
+    "oms-order-confirmation": {
+      "path": "oms-order-confirmation",
+      "version": "1.0.0"
     }
   },
   "vcs": {

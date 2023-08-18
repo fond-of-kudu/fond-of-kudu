@@ -45,3 +45,6 @@ checkout-data-product-country-filter:
 
 checkout-data-gift-cart-payment-country-filter:
   - checkout-data-gift-cart-payment-country-filter/**
+
+oms-order-confirmation:
+  - oms-order-confirmation/**

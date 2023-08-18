@@ -1,12 +1,4 @@
-namespace: fond-of-kudu/fond-of-kudu
-
-include:
-  - bundles/checkout-data-gift-cart-payment-country-filter
-  - bundles/checkout-data-product-country-filter
-  - bundles/checkout-rest-api-country-connector
-  - bundles/country-zipcode-restriction
-  - bundles/product-image-storage-connector
-  - bundles/oms-order-confirmation
+namespace: fond-of-kudu/oms-order-confirmation
 
 suites:
   unit:
@@ -26,6 +18,8 @@ paths:
 
 coverage:
   enabled: true
+  include:
+    - src/*.php
 
 modules:
   enabled:
@@ -38,7 +32,7 @@ modules:
       generate_ide_auto_completion: false
 
 env:
-  monorepo:
+  standalone:
     modules:
       config:
         \FondOfCodeception\Module\Spryker:
@@ -46,9 +40,4 @@ env:
           generate_map_classes: true
           generate_propel_classes: true
           generate_ide_auto_completion: true
-          ide_auto_completion_source_directories:
-            './bundles/*/src/': '*/*/'
-            './vendor/fond-of-spryker/*/src/': '*/*/'
-          supported_source_identifiers:
-            - page
-            - conditional-availability-period
+  monorepo:
