@@ -18,10 +18,10 @@
     </transfer>
 
     <transfer name="Item">
-        <property name="idOrderItem" type="integer" />
-        <property name="idSalesOrderItem" type="integer" />
-        <property name="fkOmsOrderItemState" type="string" />
-        <property name="fkSalesOrder" type="integer" />
+        <property name="idOrderItem" type="int" />
+        <property name="idSalesOrderItem" type="int" />
+        <property name="fkOmsOrderItemState" type="int" />
+        <property name="fkSalesOrder" type="int" />
         <property name="process" type="string" />
     </transfer>
 </transfers>
