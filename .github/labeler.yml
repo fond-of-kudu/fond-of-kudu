@@ -28,6 +28,9 @@ version:
 
 ### packages
 
+carts-rest-api:
+  - bundles/carts-rest-api/**
+
 checkout-rest-api-country-connector:
   - bundles/checkout-rest-api-country-connector/**
 
