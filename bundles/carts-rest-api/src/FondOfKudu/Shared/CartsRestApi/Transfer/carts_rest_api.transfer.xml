@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 https://static.spryker.com/transfer-01.xsd">
+    <transfer name="Order">
+        <property name="orderReference" type="string" />
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="isSuccess" type="boolean" />
+        <property name="quote" type="Quote" />
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="cartCustomerReference" type="string" />
+        <property name="customerReference" type="string" />
+        <property name="orderReference" type="string" />
+        <property name="items" type="Item[]" />
+    </transfer>
+
+    <transfer name="Item">
+        <property name="idOrderItem" type="integer" />
+        <property name="idSalesOrderItem" type="integer" />
+        <property name="fkOmsOrderItemState" type="string" />
+        <property name="fkSalesOrder" type="integer" />
+        <property name="process" type="string" />
+    </transfer>
+</transfers>
