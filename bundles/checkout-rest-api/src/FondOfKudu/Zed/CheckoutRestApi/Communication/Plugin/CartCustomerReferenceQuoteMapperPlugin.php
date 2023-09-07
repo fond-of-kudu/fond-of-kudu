@@ -17,7 +17,7 @@ class CartCustomerReferenceQuoteMapperPlugin implements QuoteMapperPluginInterfa
     public function map(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $quoteTransfer->setCartCustomerReference(
-            $restCheckoutRequestAttributesTransfer->getCustomer()->getCustomerReference()
+            $restCheckoutRequestAttributesTransfer->getCustomer()->getCustomerReference(),
         );
 
         return $quoteTransfer;
