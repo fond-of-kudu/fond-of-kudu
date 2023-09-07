@@ -28,6 +28,9 @@ version:
 
 ### packages
 
+checkout-rest-api:
+  - bundles/checkout-rest-api/**
+
 checkout-rest-api-country-connector:
   - bundles/checkout-rest-api-country-connector/**
 
