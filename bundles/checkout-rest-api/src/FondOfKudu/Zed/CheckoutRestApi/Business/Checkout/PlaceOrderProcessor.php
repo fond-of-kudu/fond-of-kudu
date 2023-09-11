@@ -3,6 +3,7 @@
 namespace FondOfKudu\Zed\CheckoutRestApi\Business\Checkout;
 
 use FondOfKudu\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToQuoteFacadeInterface;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutResponseTransfer;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\PlaceOrderProcessor as SprykerPlaceOrderProcessor;
@@ -53,5 +54,19 @@ class PlaceOrderProcessor extends SprykerPlaceOrderProcessor
         }
 
         return $checkoutResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCheckoutResponseTransfer
+     */
+    protected function createRestCheckoutResponseTransfer(CheckoutResponseTransfer $checkoutResponseTransfer): RestCheckoutResponseTransfer
+    {
+        $restCheckoutResponseTransfer = parent::createRestCheckoutResponseTransfer($checkoutResponseTransfer);
+
+        $restCheckoutResponseTransfer->setBackUrl($checkoutResponseTransfer->getBackUrl());
+
+        return $restCheckoutResponseTransfer;
     }
 }
