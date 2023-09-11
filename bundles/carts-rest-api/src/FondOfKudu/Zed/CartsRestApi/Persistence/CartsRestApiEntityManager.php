@@ -15,7 +15,7 @@ class CartsRestApiEntityManager extends SprykerCartsRestApiEntityManager impleme
     /**
      * @var string
      */
-    public const CUSTOMER_REFERENCE_COLUMN = 'CustomerReference';
+    public const COLUMN_CUSTOMER_REFERENCE = 'CustomerReference';
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -32,7 +32,7 @@ class CartsRestApiEntityManager extends SprykerCartsRestApiEntityManager impleme
             ->filterByCustomerReference($quoteTransfer->getCustomerReference())
             ->filterByUuid($quoteTransfer->getUuid())
             ->update([
-                static::CUSTOMER_REFERENCE_COLUMN => $quoteTransfer->getCartCustomerReference(),
+                static::COLUMN_CUSTOMER_REFERENCE => $quoteTransfer->getCartCustomerReference(),
             ]);
 
         return $updatedRows > 0;
