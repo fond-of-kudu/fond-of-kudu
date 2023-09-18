@@ -2,6 +2,7 @@
 
 namespace FondOfKudu\Zed\CartsRestApi\Business\Quote;
 
+use ArrayObject;
 use FondOfKudu\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface;
 use FondOfKudu\Zed\CartsRestApi\Persistence\CartsRestApiEntityManagerInterface;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -51,17 +52,32 @@ class QuoteResetter implements QuoteResetterInterface
             }
         }
 
-        $itemTransfers = $quoteTransfer->getItems();
+        $singleQuantityItemTransfers = $quoteTransfer->getItems();
+        $multiplyQuantityItemTransfers = [];
 
-        foreach ($itemTransfers as $itemTransfer) {
-            $itemTransfer->setIdOrderItem(null)
+        foreach ($singleQuantityItemTransfers as $singleQuantityItemTransfer) {
+            if (isset($multiplyQuantityItemTransfers[$singleQuantityItemTransfer->getSku()])) {
+                /** @var \Generated\Shared\Transfer\ItemTransfer $multiplyQuantityItemTransfer */
+                $multiplyQuantityItemTransfer = $multiplyQuantityItemTransfers[$singleQuantityItemTransfer->getSku()];
+
+                $multiplyQuantityItemTransfer->setQuantity($multiplyQuantityItemTransfer->getQuantity() + 1);
+
+                $multiplyQuantityItemTransfers[$singleQuantityItemTransfer->getSku()] = $multiplyQuantityItemTransfer;
+
+                continue;
+            }
+
+            $singleQuantityItemTransfer->setIdOrderItem(null)
                 ->setIdSalesOrderItem(null)
                 ->setFkOmsOrderItemState(null)
                 ->setFkSalesOrder(null)
                 ->setProcess(null);
+
+            $multiplyQuantityItemTransfers[$singleQuantityItemTransfer->getSku()] = $singleQuantityItemTransfer;
         }
 
         $quoteTransfer->setOrderReference(null);
+        $quoteTransfer->setItems(new ArrayObject(array_values($multiplyQuantityItemTransfers)));
 
         return $this->quoteFacade->updateQuote($quoteTransfer);
     }
