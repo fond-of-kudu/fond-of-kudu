@@ -5,7 +5,7 @@ namespace FondOfKudu\Zed\Quote\Business;
 use Spryker\Zed\Quote\Business\QuoteFacade as SprykerQuoteFacade;
 
 /**
- * @method \FondOfKudu\Zed\Quote\Business\QuoteBusinessFactory getFactory()
+ * @method \Spryker\Zed\Quote\Business\QuoteBusinessFactory|\FondOfKudu\Zed\Quote\Business\QuoteBusinessFactory getFactory()
  * @method \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface getRepository()
  * @method \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface getEntityManager()
  */

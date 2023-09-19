@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \FondOfKudu\Zed\Quote\Business\QuoteFacadeInterface getFacade()
+ * @method \Spryker\Zed\Quote\Business\QuoteFacadeInterface|\FondOfKudu\Zed\Quote\Business\QuoteFacadeInterface getFacade()
  * @method \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface getRepository()
  */
 class DeleteExpiredSuccessOrderQuoteConsole extends Console

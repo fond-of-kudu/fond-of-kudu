@@ -8,8 +8,8 @@ use Spryker\Zed\Quote\Business\QuoteBusinessFactory as SprykerQuoteBusinessFacto
 
 /**
  * @method \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface getEntityManager()
- * @method \FondOfKudu\Zed\Quote\Persistence\QuoteRepositoryInterface getRepository()
- * @method \FondOfKudu\Zed\Quote\QuoteConfig getConfig()
+ * @method \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface|\FondOfKudu\Zed\Quote\Persistence\QuoteRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Quote\QuoteConfig|\FondOfKudu\Zed\Quote\QuoteConfig getConfig()
  */
 class QuoteBusinessFactory extends SprykerQuoteBusinessFactory
 {

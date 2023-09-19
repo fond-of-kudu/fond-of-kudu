@@ -4,11 +4,12 @@ namespace FondOfKudu\Zed\Quote\Persistence;
 
 use DateTime;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
-use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
-use Orm\Zed\Quote\Persistence\Map\SpyQuoteTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Quote\Persistence\QuoteRepository as SprykerQuoteRepository;
 
+/**
+ * @method \Spryker\Zed\Quote\Persistence\QuotePersistenceFactory getFactory()
+ */
 class QuoteRepository extends SprykerQuoteRepository implements QuoteRepositoryInterface
 {
     /**
@@ -22,9 +23,9 @@ class QuoteRepository extends SprykerQuoteRepository implements QuoteRepositoryI
         $quoteQuery = $this->getFactory()
             ->createQuoteQuery()
             ->joinWithSpyStore()
-            ->addJoin(SpyQuoteTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
+            ->addJoin('spy_quote.customer_reference', 'spy_customer.customer_reference', Criteria::LEFT_JOIN)
             ->filterByUpdatedAt(['max' => $lifetimeLimitDate], Criteria::LESS_EQUAL)
-            ->where(SpyQuoteTableMap::COL_ORDER_REFERENCE . Criteria::ISNOTNULL)
+            ->where('spy_quote.order_reference' . Criteria::ISNOTNULL)
             ->orderByUpdatedAt()
             ->limit($limit);
 
