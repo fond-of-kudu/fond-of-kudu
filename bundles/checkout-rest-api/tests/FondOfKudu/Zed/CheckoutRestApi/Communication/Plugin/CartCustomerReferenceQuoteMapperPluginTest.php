@@ -11,6 +11,11 @@ use PHPUnit\Framework\MockObject\MockObject;
 class CartCustomerReferenceQuoteMapperPluginTest extends Unit
 {
     /**
+     * @var \FondOfKudu\Zed\CheckoutRestApi\Communication\Plugin\CartCustomerReferenceQuoteMapperPlugin
+     */
+    protected CartCustomerReferenceQuoteMapperPlugin $cartCustomerReferenceQuoteMapperPlugin;
+
+    /**
      * @var (\Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer&\PHPUnit\Framework\MockObject\MockObject)|\PHPUnit\Framework\MockObject\MockObject
      */
     protected MockObject|RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransferMock;

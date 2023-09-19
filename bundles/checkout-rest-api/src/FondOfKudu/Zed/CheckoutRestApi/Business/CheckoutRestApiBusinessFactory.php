@@ -8,6 +8,9 @@ use Spryker\Zed\CheckoutRestApi\Business\Checkout\PlaceOrderProcessorInterface;
 use Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory as SprykerCheckoutRestApiBusinessFactory;
 use Spryker\Zed\CheckoutRestApi\CheckoutRestApiDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\CheckoutRestApi\CheckoutRestApiConfig getConfig()
+ */
 class CheckoutRestApiBusinessFactory extends SprykerCheckoutRestApiBusinessFactory
 {
     /**
