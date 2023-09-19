@@ -19,6 +19,11 @@ use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCheckoutFacad
 class PlaceOrderProcessorTest extends Unit
 {
     /**
+     * @var \FondOfKudu\Zed\CheckoutRestApi\Business\Checkout\PlaceOrderProcessor
+     */
+    protected PlaceOrderProcessor $placeOrderProcessor;
+
+    /**
      * @var \PHPUnit\Framework\MockObject\MockObject|(\Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCheckoutFacadeInterface&\PHPUnit\Framework\MockObject\MockObject)
      */
     protected MockObject|CheckoutRestApiToCheckoutFacadeInterface $checkoutFacadeMock;
