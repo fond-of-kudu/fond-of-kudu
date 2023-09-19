@@ -43,7 +43,7 @@ class SuccessOrderQuoteDeleter implements SuccessOrderQuoteDeleterInterface
     /**
      * @param \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface $quoteEntityManager
      * @param \FondOfKudu\Zed\Quote\Persistence\QuoteRepositoryInterface $quoteRepository
-     * @param \FondOfKudu\Zed\Quote\QuoteConfig  $config
+     * @param \FondOfKudu\Zed\Quote\QuoteConfig $config
      * @param array<\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface> $quoteDeleteBeforePlugins
      */
     public function __construct(
