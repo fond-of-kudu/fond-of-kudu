@@ -34,6 +34,10 @@
       "path": "bundles/product-image-storage-connector",
       "version": "1.0.1"
     },
+    "quote": {
+      "path": "bundles/quote",
+      "version": "1.0.0"
+    },
     "oms-order-confirmation": {
       "path": "bundles/oms-order-confirmation",
       "version": "1.0.0"
