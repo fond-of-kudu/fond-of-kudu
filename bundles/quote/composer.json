@@ -1,0 +1,39 @@
+{
+  "name": "fond-of-kudu/quote",
+  "description": "",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Daniel Kemna",
+      "email": "danielkemna@t-online.de"
+    }
+  ],
+  "require": {
+    "php": ">=8.0",
+    "spryker/quote": "^2.0.0"
+  },
+  "require-dev": {
+    "fond-of-codeception/spryker": "*",
+    "spryker/code-sniffer": "*",
+    "spryker-sdk/phpstan-spryker": "*"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "FondOfKudu\\": "src/FondOfKudu/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "FondOfKudu\\": "tests/FondOfKudu/",
+      "Generated\\": "src/Generated/"
+    }
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  }
+}
