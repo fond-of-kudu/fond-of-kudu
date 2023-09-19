@@ -16,11 +16,6 @@ class SuccessOrderQuoteDeleter implements SuccessOrderQuoteDeleterInterface
     use TransactionTrait;
 
     /**
-     * @var int
-     */
-    protected const BATCH_SIZE_LIMIT = 200;
-
-    /**
      * @var \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface
      */
     protected QuoteEntityManagerInterface $quoteEntityManager;
@@ -83,7 +78,7 @@ class SuccessOrderQuoteDeleter implements SuccessOrderQuoteDeleterInterface
         $lifetimeInterval = new DateInterval($lifetime);
         $lifetimeLimitDate = (new DateTime())->sub($lifetimeInterval);
 
-        return $this->quoteRepository->findExpiredSuccessOrderQuotes($lifetimeLimitDate, static::BATCH_SIZE_LIMIT);
+        return $this->quoteRepository->findExpiredSuccessOrderQuotes($lifetimeLimitDate, $this->config->getBatchSizeLimit());
     }
 
     /**
