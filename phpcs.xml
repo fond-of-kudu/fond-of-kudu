@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<ruleset name="FondOfKudu">
+    <description>
+        Fond Of Kudu Coding Standard for Monorepo.
+
+        Extends main Spryker Coding Standard.
+        All sniffs in ./Sniffs will be auto loaded
+    </description>
+
+    <rule ref="Spryker"/>
+
+    <rule ref="Spryker.Namespaces.SprykerNamespace">
+        <properties>
+            <property name="namespace" value="FondOfKudu"/>
+        </properties>
+    </rule>
+</ruleset>

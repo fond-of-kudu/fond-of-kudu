@@ -6,6 +6,10 @@ use FondOfKudu\Zed\CartsRestApi\CartsRestApiDependencyProvider;
 use FondOfKudu\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface;
 use Spryker\Zed\CartsRestApi\Persistence\CartsRestApiPersistenceFactory as SprykerCartsRestApiPersistenceFactory;
 
+/**
+ * @method \Spryker\Zed\CartsRestApi\CartsRestApiConfig getConfig()
+ * @method \Spryker\Zed\CartsRestApi\Persistence\CartsRestApiEntityManagerInterface getEntityManager()
+ */
 class CartsRestApiPersistenceFactory extends SprykerCartsRestApiPersistenceFactory
 {
     /**

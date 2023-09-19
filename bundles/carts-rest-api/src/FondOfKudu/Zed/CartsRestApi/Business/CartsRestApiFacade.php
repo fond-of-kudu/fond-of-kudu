@@ -8,6 +8,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade as SprykerCartsRestApiFacade;
 
 /**
+ * @method \FondOfKudu\Zed\CartsRestApi\Persistence\CartsRestApiEntityManagerInterface getEntityManager()
  * @method \FondOfKudu\Zed\CartsRestApi\Business\CartsRestApiBusinessFactory getFactory()
  */
 class CartsRestApiFacade extends SprykerCartsRestApiFacade implements CartsRestApiFacadeInterface
