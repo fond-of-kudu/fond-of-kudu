@@ -15,4 +15,9 @@ interface QuoteConstants extends SprykerQuoteConstants
      * @var string
      */
     public const BATCH_SIZE_LIMIT = 'FOND_OF_KUDU:QUOTE:BATCH_SIZE_LIMIT';
+
+    /**
+     * @var string
+     */
+    public const GUEST_CUSTOMER_REFERENCE_PREFIX = 'FOND_OF_KUDU:QUOTE:GUEST_CUSTOMER_REFERENCE_PREFIX';
 }

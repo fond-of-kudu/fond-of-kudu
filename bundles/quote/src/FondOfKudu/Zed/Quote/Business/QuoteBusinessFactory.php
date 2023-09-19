@@ -2,6 +2,8 @@
 
 namespace FondOfKudu\Zed\Quote\Business;
 
+use FondOfKudu\Zed\Quote\Business\GuestQuote\GuestPrefixQuoteDeleter;
+use FondOfKudu\Zed\Quote\Business\GuestQuote\GuestPrefixQuoteDeleterInterface;
 use FondOfKudu\Zed\Quote\Business\SuccessOrderQuote\SuccessOrderQuoteDeleter;
 use FondOfKudu\Zed\Quote\Business\SuccessOrderQuote\SuccessOrderQuoteDeleterInterface;
 use Spryker\Zed\Quote\Business\QuoteBusinessFactory as SprykerQuoteBusinessFactory;
@@ -19,6 +21,19 @@ class QuoteBusinessFactory extends SprykerQuoteBusinessFactory
     public function createSuccessOrderQuoteDeleter(): SuccessOrderQuoteDeleterInterface
     {
         return new SuccessOrderQuoteDeleter(
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->getConfig(),
+            $this->getQuoteDeleteBeforePlugins(),
+        );
+    }
+
+    /**
+     * @return \FondOfKudu\Zed\Quote\Business\GuestQuote\GuestPrefixQuoteDeleterInterface
+     */
+    public function createGuestPrefixQuoteDelete(): GuestPrefixQuoteDeleterInterface
+    {
+        return new GuestPrefixQuoteDeleter(
             $this->getEntityManager(),
             $this->getRepository(),
             $this->getConfig(),

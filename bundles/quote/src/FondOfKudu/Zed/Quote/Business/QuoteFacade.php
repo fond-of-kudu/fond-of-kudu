@@ -18,4 +18,12 @@ class QuoteFacade extends SprykerQuoteFacade implements QuoteFacadeInterface
     {
         $this->getFactory()->createSuccessOrderQuoteDeleter()->deleteExpiredSuccessOrderQuote();
     }
+
+    /**
+     * @return void
+     */
+    public function deleteExpiredGuestPrefixQuote(): void
+    {
+        $this->getFactory()->createGuestPrefixQuoteDelete()->deleteExpiredGuestPrefixQuote();
+    }
 }
