@@ -9,6 +9,7 @@ use Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade as SprykerCartsRestApiF
 
 /**
  * @method \FondOfKudu\Zed\CartsRestApi\Business\CartsRestApiBusinessFactory getFactory()
+ * @method \FondOfKudu\Zed\CartsRestApi\Persistence\CartsRestApiEntityManagerInterface getEntityManager()
  */
 class CartsRestApiFacade extends SprykerCartsRestApiFacade implements CartsRestApiFacadeInterface
 {
