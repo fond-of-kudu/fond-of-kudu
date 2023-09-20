@@ -7,6 +7,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \FondOfKudu\Zed\CountryZipcodeRestriction\Business\CountryZipcodeRestrictionBusinessFactory getFactory()
+ * @method \FondOfKudu\Zed\CountryZipcodeRestriction\Persistence\CountryZipcodeRestrictionRepositoryInterface getRepository()
  */
 class CountryZipcodeRestrictionFacade extends AbstractFacade implements CountryZipcodeRestrictionFacadeInterface
 {

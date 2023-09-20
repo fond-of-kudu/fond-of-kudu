@@ -9,7 +9,7 @@ use Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory as Spryk
 use Spryker\Zed\CheckoutRestApi\CheckoutRestApiDependencyProvider;
 
 /**
- * @method \Spryker\Zed\CheckoutRestApi\CheckoutRestApiConfig getConfig()
+ * @method \FondOfKudu\Zed\CheckoutRestApi\CheckoutRestApiConfig getConfig()
  */
 class CheckoutRestApiBusinessFactory extends SprykerCheckoutRestApiBusinessFactory
 {

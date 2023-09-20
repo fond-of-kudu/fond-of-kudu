@@ -8,7 +8,7 @@ use Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataExpanderP
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Business\CheckoutRestApiCountryConnectorFacade getFacade()
+ * @method \FondOfKudu\Zed\CheckoutRestApiCountryConnector\Business\CheckoutRestApiCountryConnectorFacadeInterface getFacade()
  */
 class CountryCheckoutDataExpanderPlugin extends AbstractPlugin implements CheckoutDataExpanderPluginInterface
 {

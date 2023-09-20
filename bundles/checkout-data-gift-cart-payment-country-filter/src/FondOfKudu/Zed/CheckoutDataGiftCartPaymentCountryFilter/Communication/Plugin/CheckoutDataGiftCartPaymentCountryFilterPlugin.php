@@ -9,6 +9,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \FondOfKudu\Zed\CheckoutDataGiftCartPaymentCountryFilter\Business\CheckoutDataGiftCartPaymentCountryFilterFacadeInterface getFacade()
+ * @method \FondOfKudu\Zed\CheckoutDataGiftCartPaymentCountryFilter\CheckoutDataGiftCartPaymentCountryFilterConfig getConfig()
  */
 class CheckoutDataGiftCartPaymentCountryFilterPlugin extends AbstractPlugin implements CheckoutRestApiCountryFilterPluginInterface
 {
