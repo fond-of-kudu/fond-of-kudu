@@ -12,6 +12,7 @@ use Spryker\Zed\CartsRestApi\Business\CartsRestApiBusinessFactory as SprykerCart
 
 /**
  * @method \FondOfKudu\Zed\CartsRestApi\Persistence\CartsRestApiEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\CartsRestApi\CartsRestApiConfig getConfig()
  */
 class CartsRestApiBusinessFactory extends SprykerCartsRestApiBusinessFactory
 {
