@@ -9,6 +9,9 @@ use Orm\Zed\Quote\Persistence\Map\SpyQuoteTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Quote\Persistence\QuoteRepository as SprykerQuoteRepository;
 
+/**
+ * @method \Spryker\Zed\Quote\Persistence\QuotePersistenceFactory getFactory()
+ */
 class QuoteRepository extends SprykerQuoteRepository implements QuoteRepositoryInterface
 {
     /**
