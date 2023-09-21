@@ -4,11 +4,11 @@ install:
 
 .PHONY: phpcs
 phpcs:
-	./vendor/bin/phpcs --standard=./vendor/spryker/code-sniffer/Spryker/ruleset.xml ./src/FondOfKudu/* ./tests/*
+	./vendor/bin/phpcs --standard=./phpcs.xml ./src/FondOfKudu/* ./tests/*
 
 .PHONY: phpcbf
 phpcbf:
-	./vendor/bin/phpcbf --standard=./vendor/spryker/code-sniffer/Spryker/ruleset.xml ./src/FondOfKudu/* ./tests/*
+	./vendor/bin/phpcbf --standard=./phpcs.xml ./src/FondOfKudu/* ./tests/*
 
 .PHONY: phpstan
 phpstan:
@@ -25,6 +25,6 @@ ci: phpcs codeception phpstan
 clean:
 	rm -Rf composer.lock
 	rm -Rf ./vendor
-	find ./tests/_output/ -not -name .gitignore -delete
+	find ./tests/_output/ -not -name .gitkeep -delete
 	rm -Rf src/Generated/*
 	rm -Rf src/Orm/*

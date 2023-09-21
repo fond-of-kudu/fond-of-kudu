@@ -6,15 +6,15 @@ install:
 
 .PHONY: phpcs
 phpcs:
-	./vendor/bin/phpcs -d memory_limit=-1 --standard=./vendor/spryker/code-sniffer/Spryker/ruleset.xml --parallel=75 ./bundles/*
+	./vendor/bin/phpcs -d memory_limit=-1 --standard=./phpcs.xml --parallel=75 ./bundles/*
 
 .PHONY: phpcs-with-cache
 phpcs-with-cache:
-	./vendor/bin/phpcs -d memory_limit=-1 --cache=phpcs.cache --standard=./vendor/spryker/code-sniffer/Spryker/ruleset.xml --parallel=75 ./bundles/*
+	./vendor/bin/phpcs -d memory_limit=-1 --cache=phpcs.cache --standard=./phpcs.xml --parallel=75 ./bundles/*
 
 .PHONY: phpcbf
 phpcbf:
-	./vendor/bin/phpcbf -d memory_limit=-1 --standard=./vendor/spryker/code-sniffer/Spryker/ruleset.xml ./bundles/*
+	./vendor/bin/phpcbf -d memory_limit=-1 --standard=./phpcs.xml ./bundles/*
 
 .PHONY: phpstan
 phpstan:

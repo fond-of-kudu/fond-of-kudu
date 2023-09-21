@@ -6,7 +6,7 @@ use Spryker\Zed\Quote\Business\QuoteFacade as SprykerQuoteFacade;
 
 /**
  * @method \FondOfKudu\Zed\Quote\Business\QuoteBusinessFactory getFactory()
- * @method \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface getRepository()
+ * @method \FondOfKudu\Zed\Quote\Persistence\QuoteRepositoryInterface getRepository()
  * @method \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface getEntityManager()
  */
 class QuoteFacade extends SprykerQuoteFacade implements QuoteFacadeInterface

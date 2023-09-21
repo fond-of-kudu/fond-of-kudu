@@ -8,7 +8,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartsRestApi\Communication\Controller\GatewayController as SprykerGatewayController;
 
 /**
- * @method \FondOfKudu\Zed\CartsRestApi\Business\CartsRestApiFacade getFacade()
+ * @method \FondOfKudu\Zed\CartsRestApi\Business\CartsRestApiFacadeInterface getFacade()
  */
 class GatewayController extends SprykerGatewayController
 {
