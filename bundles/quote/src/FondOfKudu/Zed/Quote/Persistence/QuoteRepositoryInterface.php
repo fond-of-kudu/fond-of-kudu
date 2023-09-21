@@ -16,6 +16,7 @@ interface QuoteRepositoryInterface extends SprykerQuoteRepositoryInterface
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function findExpiredGuestPrefixQuotes(string $customerReferencePrefix, DateTime $lifetimeLimitDate, int $limit): QuoteCollectionTransfer;
+
     /**
      * @param \DateTime $lifetimeLimitDate
      * @param int $limit

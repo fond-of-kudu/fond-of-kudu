@@ -8,6 +8,7 @@ use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Quote\Persistence\Map\SpyQuoteTableMap;
 use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria as SprykerCriteria;
 use Spryker\Zed\Quote\Persistence\QuoteRepository as SprykerQuoteRepository;
 
 /**
@@ -27,7 +28,7 @@ class QuoteRepository extends SprykerQuoteRepository implements QuoteRepositoryI
         $quoteQuery = $this->getFactory()
             ->createQuoteQuery()
             ->joinWithSpyStore()
-            ->addJoin(SpyQuoteTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, \Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria::LEFT_JOIN)
+            ->addJoin(SpyQuoteTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, SprykerCriteria::LEFT_JOIN)
             ->filterByUpdatedAt(['max' => $lifetimeLimitDate], Criteria::LESS_EQUAL)
             ->filterByCustomerReference_Like(sprintf('%s%%', $customerReferencePrefix))
             ->orderByUpdatedAt()

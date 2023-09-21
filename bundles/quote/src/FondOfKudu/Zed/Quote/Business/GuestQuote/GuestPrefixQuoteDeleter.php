@@ -2,6 +2,8 @@
 
 namespace FondOfKudu\Zed\Quote\Business\GuestQuote;
 
+use DateInterval;
+use DateTime;
 use FondOfKudu\Zed\Quote\Persistence\QuoteRepositoryInterface;
 use FondOfKudu\Zed\Quote\QuoteConfig;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
@@ -73,8 +75,8 @@ class GuestPrefixQuoteDeleter implements GuestPrefixQuoteDeleterInterface
     protected function findExpiredGuestPrefixQuotes(): QuoteCollectionTransfer
     {
         $lifetime = $this->config->getGuestQuoteLifetime();
-        $lifetimeInterval = new \DateInterval($lifetime);
-        $lifetimeLimitDate = (new \DateTime())->sub($lifetimeInterval);
+        $lifetimeInterval = new DateInterval($lifetime);
+        $lifetimeLimitDate = (new DateTime())->sub($lifetimeInterval);
 
         return $this->quoteRepository->findExpiredGuestPrefixQuotes($this->config->getGuestCustomerReferencePrefix(), $lifetimeLimitDate, $this->config->getBatchSizeLimit());
     }
