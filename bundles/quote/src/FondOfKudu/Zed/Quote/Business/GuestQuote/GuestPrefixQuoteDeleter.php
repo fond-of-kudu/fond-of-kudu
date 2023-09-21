@@ -81,7 +81,7 @@ class GuestPrefixQuoteDeleter implements GuestPrefixQuoteDeleterInterface
         return $this->quoteRepository->findExpiredGuestPrefixQuotes(
             $this->config->getGuestCustomerReferencePrefix(),
             $lifetimeLimitDate,
-            $this->config->getBatchSizeLimit()
+            $this->config->getBatchSizeLimit(),
         );
     }
 
