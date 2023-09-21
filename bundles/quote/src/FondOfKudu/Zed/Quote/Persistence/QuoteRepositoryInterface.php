@@ -9,6 +9,15 @@ use Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface as SprykerQuoteReposi
 interface QuoteRepositoryInterface extends SprykerQuoteRepositoryInterface
 {
     /**
+     * @param string $customerReferencePrefix
+     * @param \DateTime $lifetimeLimitDate
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    public function findExpiredGuestPrefixQuotes(string $customerReferencePrefix, DateTime $lifetimeLimitDate, int $limit): QuoteCollectionTransfer;
+
+    /**
      * @param \DateTime $lifetimeLimitDate
      * @param int $limit
      *

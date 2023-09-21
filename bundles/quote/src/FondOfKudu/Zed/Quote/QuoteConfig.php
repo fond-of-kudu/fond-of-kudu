@@ -18,6 +18,11 @@ class QuoteConfig extends SprykerQuoteConfig
     protected const DEFAULT_BATCH_SIZE_LIMIT = 200;
 
     /**
+     * @var string
+     */
+    protected const DEFAULT_GUEST_CUSTOMER_REFERENCE_PREFIX = 'anonymous:';
+
+    /**
      * @return string
      */
     public function getSuccessOrderQuoteLifeTime(): string
@@ -31,5 +36,13 @@ class QuoteConfig extends SprykerQuoteConfig
     public function getBatchSizeLimit(): int
     {
         return $this->get(QuoteConstants::BATCH_SIZE_LIMIT, static::DEFAULT_BATCH_SIZE_LIMIT);
+    }
+
+    /**
+     * @return string
+     */
+    public function getGuestCustomerReferencePrefix(): string
+    {
+        return $this->get(QuoteConstants::GUEST_CUSTOMER_REFERENCE_PREFIX, static::DEFAULT_GUEST_CUSTOMER_REFERENCE_PREFIX);
     }
 }

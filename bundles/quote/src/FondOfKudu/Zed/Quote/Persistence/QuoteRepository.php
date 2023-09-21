@@ -6,7 +6,9 @@ use DateTime;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Quote\Persistence\Map\SpyQuoteTableMap;
+use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria as SprykerCriteria;
 use Spryker\Zed\Quote\Persistence\QuoteRepository as SprykerQuoteRepository;
 
 /**
@@ -14,6 +16,27 @@ use Spryker\Zed\Quote\Persistence\QuoteRepository as SprykerQuoteRepository;
  */
 class QuoteRepository extends SprykerQuoteRepository implements QuoteRepositoryInterface
 {
+    /**
+     * @param string $customerReferencePrefix
+     * @param \DateTime $lifetimeLimitDate
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    public function findExpiredGuestPrefixQuotes(string $customerReferencePrefix, DateTime $lifetimeLimitDate, int $limit): QuoteCollectionTransfer
+    {
+        $quoteQuery = $this->getFactory()
+            ->createQuoteQuery()
+            ->joinWithSpyStore()
+            ->addJoin(SpyQuoteTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, SprykerCriteria::LEFT_JOIN)
+            ->filterByUpdatedAt(['max' => $lifetimeLimitDate], Criteria::LESS_EQUAL)
+            ->filterByCustomerReference_Like(sprintf('%s%%', $customerReferencePrefix))
+            ->orderByUpdatedAt()
+            ->limit($limit);
+
+        return $this->createQuoteCollection($quoteQuery);
+    }
+
     /**
      * @param \DateTime $lifetimeLimitDate
      * @param int $limit
@@ -31,6 +54,16 @@ class QuoteRepository extends SprykerQuoteRepository implements QuoteRepositoryI
             ->orderByUpdatedAt()
             ->limit($limit);
 
+        return $this->createQuoteCollection($quoteQuery);
+    }
+
+    /**
+     * @param \Orm\Zed\Quote\Persistence\SpyQuoteQuery $quoteQuery
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    protected function createQuoteCollection(SpyQuoteQuery $quoteQuery): QuoteCollectionTransfer
+    {
         $quoteEntityCollectionTransfer = $this->buildQueryFromCriteria($quoteQuery)->find();
 
         $quoteMapper = $this->getFactory()->createQuoteMapper();
