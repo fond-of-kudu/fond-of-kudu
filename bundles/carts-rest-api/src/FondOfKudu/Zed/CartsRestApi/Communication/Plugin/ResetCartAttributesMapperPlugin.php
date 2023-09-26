@@ -8,6 +8,7 @@ use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\RestCartAttributesMappe
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
+ * @method \Spryker\Zed\CartsRestApi\CartsRestApiConfig getConfig()
  * @method \Spryker\Glue\CartsRestApi\CartsRestApiFactory getFactory()
  * @method \FondOfKudu\Client\CartsRestApi\CartsRestApiClientInterface getClient()
  * @method \FondOfKudu\Zed\CartsRestApi\Business\CartsRestApiFacadeInterface getFacade()
