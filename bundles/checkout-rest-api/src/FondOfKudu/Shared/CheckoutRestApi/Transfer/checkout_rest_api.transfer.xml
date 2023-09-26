@@ -6,15 +6,9 @@
         <property name="cartCustomerReference" type="string"/>
     </transfer>
 
-    <transfer name="RestCheckoutResponse">
-        <property name="BackUrl" type="string" />
-    </transfer>
+    <transfer name="RestCheckoutResponse" />
 
-    <transfer name="CheckoutResponse">
-        <property name="BackUrl" type="string" />
-    </transfer>
+    <transfer name="CheckoutResponse" />
 
-    <transfer name="RestCheckoutResponseAttributes">
-        <property name="BackUrl" type="string" />
-    </transfer>
+    <transfer name="RestCheckoutResponseAttributes" />
 </transfers>
