@@ -71,7 +71,8 @@ class QuoteResetter implements QuoteResetterInterface
                 ->setIdSalesOrderItem(null)
                 ->setFkOmsOrderItemState(null)
                 ->setFkSalesOrder(null)
-                ->setProcess(null);
+                ->setProcess(null)
+                ->setShipment($singleQuantityItemTransfer->getShipment()->setIdSalesShipment(null));
 
             $multiplyQuantityItemTransfers[$singleQuantityItemTransfer->getSku()] = $singleQuantityItemTransfer;
         }
