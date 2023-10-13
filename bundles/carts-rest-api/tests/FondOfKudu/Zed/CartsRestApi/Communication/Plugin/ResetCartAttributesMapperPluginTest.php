@@ -70,7 +70,7 @@ class ResetCartAttributesMapperPluginTest extends Unit
         $this->quoteTransferMock->expects($this->atLeastOnce())
             ->method('getItems')
             ->willReturn(new ArrayObject([
-                $this->itemTransferMock
+                $this->itemTransferMock,
             ]));
 
         $this->itemTransferMock->expects($this->atLeastOnce())
@@ -83,7 +83,7 @@ class ResetCartAttributesMapperPluginTest extends Unit
 
         $restCartsAttributesTransfer = $this->resetCartAttributesMapperPlugin->mapQuoteTransferToRestCartAttributesTransfer(
             $this->quoteTransferMock,
-            $this->restCartsAttributesTransferMock
+            $this->restCartsAttributesTransferMock,
         );
 
         $this->assertSame($this->restCartsAttributesTransferMock, $restCartsAttributesTransfer);
@@ -97,7 +97,7 @@ class ResetCartAttributesMapperPluginTest extends Unit
         $this->quoteTransferMock->expects($this->atLeastOnce())
             ->method('getItems')
             ->willReturn(new ArrayObject([
-                $this->itemTransferMock
+                $this->itemTransferMock,
             ]));
 
         $this->itemTransferMock->expects($this->atLeastOnce())
@@ -114,7 +114,7 @@ class ResetCartAttributesMapperPluginTest extends Unit
 
         $restCartsAttributesTransfer = $this->resetCartAttributesMapperPlugin->mapQuoteTransferToRestCartAttributesTransfer(
             $this->quoteTransferMock,
-            $this->restCartsAttributesTransferMock
+            $this->restCartsAttributesTransferMock,
         );
 
         $this->assertSame($this->restCartsAttributesTransferMock, $restCartsAttributesTransfer);
@@ -128,7 +128,7 @@ class ResetCartAttributesMapperPluginTest extends Unit
         $this->quoteTransferMock->expects($this->atLeastOnce())
             ->method('getItems')
             ->willReturn(new ArrayObject([
-                $this->itemTransferMock
+                $this->itemTransferMock,
             ]));
 
         $this->itemTransferMock->expects($this->atLeastOnce())
@@ -145,7 +145,7 @@ class ResetCartAttributesMapperPluginTest extends Unit
 
         $restCartsAttributesTransfer = $this->resetCartAttributesMapperPlugin->mapQuoteTransferToRestCartAttributesTransfer(
             $this->quoteTransferMock,
-            $this->restCartsAttributesTransferMock
+            $this->restCartsAttributesTransferMock,
         );
 
         $this->assertSame($this->restCartsAttributesTransferMock, $restCartsAttributesTransfer);
