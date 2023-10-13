@@ -30,6 +30,7 @@ class ResetCartAttributesMapperPlugin extends AbstractPlugin implements RestCart
         foreach ($quoteTransfer->getItems() as $item) {
             if ($item->getIdSalesOrderItem()) {
                 $hasSalesOrderItemId = true;
+
                 break;
             }
         }
