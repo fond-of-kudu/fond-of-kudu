@@ -25,7 +25,16 @@ class ResetCartAttributesMapperPlugin extends AbstractPlugin implements RestCart
         QuoteTransfer $quoteTransfer,
         RestCartsAttributesTransfer $restCartsAttributesTransfer
     ): RestCartsAttributesTransfer {
-        if (!$quoteTransfer->getOrderReference()) {
+        $hasSalesOrderItemId = false;
+
+        foreach ($quoteTransfer->getItems() as $item) {
+            if ($item->getIdSalesOrderItem()) {
+                $hasSalesOrderItemId = true;
+                break;
+            }
+        }
+
+        if (!$quoteTransfer->getOrderReference() && !$hasSalesOrderItemId) {
             return $restCartsAttributesTransfer;
         }
 
