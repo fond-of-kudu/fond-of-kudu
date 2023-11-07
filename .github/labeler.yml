@@ -31,8 +31,8 @@ version:
 carts-rest-api:
   - bundles/carts-rest-api/**
 
-catalog-sorting-price:
-  - bundles/catalog-sorting-price/**
+catalog-sort-price:
+  - bundles/catalog-sort-price/**
 
 checkout-rest-api:
   - bundles/checkout-rest-api/**
