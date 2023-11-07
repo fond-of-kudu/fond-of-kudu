@@ -6,7 +6,7 @@
       "path": "bundles/carts-rest-api",
       "version": "1.2.2"
     },
-    "catalog-sorting-price": {
+    "catalog-sort-price": {
       "path": "bundles/catalog-sort-price",
       "version": "1.0.0-beta.1"
     },
