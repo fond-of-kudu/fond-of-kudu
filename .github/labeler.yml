@@ -57,3 +57,6 @@ checkout-data-gift-cart-payment-country-filter:
 
 oms-order-confirmation:
   - oms-order-confirmation/**
+
+catalog-sorting-price:
+  - catalog-sorting-price/**
