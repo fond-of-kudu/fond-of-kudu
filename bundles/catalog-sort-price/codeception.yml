@@ -1,4 +1,4 @@
-namespace: fond-of-kudu/catalog-sorting-price
+namespace: fond-of-kudu/catalog-sort-price
 
 suites:
   unit:

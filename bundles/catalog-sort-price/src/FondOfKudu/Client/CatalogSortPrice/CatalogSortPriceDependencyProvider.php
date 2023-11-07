@@ -1,11 +1,11 @@
 <?php
 
-namespace FondOfKudu\Client\CatalogSortingPrice;
+namespace FondOfKudu\Client\CatalogSortPrice;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
-class CatalogSortingPriceDependencyProvider extends AbstractDependencyProvider
+class CatalogSortPriceDependencyProvider extends AbstractDependencyProvider
 {
     /**
      * @param \Spryker\Client\Kernel\Container $container
