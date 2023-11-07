@@ -55,7 +55,7 @@ jobs:
 
       - name: Run phpcs
         if: steps.changed-files.outputs.any_changed == 'true'
-        run: ./vendor/bin/phpcs -d memory_limit=-1 --standard=./vendor/spryker/code-sniffer/Spryker/ruleset.xml --parallel=75 ${{ steps.changed-files.outputs.all_changed_files }}
+        run: ./vendor/bin/phpcs -d memory_limit=-1 --standard=./phpcs.xml --parallel=75 ${{ steps.changed-files.outputs.all_changed_files }}
 
       - name: Run codeception
         run: make codeception-without-coverage

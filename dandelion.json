@@ -2,6 +2,14 @@
   "pathToSplitshLite": "/usr/local/bin/splitsh-lite",
   "pathToTempDirectory": "/home/dandelion/project/tmp/",
   "repositories": {
+    "carts-rest-api": {
+      "path": "bundles/carts-rest-api",
+      "version": "1.2.2"
+    },
+    "checkout-rest-api": {
+      "path": "bundles/checkout-rest-api",
+      "version": "1.1.0"
+    },
     "checkout-data-gift-cart-payment-country-filter": {
       "path": "bundles/checkout-data-gift-cart-payment-country-filter",
       "version": "1.0.0"
@@ -26,8 +34,12 @@
       "path": "bundles/product-image-storage-connector",
       "version": "1.0.1"
     },
+    "quote": {
+      "path": "bundles/quote",
+      "version": "1.0.0"
+    },
     "oms-order-confirmation": {
-      "path": "oms-order-confirmation",
+      "path": "bundles/oms-order-confirmation",
       "version": "1.0.0"
     }
   },

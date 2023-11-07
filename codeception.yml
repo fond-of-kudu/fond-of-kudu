@@ -1,11 +1,14 @@
 namespace: fond-of-kudu/fond-of-kudu
 
 include:
+  - bundles/carts-rest-api
   - bundles/checkout-data-gift-cart-payment-country-filter
   - bundles/checkout-data-product-country-filter
+  - bundles/checkout-rest-api
   - bundles/checkout-rest-api-country-connector
   - bundles/country-zipcode-restriction
   - bundles/product-image-storage-connector
+  - bundles/quote
   - bundles/oms-order-confirmation
 
 suites:

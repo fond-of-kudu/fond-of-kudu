@@ -28,6 +28,12 @@ version:
 
 ### packages
 
+carts-rest-api:
+  - bundles/carts-rest-api/**
+
+checkout-rest-api:
+  - bundles/checkout-rest-api/**
+
 checkout-rest-api-country-connector:
   - bundles/checkout-rest-api-country-connector/**
 
@@ -36,6 +42,9 @@ checkout-rest-api-country-extension:
 
 product-image-storage-connector:
   - bundles/product-image-storage-connector/**
+
+quote:
+  - bundles/quote/**
 
 country-zipcode-restriction:
   - country-zipcode-restriction/**
