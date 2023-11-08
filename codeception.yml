@@ -2,7 +2,6 @@ namespace: fond-of-kudu/fond-of-kudu
 
 include:
   - bundles/carts-rest-api
-  - bundles/catalog-sort-price
   - bundles/checkout-data-gift-cart-payment-country-filter
   - bundles/checkout-data-product-country-filter
   - bundles/checkout-rest-api
