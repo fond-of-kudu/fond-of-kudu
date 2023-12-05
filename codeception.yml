@@ -11,6 +11,7 @@ include:
   - bundles/product-image-storage-connector
   - bundles/quote
   - bundles/oms-order-confirmation
+  - bundles/oms-retry-capture-process
 
 suites:
   unit:
