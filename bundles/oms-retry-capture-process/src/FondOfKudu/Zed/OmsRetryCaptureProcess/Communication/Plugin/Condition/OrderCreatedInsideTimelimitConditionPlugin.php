@@ -11,7 +11,7 @@ use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 /**
  * @method \FondOfKudu\Zed\OmsRetryCaptureProcess\OmsRetryCaptureProcessConfig getConfig()
  */
-class CaptureCircuitBreakerConditionPlugin extends AbstractPlugin implements ConditionInterface
+class OrderCreatedInsideTimelimitConditionPlugin extends AbstractPlugin implements ConditionInterface
 {
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem

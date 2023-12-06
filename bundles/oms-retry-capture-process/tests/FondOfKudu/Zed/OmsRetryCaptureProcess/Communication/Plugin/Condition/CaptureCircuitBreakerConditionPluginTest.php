@@ -52,7 +52,7 @@ class CaptureCircuitBreakerConditionPluginTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->plugin = new CaptureCircuitBreakerConditionPlugin();
+        $this->plugin = new OrderCreatedInsideTimelimitConditionPlugin();
         $this->plugin->setConfig($this->configMock);
     }
 
