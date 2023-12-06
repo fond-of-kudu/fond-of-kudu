@@ -3,7 +3,6 @@
 namespace FondOfKudu\Zed\OmsRetryCaptureProcess\Communication\Plugin\Condition;
 
 use Codeception\Test\Unit;
-use DateInterval;
 use DateTime;
 use FondOfKudu\Zed\OmsRetryCaptureProcess\OmsRetryCaptureProcessConfig;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
@@ -59,10 +58,9 @@ class RetryCaptureTimeoutConditionPluginTest extends Unit
     /**
      * @return void
      */
-    public function testCheck(): void
+    public function testCheckTrue(): void
     {
-        $current = new DateTime();
-        $createdAt = (new DateTime())->sub(new DateInterval('P6H'));
+        $createdAt = (new DateTime())->modify('+6 hours');
 
         $this->salesOrderItemMock->expects(static::atLeastOnce())
             ->method('getOrder')
@@ -72,6 +70,32 @@ class RetryCaptureTimeoutConditionPluginTest extends Unit
             ->method('getCreatedAt')
             ->willReturn($createdAt);
 
+        $this->configMock->expects(static::atLeastOnce())
+            ->method('getHoursAfterCaptureFinalFailed')
+            ->willReturn(12);
+
         static::assertTrue($this->plugin->check($this->salesOrderItemMock));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckFalse(): void
+    {
+        $createdAt = (new DateTime())->modify('+16 hour');
+
+        $this->salesOrderItemMock->expects(static::atLeastOnce())
+            ->method('getOrder')
+            ->willReturn($this->spySalesOrderMock);
+
+        $this->spySalesOrderMock->expects(static::atLeastOnce())
+            ->method('getCreatedAt')
+            ->willReturn($createdAt);
+
+        $this->configMock->expects(static::atLeastOnce())
+            ->method('getHoursAfterCaptureFinalFailed')
+            ->willReturn(12);
+
+        static::assertFalse($this->plugin->check($this->salesOrderItemMock));
     }
 }
