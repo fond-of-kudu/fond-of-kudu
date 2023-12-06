@@ -61,7 +61,7 @@ class CaptureCircuitBreakerConditionPluginTest extends Unit
      */
     public function testCheckTrue(): void
     {
-        $createdAt = (new DateTime())->modify('+6 hours');
+        $createdAt = (new DateTime())->modify('+13 hours');
 
         $this->salesOrderItemMock->expects(static::atLeastOnce())
             ->method('getOrder')
@@ -73,7 +73,7 @@ class CaptureCircuitBreakerConditionPluginTest extends Unit
 
         $this->configMock->expects(static::atLeastOnce())
             ->method('getHoursAfterCaptureFinalFailed')
-            ->willReturn(12);
+            ->willReturn($this->configMock->getHoursAfterCaptureFinalFailed());
 
         static::assertTrue($this->plugin->check($this->salesOrderItemMock));
     }
@@ -83,7 +83,7 @@ class CaptureCircuitBreakerConditionPluginTest extends Unit
      */
     public function testCheckFalse(): void
     {
-        $createdAt = (new DateTime())->modify('+16 hour');
+        $createdAt = (new DateTime())->modify('+9 hour');
 
         $this->salesOrderItemMock->expects(static::atLeastOnce())
             ->method('getOrder')

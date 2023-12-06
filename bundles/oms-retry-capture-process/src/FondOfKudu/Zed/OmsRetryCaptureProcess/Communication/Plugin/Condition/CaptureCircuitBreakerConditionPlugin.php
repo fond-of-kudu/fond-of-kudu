@@ -27,6 +27,6 @@ class CaptureCircuitBreakerConditionPlugin extends AbstractPlugin implements Con
             return false;
         }
 
-        return $interval->h <= $this->getConfig()->getHoursAfterCaptureFinalFailed();
+        return $interval->h > $this->getConfig()->getHoursAfterCaptureFinalFailed();
     }
 }
