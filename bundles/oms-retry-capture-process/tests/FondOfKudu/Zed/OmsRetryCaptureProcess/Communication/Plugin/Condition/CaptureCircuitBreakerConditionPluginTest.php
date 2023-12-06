@@ -8,9 +8,10 @@ use FondOfKudu\Zed\OmsRetryCaptureProcess\OmsRetryCaptureProcessConfig;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use PHPUnit\Framework\MockObject\MockObject;
+use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 
-class RetryCaptureTimeoutConditionPluginTest extends Unit
+class CaptureCircuitBreakerConditionPluginTest extends Unit
 {
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderItem
@@ -51,7 +52,7 @@ class RetryCaptureTimeoutConditionPluginTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->plugin = new RetryCaptureTimeoutConditionPlugin();
+        $this->plugin = new CaptureCircuitBreakerConditionPlugin();
         $this->plugin->setConfig($this->configMock);
     }
 
@@ -93,6 +94,25 @@ class RetryCaptureTimeoutConditionPluginTest extends Unit
             ->willReturn($createdAt);
 
         $this->configMock->expects(static::atLeastOnce())
+            ->method('getHoursAfterCaptureFinalFailed')
+            ->willReturn(12);
+
+        static::assertFalse($this->plugin->check($this->salesOrderItemMock));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckException(): void
+    {
+        $this->salesOrderItemMock->expects(static::atLeastOnce())
+            ->method('getOrder')
+            ->willThrowException(new PropelException());
+
+        $this->spySalesOrderMock->expects(static::never())
+            ->method('getCreatedAt');
+
+        $this->configMock->expects(static::never())
             ->method('getHoursAfterCaptureFinalFailed')
             ->willReturn(12);
 
