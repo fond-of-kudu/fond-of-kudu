@@ -1,6 +1,6 @@
 {
   "name": "fond-of-kudu/oms-payone-error",
-  "description": "",
+  "description": "Collection of plugins for specific error scenarios during the order and payment process.",
   "license": "MIT",
   "authors": [
     {
