@@ -60,3 +60,6 @@ checkout-data-gift-cart-payment-country-filter:
 
 oms-order-confirmation:
   - oms-order-confirmation/**
+
+oms-retry-capture-process:
+  - oms-retry-capture-process/**
