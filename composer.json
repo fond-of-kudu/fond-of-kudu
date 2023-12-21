@@ -42,7 +42,9 @@
     "fond-of-kudu/checkout-data-product-country-filter": "*",
     "fond-of-kudu/country-zipcode-restriction": "*",
     "fond-of-kudu/product-image-storage-connector": "*",
-    "fond-of-kudu/oms-order-confirmation": "*"
+    "fond-of-kudu/oms-order-confirmation": "*",
+    "fond-of-kudu/oms-payone-error": "*",
+    "fond-of-kudu/oms-retry-capture-process": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -69,7 +71,9 @@
       "FondOfKudu\\Zed\\OmsOrderConfirmation\\": "bundles/oms-order-confirmation/src/FondOfKudu/Zed/OmsOrderConfirmation",
       "FondOfKudu\\Shared\\OmsOrderConfirmation\\": "bundles/oms-order-confirmation/src/FondOfKudu/Shared/OmsOrderConfirmation",
       "FondOfKudu\\Zed\\OmsRetryCaptureProcess\\": "bundles/oms-retry-capture-process/src/FondOfKudu/Zed/OmsRetryCaptureProcess",
-      "FondOfKudu\\Shared\\OmsRetryCaptureProcess\\": "bundles/oms-retry-capture-process/src/FondOfKudu/Shared/OmsRetryCaptureProcess"
+      "FondOfKudu\\Shared\\OmsRetryCaptureProcess\\": "bundles/oms-retry-capture-process/src/FondOfKudu/Shared/OmsRetryCaptureProcess",
+      "FondOfKudu\\Zed\\OmsPayoneError\\": "bundles/oms-payone-error/src/FondOfKudu/Zed/OmsPayoneError",
+      "FondOfKudu\\Shared\\OmsPayoneError\\": "bundles/oms-payone-error/src/FondOfKudu/Shared/OmsPayoneError"
     }
   },
   "autoload-dev": {
@@ -85,6 +89,7 @@
       "FondOfKudu\\Zed\\OmsOrderConfirmation\\": "bundles/oms-order-confirmation/tests/FondOfKudu/Zed/OmsOrderConfirmation",
       "FondOfKudu\\Shared\\OmsOrderConfirmation\\": "bundles/oms-order-confirmation/tests/FondOfKudu/Shared/OmsOrderConfirmation",
       "FondOfKudu\\Zed\\OmsRetryCaptureProcess\\": "bundles/oms-retry-capture-process/tests/FondOfKudu/Zed/OmsRetryCaptureProcess",
+      "FondOfKudu\\Zed\\OmsPayoneError\\": "bundles/oms-payone-error/tests/FondOfKudu/Zed/OmsPayoneError",
       "Generated\\": "src/Generated/",
       "Orm\\Zed\\": "src/Orm/Zed/"
     }

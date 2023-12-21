@@ -26,7 +26,7 @@ class SuccessOrderQuoteDeleter implements SuccessOrderQuoteDeleterInterface
     protected QuoteRepositoryInterface $quoteRepository;
 
     /**
-     * @var \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
+     * @var array<\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface>
      */
     protected array $quoteDeleteBeforePlugins;
 
