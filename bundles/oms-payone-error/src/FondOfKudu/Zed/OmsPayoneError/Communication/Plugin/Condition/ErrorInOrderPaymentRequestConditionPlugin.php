@@ -9,6 +9,7 @@ use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 /**
  * @method \FondOfKudu\Zed\OmsPayoneError\OmsPayoneErrorConfig getConfig()
  * @method \FondOfKudu\Zed\OmsPayoneError\Business\OmsPayoneErrorFacadeInterface getFacade()
+ * @method \FondOfKudu\Zed\OmsPayoneError\Persistence\OmsPayoneErrorQueryContainerInterface getQueryContainer()
  */
 class ErrorInOrderPaymentRequestConditionPlugin extends AbstractPlugin implements ConditionInterface
 {
