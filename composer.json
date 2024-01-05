@@ -34,7 +34,6 @@
   },
   "replace": {
     "fond-of-kudu/carts-rest-api": "*",
-    "fond-of-kudu/catalog-sort-price": "*",
     "fond-of-kudu/checkout-rest-api": "*",
     "fond-of-kudu/checkout-rest-api-country-connector": "*",
     "fond-of-kudu/checkout-data-gift-cart-payment-country-filter": "*",
@@ -53,8 +52,6 @@
       "FondOfKudu\\Zed\\CartsRestApi\\": "bundles/carts-rest-api/src/FondOfKudu/Zed/CartsRestApi",
       "FondOfKudu\\Shared\\CartsRestApi\\": "bundles/carts-rest-api/src/FondOfKudu/Shared/CartsRestApi",
       "FondOfKudu\\Client\\CartsRestApi\\": "bundles/carts-rest-api/src/FondOfKudu/Client/CartsRestApi",
-      "FondOfKudu\\Shared\\CatalogSortPrice\\": "bundles/catalog-sort-price/src/FondOfKudu/Shared/CatalogSortPrice",
-      "FondOfKudu\\Client\\CatalogSortPrice\\": "bundles/catalog-sort-price/src/FondOfKudu/Client/CatalogSortPrice",
       "FondOfKudu\\Zed\\CountryZipcodeRestriction\\": "bundles/country-zipcode-restriction/src/FondOfKudu/Zed/CountryZipcodeRestriction",
       "FondOfKudu\\Shared\\CountryZipcodeRestriction\\": "bundles/country-zipcode-restriction/src/FondOfKudu/Shared/CountryZipcodeRestriction",
       "FondOfKudu\\Client\\ProductImageStorageConnector\\": "bundles/product-image-storage-connector/src/FondOfKudu/Client/ProductImageStorageConnector",
