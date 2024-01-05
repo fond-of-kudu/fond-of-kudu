@@ -11,7 +11,7 @@ use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
  * @method \FondOfKudu\Zed\OmsPayoneError\Business\OmsPayoneErrorFacadeInterface getFacade()
  * @method \FondOfKudu\Zed\OmsPayoneError\Persistence\OmsPayoneErrorQueryContainerInterface getQueryContainer()
  */
-class ErrorCustomerIssuePaymentMethodConditionPlugin extends AbstractPlugin implements ConditionInterface
+class ErrorIssueWithCustomerPaymentMethodConditionPlugin extends AbstractPlugin implements ConditionInterface
 {
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem

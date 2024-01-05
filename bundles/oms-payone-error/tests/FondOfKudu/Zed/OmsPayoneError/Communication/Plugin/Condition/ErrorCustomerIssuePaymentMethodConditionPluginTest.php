@@ -10,9 +10,9 @@ use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 class ErrorCustomerIssuePaymentMethodConditionPluginTest extends Unit
 {
     /**
-     * @var \FondOfKudu\Zed\OmsPayoneError\Communication\Plugin\Condition\ErrorCustomerIssuePaymentMethodConditionPlugin|\Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface
+     * @var \FondOfKudu\Zed\OmsPayoneError\Communication\Plugin\Condition\ErrorIssueWithCustomerPaymentMethodConditionPlugin|\Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface
      */
-    protected ErrorCustomerIssuePaymentMethodConditionPlugin|ConditionInterface $plugin;
+    protected ErrorIssueWithCustomerPaymentMethodConditionPlugin|ConditionInterface $plugin;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderItem
@@ -30,7 +30,7 @@ class ErrorCustomerIssuePaymentMethodConditionPluginTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->plugin = new ErrorCustomerIssuePaymentMethodConditionPlugin();
+        $this->plugin = new ErrorIssueWithCustomerPaymentMethodConditionPlugin();
     }
 
     /**

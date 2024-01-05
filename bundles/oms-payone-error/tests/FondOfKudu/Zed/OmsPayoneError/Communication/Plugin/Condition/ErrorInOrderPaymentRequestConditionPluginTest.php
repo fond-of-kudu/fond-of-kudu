@@ -10,9 +10,9 @@ use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 class ErrorInOrderPaymentRequestConditionPluginTest extends Unit
 {
     /**
-     * @var \FondOfKudu\Zed\OmsPayoneError\Communication\Plugin\Condition\ErrorInOrderPaymentRequestConditionPlugin|\Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface
+     * @var \FondOfKudu\Zed\OmsPayoneError\Communication\Plugin\Condition\ErrorPaymentRejectedByThirdPartyConditionPlugin|\Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface
      */
-    protected ErrorInOrderPaymentRequestConditionPlugin|ConditionInterface $plugin;
+    protected ErrorPaymentRejectedByThirdPartyConditionPlugin|ConditionInterface $plugin;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderItem
@@ -30,7 +30,7 @@ class ErrorInOrderPaymentRequestConditionPluginTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->plugin = new ErrorInOrderPaymentRequestConditionPlugin();
+        $this->plugin = new ErrorPaymentRejectedByThirdPartyConditionPlugin();
     }
 
     /**
