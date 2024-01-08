@@ -4,8 +4,6 @@ namespace FondOfKudu\Zed\OmsPayoneError\Persistence;
 
 use FondOfKudu\Zed\OmsPayoneError\OmsPayoneErrorDependencyProvider;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery;
-use Orm\Zed\Payone\Persistence\SpyPaymentPayoneQuery;
-use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -15,22 +13,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class OmsPayoneErrorPersistenceFactory extends AbstractPersistenceFactory
 {
-    /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
-     */
-    public function getSalesOrderPropelQuery(): SpySalesOrderQuery
-    {
-        return $this->getProvidedDependency(OmsPayoneErrorDependencyProvider::PROPEL_QUERY_SALES_ORDER);
-    }
-
-    /**
-     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneQuery
-     */
-    public function getPaymentPayonePropelQuery(): SpyPaymentPayoneQuery
-    {
-        return $this->getProvidedDependency(OmsPayoneErrorDependencyProvider::PROPEL_QUERY_PAYMENT_PAYONE);
-    }
-
     /**
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery
      */

@@ -1,18 +1,17 @@
 <?php
 
-namespace FondOfKudu\Zed\OmsPayoneError\Communication\Plugin\Condition;
+namespace FondOfKudu\Zed\OmsPayoneError\Communication\Plugin\Oms\Condition;
 
 use Codeception\Test\Unit;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use PHPUnit\Framework\MockObject\MockObject;
-use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 
-class ErrorCustomerIssuePaymentMethodConditionPluginTest extends Unit
+class Error3dSecureConditionPluginTest extends Unit
 {
     /**
-     * @var \FondOfKudu\Zed\OmsPayoneError\Communication\Plugin\Condition\ErrorCustomerIssuePaymentMethodConditionPlugin|\Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface
+     * @var \FondOfKudu\Zed\OmsPayoneError\Communication\Plugin\Oms\Condition\Error3dSecureConditionPlugin
      */
-    protected ErrorCustomerIssuePaymentMethodConditionPlugin|ConditionInterface $plugin;
+    protected Error3dSecureConditionPlugin $plugin;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderItem
@@ -30,7 +29,7 @@ class ErrorCustomerIssuePaymentMethodConditionPluginTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->plugin = new ErrorCustomerIssuePaymentMethodConditionPlugin();
+        $this->plugin = new Error3dSecureConditionPlugin();
     }
 
     /**

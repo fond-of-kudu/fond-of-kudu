@@ -2,7 +2,7 @@
 
 namespace FondOfKudu\Zed\OmsPayoneError\Communication;
 
-use FondOfKudu\Zed\OmsPayoneError\Dependency\Facade\OmsPayoneErrorFacadeToPayoneFacadeInterface;
+use FondOfKudu\Zed\OmsPayoneError\Dependency\Facade\OmsPayoneErrorToPayoneFacadeInterface;
 use FondOfKudu\Zed\OmsPayoneError\OmsPayoneErrorDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -15,9 +15,9 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class OmsPayoneErrorCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \FondOfKudu\Zed\OmsPayoneError\Dependency\Facade\OmsPayoneErrorFacadeToPayoneFacadeInterface
+     * @return \FondOfKudu\Zed\OmsPayoneError\Dependency\Facade\OmsPayoneErrorToPayoneFacadeInterface
      */
-    public function getPayoneFacade(): OmsPayoneErrorFacadeToPayoneFacadeInterface
+    public function getPayoneFacade(): OmsPayoneErrorToPayoneFacadeInterface
     {
         return $this->getProvidedDependency(OmsPayoneErrorDependencyProvider::FACADE_PAYONE);
     }

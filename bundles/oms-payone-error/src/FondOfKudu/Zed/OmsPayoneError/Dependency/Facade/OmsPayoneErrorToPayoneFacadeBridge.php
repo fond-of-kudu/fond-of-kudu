@@ -5,7 +5,7 @@ namespace FondOfKudu\Zed\OmsPayoneError\Dependency\Facade;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerEco\Zed\Payone\Business\PayoneFacadeInterface;
 
-class OmsPayoneErrorFacadeToPayoneFacadeBridge implements OmsPayoneErrorFacadeToPayoneFacadeInterface
+class OmsPayoneErrorToPayoneFacadeBridge implements OmsPayoneErrorToPayoneFacadeInterface
 {
     private PayoneFacadeInterface $payoneFacade;
 

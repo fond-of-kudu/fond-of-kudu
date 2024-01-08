@@ -1,22 +1,18 @@
 <?php
 
-namespace FondOfKudu\Zed\OmsPayoneError\Communication\Plugin\Condition;
+namespace FondOfKudu\Zed\OmsPayoneError\Communication\Plugin\Oms\Condition;
 
 use Codeception\Test\Unit;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use PHPUnit\Framework\MockObject\MockObject;
-use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 
 class ErrorInOrderPaymentRequestConditionPluginTest extends Unit
 {
     /**
-     * @var \FondOfKudu\Zed\OmsPayoneError\Communication\Plugin\Condition\ErrorInOrderPaymentRequestConditionPlugin|\Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface
+     * @var \FondOfKudu\Zed\OmsPayoneError\Communication\Plugin\Oms\Condition\ErrorInOrderPaymentRequestConditionPlugin
      */
-    protected ErrorInOrderPaymentRequestConditionPlugin|ConditionInterface $plugin;
+    protected ErrorInOrderPaymentRequestConditionPlugin $plugin;
 
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderItem
-     */
     protected MockObject|SpySalesOrderItem $spySalesOrderItemMock;
 
     /**

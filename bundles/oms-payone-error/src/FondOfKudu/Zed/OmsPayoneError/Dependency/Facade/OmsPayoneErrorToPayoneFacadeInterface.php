@@ -4,7 +4,7 @@ namespace FondOfKudu\Zed\OmsPayoneError\Dependency\Facade;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
-interface OmsPayoneErrorFacadeToPayoneFacadeInterface
+interface OmsPayoneErrorToPayoneFacadeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
