@@ -10,8 +10,7 @@
   ],
   "require": {
     "php": ">=8.0",
-    "spryker/oms-extension": "^1.0.0",
-    "spryker-eco/payone": "^4.4.2"
+    "spryker/oms-extension": "^1.0.0"
   },
   "require-dev": {
     "fond-of-codeception/spryker": "*",

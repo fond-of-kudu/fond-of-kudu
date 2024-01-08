@@ -6,10 +6,6 @@
       "path": "bundles/carts-rest-api",
       "version": "1.2.2"
     },
-    "catalog-sort-price": {
-      "path": "bundles/catalog-sort-price",
-      "version": "1.0.0-beta.1"
-    },
     "checkout-rest-api": {
       "path": "bundles/checkout-rest-api",
       "version": "1.1.0"
