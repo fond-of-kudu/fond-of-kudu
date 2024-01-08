@@ -3,6 +3,7 @@
 namespace FondOfKudu\Zed\OmsPayoneError\Communication\Plugin\Condition;
 
 use Codeception\Test\Unit;
+use FondOfKudu\Zed\OmsPayoneError\Communication\Plugin\Oms\Condition\ErrorInOrderPaymentRequestConditionPlugin;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
@@ -10,7 +11,7 @@ use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 class ErrorPaymentRejectedThirdPartyConditionPluginTest extends Unit
 {
     /**
-     * @var \FondOfKudu\Zed\OmsPayoneError\Communication\Plugin\Condition\ErrorInOrderPaymentRequestConditionPlugin|\Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface
+     * @var \FondOfKudu\Zed\OmsPayoneError\Communication\Plugin\Oms\Condition\ErrorInOrderPaymentRequestConditionPlugin|\Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface
      */
     protected ErrorInOrderPaymentRequestConditionPlugin|ConditionInterface $plugin;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace FondOfKudu\Zed\OmsPayoneError\Communication\Plugin\Condition;
+namespace FondOfKudu\Zed\OmsPayoneError\Communication\Plugin\Oms\Condition;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerEco\Zed\Payone\Communication\Plugin\Oms\Condition\AbstractPlugin;
