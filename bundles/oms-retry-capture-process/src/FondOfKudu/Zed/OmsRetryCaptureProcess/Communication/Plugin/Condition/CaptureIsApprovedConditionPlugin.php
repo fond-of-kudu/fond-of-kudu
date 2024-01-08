@@ -23,10 +23,7 @@ class CaptureIsApprovedConditionPlugin extends AbstractPlugin
      */
     protected function callFacade(OrderTransfer $orderTransfer): bool
     {
-        if (
-            APPLICATION_ENV !== 'production'
-            && in_array($orderTransfer->getCustomer()->getEmail(), $this->getConfig()->getCaptureFailTestRecipients())
-        ) {
+        if (in_array($orderTransfer->getCustomer()->getEmail(), $this->getConfig()->getCaptureFailTestRecipients())) {
             return false;
         }
 
