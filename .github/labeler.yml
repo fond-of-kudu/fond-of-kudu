@@ -51,6 +51,9 @@ carts-rest-api:
       - any-glob-to-any-file:
           - bundles/carts-rest-api/**
 
+catalog-sort-price:
+  - bundles/catalog-sort-price/**
+
 checkout-rest-api:
   - changed-files:
       - any-glob-to-any-file:
