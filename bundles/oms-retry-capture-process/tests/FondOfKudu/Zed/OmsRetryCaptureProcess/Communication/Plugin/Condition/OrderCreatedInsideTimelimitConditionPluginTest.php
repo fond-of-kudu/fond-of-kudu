@@ -11,7 +11,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 
-class CaptureCircuitBreakerConditionPluginTest extends Unit
+class OrderCreatedInsideTimelimitConditionPluginTest extends Unit
 {
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderItem
