@@ -2,6 +2,8 @@
 
 namespace FondOfKudu\Zed\OmsPayoneError;
 
+use FondOfKudu\Zed\OmsPayoneError\Dependency\Facade\OmsPayoneErrorFacadeToPayoneFacadeBridge;
+use FondOfKudu\Zed\OmsPayoneError\Dependency\Facade\OmsPayoneErrorFacadeToPayoneFacadeInterface;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
@@ -10,6 +12,11 @@ use Spryker\Zed\Kernel\Container;
 
 class OmsPayoneErrorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const FACADE_PAYONE = 'FACADE_PAYONE';
+
     /**
      * @var string
      */
@@ -55,6 +62,18 @@ class OmsPayoneErrorDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function provideCommunicationLayerDependencies(Container $container): Container
+    {
+        $container = $this->addPayoneFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addSalesOrderPropelQuery(Container $container): Container
     {
         $container[static::PROPEL_QUERY_SALES_ORDER] = static fn (
@@ -88,6 +107,22 @@ class OmsPayoneErrorDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::PROPEL_QUERY_PAYMENT_PAYONE_API_LOG] = static fn (
             Container $container
         ) => SpyPaymentPayoneApiLogQuery::create();
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPayoneFacade(Container $container): Container
+    {
+        $container[static::FACADE_PAYONE] = static fn (
+            Container $container
+        ): OmsPayoneErrorFacadeToPayoneFacadeInterface => new OmsPayoneErrorFacadeToPayoneFacadeBridge(
+            $container->getLocator()->payone()->facade(),
+        );
 
         return $container;
     }
