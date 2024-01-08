@@ -24,7 +24,8 @@
     "spryker/product-storage-extension": "^1.0.0",
     "spryker/quote": "^2.0.0",
     "spryker/storage": "^3.20.0",
-    "spryker/synchronization": "^1.16"
+    "spryker/synchronization": "^1.16",
+    "spryker-eco/payone": "^4.4.0"
   },
   "require-dev": {
     "fond-of-codeception/spryker": "*",
