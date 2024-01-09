@@ -22,11 +22,11 @@ class OrderCreatedInsideTimelimitConditionPlugin extends AbstractPlugin implemen
     {
         try {
             $createdAt = $orderItem->getOrder()->getCreatedAt();
-            $interval = $createdAt->diff(new DateTime());
+            $diff = round(((new DateTime())->getTimestamp() - $createdAt->getTimestamp()) / 3600);
         } catch (PropelException $e) {
             return false;
         }
 
-        return $interval->h > $this->getConfig()->getHoursAfterCaptureFinalFailed();
+        return $diff > $this->getConfig()->getHoursAfterCaptureFinalFailed();
     }
 }
