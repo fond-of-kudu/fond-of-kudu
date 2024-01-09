@@ -4,7 +4,7 @@ namespace FondOfKudu\Zed\OmsRetryCaptureProcess;
 
 use Codeception\Test\Unit;
 
-class OrderCreatedInsideTimelimitConditionPluginTest extends Unit
+class OmsRetryCaptureProcessConfigTest extends Unit
 {
     /**
      * @var \FondOfKudu\Zed\OmsRetryCaptureProcess\OmsRetryCaptureProcessConfig

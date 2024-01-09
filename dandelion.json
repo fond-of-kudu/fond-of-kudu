@@ -48,7 +48,7 @@
     },
     "oms-retry-capture-process": {
       "path": "bundles/oms-retry-capture-process",
-      "version": "1.0.0"
+      "version": "1.0.1"
     }
   },
   "vcs": {
