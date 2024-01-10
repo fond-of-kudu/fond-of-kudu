@@ -11,7 +11,7 @@ use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
  * @method \FondOfKudu\Zed\OmsPayoneError\Persistence\OmsPayoneErrorQueryContainerInterface getQueryContainer()
  * @method \FondOfKudu\Zed\OmsPayoneError\Communication\OmsPayoneErrorCommunicationFactory getFactory()
  */
-class ErrorPaymentRejectedByThirdPartyConditionPlugin extends AbstractPlugin implements ConditionInterface
+class ErrorOrderAddressConditionPlugin extends AbstractPlugin implements ConditionInterface
 {
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
@@ -28,6 +28,6 @@ class ErrorPaymentRejectedByThirdPartyConditionPlugin extends AbstractPlugin imp
             return false;
         }
 
-        return $spyPaymentPayoneApiLog->getErrorCode() >= 981 && $spyPaymentPayoneApiLog->getErrorCode() <= 987;
+        return $spyPaymentPayoneApiLog->getErrorCode() >= 4000 && $spyPaymentPayoneApiLog->getErrorCode() <= 4099;
     }
 }
