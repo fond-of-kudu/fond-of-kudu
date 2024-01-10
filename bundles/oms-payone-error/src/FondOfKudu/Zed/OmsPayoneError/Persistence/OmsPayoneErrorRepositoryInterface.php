@@ -6,12 +6,8 @@ interface OmsPayoneErrorRepositoryInterface
 {
     /**
      * @param int $idSalesOrder
-     * @param array $errorCodeBetween
      *
-     * @return bool
+     * @return string
      */
-    public function isPaymentPayoneApiLogErrorWithIdSalesOrderAndErrorCodeBetween(
-        int $idSalesOrder,
-        array $errorCodeBetween
-    ): bool;
+    public function findPaymentPayoneApiLogErrorWithIdSalesOrder(int $idSalesOrder): string;
 }

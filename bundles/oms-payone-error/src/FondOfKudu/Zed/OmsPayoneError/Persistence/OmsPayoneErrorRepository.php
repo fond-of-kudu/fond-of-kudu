@@ -4,7 +4,6 @@ namespace FondOfKudu\Zed\OmsPayoneError\Persistence;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria as SprykerCriteria;
 
 /**
  * @method \FondOfKudu\Zed\OmsPayoneError\Persistence\OmsPayoneErrorPersistenceFactory getFactory()
@@ -13,25 +12,22 @@ class OmsPayoneErrorRepository extends AbstractRepository implements OmsPayoneEr
 {
     /**
      * @param int $idSalesOrder
-     * @param array $errorCodeBetween
      *
-     * @return bool
+     * @return string
      */
-    public function isPaymentPayoneApiLogErrorWithIdSalesOrderAndErrorCodeBetween(
-        int $idSalesOrder,
-        array $errorCodeBetween
-    ): bool {
+    public function findPaymentPayoneApiLogErrorWithIdSalesOrder(int $idSalesOrder): string
+    {
         $query = $this->getFactory()->getPaymentPayoneApiLogQuery()
             ->useSpyPaymentPayoneQuery()
                 ->filterByFkSalesOrder($idSalesOrder)
             ->endUse()
             ->filterByStatus('ERROR')
-            ->filterByErrorCode($errorCodeBetween, SprykerCriteria::BETWEEN)
             ->orderByCreatedAt(Criteria::DESC)
             ->orderByIdPaymentPayoneApiLog(Criteria::DESC);
 
+        /** @var \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog $spyPaymentPayoneApiLog */
         $spyPaymentPayoneApiLog = $this->buildQueryFromCriteria($query)->findOne();
 
-        return $spyPaymentPayoneApiLog !== null;
+        return $spyPaymentPayoneApiLog->getErrorCode();
     }
 }

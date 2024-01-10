@@ -14,18 +14,24 @@ use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 class ErrorOrderAddressConditionPlugin extends AbstractPlugin implements ConditionInterface
 {
     /**
+     * @var int
+     */
+    public const ERROR_MIN = 4000;
+
+    /**
+     * @var int
+     */
+    public const ERROR_MAX = 4099;
+
+    /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return bool
      */
     public function check(SpySalesOrderItem $orderItem): bool
     {
-        return $this->getRepository()->isPaymentPayoneApiLogErrorWithIdSalesOrderAndErrorCodeBetween(
-            $orderItem->getFkSalesOrder(),
-            [
-                'min' => 4000,
-                'max' => 4099,
-            ],
-        );
+        $errorCode = (int)$this->getRepository()->findPaymentPayoneApiLogErrorWithIdSalesOrder($orderItem->getFkSalesOrder());
+
+        return $errorCode >= static::ERROR_MIN && $errorCode <= static::ERROR_MAX;
     }
 }

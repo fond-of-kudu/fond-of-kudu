@@ -14,18 +14,24 @@ use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 class ErrorPaymentRejectedByThirdPartyConditionPlugin extends AbstractPlugin implements ConditionInterface
 {
     /**
+     * @var int
+     */
+    public const ERROR_MIN = 981;
+
+    /**
+     * @var int
+     */
+    public const ERROR_MAX = 987;
+
+    /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return bool
      */
     public function check(SpySalesOrderItem $orderItem): bool
     {
-        return $this->getRepository()->isPaymentPayoneApiLogErrorWithIdSalesOrderAndErrorCodeBetween(
-            $orderItem->getFkSalesOrder(),
-            [
-                'min' => 981,
-                'max' => 987,
-            ],
-        );
+        $errorCode = (int)$this->getRepository()->findPaymentPayoneApiLogErrorWithIdSalesOrder($orderItem->getFkSalesOrder());
+
+        return $errorCode >= static::ERROR_MIN && $errorCode <= static::ERROR_MAX;
     }
 }
