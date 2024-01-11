@@ -11,17 +11,17 @@ use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
  * @method \FondOfKudu\Zed\OmsPayoneError\Persistence\OmsPayoneErrorRepositoryInterface getRepository()
  * @method \FondOfKudu\Zed\OmsPayoneError\Communication\OmsPayoneErrorCommunicationFactory getFactory()
  */
-class ErrorInOrderPaymentRequestConditionPlugin extends AbstractPlugin implements ConditionInterface
+class ErrorOrderAddressConditionPlugin extends AbstractPlugin implements ConditionInterface
 {
     /**
      * @var int
      */
-    public const ERROR_MIN = 1000;
+    public const ERROR_MIN = 4000;
 
     /**
      * @var int
      */
-    public const ERROR_MAX = 1099;
+    public const ERROR_MAX = 4099;
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem

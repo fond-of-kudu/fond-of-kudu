@@ -8,8 +8,7 @@ use SprykerEco\Zed\Payone\Communication\Plugin\Oms\Condition\AbstractPlugin;
 /**
  * @method \FondOfKudu\Zed\OmsPayoneError\Communication\OmsPayoneErrorCommunicationFactory getFactory()
  * @method \FondOfKudu\Zed\OmsPayoneError\OmsPayoneErrorConfig getConfig()
- * @method \FondOfKudu\Zed\OmsPayoneError\Persistence\OmsPayoneErrorQueryContainerInterface getQueryContainer()
- * @method \FondOfKudu\Zed\OmsPayoneError\Business\OmsPayoneErrorFacadeInterface getFacade()
+ * @method \FondOfKudu\Zed\OmsPayoneError\Persistence\OmsPayoneErrorRepositoryInterface getRepository()
  */
 class CaptureIsApprovedConditionPlugin extends AbstractPlugin
 {

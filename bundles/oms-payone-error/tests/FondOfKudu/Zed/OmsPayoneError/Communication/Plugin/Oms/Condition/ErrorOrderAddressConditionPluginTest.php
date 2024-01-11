@@ -7,12 +7,12 @@ use FondOfKudu\Zed\OmsPayoneError\Persistence\OmsPayoneErrorRepository;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use PHPUnit\Framework\MockObject\MockObject;
 
-class Error3dSecureConditionPluginTest extends Unit
+class ErrorOrderAddressConditionPluginTest extends Unit
 {
     /**
-     * @var \FondOfKudu\Zed\OmsPayoneError\Communication\Plugin\Oms\Condition\Error3dSecureConditionPlugin
+     * @var \FondOfKudu\Zed\OmsPayoneError\Communication\Plugin\Oms\Condition\ErrorOrderAddressConditionPlugin
      */
-    protected Error3dSecureConditionPlugin $plugin;
+    protected ErrorOrderAddressConditionPlugin $plugin;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderItem
@@ -39,7 +39,7 @@ class Error3dSecureConditionPluginTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->plugin = new Error3dSecureConditionPlugin();
+        $this->plugin = new ErrorOrderAddressConditionPlugin();
     }
 
     /**
@@ -50,7 +50,7 @@ class Error3dSecureConditionPluginTest extends Unit
         $this->omsPayoneErrorRepositoryMock->expects(static::atLeastOnce())
             ->method('findPaymentPayoneApiLogErrorWithIdSalesOrder')
             ->with(699)
-            ->willReturn('4250');
+            ->willReturn('50');
 
         static::assertTrue($this->plugin->check($this->spySalesOrderItemMock));
     }

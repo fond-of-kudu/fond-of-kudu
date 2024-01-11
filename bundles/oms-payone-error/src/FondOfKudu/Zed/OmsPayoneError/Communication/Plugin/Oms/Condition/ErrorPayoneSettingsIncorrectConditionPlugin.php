@@ -8,12 +8,21 @@ use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 
 /**
  * @method \FondOfKudu\Zed\OmsPayoneError\OmsPayoneErrorConfig getConfig()
- * @method \FondOfKudu\Zed\OmsPayoneError\Business\OmsPayoneErrorFacadeInterface getFacade()
- * @method \FondOfKudu\Zed\OmsPayoneError\Persistence\OmsPayoneErrorQueryContainerInterface getQueryContainer()
  * @method \FondOfKudu\Zed\OmsPayoneError\Communication\OmsPayoneErrorCommunicationFactory getFactory()
+ * @method \FondOfKudu\Zed\OmsPayoneError\Persistence\OmsPayoneErrorRepositoryInterface getRepository()
  */
 class ErrorPayoneSettingsIncorrectConditionPlugin extends AbstractPlugin implements ConditionInterface
 {
+    /**
+     * @var int
+     */
+    public const ERROR_MIN = 1200;
+
+    /**
+     * @var int
+     */
+    public const ERROR_MAX = 1299;
+
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
@@ -21,6 +30,8 @@ class ErrorPayoneSettingsIncorrectConditionPlugin extends AbstractPlugin impleme
      */
     public function check(SpySalesOrderItem $orderItem): bool
     {
-        return true;
+        $errorCode = (int)$this->getRepository()->findPaymentPayoneApiLogErrorWithIdSalesOrder($orderItem->getFkSalesOrder());
+
+        return $errorCode >= static::ERROR_MIN && $errorCode <= static::ERROR_MAX;
     }
 }

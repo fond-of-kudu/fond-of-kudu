@@ -3,6 +3,7 @@
 namespace FondOfKudu\Zed\OmsPayoneError\Communication\Plugin\Oms\Condition;
 
 use Codeception\Test\Unit;
+use FondOfKudu\Zed\OmsPayoneError\Persistence\OmsPayoneErrorRepository;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -13,7 +14,15 @@ class ErrorInOrderPaymentRequestConditionPluginTest extends Unit
      */
     protected ErrorInOrderPaymentRequestConditionPlugin $plugin;
 
+    /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderItem
+     */
     protected MockObject|SpySalesOrderItem $spySalesOrderItemMock;
+
+    /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfKudu\Zed\OmsPayoneError\Persistence\OmsPayoneErrorRepository
+     */
+    protected MockObject|OmsPayoneErrorRepository $omsPayoneErrorRepositoryMock;
 
     /**
      * @return void
@@ -26,6 +35,10 @@ class ErrorInOrderPaymentRequestConditionPluginTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->omsPayoneErrorRepositoryMock = $this->getMockBuilder(OmsPayoneErrorRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->plugin = new ErrorInOrderPaymentRequestConditionPlugin();
     }
 
@@ -34,6 +47,24 @@ class ErrorInOrderPaymentRequestConditionPluginTest extends Unit
      */
     public function testCheckTrue(): void
     {
+        $this->omsPayoneErrorRepositoryMock->expects(static::atLeastOnce())
+            ->method('findPaymentPayoneApiLogErrorWithIdSalesOrder')
+            ->with(699)
+            ->willReturn('1050');
+
+        static::assertTrue($this->plugin->check($this->spySalesOrderItemMock));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckFalse(): void
+    {
+        $this->omsPayoneErrorRepositoryMock->expects(static::atLeastOnce())
+            ->method('findPaymentPayoneApiLogErrorWithIdSalesOrder')
+            ->with(699)
+            ->willReturn('9999');
+
         static::assertTrue($this->plugin->check($this->spySalesOrderItemMock));
     }
 }
