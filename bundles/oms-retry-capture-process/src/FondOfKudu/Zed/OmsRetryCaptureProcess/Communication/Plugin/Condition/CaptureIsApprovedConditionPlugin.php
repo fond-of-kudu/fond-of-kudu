@@ -1,14 +1,13 @@
 <?php
 
-namespace FondOfKudu\Zed\OmsPayoneError\Communication\Plugin\Oms\Condition;
+namespace FondOfKudu\Zed\OmsRetryCaptureProcess\Communication\Plugin\Condition;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerEco\Zed\Payone\Communication\Plugin\Oms\Condition\AbstractPlugin;
 
 /**
- * @method \FondOfKudu\Zed\OmsPayoneError\Communication\OmsPayoneErrorCommunicationFactory getFactory()
- * @method \FondOfKudu\Zed\OmsPayoneError\OmsPayoneErrorConfig getConfig()
- * @method \FondOfKudu\Zed\OmsPayoneError\Persistence\OmsPayoneErrorRepositoryInterface getRepository()
+ * @method \FondOfKudu\Zed\OmsRetryCaptureProcess\Communication\OmsRetryCaptureProcessCommunicationFactory getFactory()
+ * @method \FondOfKudu\Zed\OmsRetryCaptureProcess\OmsRetryCaptureProcessConfig getConfig()
  */
 class CaptureIsApprovedConditionPlugin extends AbstractPlugin
 {
@@ -24,7 +23,9 @@ class CaptureIsApprovedConditionPlugin extends AbstractPlugin
      */
     protected function callFacade(OrderTransfer $orderTransfer): bool
     {
-        if (in_array($orderTransfer->getCustomer()->getEmail(), $this->getConfig()->getCaptureFailTestRecipients())) {
+        $email = $orderTransfer->getEmail() ?? $orderTransfer->getCustomer()->getEmail();
+
+        if ($email === null || in_array($email, $this->getConfig()->getCaptureFailTestRecipients())) {
             return false;
         }
 

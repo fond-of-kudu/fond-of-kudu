@@ -10,6 +10,7 @@ use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 
 /**
  * @method \FondOfKudu\Zed\OmsRetryCaptureProcess\OmsRetryCaptureProcessConfig getConfig()
+ * @method \FondOfKudu\Zed\OmsRetryCaptureProcess\Communication\OmsRetryCaptureProcessCommunicationFactory getFactory()
  */
 class OrderCreatedInsideTimelimitConditionPlugin extends AbstractPlugin implements ConditionInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace FondOfKudu\Zed\OmsPayoneError\Dependency\Facade;
+namespace FondOfKudu\Zed\OmsRetryCaptureProcess\Dependency\Facade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -8,7 +8,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use SprykerEco\Zed\Payone\Business\PayoneFacade;
 use SprykerEco\Zed\Payone\Business\PayoneFacadeInterface;
 
-class OmsPayoneErrorToPayoneFacadeBridgeTest extends Unit
+class OmsRetryCatpureProcessToPayoneFacadeBridgeTest extends Unit
 {
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\SprykerEco\Zed\Payone\Business\PayoneFacadeInterface
@@ -21,9 +21,9 @@ class OmsPayoneErrorToPayoneFacadeBridgeTest extends Unit
     protected MockObject|OrderTransfer $orderTransferMock;
 
     /**
-     * @var \FondOfKudu\Zed\OmsPayoneError\Dependency\Facade\OmsPayoneErrorToPayoneFacadeBridge
+     * @var \FondOfKudu\Zed\OmsRetryCaptureProcess\Dependency\Facade\OmsRetryCatpureProcessToPayoneFacadeBridge
      */
-    protected OmsPayoneErrorToPayoneFacadeBridge $bridge;
+    protected OmsRetryCatpureProcessToPayoneFacadeBridge $bridge;
 
     /**
      * @return void
@@ -38,7 +38,7 @@ class OmsPayoneErrorToPayoneFacadeBridgeTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->bridge = new OmsPayoneErrorToPayoneFacadeBridge($this->payoneFacadeMock);
+        $this->bridge = new OmsRetryCatpureProcessToPayoneFacadeBridge($this->payoneFacadeMock);
     }
 
     /**
