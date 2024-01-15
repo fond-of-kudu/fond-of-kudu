@@ -1,11 +1,11 @@
 <?php
 
-namespace FondOfKudu\Zed\OmsPayoneError\Dependency\Facade;
+namespace FondOfKudu\Zed\OmsRetryCaptureProcess\Dependency\Facade;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerEco\Zed\Payone\Business\PayoneFacadeInterface;
 
-class OmsPayoneErrorToPayoneFacadeBridge implements OmsPayoneErrorToPayoneFacadeInterface
+class OmsRetryCatpureProcessToPayoneFacadeBridge implements OmsRetryCatpureProcessToPayoneFacadeInterface
 {
     private PayoneFacadeInterface $payoneFacade;
 
