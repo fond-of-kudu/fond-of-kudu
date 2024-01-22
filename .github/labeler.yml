@@ -66,3 +66,6 @@ oms-payone-error:
 
 oms-retry-capture-process:
   - oms-retry-capture-process/**
+  -
+discount-promotion-rest-api:
+  - discount-promotion-rest-api/**
