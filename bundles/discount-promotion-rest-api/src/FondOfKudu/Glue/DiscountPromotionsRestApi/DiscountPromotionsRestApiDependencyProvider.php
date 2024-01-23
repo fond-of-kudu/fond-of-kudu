@@ -2,8 +2,8 @@
 
 namespace FondOfKudu\Glue\DiscountPromotionsRestApi;
 
-use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductStorageClientBridge;
-use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductStorageClientInterface;
+use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionRestApiToProductResourceAliasStorageClientBridge;
+use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionRestApiToProductResourceAliasStorageClientInterface;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
@@ -12,7 +12,7 @@ class DiscountPromotionsRestApiDependencyProvider extends AbstractBundleDependen
     /**
      * @var string
      */
-    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    public const CLIENT_PRODUCT_RESOURCE_ALIAS = 'CLIENT_PRODUCT_RESOURCE_ALIAS';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -22,7 +22,7 @@ class DiscountPromotionsRestApiDependencyProvider extends AbstractBundleDependen
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
-        $container = $this->addProductStorageClient($container);
+        $container = $this->addProductResourceAliasStorageClient($container);
 
         return $container;
     }
@@ -32,12 +32,12 @@ class DiscountPromotionsRestApiDependencyProvider extends AbstractBundleDependen
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addProductStorageClient(Container $container): Container
+    protected function addProductResourceAliasStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_STORAGE] = static fn (
+        $container[static::CLIENT_PRODUCT_RESOURCE_ALIAS] = static fn (
             Container $container
-        ): DiscountPromotionsRestApiToProductStorageClientInterface => new DiscountPromotionsRestApiToProductStorageClientBridge(
-            $container->getLocator()->productStorage()->client(),
+        ): DiscountPromotionRestApiToProductResourceAliasStorageClientInterface => new DiscountPromotionRestApiToProductResourceAliasStorageClientBridge(
+            $container->getLocator()->productResourceAliasStorage()->client(),
         );
 
         return $container;
