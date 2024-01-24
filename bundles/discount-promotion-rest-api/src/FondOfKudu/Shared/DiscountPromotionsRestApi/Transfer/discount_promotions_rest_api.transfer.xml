@@ -1,7 +1,18 @@
 <?xml version="1.0"?>
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
     <transfer name="RestPromotionalItemsAttributes">
-        <property name="skus" type="string[]" singular="sku"/>
-        <property name="products" type="array" singular="product"/>
+        <property name="discountPromotionUuid" type="string"/>
+        <property name="promotedProducts" type="array" singular="promotedProduct"/>
     </transfer>
+
+    <transfer name="RestCartItemsAttributes">
+        <property name="discountPromotionUuid" type="string"/>
+    </transfer>
+
+    <transfer name="CartItemRequest">
+        <property name="discountPromotionUuid" type="string"/>
+    </transfer>
+
+    <transfer name="DiscountCalculationResponse" />
 </transfers>
+
