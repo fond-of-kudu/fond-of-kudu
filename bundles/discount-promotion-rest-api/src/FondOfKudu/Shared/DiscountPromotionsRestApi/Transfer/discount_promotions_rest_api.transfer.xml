@@ -2,7 +2,14 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
     <transfer name="RestPromotionalItemsAttributes">
         <property name="discountPromotionUuid" type="string"/>
-        <property name="promotedProducts" type="array" singular="promotedProduct"/>
+        <property name="promotedProducts" type="PromotedProduct[]" singular="promotedProduct"/>
+    </transfer>
+
+    <transfer name="PromotedProduct">
+        <property name="name" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="price" type="int"/>
+        <property name="discountPrice" type="int"/>
     </transfer>
 
     <transfer name="RestCartItemsAttributes">
@@ -13,6 +20,25 @@
         <property name="discountPromotionUuid" type="string"/>
     </transfer>
 
-    <transfer name="DiscountCalculationResponse" />
+    <transfer name="DiscountableItem">
+        <property name="unitPrice" type="int"/>
+    </transfer>
+
+    <transfer name="DiscountCalculationRequest">
+        <property name="discountableItems" type="DiscountableItem[]" singular="discountableItem"/>
+        <property name="discount" type="Discount"/>
+    </transfer>
+
+    <transfer name="DiscountCalculationResponse">
+        <property name="amount" type="int"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="grossAmount" type="int"/>
+    </transfer>
+
+    <transfer name="PriceProduct">
+        <property name="moneyValue" type="MoneyValue"/>
+    </transfer>
 </transfers>
 

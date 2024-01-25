@@ -50,6 +50,7 @@ class PromotionItemByQuoteResourceRelationshipExpander extends SprykerPromotionI
                 $restPromotionalItemsAttributesTransfer = $this->promotionItemMapper
                     ->mapPromotedProductsToRestPromotionalItemsAttributesTransfer(
                         $restPromotionalItemsAttributesTransfer,
+                        $promotionItemTransfer,
                     );
 
                 $promotionalItemsResource = $this->restResourceBuilder->createRestResource(
