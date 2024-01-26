@@ -3,7 +3,6 @@
 namespace FondOfKudu\Glue\DiscountPromotionsRestApi;
 
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionRestApiToProductResourceAliasStorageClientInterface;
-use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToPriceProductStorageClientInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductStorageClientInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Service\DiscountPromotionsRestApiToDiscountServiceInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Expander\PromotionItemByQuoteResourceRelationshipExpander;
@@ -34,9 +33,9 @@ class DiscountPromotionsRestApiFactory extends SprykerDiscountPromotionsRestApiF
     {
         return new PromotionItemMapper(
             $this->getProductResourceAliasStorageClient(),
-            $this->getPriceProductStorageClient(),
             $this->getProductStorageClient(),
             $this->getDiscountService(),
+            $this->createPromotionProductMapper(),
         );
     }
 
@@ -54,14 +53,6 @@ class DiscountPromotionsRestApiFactory extends SprykerDiscountPromotionsRestApiF
     protected function getProductResourceAliasStorageClient(): DiscountPromotionRestApiToProductResourceAliasStorageClientInterface
     {
         return $this->getProvidedDependency(DiscountPromotionsRestApiDependencyProvider::CLIENT_PRODUCT_RESOURCE_ALIAS);
-    }
-
-    /**
-     * @return \FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToPriceProductStorageClientInterface
-     */
-    protected function getPriceProductStorageClient(): DiscountPromotionsRestApiToPriceProductStorageClientInterface
-    {
-        return $this->getProvidedDependency(DiscountPromotionsRestApiDependencyProvider::CLIENT_PRICE_PRODUCT_STORAGE);
     }
 
     /**

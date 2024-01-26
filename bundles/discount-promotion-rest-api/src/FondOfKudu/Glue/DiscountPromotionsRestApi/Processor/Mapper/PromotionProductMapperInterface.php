@@ -9,12 +9,12 @@ interface PromotionProductMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param int $dicountAmount
+     * @param int $discountAmount
      *
      * @return \Generated\Shared\Transfer\RestPromotionalProductTransfer
      */
     public function mapProductViewTransferToRestPromotionalProductTransfer(
         ProductViewTransfer $productViewTransfer,
-        int $dicountAmount
+        int $discountAmount
     ): RestPromotionalProductTransfer;
 }

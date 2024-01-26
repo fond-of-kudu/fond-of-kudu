@@ -4,13 +4,11 @@ namespace FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper;
 
 use ArrayObject;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionRestApiToProductResourceAliasStorageClientInterface;
-use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToPriceProductStorageClientInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductStorageClientInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Service\DiscountPromotionsRestApiToDiscountServiceInterface;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountCalculationRequestTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
-use Generated\Shared\Transfer\PromotedProductTransfer;
 use Generated\Shared\Transfer\PromotionItemTransfer;
 use Generated\Shared\Transfer\RestPromotionalItemsAttributesTransfer;
 use Spryker\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionItemMapper as SprykerPromotionItemMapper;
@@ -28,11 +26,6 @@ class PromotionItemMapper extends SprykerPromotionItemMapper implements Promotio
     protected DiscountPromotionRestApiToProductResourceAliasStorageClientInterface $productResourceAliasStorageClient;
 
     /**
-     * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToPriceProductStorageClientInterface
-     */
-    protected DiscountPromotionsRestApiToPriceProductStorageClientInterface $priceProductStorageClient;
-
-    /**
      * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductStorageClientInterface
      */
     protected DiscountPromotionsRestApiToProductStorageClientInterface $productStorageClient;
@@ -43,21 +36,26 @@ class PromotionItemMapper extends SprykerPromotionItemMapper implements Promotio
     protected DiscountPromotionsRestApiToDiscountServiceInterface $discountService;
 
     /**
+     * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionProductMapperInterface
+     */
+    protected PromotionProductMapperInterface $promotionProductMapper;
+
+    /**
      * @param \FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionRestApiToProductResourceAliasStorageClientInterface $productResourceAliasStorageClient
-     * @param \FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToPriceProductStorageClientInterface $priceProductStorageClient
      * @param \FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductStorageClientInterface $productStorageClient
      * @param \FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Service\DiscountPromotionsRestApiToDiscountServiceInterface $discountService
+     * @param \FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionProductMapperInterface $promotionProductMapper
      */
     public function __construct(
         DiscountPromotionRestApiToProductResourceAliasStorageClientInterface $productResourceAliasStorageClient,
-        DiscountPromotionsRestApiToPriceProductStorageClientInterface $priceProductStorageClient,
         DiscountPromotionsRestApiToProductStorageClientInterface $productStorageClient,
-        DiscountPromotionsRestApiToDiscountServiceInterface $discountService
+        DiscountPromotionsRestApiToDiscountServiceInterface $discountService,
+        PromotionProductMapperInterface $promotionProductMapper
     ) {
         $this->productResourceAliasStorageClient = $productResourceAliasStorageClient;
-        $this->priceProductStorageClient = $priceProductStorageClient;
         $this->productStorageClient = $productStorageClient;
         $this->discountService = $discountService;
+        $this->promotionProductMapper = $promotionProductMapper;
     }
 
     /**
@@ -98,12 +96,13 @@ class PromotionItemMapper extends SprykerPromotionItemMapper implements Promotio
 
             $discountCalculationResponseTransfer = $this->discountService->calculate($discountCalculationRequestTransfer);
 
-            $promotedProductTransfer = (new PromotedProductTransfer())
-                ->fromArray($productData, true)
-                ->setPrice($productViewTransfer->getPrice())
-                ->setDiscountPrice($productViewTransfer->getPrice() - $discountCalculationResponseTransfer->getAmount());
+            $restPromotionalProductTransfer = $this->promotionProductMapper
+                ->mapProductViewTransferToRestPromotionalProductTransfer(
+                    $productViewTransfer,
+                    $discountCalculationResponseTransfer->getAmount(),
+                );
 
-            $restPromotionalItemsAttributesTransfer->addPromotedProduct($promotedProductTransfer);
+            $restPromotionalItemsAttributesTransfer->addPromotedProduct($restPromotionalProductTransfer);
         }
 
         return $restPromotionalItemsAttributesTransfer;

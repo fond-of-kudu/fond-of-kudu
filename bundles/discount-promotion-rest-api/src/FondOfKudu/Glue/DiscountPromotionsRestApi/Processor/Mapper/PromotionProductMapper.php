@@ -9,16 +9,16 @@ class PromotionProductMapper implements PromotionProductMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param int $dicountAmount
+     * @param int $discountAmount
      *
      * @return \Generated\Shared\Transfer\RestPromotionalProductTransfer
      */
     public function mapProductViewTransferToRestPromotionalProductTransfer(
         ProductViewTransfer $productViewTransfer,
-        int $dicountAmount
+        int $discountAmount
     ): RestPromotionalProductTransfer {
         return (new RestPromotionalProductTransfer())
             ->fromArray($productViewTransfer->toArray(), true)
-            ->setDiscountPrice($productViewTransfer->getPrice() - $dicountAmount);
+            ->setDiscountPrice($productViewTransfer->getPrice() - $discountAmount);
     }
 }
