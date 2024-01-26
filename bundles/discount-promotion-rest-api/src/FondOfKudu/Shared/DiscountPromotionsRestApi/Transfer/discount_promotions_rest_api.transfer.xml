@@ -40,5 +40,12 @@
     <transfer name="PriceProduct">
         <property name="moneyValue" type="MoneyValue"/>
     </transfer>
+
+    <transfer name="ProductView">
+        <property name="name" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="price" type="int"/>
+        <property name="discountPrice" type="int"/>
+    </transfer>
 </transfers>
 
