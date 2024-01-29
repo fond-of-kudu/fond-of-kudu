@@ -120,10 +120,6 @@ class ProductViewImageCustomSetsExpander implements ProductViewImageCustomSetsEx
             );
         }
 
-        if ($ProductImageSetStorageTransferCollection->offsetExists(0)) {
-            return $ProductImageSetStorageTransferCollection->offsetGet(0);
-        }
-
         return null;
     }
 }
