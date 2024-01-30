@@ -11,8 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         name: Checkout
-      - uses: actions/labeler@v4
+      - uses: actions/labeler@v5
         with:
           sync-labels: true
           dot: true
-          configuration-path: .github/labeler.yml
