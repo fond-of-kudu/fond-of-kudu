@@ -28,6 +28,6 @@ class OrderCreatedInsideTimelimitConditionPlugin extends AbstractPlugin implemen
             return false;
         }
 
-        return $diff > $this->getConfig()->getHoursAfterCaptureFinalFailed();
+        return $this->getConfig()->getHoursAfterCaptureFinalFailed() > $diff;
     }
 }

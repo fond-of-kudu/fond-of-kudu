@@ -59,7 +59,7 @@ class OrderCreatedInsideTimelimitConditionPluginTest extends Unit
     /**
      * @return void
      */
-    public function testCheckTrue(): void
+    public function testCheckFalse(): void
     {
         $createdAt = (new DateTime())->modify('-15 hours');
 
@@ -75,13 +75,13 @@ class OrderCreatedInsideTimelimitConditionPluginTest extends Unit
             ->method('getHoursAfterCaptureFinalFailed')
             ->willReturn($this->configMock->getHoursAfterCaptureFinalFailed());
 
-        static::assertTrue($this->plugin->check($this->salesOrderItemMock));
+        static::assertFalse($this->plugin->check($this->salesOrderItemMock));
     }
 
     /**
      * @return void
      */
-    public function testCheckFalse(): void
+    public function testCheckTrue(): void
     {
         $createdAt = (new DateTime())->modify('+9 hour');
 
@@ -97,7 +97,7 @@ class OrderCreatedInsideTimelimitConditionPluginTest extends Unit
             ->method('getHoursAfterCaptureFinalFailed')
             ->willReturn(12);
 
-        static::assertFalse($this->plugin->check($this->salesOrderItemMock));
+        static::assertTrue($this->plugin->check($this->salesOrderItemMock));
     }
 
     /**
