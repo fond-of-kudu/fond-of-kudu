@@ -34,8 +34,6 @@ version:
   - changed-files:
       - any-glob-to-any-file: ['dandelion.json']
 
-### packages
-
 carts-rest-api:
   - changed-files:
       - any-glob-to-any-file: ['bundles/carts-rest-api/**']
