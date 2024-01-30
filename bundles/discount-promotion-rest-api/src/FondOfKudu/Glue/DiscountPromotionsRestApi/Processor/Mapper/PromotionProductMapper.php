@@ -3,7 +3,7 @@
 namespace FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Generated\Shared\Transfer\RestPromotionalProductTransfer;
+use Generated\Shared\Transfer\PromotedProductTransfer;
 
 class PromotionProductMapper implements PromotionProductMapperInterface
 {
@@ -11,13 +11,13 @@ class PromotionProductMapper implements PromotionProductMapperInterface
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param int $discountAmount
      *
-     * @return \Generated\Shared\Transfer\RestPromotionalProductTransfer
+     * @return \Generated\Shared\Transfer\PromotedProductTransfer
      */
     public function mapProductViewTransferToRestPromotionalProductTransfer(
         ProductViewTransfer $productViewTransfer,
         int $discountAmount
-    ): RestPromotionalProductTransfer {
-        return (new RestPromotionalProductTransfer())
+    ): PromotedProductTransfer {
+        return (new PromotedProductTransfer())
             ->fromArray($productViewTransfer->toArray(), true)
             ->setDiscountPrice($productViewTransfer->getPrice() - $discountAmount);
     }

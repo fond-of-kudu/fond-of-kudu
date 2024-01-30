@@ -61,12 +61,14 @@ class PromotionItemMapper extends SprykerPromotionItemMapper implements Promotio
     /**
      * @param \Generated\Shared\Transfer\RestPromotionalItemsAttributesTransfer $restPromotionalItemsAttributesTransfer
      * @param \Generated\Shared\Transfer\PromotionItemTransfer $promotionItemTransfer
+     * @param string $locale
      *
      * @return \Generated\Shared\Transfer\RestPromotionalItemsAttributesTransfer
      */
     public function mapPromotedProductsToRestPromotionalItemsAttributesTransfer(
         RestPromotionalItemsAttributesTransfer $restPromotionalItemsAttributesTransfer,
-        PromotionItemTransfer $promotionItemTransfer
+        PromotionItemTransfer $promotionItemTransfer,
+        string $locale
     ): RestPromotionalItemsAttributesTransfer {
         if (count($restPromotionalItemsAttributesTransfer->getSkus()) === 0) {
             return $restPromotionalItemsAttributesTransfer;
@@ -74,7 +76,7 @@ class PromotionItemMapper extends SprykerPromotionItemMapper implements Promotio
 
         $productsData = $this->productResourceAliasStorageClient->getBulkProductAbstractStorageData(
             $restPromotionalItemsAttributesTransfer->getSkus(),
-            'de_DE',
+            $locale,
         );
 
         foreach ($productsData as $productData) {
@@ -83,7 +85,7 @@ class PromotionItemMapper extends SprykerPromotionItemMapper implements Promotio
             }
 
             $productViewTransfer = $this->productStorageClient
-                ->findProductAbstractViewTransfer($productData[static::ID_PRODUCT_ABSTRACT], 'de_DE');
+                ->findProductAbstractViewTransfer($productData[static::ID_PRODUCT_ABSTRACT], $locale);
 
             if ($productViewTransfer === null) {
                 continue;

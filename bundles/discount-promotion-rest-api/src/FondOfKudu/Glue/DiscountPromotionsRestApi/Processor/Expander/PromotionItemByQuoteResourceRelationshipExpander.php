@@ -2,11 +2,9 @@
 
 namespace FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Expander;
 
-use FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionItemMapperInterface;
 use Generated\Shared\Transfer\RestPromotionalItemsAttributesTransfer;
 use Spryker\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig;
 use Spryker\Glue\DiscountPromotionsRestApi\Processor\Expander\PromotionItemByQuoteResourceRelationshipExpander as SprykerPromotionItemByQuoteResourceRelationshipExpander;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class PromotionItemByQuoteResourceRelationshipExpander extends SprykerPromotionItemByQuoteResourceRelationshipExpander
@@ -17,18 +15,6 @@ class PromotionItemByQuoteResourceRelationshipExpander extends SprykerPromotionI
     protected $promotionItemMapper;
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionItemMapperInterface $promotionItemMapper
-     */
-    public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder,
-        PromotionItemMapperInterface $promotionItemMapper
-    ) {
-        $this->restResourceBuilder = $restResourceBuilder;
-        $this->promotionItemMapper = $promotionItemMapper;
-    }
-
-    /**
      * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
@@ -36,6 +22,8 @@ class PromotionItemByQuoteResourceRelationshipExpander extends SprykerPromotionI
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
+        $locale = $restRequest->getMetadata()->getLocale();
+
         foreach ($resources as $resource) {
             $promotionItemTransfers = $this->getPromotionItemsFromPayload($resource);
             $promotionItemTransfers = $this->filterDiscountPromotionDuplicates($promotionItemTransfers);
@@ -51,6 +39,7 @@ class PromotionItemByQuoteResourceRelationshipExpander extends SprykerPromotionI
                     ->mapPromotedProductsToRestPromotionalItemsAttributesTransfer(
                         $restPromotionalItemsAttributesTransfer,
                         $promotionItemTransfer,
+                        $locale,
                     );
 
                 $promotionalItemsResource = $this->restResourceBuilder->createRestResource(

@@ -11,11 +11,13 @@ interface PromotionItemMapperInterface extends SprykerPromotionItemMapperInterfa
     /**
      * @param \Generated\Shared\Transfer\RestPromotionalItemsAttributesTransfer $restPromotionalItemsAttributesTransfer
      * @param \Generated\Shared\Transfer\PromotionItemTransfer $promotionItemTransfer
+     * @param string $locale
      *
      * @return \Generated\Shared\Transfer\RestPromotionalItemsAttributesTransfer
      */
     public function mapPromotedProductsToRestPromotionalItemsAttributesTransfer(
         RestPromotionalItemsAttributesTransfer $restPromotionalItemsAttributesTransfer,
-        PromotionItemTransfer $promotionItemTransfer
+        PromotionItemTransfer $promotionItemTransfer,
+        string $locale
     ): RestPromotionalItemsAttributesTransfer;
 }
