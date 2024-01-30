@@ -33,3 +33,29 @@ github:
 version:
   - changed-files:
       - any-glob-to-any-file: ['dandelion.json']
+
+### packages
+
+carts-rest-api:
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/carts-rest-api/**']
+
+checkout-rest-api:
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/checkout-rest-api/**']
+
+checkout-rest-api-country-connector:
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/checkout-rest-api-country-connector/**']
+
+checkout-rest-api-country-extension:
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/checkout-rest-api-country-extension/**']
+
+quote:
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/quote/**']
+
+country-zipcode-restriction:
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/country-zipcode-restriction/**']
