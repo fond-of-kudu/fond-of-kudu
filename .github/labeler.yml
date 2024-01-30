@@ -1,65 +1,35 @@
 zed:
-  - bundles/**/src/FondOfKudu/Zed/**
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/**/src/FondOfKudu/Zed/**']
 
 yves:
-  - bundles/**/src/FondOfKudu/Yves/**
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/**/src/FondOfKudu/Yves/**']
 
 glue:
-  - bundles/**/src/FondOfKudu/Glue/**
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/**/src/FondOfKudu/Glue/**']
 
 client:
-  - bundles/**/src/FondOfKudu/Client/**
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/**/src/FondOfKudu/Client/**']
 
 service:
-  - bundles/**/src/FondOfKudu/Service/**
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/**/src/FondOfKudu/Service/**']
 
 tests:
-  - bundles/**/tests/FondOfKudu/**
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/**/tests/FondOfKudu/**']
 
 composer:
-  - composer.json
-  - bundles/**/src/FondOfKudu/composer.json
+  - changed-files:
+      - any-glob-to-any-file: ['composer.json', 'bundles/**/src/FondOfKudu/composer.json']
 
 github:
-  - .github/**
+  - changed-files:
+      - any-glob-to-any-file: ['.github/**']
 
 version:
-  - dandelion.json
-
-### packages
-
-carts-rest-api:
-  - bundles/carts-rest-api/**
-
-checkout-rest-api:
-  - bundles/checkout-rest-api/**
-
-checkout-rest-api-country-connector:
-  - bundles/checkout-rest-api-country-connector/**
-
-checkout-rest-api-country-extension:
-  - bundles/checkout-rest-api-country-extension/**
-
-quote:
-  - bundles/quote/**
-
-country-zipcode-restriction:
-  - bundles/country-zipcode-restriction/**
-
-checkout-data-product-country-filter:
-  - bundles/checkout-data-product-country-filter/**
-
-checkout-data-gift-cart-payment-country-filter:
-  - bundles/checkout-data-gift-cart-payment-country-filter/**
-
-oms-order-confirmation:
-  - bundles/oms-order-confirmation/**
-
-oms-payone-error:
-  - bundles/oms-payone-error/**
-
-oms-retry-capture-process:
-  - bundles/oms-retry-capture-process/**
-
-discount-promotion-rest-api:
-  - bundles/discount-promotion-rest-api/**
+  - changed-files:
+      - any-glob-to-any-file: ['dandelion.json']
