@@ -36,7 +36,7 @@
     },
     "product-image-storage-connector": {
       "path": "bundles/product-image-storage-connector",
-      "version": "1.0.1"
+      "version": "1.0.3"
     },
     "quote": {
       "path": "bundles/quote",
