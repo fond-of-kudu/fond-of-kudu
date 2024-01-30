@@ -38,10 +38,6 @@ carts-rest-api:
   - changed-files:
       - any-glob-to-any-file: ['bundles/carts-rest-api/**']
 
-catalog-sort-price:
-  - changed-files:
-      - any-glob-to-any-file: ['bundles/catalog-sort-price/**']
-
 checkout-rest-api:
   - changed-files:
       - any-glob-to-any-file: ['bundles/checkout-rest-api/**']
@@ -53,10 +49,6 @@ checkout-rest-api-country-connector:
 checkout-rest-api-country-extension:
   - changed-files:
       - any-glob-to-any-file: ['bundles/checkout-rest-api-country-extension/**']
-
-product-image-storage-connector:
-  - changed-files:
-      - any-glob-to-any-file: ['bundles/product-image-storage-connector/**']
 
 quote:
   - changed-files:
