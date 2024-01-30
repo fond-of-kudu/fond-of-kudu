@@ -50,22 +50,22 @@ quote:
   - bundles/quote/**
 
 country-zipcode-restriction:
-  - country-zipcode-restriction/**
+  - bundles/country-zipcode-restriction/**
 
 checkout-data-product-country-filter:
-  - checkout-data-product-country-filter/**
+  - bundles/checkout-data-product-country-filter/**
 
 checkout-data-gift-cart-payment-country-filter:
-  - checkout-data-gift-cart-payment-country-filter/**
+  - bundles/checkout-data-gift-cart-payment-country-filter/**
 
 oms-order-confirmation:
-  - oms-order-confirmation/**
+  - bundles/oms-order-confirmation/**
 
 oms-payone-error:
-  - oms-payone-error/**
+  - bundles/oms-payone-error/**
 
 oms-retry-capture-process:
-  - oms-retry-capture-process/**
-  -
+  - bundles/oms-retry-capture-process/**
+
 discount-promotion-rest-api:
-  - discount-promotion-rest-api/**
+  - bundles/discount-promotion-rest-api/**
