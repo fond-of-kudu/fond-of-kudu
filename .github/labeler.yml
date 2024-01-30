@@ -31,9 +31,6 @@ version:
 carts-rest-api:
   - bundles/carts-rest-api/**
 
-catalog-sort-price:
-  - bundles/catalog-sort-price/**
-
 checkout-rest-api:
   - bundles/checkout-rest-api/**
 
@@ -42,9 +39,6 @@ checkout-rest-api-country-connector:
 
 checkout-rest-api-country-extension:
   - bundles/checkout-rest-api-country-extension/**
-
-product-image-storage-connector:
-  - bundles/product-image-storage-connector/**
 
 quote:
   - bundles/quote/**
