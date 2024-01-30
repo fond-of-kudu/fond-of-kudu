@@ -16,6 +16,16 @@
         <property name="price" type="int"/>
         <property name="discountPrice" type="int"/>
         <property name="imageSets" singular="imageSet" type="[]"/>
+        <property name="url" type="string"/>
+        <property name="available" type="bool"/>
+
+        <property name="brand" type="string"/>
+        <property name="model" type="string"/>
+        <property name="modelKey" type="string"/>
+        <property name="modelSize" type="string"/>
+        <property name="style" type="string"/>
+        <property name="styleKey" type="string"/>
+        <property name="type" type="string"/>
     </transfer>
 
     <transfer name="RestCartItemsAttributes">
@@ -53,6 +63,9 @@
         <property name="price" type="int"/>
         <property name="discountPrice" type="int"/>
         <property name="imageSets" singular="imageSet" type="[]"/>
+        <property name="url" type="string"/>
+        <property name="available" type="bool"/>
+        <property name="attributes" type="array"/>
     </transfer>
 
     <transfer name="Discount" />
