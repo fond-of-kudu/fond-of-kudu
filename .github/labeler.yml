@@ -1,71 +1,93 @@
 zed:
-  - bundles/**/src/FondOfKudu/Zed/**
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/**/src/FondOfKudu/Zed/**']
 
 yves:
-  - bundles/**/src/FondOfKudu/Yves/**
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/**/src/FondOfKudu/Yves/**']
 
 glue:
-  - bundles/**/src/FondOfKudu/Glue/**
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/**/src/FondOfKudu/Glue/**']
 
 client:
-  - bundles/**/src/FondOfKudu/Client/**
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/**/src/FondOfKudu/Client/**']
 
 service:
-  - bundles/**/src/FondOfKudu/Service/**
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/**/src/FondOfKudu/Service/**']
 
 tests:
-  - bundles/**/tests/FondOfKudu/**
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/**/tests/FondOfKudu/**']
 
 composer:
-  - composer.json
-  - bundles/**/src/FondOfKudu/composer.json
+  - changed-files:
+      - any-glob-to-any-file: ['composer.json', 'bundles/**/src/FondOfKudu/composer.json']
 
 github:
-  - .github/**
+  - changed-files:
+      - any-glob-to-any-file: ['.github/**']
 
 version:
-  - dandelion.json
+  - changed-files:
+      - any-glob-to-any-file: ['dandelion.json']
 
 ### packages
 
 carts-rest-api:
-  - bundles/carts-rest-api/**
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/carts-rest-api/**']
 
 catalog-sort-price:
-  - bundles/catalog-sort-price/**
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/catalog-sort-price/**']
 
 checkout-rest-api:
-  - bundles/checkout-rest-api/**
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/checkout-rest-api/**']
 
 checkout-rest-api-country-connector:
-  - bundles/checkout-rest-api-country-connector/**
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/checkout-rest-api-country-connector/**']
 
 checkout-rest-api-country-extension:
-  - bundles/checkout-rest-api-country-extension/**
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/checkout-rest-api-country-extension/**']
 
 product-image-storage-connector:
-  - bundles/product-image-storage-connector/**
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/product-image-storage-connector/**']
 
 quote:
-  - bundles/quote/**
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/quote/**']
 
 country-zipcode-restriction:
-  - country-zipcode-restriction/**
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/country-zipcode-restriction/**']
 
 checkout-data-product-country-filter:
-  - checkout-data-product-country-filter/**
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/checkout-data-product-country-filter/**']
 
 checkout-data-gift-cart-payment-country-filter:
-  - checkout-data-gift-cart-payment-country-filter/**
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/checkout-data-gift-cart-payment-country-filter/**']
 
 oms-order-confirmation:
-  - oms-order-confirmation/**
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/oms-order-confirmation/**']
 
 oms-payone-error:
-  - oms-payone-error/**
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/oms-payone-error/**']
 
 oms-retry-capture-process:
-  - oms-retry-capture-process/**
-  -
+  - changed-files:
+      - any-glob-to-any-file: ['bundles/oms-retry-capture-process/**']
+
 discount-promotion-rest-api:
-  - discount-promotion-rest-api/**
+  - changed-files:
+      - any-glob-to-any-file: ['discount-promotion-rest-api/**']
