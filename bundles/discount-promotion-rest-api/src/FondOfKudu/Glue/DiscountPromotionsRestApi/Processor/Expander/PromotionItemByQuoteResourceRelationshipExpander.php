@@ -2,35 +2,17 @@
 
 namespace FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Expander;
 
-use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductStorageClientInterface;
 use Generated\Shared\Transfer\RestPromotionalItemsAttributesTransfer;
 use Spryker\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig;
 use Spryker\Glue\DiscountPromotionsRestApi\Processor\Expander\PromotionItemByQuoteResourceRelationshipExpander as SprykerPromotionItemByQuoteResourceRelationshipExpander;
-use Spryker\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionItemMapperInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class PromotionItemByQuoteResourceRelationshipExpander extends SprykerPromotionItemByQuoteResourceRelationshipExpander
 {
     /**
-     * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductStorageClientInterface
+     * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionItemMapperInterface
      */
-    protected DiscountPromotionsRestApiToProductStorageClientInterface $productStorageClient;
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionItemMapperInterface $promotionItemMapper
-     * @param \FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductStorageClientInterface $productStorageClient
-     */
-    public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder,
-        PromotionItemMapperInterface $promotionItemMapper,
-        DiscountPromotionsRestApiToProductStorageClientInterface $productStorageClient
-    ) {
-        parent::__construct($restResourceBuilder, $promotionItemMapper);
-
-        $this->productStorageClient = $productStorageClient;
-    }
+    protected $promotionItemMapper;
 
     /**
      * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
@@ -40,6 +22,8 @@ class PromotionItemByQuoteResourceRelationshipExpander extends SprykerPromotionI
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
+        $locale = $restRequest->getMetadata()->getLocale();
+
         foreach ($resources as $resource) {
             $promotionItemTransfers = $this->getPromotionItemsFromPayload($resource);
             $promotionItemTransfers = $this->filterDiscountPromotionDuplicates($promotionItemTransfers);
@@ -49,6 +33,13 @@ class PromotionItemByQuoteResourceRelationshipExpander extends SprykerPromotionI
                     ->mapPromotionItemTransferToRestPromotionalItemsAttributesTransfer(
                         $promotionItemTransfer,
                         new RestPromotionalItemsAttributesTransfer(),
+                    );
+
+                $restPromotionalItemsAttributesTransfer = $this->promotionItemMapper
+                    ->mapPromotedProductsToRestPromotionalItemsAttributesTransfer(
+                        $restPromotionalItemsAttributesTransfer,
+                        $promotionItemTransfer,
+                        $locale,
                     );
 
                 $promotionalItemsResource = $this->restResourceBuilder->createRestResource(

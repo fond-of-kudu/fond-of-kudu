@@ -2,11 +2,12 @@
 
 namespace FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ProductStorage\ProductStorageClientInterface;
 
 class DiscountPromotionsRestApiToProductStorageClientBridge implements DiscountPromotionsRestApiToProductStorageClientInterface
 {
-    private ProductStorageClientInterface $productStorageClient;
+    protected ProductStorageClientInterface $productStorageClient;
 
     /**
      * @param \Spryker\Client\ProductStorage\ProductStorageClientInterface $productStorageClient
@@ -19,11 +20,16 @@ class DiscountPromotionsRestApiToProductStorageClientBridge implements DiscountP
     /**
      * @param int $idProductAbstract
      * @param string $localeName
+     * @param array $selectedAttributes
      *
-     * @return array|null
+     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
      */
-    public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
+    public function findProductAbstractViewTransfer(int $idProductAbstract, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer
     {
-        return $this->productStorageClient->findProductAbstractStorageData($idProductAbstract, $localeName);
+        return $this->productStorageClient->findProductAbstractViewTransfer(
+            $idProductAbstract,
+            $localeName,
+            $selectedAttributes,
+        );
     }
 }
