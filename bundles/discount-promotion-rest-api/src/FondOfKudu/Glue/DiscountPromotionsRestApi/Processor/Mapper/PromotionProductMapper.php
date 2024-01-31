@@ -2,6 +2,8 @@
 
 namespace FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper;
 
+use FondOfKudu\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig;
+use Generated\Shared\Transfer\ProductImageStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\PromotedProductTransfer;
 
@@ -43,6 +45,19 @@ class PromotionProductMapper implements PromotionProductMapperInterface
     public const PRODUCT_ATTR_TYPE = 'type';
 
     /**
+     * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig
+     */
+    protected DiscountPromotionsRestApiConfig $config;
+
+    /**
+     * @param \FondOfKudu\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig $config
+     */
+    public function __construct(DiscountPromotionsRestApiConfig $config)
+    {
+        $this->config = $config;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param int $discountAmount
      *
@@ -61,7 +76,8 @@ class PromotionProductMapper implements PromotionProductMapperInterface
             ->setModelSize($this->getProductViewTransferAttribute($productViewTransfer, static::PRODUCT_ATTR_MODEL_SIZE))
             ->setStyle($this->getProductViewTransferAttribute($productViewTransfer, static::PRODUCT_ATTR_STYLE))
             ->setStyleKey($this->getProductViewTransferAttribute($productViewTransfer, static::PRODUCT_ATTR_STYLE_KEY))
-            ->setType($this->getProductViewTransferAttribute($productViewTransfer, static::PRODUCT_ATTR_TYPE));
+            ->setType($this->getProductViewTransferAttribute($productViewTransfer, static::PRODUCT_ATTR_TYPE))
+            ->setThumb($this->getThumb($productViewTransfer));
     }
 
     /**
@@ -79,5 +95,27 @@ class PromotionProductMapper implements PromotionProductMapperInterface
         }
 
         return $productViewTransfer->getAttributes()[$attribute];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductImageStorageTransfer|null
+     */
+    protected function getThumb(ProductViewTransfer $productViewTransfer): ?ProductImageStorageTransfer
+    {
+        foreach (($productViewTransfer->getImageSets()) as $index => $imageSet) {
+            if ($index !== $this->config->getImageSetNameForPromotedProductThumb()) {
+                continue;
+            }
+
+            foreach ($imageSet as $image) {
+                if ($image instanceof ProductImageStorageTransfer) {
+                    return $image;
+                }
+            }
+        }
+
+        return null;
     }
 }

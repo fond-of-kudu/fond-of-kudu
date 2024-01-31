@@ -15,10 +15,8 @@
         <property name="sku" type="string"/>
         <property name="price" type="int"/>
         <property name="discountPrice" type="int"/>
-        <property name="imageSets" singular="imageSet" type="[]"/>
         <property name="url" type="string"/>
         <property name="available" type="bool"/>
-
         <property name="brand" type="string"/>
         <property name="model" type="string"/>
         <property name="modelKey" type="string"/>
@@ -26,6 +24,13 @@
         <property name="style" type="string"/>
         <property name="styleKey" type="string"/>
         <property name="type" type="string"/>
+        <property name="thumb" type="ProductImageStorage"/>
+    </transfer>
+
+    <transfer name="ProductImageStorage">
+        <property name="idProductImage" type="int"/>
+        <property name="externalUrlLarge" type="string"/>
+        <property name="externalUrlSmall" type="string"/>
     </transfer>
 
     <transfer name="RestCartItemsAttributes">
@@ -70,4 +75,3 @@
 
     <transfer name="Discount" />
 </transfers>
-

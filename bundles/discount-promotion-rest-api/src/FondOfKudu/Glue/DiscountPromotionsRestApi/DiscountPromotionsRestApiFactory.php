@@ -15,6 +15,9 @@ use FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionProductM
 use Spryker\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiFactory as SprykerDiscountPromotionsRestApiFactory;
 use Spryker\Glue\DiscountPromotionsRestApi\Processor\Expander\PromotionItemByQuoteResourceRelationshipExpanderInterface;
 
+/**
+ * @method \FondOfKudu\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig getConfig()
+ */
 class DiscountPromotionsRestApiFactory extends SprykerDiscountPromotionsRestApiFactory
 {
     /**
@@ -47,7 +50,7 @@ class DiscountPromotionsRestApiFactory extends SprykerDiscountPromotionsRestApiF
      */
     protected function createPromotionProductMapper(): PromotionProductMapperInterface
     {
-        return new PromotionProductMapper();
+        return new PromotionProductMapper($this->getConfig());
     }
 
     /**
