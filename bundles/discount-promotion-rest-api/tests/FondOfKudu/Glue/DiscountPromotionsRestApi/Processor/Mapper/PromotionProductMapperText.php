@@ -94,6 +94,9 @@ class PromotionProductMapperText extends Unit
             2000,
         );
 
+        static::assertEquals($promotedProductTransfer->getName(), 'product name');
+        static::assertEquals($promotedProductTransfer->getSku(), 'sku-a');
+        static::assertEquals($promotedProductTransfer->getPrice(), 5999);
         static::assertEquals($promotedProductTransfer->getBrand(), $productViewTransferAttributes[PromotionProductMapper::PRODUCT_ATTR_BRAND]);
         static::assertEquals($promotedProductTransfer->getModel(), $productViewTransferAttributes[PromotionProductMapper::PRODUCT_ATTR_MODEL]);
         static::assertEquals($promotedProductTransfer->getModelKey(), $productViewTransferAttributes[PromotionProductMapper::PRODUCT_ATTR_MODEL_KEY]);
