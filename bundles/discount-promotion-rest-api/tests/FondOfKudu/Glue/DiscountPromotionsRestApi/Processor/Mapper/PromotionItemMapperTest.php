@@ -4,11 +4,8 @@ namespace FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper;
 
 use Codeception\Test\Unit;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionRestApiToProductResourceAliasStorageClientBridge;
-use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionRestApiToProductResourceAliasStorageClientInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductStorageClientBridge;
-use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductStorageClientInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Service\DiscountPromotionsRestApiToDiscountServiceBridge;
-use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Service\DiscountPromotionsRestApiToDiscountServiceInterface;
 use Generated\Shared\Transfer\DiscountCalculationRequestTransfer;
 use Generated\Shared\Transfer\DiscountCalculationResponseTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
@@ -21,24 +18,24 @@ use PHPUnit\Framework\MockObject\MockObject;
 class PromotionItemMapperTest extends Unit
 {
     /**
-     * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionRestApiToProductResourceAliasStorageClientInterface
+     * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionRestApiToProductResourceAliasStorageClientBridge
      */
-    protected MockObject|DiscountPromotionRestApiToProductResourceAliasStorageClientInterface $productResourceAliasStorageClientMock;
+    protected MockObject|DiscountPromotionRestApiToProductResourceAliasStorageClientBridge $productResourceAliasStorageClientMock;
 
     /**
-     * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductStorageClientInterface
+     * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductStorageClientBridge
      */
-    protected MockObject|DiscountPromotionsRestApiToProductStorageClientInterface $productStorageClientMock;
+    protected MockObject|DiscountPromotionsRestApiToProductStorageClientBridge $productStorageClientMock;
 
     /**
-     * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Service\DiscountPromotionsRestApiToDiscountServiceInterface
+     * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Service\DiscountPromotionsRestApiToDiscountServiceBridge
      */
-    protected MockObject|DiscountPromotionsRestApiToDiscountServiceInterface $discountServiceMock;
+    protected MockObject|DiscountPromotionsRestApiToDiscountServiceBridge $discountServiceMock;
 
     /**
-     * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionProductMapperInterface
+     * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionProductMapper
      */
-    protected MockObject|PromotionProductMapperInterface $promotionProductMapperMock;
+    protected MockObject|PromotionProductMapper $promotionProductMapperMock;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\Generated\Shared\Transfer\RestPromotionalItemsAttributesTransfer
@@ -74,6 +71,11 @@ class PromotionItemMapperTest extends Unit
      * @var \PHPUnit\Framework\MockObject\MockObject|\Generated\Shared\Transfer\PromotedProductTransfer
      */
     protected MockObject|PromotedProductTransfer $promotedProductTransferMock;
+
+    /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\DiscountCalculationRequestMapper
+     */
+    protected MockObject|DiscountCalculationRequestMapper $discountCalculationRequestMapperMock;
 
     /**
      * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionItemMapper
@@ -129,31 +131,35 @@ class PromotionItemMapperTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->discountCalculationRequestMapperMock = $this->getMockBuilder(DiscountCalculationRequestMapper::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->mapper = new PromotionItemMapper(
             $this->productResourceAliasStorageClientMock,
             $this->productStorageClientMock,
             $this->discountServiceMock,
             $this->promotionProductMapperMock,
+            $this->discountCalculationRequestMapperMock,
         );
     }
 
     /**
      * @return void
      */
-    public function testMapPromotedProductsToRestPromotionalItemsAttributesTransfer(): void
+    public function testMapPromotedProductsToRestPromotionalItemsAttributesTransfer()
     {
-        $locale = 'de_DE';
-        $productsData = [];
-        $productsData[] = [PromotionItemMapper::ID_PRODUCT_ABSTRACT => 1];
+        $locale = 'en_US';
+        $skus = ['sku-a'];
 
         $this->restPromotionalItemsAttributesTransferMock->expects(static::atLeastOnce())
             ->method('getSkus')
-            ->willReturn(['sku-a']);
+            ->willReturn($skus);
 
         $this->productResourceAliasStorageClientMock->expects(static::atLeastOnce())
             ->method('getBulkProductAbstractStorageData')
-            ->with(['sku-a'], $locale)
-            ->willReturn($productsData);
+            ->with($skus, $locale)
+            ->willReturn([[PromotionItemMapper::ID_PRODUCT_ABSTRACT => 1]]);
 
         $this->productStorageClientMock->expects(static::atLeastOnce())
             ->method('findProductAbstractViewTransfer')
@@ -168,6 +174,11 @@ class PromotionItemMapperTest extends Unit
             ->method('getPrice')
             ->willReturn(5999);
 
+        $this->discountCalculationRequestMapperMock->expects(static::atLeastOnce())
+            ->method('mapFromDiscountTransfer')
+            ->with($this->discountTransferMock, 5999)
+            ->willReturn($this->discountCalculationRequestTransferMock);
+
         $this->discountServiceMock->expects(static::atLeastOnce())
             ->method('calculate')
             ->with($this->discountCalculationRequestTransferMock)
@@ -177,15 +188,12 @@ class PromotionItemMapperTest extends Unit
             ->method('getAmount')
             ->willReturn(2000);
 
-        $this->promotionProductMapperMock->expects(static::atLeastOnce())
-            ->method('mapProductViewTransferToRestPromotionalProductTransfer')
-            ->with($this->productViewTransferMock, $this->discountCalculationResponseTransferMock)
-            ->willReturn($this->promotedProductTransferMock);
-
-        $restPromotionalItemsAttributesTransfer = $this->mapper->mapPromotedProductsToRestPromotionalItemsAttributesTransfer(
+        $result = $this->mapper->mapPromotedProductsToRestPromotionalItemsAttributesTransfer(
             $this->restPromotionalItemsAttributesTransferMock,
             $this->promotionItemTransferMock,
             $locale,
         );
+
+        static::assertEquals($result, $this->restPromotionalItemsAttributesTransferMock);
     }
 }

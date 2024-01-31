@@ -6,6 +6,8 @@ use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotio
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductStorageClientInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Service\DiscountPromotionsRestApiToDiscountServiceInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Expander\PromotionItemByQuoteResourceRelationshipExpander;
+use FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\DiscountCalculationRequestMapper;
+use FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\DiscountCalculationRequestMapperInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionItemMapper;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionItemMapperInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionProductMapper;
@@ -36,6 +38,7 @@ class DiscountPromotionsRestApiFactory extends SprykerDiscountPromotionsRestApiF
             $this->getProductStorageClient(),
             $this->getDiscountService(),
             $this->createPromotionProductMapper(),
+            $this->createDiscountCalculationRequestMapper(),
         );
     }
 
@@ -45,6 +48,14 @@ class DiscountPromotionsRestApiFactory extends SprykerDiscountPromotionsRestApiF
     protected function createPromotionProductMapper(): PromotionProductMapperInterface
     {
         return new PromotionProductMapper();
+    }
+
+    /**
+     * @return \FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\DiscountCalculationRequestMapperInterface
+     */
+    protected function createDiscountCalculationRequestMapper(): DiscountCalculationRequestMapperInterface
+    {
+        return new DiscountCalculationRequestMapper();
     }
 
     /**
