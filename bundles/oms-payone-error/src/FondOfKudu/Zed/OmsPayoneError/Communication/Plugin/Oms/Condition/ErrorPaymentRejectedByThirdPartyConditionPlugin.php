@@ -28,8 +28,12 @@ class ErrorPaymentRejectedByThirdPartyConditionPlugin extends AbstractPlugin imp
      */
     public function check(SpySalesOrderItem $orderItem): bool
     {
-        $errorCode = (int)$this->getRepository()->findPaymentPayoneApiLogErrorWithIdSalesOrder($orderItem->getFkSalesOrder());
+        $errorCode = $this->getRepository()->findPaymentPayoneApiLogErrorWithIdSalesOrder($orderItem->getFkSalesOrder());
 
-        return $errorCode >= static::ERROR_MIN && $errorCode <= static::ERROR_MAX;
+        if ($errorCode === null) {
+            return false;
+        }
+
+        return (int)$errorCode >= static::ERROR_MIN && (int)$errorCode <= static::ERROR_MAX;
     }
 }
