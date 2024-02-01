@@ -40,6 +40,7 @@ class ErrorPayoneSettingsIncorrectConditionPluginTest extends Unit
             ->getMock();
 
         $this->plugin = new ErrorPayoneSettingsIncorrectConditionPlugin();
+        $this->plugin->setRepository($this->omsPayoneErrorRepositoryMock);
     }
 
     /**
@@ -49,8 +50,12 @@ class ErrorPayoneSettingsIncorrectConditionPluginTest extends Unit
     {
         $this->omsPayoneErrorRepositoryMock->expects(static::atLeastOnce())
             ->method('findPaymentPayoneApiLogErrorWithIdSalesOrder')
-            ->with(699)
-            ->willReturn('984');
+            ->with('699')
+            ->willReturn('1201');
+
+        $this->spySalesOrderItemMock->expects(static::atLeastOnce())
+            ->method('getFkSalesOrder')
+            ->willReturn('699');
 
         static::assertTrue($this->plugin->check($this->spySalesOrderItemMock));
     }
@@ -62,9 +67,30 @@ class ErrorPayoneSettingsIncorrectConditionPluginTest extends Unit
     {
         $this->omsPayoneErrorRepositoryMock->expects(static::atLeastOnce())
             ->method('findPaymentPayoneApiLogErrorWithIdSalesOrder')
-            ->with(699)
+            ->with('699')
             ->willReturn('9999');
 
-        static::assertTrue($this->plugin->check($this->spySalesOrderItemMock));
+        $this->spySalesOrderItemMock->expects(static::atLeastOnce())
+            ->method('getFkSalesOrder')
+            ->willReturn('699');
+
+        static::assertFalse($this->plugin->check($this->spySalesOrderItemMock));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckNull(): void
+    {
+        $this->omsPayoneErrorRepositoryMock->expects(static::atLeastOnce())
+            ->method('findPaymentPayoneApiLogErrorWithIdSalesOrder')
+            ->with('699')
+            ->willReturn(null);
+
+        $this->spySalesOrderItemMock->expects(static::atLeastOnce())
+            ->method('getFkSalesOrder')
+            ->willReturn('699');
+
+        static::assertFalse($this->plugin->check($this->spySalesOrderItemMock));
     }
 }

@@ -48,7 +48,7 @@
     },
     "oms-payone-error": {
       "path": "bundles/oms-payone-error",
-      "version": "1.0.1"
+      "version": "1.0.2"
     },
     "oms-retry-capture-process": {
       "path": "bundles/oms-retry-capture-process",

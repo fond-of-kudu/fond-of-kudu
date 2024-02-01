@@ -7,7 +7,7 @@ interface OmsPayoneErrorRepositoryInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return string
+     * @return string|null
      */
-    public function findPaymentPayoneApiLogErrorWithIdSalesOrder(int $idSalesOrder): string;
+    public function findPaymentPayoneApiLogErrorWithIdSalesOrder(int $idSalesOrder): ?string;
 }
