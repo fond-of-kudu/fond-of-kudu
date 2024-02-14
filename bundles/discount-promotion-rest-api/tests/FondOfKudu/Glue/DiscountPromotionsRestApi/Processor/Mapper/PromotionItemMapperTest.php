@@ -170,6 +170,10 @@ class PromotionItemMapperTest extends Unit
             ->method('getDiscount')
             ->willReturn($this->discountTransferMock);
 
+        $this->promotionItemTransferMock->expects(static::atLeastOnce())
+            ->method('getUuid')
+            ->willReturn('uuid');
+
         $this->productViewTransferMock->expects(static::atLeastOnce())
             ->method('getPrice')
             ->willReturn(5999);

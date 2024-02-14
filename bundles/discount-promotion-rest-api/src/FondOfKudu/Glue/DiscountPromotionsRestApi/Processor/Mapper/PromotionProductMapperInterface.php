@@ -10,11 +10,13 @@ interface PromotionProductMapperInterface
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param int $discountAmount
+     * @param string $uuidDiscountPromotion
      *
      * @return \Generated\Shared\Transfer\PromotedProductTransfer
      */
     public function mapProductViewTransferToRestPromotionalProductTransfer(
         ProductViewTransfer $productViewTransfer,
-        int $discountAmount
+        int $discountAmount,
+        string $uuidDiscountPromotion
     ): PromotedProductTransfer;
 }

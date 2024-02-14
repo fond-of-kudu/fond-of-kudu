@@ -92,6 +92,7 @@ class PromotionProductMapperText extends Unit
         $promotedProductTransfer = $this->mapper->mapProductViewTransferToRestPromotionalProductTransfer(
             $this->productViewTransferMock,
             2000,
+            'uuid',
         );
 
         static::assertEquals($promotedProductTransfer->getName(), 'product name');
@@ -105,5 +106,6 @@ class PromotionProductMapperText extends Unit
         static::assertEquals($promotedProductTransfer->getStyleKey(), $productViewTransferAttributes[PromotionProductMapper::PRODUCT_ATTR_STYLE_KEY]);
         static::assertEquals($promotedProductTransfer->getType(), $productViewTransferAttributes[PromotionProductMapper::PRODUCT_ATTR_TYPE]);
         static::assertNotNull($promotedProductTransfer->getThumb());
+        static::assertEquals($promotedProductTransfer->getUuidDiscountPromotion(), 'uuid');
     }
 }

@@ -8,6 +8,7 @@
 
     <transfer name="PromotionItem">
         <property name="discount" type="Discount"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="PromotedProduct">
@@ -25,6 +26,7 @@
         <property name="styleKey" type="string"/>
         <property name="type" type="string"/>
         <property name="thumb" type="ProductImageStorage"/>
+        <property name="uuidDiscountPromotion" type="string"/>
     </transfer>
 
     <transfer name="ProductImageStorage">

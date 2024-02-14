@@ -60,12 +60,14 @@ class PromotionProductMapper implements PromotionProductMapperInterface
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param int $discountAmount
+     * @param string $uuidDiscountPromotion
      *
      * @return \Generated\Shared\Transfer\PromotedProductTransfer
      */
     public function mapProductViewTransferToRestPromotionalProductTransfer(
         ProductViewTransfer $productViewTransfer,
-        int $discountAmount
+        int $discountAmount,
+        string $uuidDiscountPromotion
     ): PromotedProductTransfer {
         return (new PromotedProductTransfer())
             ->fromArray($productViewTransfer->toArray(), true)
@@ -77,7 +79,8 @@ class PromotionProductMapper implements PromotionProductMapperInterface
             ->setStyle($this->getProductViewTransferAttribute($productViewTransfer, static::PRODUCT_ATTR_STYLE))
             ->setStyleKey($this->getProductViewTransferAttribute($productViewTransfer, static::PRODUCT_ATTR_STYLE_KEY))
             ->setType($this->getProductViewTransferAttribute($productViewTransfer, static::PRODUCT_ATTR_TYPE))
-            ->setThumb($this->getThumb($productViewTransfer));
+            ->setThumb($this->getThumb($productViewTransfer))
+            ->setUuidDiscountPromotion($uuidDiscountPromotion);
     }
 
     /**
