@@ -30,6 +30,10 @@ class ErrorOrderAddressConditionPlugin extends AbstractPlugin implements Conditi
     {
         $errorCode = $this->getRepository()->findPaymentPayoneApiLogErrorWithIdSalesOrder($orderItem->getFkSalesOrder());
 
-        return $errorCode !== null && (int)$errorCode >= static::ERROR_MIN && (int)$errorCode <= static::ERROR_MAX;
+        if ($errorCode === null) {
+            return false;
+        }
+
+        return (int)$errorCode >= static::ERROR_MIN && (int)$errorCode <= static::ERROR_MAX;
     }
 }
