@@ -18,9 +18,8 @@
         <property name="price" type="int"/>
         <property name="prices" type="array" singular="prices"/>
         <property name="available" type="bool"/>
-        <property name="images" singular="image" type="ProductImageStorage[]"/>
         <property name="uuidDiscountPromotion" type="string"/>
-        <property name="discountPrice" type="int"/>
+        <property name="images" singular="image" type="[]"/>
     </transfer>
 
     <transfer name="ProductImageStorage">
@@ -66,7 +65,7 @@
         <property name="prices" type="array" singular="prices"/>
         <property name="available" type="bool"/>
         <property name="images" singular="image" type="ProductImageStorage[]"/>
-        <property name="discountPrice" type="int"/>
+        <property name="imageSets" singular="imageSet" type="[]"/>
     </transfer>
 
     <transfer name="Discount" />
