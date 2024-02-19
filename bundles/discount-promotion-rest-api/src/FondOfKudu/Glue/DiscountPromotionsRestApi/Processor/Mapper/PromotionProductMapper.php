@@ -2,6 +2,7 @@
 
 namespace FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper;
 
+use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToCurrencyClientInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig;
 use FondOfKudu\Shared\DiscountPromotionsRestApi\DiscountPromotionsRestApiConstants;
 use Generated\Shared\Transfer\ProductViewTransfer;
@@ -49,12 +50,18 @@ class PromotionProductMapper implements PromotionProductMapperInterface
      */
     protected DiscountPromotionsRestApiConfig $config;
 
+    private DiscountPromotionsRestApiToCurrencyClientInterface $currencyClient;
+
     /**
      * @param \FondOfKudu\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig $config
+     * @param \FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToCurrencyClientInterface $currencyClient
      */
-    public function __construct(DiscountPromotionsRestApiConfig $config)
-    {
+    public function __construct(
+        DiscountPromotionsRestApiConfig $config,
+        DiscountPromotionsRestApiToCurrencyClientInterface $currencyClient
+    ) {
         $this->config = $config;
+        $this->currencyClient = $currencyClient;
     }
 
     /**

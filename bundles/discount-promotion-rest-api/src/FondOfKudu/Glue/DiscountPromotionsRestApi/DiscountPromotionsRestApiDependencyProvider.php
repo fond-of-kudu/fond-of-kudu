@@ -4,6 +4,8 @@ namespace FondOfKudu\Glue\DiscountPromotionsRestApi;
 
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionRestApiToProductResourceAliasStorageClientBridge;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionRestApiToProductResourceAliasStorageClientInterface;
+use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToCurrencyClientBridge;
+use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToCurrencyClientInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductStorageClientBridge;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductStorageClientInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Service\DiscountPromotionsRestApiToDiscountServiceBridge;
@@ -31,6 +33,11 @@ class DiscountPromotionsRestApiDependencyProvider extends AbstractBundleDependen
     /**
      * @var string
      */
+    public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
+
+    /**
+     * @var string
+     */
     public const SERVICE_DISCOUNT = 'SERVICE_DISCOUNT';
 
     /**
@@ -44,6 +51,7 @@ class DiscountPromotionsRestApiDependencyProvider extends AbstractBundleDependen
         $container = $this->addProductResourceAliasStorageClient($container);
         $container = $this->addProductStorageClient($container);
         $container = $this->addDiscountService($container);
+        $container = $this->addCurrencyClient($container);
 
         return $container;
     }
@@ -91,6 +99,22 @@ class DiscountPromotionsRestApiDependencyProvider extends AbstractBundleDependen
             Container $container
         ): DiscountPromotionsRestApiToDiscountServiceInterface => new DiscountPromotionsRestApiToDiscountServiceBridge(
             $container->getLocator()->discount()->service(),
+        );
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addCurrencyClient(Container $container): Container
+    {
+        $container[static::CLIENT_CURRENCY] = static fn (
+            Container $container
+        ): DiscountPromotionsRestApiToCurrencyClientInterface => new DiscountPromotionsRestApiToCurrencyClientBridge(
+            $container->getLocator()->currency()->client(),
         );
 
         return $container;
