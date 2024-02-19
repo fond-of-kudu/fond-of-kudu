@@ -28,4 +28,12 @@ class DiscountPromotionsRestApiConfig extends SprykerDiscountPromotionsRestApi
             ],
         );
     }
+
+    /**
+     * @return string|null
+     */
+    public function getImageSetByName(): ?string
+    {
+        return $this->get(DiscountPromotionsRestApiConstants::IMAGE_SET_NAME, null);
+    }
 }

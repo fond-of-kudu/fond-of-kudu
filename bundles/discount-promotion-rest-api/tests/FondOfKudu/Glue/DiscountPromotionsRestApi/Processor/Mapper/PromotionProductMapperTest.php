@@ -114,6 +114,10 @@ class PromotionProductMapperTest extends Unit
             ->method('getImageSets')
             ->willReturn(['ADDITIONALIMAGE' => new ArrayObject([$productImageStorageTransferMock])]);
 
+        $this->discountPromotionsRestApiConfigMock->expects(static::atLeastOnce())
+            ->method('getImageSetByName')
+            ->willReturn(null);
+
         $promotedProductTransfer = $this->mapper->mapProductViewTransferToRestPromotionalProductTransfer(
             $this->productViewTransferMock,
             2000,

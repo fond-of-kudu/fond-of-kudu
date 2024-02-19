@@ -109,10 +109,16 @@ class PromotionProductMapper implements PromotionProductMapperInterface
     {
         $images = [];
 
-        foreach ($productViewTransfer->getImageSets() as $index => $imageCollection) {
+        foreach ($productViewTransfer->getImageSets() as $collectionName => $imageCollection) {
             /** @var \Generated\Shared\Transfer\ProductImageStorageTransfer $productImageStorageTransfer */
             foreach ($imageCollection as $productImageStorageTransfer) {
-                $images[$index][] = $productImageStorageTransfer->toArray();
+                if ($this->config->getImageSetByName() === null) {
+                    $images[$collectionName][] = $productImageStorageTransfer->toArray();
+                }
+
+                if ($this->config->getImageSetByName() === $collectionName) {
+                    return [$collectionName => [$productImageStorageTransfer->toArray()]];
+                }
             }
         }
 

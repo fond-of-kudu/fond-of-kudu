@@ -7,12 +7,12 @@ interface DiscountPromotionsRestApiConstants
     /**
      * @var string
      */
-    public const IMAGE_SET_NAME_FOR_PROMOTED_PRODUCT_THUMB = 'IMAGE_SET_NAME_FOR_PROMOTED_PRODUCT_THUMB';
+    public const PRODUCT_VIEW_TRANSFER_ATTRIBUTES_TO_MAP = 'DiscountPromotionsRestApi:PRODUCT_VIEW_TRANSFER_ATTRIBUTES_TO_MAP';
 
     /**
      * @var string
      */
-    public const PRODUCT_VIEW_TRANSFER_ATTRIBUTES_TO_MAP = 'PRODUCT_VIEW_TRANSFER_ATTRIBUTES_TO_MAP';
+    public const IMAGE_SET_NAME = 'DiscountPromotionsRestApi:IMAGE_SET_NAME';
 
     /**
      * @var string
