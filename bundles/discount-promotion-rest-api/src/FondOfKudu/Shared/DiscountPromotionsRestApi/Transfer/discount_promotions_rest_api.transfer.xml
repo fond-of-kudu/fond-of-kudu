@@ -12,6 +12,7 @@
     </transfer>
 
     <transfer name="PromotedProduct">
+        <property name="name" type="string"/>
         <property name="abstractSku" type="string"/>
         <property name="sku" type="string"/>
         <property name="attributes" type="array"/>

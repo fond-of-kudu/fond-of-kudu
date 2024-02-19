@@ -70,15 +70,15 @@ class PromotionProductMapper implements PromotionProductMapperInterface
         string $uuidDiscountPromotion
     ): PromotedProductTransfer {
         $specialPrice = $productViewTransfer->getPrice() - $discountAmount;
-        $attributes = $this->mapProductViewTransferAttributesToPromotedProductTransfer($productViewTransfer);
+        $attributes = $this->mapAttributesFromProductViewTransfer($productViewTransfer);
         $attributes[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_SPECIAL_PRICE] = $specialPrice;
 
         return (new PromotedProductTransfer())
             ->fromArray($productViewTransfer->toArray(), true)
-            ->setAbstractSku('Abstract-' . $productViewTransfer->getAbstractSku())
+            ->setAbstractSku('Abstract-' . $productViewTransfer->getSku())
             ->setUuidDiscountPromotion($uuidDiscountPromotion)
-            ->setImages($productViewTransfer->getImageSets())
-            ->setAttributes($this->mapProductViewTransferAttributesToPromotedProductTransfer($productViewTransfer));
+            ->setImages($this->mapImagesFromProductViewTransfer($productViewTransfer))
+            ->setAttributes($attributes);
     }
 
     /**
@@ -86,7 +86,7 @@ class PromotionProductMapper implements PromotionProductMapperInterface
      *
      * @return array
      */
-    protected function mapProductViewTransferAttributesToPromotedProductTransfer(
+    protected function mapAttributesFromProductViewTransfer(
         ProductViewTransfer $productViewTransfer
     ): array {
         $attributes = [];
@@ -98,5 +98,24 @@ class PromotionProductMapper implements PromotionProductMapperInterface
         }
 
         return $attributes;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return array
+     */
+    protected function mapImagesFromProductViewTransfer(ProductViewTransfer $productViewTransfer): array
+    {
+        $images = [];
+
+        foreach ($productViewTransfer->getImageSets() as $index => $imageCollection) {
+            /** @var \Generated\Shared\Transfer\ProductImageStorageTransfer $productImageStorageTransfer */
+            foreach ($imageCollection as $productImageStorageTransfer) {
+                $images[$index][] = $productImageStorageTransfer->toArray();
+            }
+        }
+
+        return $images;
     }
 }

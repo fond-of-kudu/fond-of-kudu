@@ -8,17 +8,6 @@ use Spryker\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig as Sp
 class DiscountPromotionsRestApiConfig extends SprykerDiscountPromotionsRestApi
 {
     /**
-     * @return string
-     */
-    public function getImageSetNameForPromotedProductThumb(): string
-    {
-        return $this->get(
-            DiscountPromotionsRestApiConstants::IMAGE_SET_NAME_FOR_PROMOTED_PRODUCT_THUMB,
-            'IMG_FRONT',
-        );
-    }
-
-    /**
      * @return array<string>
      */
     public function getProductViewTransferAttributesToMap(): array
