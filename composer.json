@@ -92,6 +92,7 @@
       "FondOfKudu\\Zed\\CheckoutRestApiCountryConnector\\": "bundles/checkout-rest-api-country-connector/tests/FondOfKudu/Zed/CheckoutRestApiCountryConnector",
       "FondOfKudu\\Zed\\CheckoutDataProductCountryFilter\\": "bundles/checkout-data-product-country-filter/tests/FondOfKudu/Zed/CheckoutDataProductCountryFilter",
       "FondOfKudu\\Zed\\CheckoutDataGiftCartPaymentCountryFilter\\": "bundles/checkout-data-gift-cart-payment-country-filter/tests/FondOfKudu/Zed/CheckoutDataGiftCartPaymentCountryFilter",
+      "FondOfKudu\\Glue\\DiscountPromotionsRestApi\\": "bundles/discount-promotion-rest-api/tests/FondOfKudu/Glue/DiscountPromotionsRestApi",
       "FondOfKudu\\Zed\\OmsOrderConfirmation\\": "bundles/oms-order-confirmation/tests/FondOfKudu/Zed/OmsOrderConfirmation",
       "FondOfKudu\\Shared\\OmsOrderConfirmation\\": "bundles/oms-order-confirmation/tests/FondOfKudu/Shared/OmsOrderConfirmation",
       "FondOfKudu\\Zed\\OmsRetryCaptureProcess\\": "bundles/oms-retry-capture-process/tests/FondOfKudu/Zed/OmsRetryCaptureProcess",

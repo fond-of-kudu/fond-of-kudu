@@ -63,4 +63,9 @@ interface DiscountPromotionsRestApiConstants
      * @var string
      */
     public const PRODUCT_ATTR_RELEASE_DATE = 'release_date';
+
+    /**
+     * @var string
+     */
+    public const PRODUCT_ATTR_URL_KEY = 'url_key';
 }

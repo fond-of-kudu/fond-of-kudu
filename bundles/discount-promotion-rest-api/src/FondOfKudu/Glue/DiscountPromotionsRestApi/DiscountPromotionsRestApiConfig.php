@@ -25,6 +25,7 @@ class DiscountPromotionsRestApiConfig extends SprykerDiscountPromotionsRestApi
                 DiscountPromotionsRestApiConstants::PRODUCT_ATTR_FEATURE_EDITION,
                 DiscountPromotionsRestApiConstants::PRODUCT_ATTR_RESTOCK_DATE,
                 DiscountPromotionsRestApiConstants::PRODUCT_ATTR_RELEASE_DATE,
+                DiscountPromotionsRestApiConstants::PRODUCT_ATTR_URL_KEY,
             ],
         );
     }
@@ -34,6 +35,6 @@ class DiscountPromotionsRestApiConfig extends SprykerDiscountPromotionsRestApi
      */
     public function getImageSetByName(): ?string
     {
-        return $this->get(DiscountPromotionsRestApiConstants::IMAGE_SET_NAME, null);
+        return $this->get(DiscountPromotionsRestApiConstants::IMAGE_SET_NAME);
     }
 }

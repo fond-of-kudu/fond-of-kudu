@@ -101,6 +101,7 @@ class PromotionProductMapperTest extends Unit
                 DiscountPromotionsRestApiConstants::PRODUCT_ATTR_FEATURE_EDITION,
                 DiscountPromotionsRestApiConstants::PRODUCT_ATTR_RESTOCK_DATE,
                 DiscountPromotionsRestApiConstants::PRODUCT_ATTR_RELEASE_DATE,
+                DiscountPromotionsRestApiConstants::PRODUCT_ATTR_URL_KEY,
             ]);
 
         $this->productViewTransferMock->expects(static::atLeastOnce())
@@ -116,6 +117,7 @@ class PromotionProductMapperTest extends Unit
                 DiscountPromotionsRestApiConstants::PRODUCT_ATTR_FEATURE_EDITION => DiscountPromotionsRestApiConstants::PRODUCT_ATTR_FEATURE_EDITION,
                 DiscountPromotionsRestApiConstants::PRODUCT_ATTR_RESTOCK_DATE => DiscountPromotionsRestApiConstants::PRODUCT_ATTR_RESTOCK_DATE,
                 DiscountPromotionsRestApiConstants::PRODUCT_ATTR_RELEASE_DATE => DiscountPromotionsRestApiConstants::PRODUCT_ATTR_RELEASE_DATE,
+                DiscountPromotionsRestApiConstants::PRODUCT_ATTR_URL_KEY => DiscountPromotionsRestApiConstants::PRODUCT_ATTR_URL_KEY,
             ]);
 
         $this->productViewTransferMock->expects(static::atLeastOnce())
@@ -177,6 +179,7 @@ class PromotionProductMapperTest extends Unit
         static::assertEquals($promotedProductTransfer->getAttributes()[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_FEATURE_EDITION], DiscountPromotionsRestApiConstants::PRODUCT_ATTR_FEATURE_EDITION);
         static::assertEquals($promotedProductTransfer->getAttributes()[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_RESTOCK_DATE], DiscountPromotionsRestApiConstants::PRODUCT_ATTR_RESTOCK_DATE);
         static::assertEquals($promotedProductTransfer->getAttributes()[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_RELEASE_DATE], DiscountPromotionsRestApiConstants::PRODUCT_ATTR_RELEASE_DATE);
+        static::assertEquals($promotedProductTransfer->getAttributes()[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_URL_KEY], DiscountPromotionsRestApiConstants::PRODUCT_ATTR_URL_KEY);
         static::assertArrayHasKey('ADDITIONALIMAGE', $promotedProductTransfer->getImages());
     }
 }
