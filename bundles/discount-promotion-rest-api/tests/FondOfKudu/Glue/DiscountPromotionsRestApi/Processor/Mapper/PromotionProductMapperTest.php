@@ -4,6 +4,8 @@ namespace FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductImageStorageClientBridge;
+use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductImageStorageClientInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig;
 use FondOfKudu\Shared\DiscountPromotionsRestApi\DiscountPromotionsRestApiConstants;
 use Generated\Shared\Transfer\ProductImageStorageTransfer;
@@ -39,6 +41,11 @@ class PromotionProductMapperTest extends Unit
     protected MockObject|RestProductPriceAttributesTransfer $restProductPriceAttributesTransferMock;
 
     /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductImageStorageClientInterface
+     */
+    protected MockObject|DiscountPromotionsRestApiToProductImageStorageClientInterface $productImageStorageClientMock;
+
+    /**
      * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionProductMapperInterface
      */
     protected PromotionProductMapperInterface $mapper;
@@ -68,9 +75,14 @@ class PromotionProductMapperTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->productImageStorageClientMock = $this->getMockBuilder(DiscountPromotionsRestApiToProductImageStorageClientBridge::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->mapper = new PromotionProductMapper(
             $this->discountPromotionsRestApiConfigMock,
             $this->restProductPriceAttributeMapperMock,
+            $this->productImageStorageClientMock,
         );
     }
 
@@ -83,6 +95,19 @@ class PromotionProductMapperTest extends Unit
             ->method('mapFromProductViewTransfer')
             ->with($this->productViewTransferMock)
             ->willReturn($this->restProductPriceAttributesTransferMock);
+
+        $this->productViewTransferMock->expects(static::atLeastOnce())
+            ->method('getIdProductAbstract')
+            ->willReturn(1);
+
+        $this->productViewTransferMock->expects(static::atLeastOnce())
+            ->method('getIdProductConcrete')
+            ->willReturn(2);
+
+        $this->productImageStorageClientMock->expects(static::atLeastOnce())
+            ->method('resolveProductImageSetStorageTransfers')
+            ->with(1, 2, 'de_DE')
+            ->willReturn([]);
 
         $this->productViewTransferMock->expects(static::atLeastOnce())
             ->method('getPrice')
@@ -125,7 +150,6 @@ class PromotionProductMapperTest extends Unit
             ->willReturn([
                 'name' => 'product name',
                 'sku' => 'sku-a',
-                //'abstractSku' => 'Abstract-sku-a',
                 'price' => 5999,
                 'prices' => ['DEFAULT' => 5999],
                 'available' => true,
@@ -151,6 +175,7 @@ class PromotionProductMapperTest extends Unit
             $this->productViewTransferMock,
             2000,
             'uuid',
+            'de_DE',
         );
 
         static::assertEquals($promotedProductTransfer->getName(), 'product name');

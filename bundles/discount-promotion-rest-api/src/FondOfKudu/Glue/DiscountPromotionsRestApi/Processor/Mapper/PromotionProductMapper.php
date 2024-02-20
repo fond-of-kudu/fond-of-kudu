@@ -3,6 +3,7 @@
 namespace FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper;
 
 use ArrayObject;
+use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductImageStorageClientInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig;
 use FondOfKudu\Shared\DiscountPromotionsRestApi\DiscountPromotionsRestApiConstants;
 use Generated\Shared\Transfer\ProductViewTransfer;
@@ -21,28 +22,38 @@ class PromotionProductMapper implements PromotionProductMapperInterface
     protected RestProductPriceAttributeMapperInterface $restProductPriceAttributeMapper;
 
     /**
+     * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductImageStorageClientInterface
+     */
+    protected DiscountPromotionsRestApiToProductImageStorageClientInterface $productImageStorageClient;
+
+    /**
      * @param \FondOfKudu\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig $config
      * @param \FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\RestProductPriceAttributeMapperInterface $restProductPriceAttributeMapper
+     * @param \FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductImageStorageClientInterface $productImageStorageClient
      */
     public function __construct(
         DiscountPromotionsRestApiConfig $config,
-        RestProductPriceAttributeMapperInterface $restProductPriceAttributeMapper
+        RestProductPriceAttributeMapperInterface $restProductPriceAttributeMapper,
+        DiscountPromotionsRestApiToProductImageStorageClientInterface $productImageStorageClient
     ) {
         $this->config = $config;
         $this->restProductPriceAttributeMapper = $restProductPriceAttributeMapper;
+        $this->productImageStorageClient = $productImageStorageClient;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param int $discountAmount
      * @param string $uuidDiscountPromotion
+     * @param string $locale
      *
      * @return \Generated\Shared\Transfer\PromotedProductTransfer
      */
     public function mapProductViewTransferToRestPromotionalProductTransfer(
         ProductViewTransfer $productViewTransfer,
         int $discountAmount,
-        string $uuidDiscountPromotion
+        string $uuidDiscountPromotion,
+        string $locale
     ): PromotedProductTransfer {
         $specialPrice = $productViewTransfer->getPrice() - $discountAmount;
         $attributes = $this->mapAttributesFromProductViewTransfer($productViewTransfer);
@@ -50,6 +61,12 @@ class PromotionProductMapper implements PromotionProductMapperInterface
         $prices = new ArrayObject([
             $this->restProductPriceAttributeMapper->mapFromProductViewTransfer($productViewTransfer),
         ]);
+
+        $imageSets = $this->productImageStorageClient->resolveProductImageSetStorageTransfers(
+            $productViewTransfer->getIdProductAbstract(),
+            $productViewTransfer->getIdProductConcrete(),
+            $locale,
+        );
 
         return (new PromotedProductTransfer())
             ->fromArray($productViewTransfer->toArray(), true)

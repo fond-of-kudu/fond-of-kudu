@@ -72,6 +72,8 @@
     </transfer>
 
     <transfer name="ProductView">
+        <property name="idProductAbstract" type="int"/>
+        <property name="idProductConcrete" type="int"/>
         <property name="abstractSku" type="string"/>
         <property name="sku" type="string"/>
         <property name="attributes" type="array"/>
@@ -88,5 +90,16 @@
         <property name="code" type="string"/>
         <property name="name" type="string"/>
         <property name="symbol" type="string"/>
+    </transfer>
+
+    <transfer name="ProductImageSetStorage">
+        <property name="name" type="string"/>
+        <property name="images" singular="image" type="ProductImageStorage[]"/>
+    </transfer>
+
+    <transfer name="ProductImageStorage">
+        <property name="idProductImage" type="int"/>
+        <property name="externalUrlLarge" type="string"/>
+        <property name="externalUrlSmall" type="string"/>
     </transfer>
 </transfers>
