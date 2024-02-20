@@ -8,13 +8,33 @@ use Spryker\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig as Sp
 class DiscountPromotionsRestApiConfig extends SprykerDiscountPromotionsRestApi
 {
     /**
-     * @return string
+     * @return array<string>
      */
-    public function getImageSetNameForPromotedProductThumb(): string
+    public function getProductViewTransferAttributesToMap(): array
     {
         return $this->get(
-            DiscountPromotionsRestApiConstants::IMAGE_SET_NAME_FOR_PROMOTED_PRODUCT_THUMB,
-            'IMG_FRONT',
+            DiscountPromotionsRestApiConstants::PRODUCT_VIEW_TRANSFER_ATTRIBUTES_TO_MAP,
+            [
+                DiscountPromotionsRestApiConstants::PRODUCT_ATTR_STYLE,
+                DiscountPromotionsRestApiConstants::PRODUCT_ATTR_MODEL,
+                DiscountPromotionsRestApiConstants::PRODUCT_ATTR_MODEL_KEY,
+                DiscountPromotionsRestApiConstants::PRODUCT_ATTR_SPECIAL_PRICE_FROM,
+                DiscountPromotionsRestApiConstants::PRODUCT_ATTR_SPECIAL_PRICE_TO,
+                DiscountPromotionsRestApiConstants::PRODUCT_ATTR_SPECIAL_PRICE,
+                DiscountPromotionsRestApiConstants::PRODUCT_ATTR_FEATURE_HIGHLIGHT,
+                DiscountPromotionsRestApiConstants::PRODUCT_ATTR_FEATURE_EDITION,
+                DiscountPromotionsRestApiConstants::PRODUCT_ATTR_RESTOCK_DATE,
+                DiscountPromotionsRestApiConstants::PRODUCT_ATTR_RELEASE_DATE,
+                DiscountPromotionsRestApiConstants::PRODUCT_ATTR_URL_KEY,
+            ],
         );
+    }
+
+    /**
+     * @return string|bool
+     */
+    public function getImageSetByName(): bool|string
+    {
+        return $this->get(DiscountPromotionsRestApiConstants::IMAGE_SET_NAME, false);
     }
 }

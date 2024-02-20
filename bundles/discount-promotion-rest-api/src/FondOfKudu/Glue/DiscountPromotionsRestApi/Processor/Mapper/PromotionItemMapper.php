@@ -107,6 +107,7 @@ class PromotionItemMapper extends SprykerPromotionItemMapper implements Promotio
                 ->mapProductViewTransferToRestPromotionalProductTransfer(
                     $productViewTransfer,
                     $discountCalculationResponseTransfer->getAmount(),
+                    $promotionItemTransfer->getUuid(),
                 );
 
             $restPromotionalItemsAttributesTransfer->addPromotedProduct($promotedProductTransfer);

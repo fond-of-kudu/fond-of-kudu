@@ -18,22 +18,22 @@ use PHPUnit\Framework\MockObject\MockObject;
 class PromotionItemMapperTest extends Unit
 {
     /**
-     * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionRestApiToProductResourceAliasStorageClientBridge
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionRestApiToProductResourceAliasStorageClientBridge
      */
     protected MockObject|DiscountPromotionRestApiToProductResourceAliasStorageClientBridge $productResourceAliasStorageClientMock;
 
     /**
-     * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductStorageClientBridge
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductStorageClientBridge
      */
     protected MockObject|DiscountPromotionsRestApiToProductStorageClientBridge $productStorageClientMock;
 
     /**
-     * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Service\DiscountPromotionsRestApiToDiscountServiceBridge
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Service\DiscountPromotionsRestApiToDiscountServiceBridge
      */
     protected MockObject|DiscountPromotionsRestApiToDiscountServiceBridge $discountServiceMock;
 
     /**
-     * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionProductMapper
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionProductMapper
      */
     protected MockObject|PromotionProductMapper $promotionProductMapperMock;
 
@@ -169,6 +169,10 @@ class PromotionItemMapperTest extends Unit
         $this->promotionItemTransferMock->expects(static::atLeastOnce())
             ->method('getDiscount')
             ->willReturn($this->discountTransferMock);
+
+        $this->promotionItemTransferMock->expects(static::atLeastOnce())
+            ->method('getUuid')
+            ->willReturn('uuid');
 
         $this->productViewTransferMock->expects(static::atLeastOnce())
             ->method('getPrice')
