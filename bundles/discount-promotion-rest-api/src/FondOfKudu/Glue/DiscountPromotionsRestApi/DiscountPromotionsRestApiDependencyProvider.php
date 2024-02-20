@@ -135,7 +135,7 @@ class DiscountPromotionsRestApiDependencyProvider extends AbstractBundleDependen
      */
     protected function addProductImageStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_CURRENCY] = static fn (
+        $container[static::CLIENT_PRODUCT_IMAGE_STORAGE] = static fn (
             Container $container
         ): DiscountPromotionsRestApiToProductImageStorageClientInterface => new DiscountPromotionsRestApiToProductImageStorageClientBridge(
             $container->getLocator()->productImageStorage()->client(),

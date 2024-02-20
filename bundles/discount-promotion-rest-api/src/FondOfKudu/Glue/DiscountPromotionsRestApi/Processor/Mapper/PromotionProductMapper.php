@@ -62,17 +62,11 @@ class PromotionProductMapper implements PromotionProductMapperInterface
             $this->restProductPriceAttributeMapper->mapFromProductViewTransfer($productViewTransfer),
         ]);
 
-        $imageSets = $this->productImageStorageClient->resolveProductImageSetStorageTransfers(
-            $productViewTransfer->getIdProductAbstract(),
-            $productViewTransfer->getIdProductConcrete(),
-            $locale,
-        );
-
         return (new PromotedProductTransfer())
             ->fromArray($productViewTransfer->toArray(), true)
             ->setAbstractSku('Abstract-' . $productViewTransfer->getSku())
             ->setUuidDiscountPromotion($uuidDiscountPromotion)
-            ->setImages($this->mapImagesFromProductViewTransfer($productViewTransfer))
+            ->setImages($this->mapImagesFromStorage($productViewTransfer, $locale))
             ->setPrices($prices)
             ->setAttributes($attributes);
     }
@@ -98,25 +92,31 @@ class PromotionProductMapper implements PromotionProductMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $locale
      *
-     * @return array
+     * @return array<array>
      */
-    protected function mapImagesFromProductViewTransfer(ProductViewTransfer $productViewTransfer): array
-    {
+    protected function mapImagesFromStorage(
+        ProductViewTransfer $productViewTransfer,
+        string $locale
+    ): array {
         $images = [];
+        $productImageSetStorageTransferCollection = $this->productImageStorageClient->resolveProductImageSetStorageTransfers(
+            $productViewTransfer->getIdProductAbstract(),
+            $productViewTransfer->getIdProductConcrete(),
+            $locale,
+        );
 
-        foreach ($productViewTransfer->getImageSets() as $collectionName => $imageCollection) {
-            /** @var \Generated\Shared\Transfer\ProductImageStorageTransfer $productImageStorageTransfer */
-            foreach ($imageCollection as $productImageStorageTransfer) {
-                if ($this->config->getImageSetByName() === false) {
-                    $images[$collectionName][] = $productImageStorageTransfer->toArray();
+        /** @var \Generated\Shared\Transfer\ProductImageSetStorageTransfer $productImageSetStorageTransfer */
+        foreach ($productImageSetStorageTransferCollection as $productImageSetStorageTransfer) {
+            if ($this->config->getImageSetByName() === false) {
+                $images[] = $productImageSetStorageTransfer->toArray();
 
-                    continue;
-                }
+                continue;
+            }
 
-                if ($this->config->getImageSetByName() === $collectionName) {
-                    return [$collectionName => [$productImageStorageTransfer->toArray()]];
-                }
+            if ($this->config->getImageSetByName() === $productImageSetStorageTransfer->getName()) {
+                return [[$productImageSetStorageTransfer->toArray()]];
             }
         }
 
