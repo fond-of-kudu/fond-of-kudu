@@ -145,7 +145,7 @@ class PromotionProductMapperTest extends Unit
 
         $this->discountPromotionsRestApiConfigMock->expects(static::atLeastOnce())
             ->method('getImageSetByName')
-            ->willReturn(null);
+            ->willReturn(false);
 
         $promotedProductTransfer = $this->mapper->mapProductViewTransferToRestPromotionalProductTransfer(
             $this->productViewTransferMock,
@@ -157,7 +157,7 @@ class PromotionProductMapperTest extends Unit
         static::assertEquals($promotedProductTransfer->getSku(), 'sku-a');
         static::assertEquals($promotedProductTransfer->getAbstractSku(), 'Abstract-sku-a');
         static::assertEquals($promotedProductTransfer->getPrice(), 5999);
-        static::assertArrayHasKey('DEFAULT', $promotedProductTransfer->getPrices());
+        static::assertCount(1, $promotedProductTransfer->getPrices());
         static::assertTrue($promotedProductTransfer->getAvailable());
         static::assertArrayHasKey(DiscountPromotionsRestApiConstants::PRODUCT_ATTR_STYLE, $promotedProductTransfer->getAttributes());
         static::assertArrayHasKey(DiscountPromotionsRestApiConstants::PRODUCT_ATTR_MODEL, $promotedProductTransfer->getAttributes());

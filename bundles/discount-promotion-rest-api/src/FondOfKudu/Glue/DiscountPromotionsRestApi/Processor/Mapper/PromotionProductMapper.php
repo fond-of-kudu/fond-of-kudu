@@ -2,6 +2,7 @@
 
 namespace FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper;
 
+use ArrayObject;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig;
 use FondOfKudu\Shared\DiscountPromotionsRestApi\DiscountPromotionsRestApiConstants;
 use Generated\Shared\Transfer\ProductViewTransfer;
@@ -46,13 +47,16 @@ class PromotionProductMapper implements PromotionProductMapperInterface
         $specialPrice = $productViewTransfer->getPrice() - $discountAmount;
         $attributes = $this->mapAttributesFromProductViewTransfer($productViewTransfer);
         $attributes[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_SPECIAL_PRICE] = $specialPrice;
+        $prices = new ArrayObject([
+            $this->restProductPriceAttributeMapper->mapFromProductViewTransfer($productViewTransfer),
+        ]);
 
         return (new PromotedProductTransfer())
             ->fromArray($productViewTransfer->toArray(), true)
             ->setAbstractSku('Abstract-' . $productViewTransfer->getSku())
             ->setUuidDiscountPromotion($uuidDiscountPromotion)
             ->setImages($this->mapImagesFromProductViewTransfer($productViewTransfer))
-            ->addPrice($this->restProductPriceAttributeMapper->mapFromProductViewTransfer($productViewTransfer))
+            ->setPrices($prices)
             ->setAttributes($attributes);
     }
 
@@ -87,8 +91,10 @@ class PromotionProductMapper implements PromotionProductMapperInterface
         foreach ($productViewTransfer->getImageSets() as $collectionName => $imageCollection) {
             /** @var \Generated\Shared\Transfer\ProductImageStorageTransfer $productImageStorageTransfer */
             foreach ($imageCollection as $productImageStorageTransfer) {
-                if ($this->config->getImageSetByName() === null) {
+                if ($this->config->getImageSetByName() === false) {
                     $images[$collectionName][] = $productImageStorageTransfer->toArray();
+
+                    continue;
                 }
 
                 if ($this->config->getImageSetByName() === $collectionName) {
