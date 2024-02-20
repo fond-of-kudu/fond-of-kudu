@@ -13,6 +13,8 @@ use FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionItemMapp
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionItemMapperInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionProductMapper;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionProductMapperInterface;
+use FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\RestProductPriceAttributeMapper;
+use FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\RestProductPriceAttributeMapperInterface;
 use Spryker\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiFactory as SprykerDiscountPromotionsRestApiFactory;
 use Spryker\Glue\DiscountPromotionsRestApi\Processor\Expander\PromotionItemByQuoteResourceRelationshipExpanderInterface;
 
@@ -53,8 +55,16 @@ class DiscountPromotionsRestApiFactory extends SprykerDiscountPromotionsRestApiF
     {
         return new PromotionProductMapper(
             $this->getConfig(),
-            $this->getCurrencyClient(),
+            $this->createRestProductPriceAttributeMapper(),
         );
+    }
+
+    /**
+     * @return \FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\RestProductPriceAttributeMapperInterface
+     */
+    protected function createRestProductPriceAttributeMapper(): RestProductPriceAttributeMapperInterface
+    {
+        return new RestProductPriceAttributeMapper($this->getCurrencyClient());
     }
 
     /**

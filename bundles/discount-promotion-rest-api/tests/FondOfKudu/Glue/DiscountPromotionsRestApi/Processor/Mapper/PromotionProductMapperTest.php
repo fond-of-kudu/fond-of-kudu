@@ -8,6 +8,7 @@ use FondOfKudu\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig;
 use FondOfKudu\Shared\DiscountPromotionsRestApi\DiscountPromotionsRestApiConstants;
 use Generated\Shared\Transfer\ProductImageStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
+use Generated\Shared\Transfer\RestProductPriceAttributesTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class PromotionProductMapperTest extends Unit
@@ -26,6 +27,16 @@ class PromotionProductMapperTest extends Unit
      * @var \PHPUnit\Framework\MockObject\MockObject|\Generated\Shared\Transfer\ProductImageStorageTransfer
      */
     protected MockObject|ProductImageStorageTransfer $productImageStorageTransferMock;
+
+    /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\RestProductPriceAttributeMapper
+     */
+    protected MockObject|RestProductPriceAttributeMapper $restProductPriceAttributeMapperMock;
+
+    /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Generated\Shared\Transfer\RestProductPriceAttributesTransfer
+     */
+    protected MockObject|RestProductPriceAttributesTransfer $restProductPriceAttributesTransferMock;
 
     /**
      * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionProductMapperInterface
@@ -49,7 +60,18 @@ class PromotionProductMapperTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->mapper = new PromotionProductMapper($this->discountPromotionsRestApiConfigMock);
+        $this->restProductPriceAttributeMapperMock = $this->getMockBuilder(RestProductPriceAttributeMapper::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->restProductPriceAttributesTransferMock = $this->getMockBuilder(RestProductPriceAttributesTransfer::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->mapper = new PromotionProductMapper(
+            $this->discountPromotionsRestApiConfigMock,
+            $this->restProductPriceAttributeMapperMock,
+        );
     }
 
     /**
@@ -57,6 +79,11 @@ class PromotionProductMapperTest extends Unit
      */
     public function testMapProductViewTransferToRestPromotionalProductTransfer(): void
     {
+        $this->restProductPriceAttributeMapperMock->expects(static::atLeastOnce())
+            ->method('mapFromProductViewTransfer')
+            ->with($this->productViewTransferMock)
+            ->willReturn($this->restProductPriceAttributesTransferMock);
+
         $this->productViewTransferMock->expects(static::atLeastOnce())
             ->method('getPrice')
             ->willReturn(5999);

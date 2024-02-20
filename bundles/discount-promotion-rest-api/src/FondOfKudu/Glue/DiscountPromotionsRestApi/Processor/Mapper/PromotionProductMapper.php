@@ -2,7 +2,6 @@
 
 namespace FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper;
 
-use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToCurrencyClientInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig;
 use FondOfKudu\Shared\DiscountPromotionsRestApi\DiscountPromotionsRestApiConstants;
 use Generated\Shared\Transfer\ProductViewTransfer;
@@ -11,57 +10,25 @@ use Generated\Shared\Transfer\PromotedProductTransfer;
 class PromotionProductMapper implements PromotionProductMapperInterface
 {
     /**
-     * @var string
-     */
-    public const PRODUCT_ATTR_BRAND = 'brand';
-
-    /**
-     * @var string
-     */
-    public const PRODUCT_ATTR_MODEL = 'model';
-
-    /**
-     * @var string
-     */
-    public const PRODUCT_ATTR_MODEL_KEY = 'modelKey';
-
-    /**
-     * @var string
-     */
-    public const PRODUCT_ATTR_MODEL_SIZE = 'modelSize';
-
-    /**
-     * @var string
-     */
-    public const PRODUCT_ATTR_STYLE = 'style';
-
-    /**
-     * @var string
-     */
-    public const PRODUCT_ATTR_STYLE_KEY = 'styleKey';
-
-    /**
-     * @var string
-     */
-    public const PRODUCT_ATTR_TYPE = 'type';
-
-    /**
      * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig
      */
     protected DiscountPromotionsRestApiConfig $config;
 
-    private DiscountPromotionsRestApiToCurrencyClientInterface $currencyClient;
+    /**
+     * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\RestProductPriceAttributeMapperInterface
+     */
+    protected RestProductPriceAttributeMapperInterface $restProductPriceAttributeMapper;
 
     /**
      * @param \FondOfKudu\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig $config
-     * @param \FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToCurrencyClientInterface $currencyClient
+     * @param \FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\RestProductPriceAttributeMapperInterface $restProductPriceAttributeMapper
      */
     public function __construct(
         DiscountPromotionsRestApiConfig $config,
-        DiscountPromotionsRestApiToCurrencyClientInterface $currencyClient
+        RestProductPriceAttributeMapperInterface $restProductPriceAttributeMapper
     ) {
         $this->config = $config;
-        $this->currencyClient = $currencyClient;
+        $this->restProductPriceAttributeMapper = $restProductPriceAttributeMapper;
     }
 
     /**
@@ -85,6 +52,7 @@ class PromotionProductMapper implements PromotionProductMapperInterface
             ->setAbstractSku('Abstract-' . $productViewTransfer->getSku())
             ->setUuidDiscountPromotion($uuidDiscountPromotion)
             ->setImages($this->mapImagesFromProductViewTransfer($productViewTransfer))
+            ->addPrice($this->restProductPriceAttributeMapper->mapFromProductViewTransfer($productViewTransfer))
             ->setAttributes($attributes);
     }
 
