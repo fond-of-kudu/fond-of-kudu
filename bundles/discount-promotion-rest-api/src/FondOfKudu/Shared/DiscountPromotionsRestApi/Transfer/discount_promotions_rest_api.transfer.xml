@@ -19,7 +19,7 @@
         <property name="price" type="int"/>
         <property name="prices" singular="price" type="RestProductPriceAttributes[]"/>
         <property name="available" type="bool"/>
-        <property name="uuidDiscountPromotion" type="string"/>
+        <property name="discountPromotionUuid" type="string"/>
         <property name="images" singular="image" type="[]"/>
     </transfer>
 

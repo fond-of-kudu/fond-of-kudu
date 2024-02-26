@@ -44,7 +44,7 @@ class PromotionProductMapper implements PromotionProductMapperInterface
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param int $discountAmount
-     * @param string $uuidDiscountPromotion
+     * @param string $discountPromotionUuid
      * @param string $locale
      *
      * @return \Generated\Shared\Transfer\PromotedProductTransfer
@@ -52,7 +52,7 @@ class PromotionProductMapper implements PromotionProductMapperInterface
     public function mapProductViewTransferToRestPromotionalProductTransfer(
         ProductViewTransfer $productViewTransfer,
         int $discountAmount,
-        string $uuidDiscountPromotion,
+        string $discountPromotionUuid,
         string $locale
     ): PromotedProductTransfer {
         $specialPrice = $productViewTransfer->getPrice() - $discountAmount;
@@ -65,7 +65,7 @@ class PromotionProductMapper implements PromotionProductMapperInterface
         return (new PromotedProductTransfer())
             ->fromArray($productViewTransfer->toArray(), true)
             ->setAbstractSku('Abstract-' . $productViewTransfer->getSku())
-            ->setUuidDiscountPromotion($uuidDiscountPromotion)
+            ->setDiscountPromotionUuid($discountPromotionUuid)
             ->setImages($this->mapImagesFromStorage($productViewTransfer, $locale))
             ->setPrices($prices)
             ->setAttributes($attributes);
