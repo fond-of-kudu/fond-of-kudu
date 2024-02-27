@@ -43,6 +43,8 @@ class PromotionProductMapperTest extends Unit
      */
     protected MockObject|ProductImageStorageTransfer $productImageSetStorageTransferMock;
 
+    protected MockObject|RestResponseProductImageMapperInterface $restResponseProductImageMapperMock;
+
     /**
      * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionProductMapperInterface
      */
@@ -77,9 +79,14 @@ class PromotionProductMapperTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->restResponseProductImageMapperMock = $this->getMockBuilder(RestResponseProductImageMapper::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->mapper = new PromotionProductMapper(
             $this->discountPromotionsRestApiConfigMock,
             $this->restProductPriceAttributeMapperMock,
+            $this->restResponseProductImageMapperMock,
         );
     }
 
@@ -143,17 +150,23 @@ class PromotionProductMapperTest extends Unit
             ->method('getPrice')
             ->willReturn(5999);
 
-        $this->productViewTransferMock->expects(static::atLeastOnce())
-            ->method('getImageSets')
-            ->willReturn(['THUMBNAIL' => [$this->productImageStorageTransferMock]]);
-
-        $this->discountPromotionsRestApiConfigMock->expects(static::atLeastOnce())
-            ->method('getImageSetByName')
-            ->willReturn(false);
-
-        $this->productImageStorageTransferMock->expects(static::atLeastOnce())
-            ->method('toArray')
-            ->willReturn([]);
+        $this->restResponseProductImageMapperMock->expects(static::atLeastOnce())
+            ->method('mapFromProductViewTransfer')
+            ->with($this->productViewTransferMock)
+            ->willReturn([
+                [
+                    'name' => 'Thumbnail',
+                    'images' => [
+                        [
+                            'id_product_image' => 7963228,
+                            'external_url_large' => 'https://fondof.getbynder.com/images/media/5D83D85F-FC78-49AF-874B2C5E88AE38AA?w=768&h=768',
+                            'external_url_small' => 'https://fondof.getbynder.com/images/media/5D83D85F-FC78-49AF-874B2C5E88AE38AA?w=384&h=384',
+                            'image_sets' => [
+                            ],
+                        ],
+                    ],
+                ],
+            ]);
 
         $promotedProductTransfer = $this->mapper->mapProductViewTransferToRestPromotionalProductTransfer(
             $this->productViewTransferMock,
