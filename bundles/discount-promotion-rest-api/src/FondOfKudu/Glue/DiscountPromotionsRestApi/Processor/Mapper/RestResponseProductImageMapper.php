@@ -40,7 +40,6 @@ class RestResponseProductImageMapper implements RestResponseProductImageMapperIn
     {
         $images = [];
 
-        /** @var array<\Generated\Shared\Transfer\ProductImageStorageTransfer> $productImageStorageTransferCollection */
         foreach ($productViewTransfer->getImageSets() as $index => $productImageStorageTransferCollection) {
             foreach ($productImageStorageTransferCollection as $productImageStorageTransfer) {
                 if (!$productImageStorageTransfer instanceof ProductImageStorageTransfer) {
@@ -64,7 +63,7 @@ class RestResponseProductImageMapper implements RestResponseProductImageMapperIn
 
     /**
      * @param string $name
-     * @param \Generated\Shared\Transfer\ProductImageSetStorageTransfer $productImageStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductImageStorageTransfer $productImageStorageTransfer
      *
      * @return array
      */
