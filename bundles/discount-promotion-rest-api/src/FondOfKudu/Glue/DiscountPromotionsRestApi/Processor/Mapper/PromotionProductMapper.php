@@ -21,28 +21,36 @@ class PromotionProductMapper implements PromotionProductMapperInterface
     protected RestProductPriceAttributeMapperInterface $restProductPriceAttributeMapper;
 
     /**
+     * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\RestResponseProductImageMapperInterface
+     */
+    protected RestResponseProductImageMapperInterface $restResponseProductImageMapper;
+
+    /**
      * @param \FondOfKudu\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig $config
      * @param \FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\RestProductPriceAttributeMapperInterface $restProductPriceAttributeMapper
+     * @param \FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\RestResponseProductImageMapperInterface $restResponseProductImageMapper
      */
     public function __construct(
         DiscountPromotionsRestApiConfig $config,
-        RestProductPriceAttributeMapperInterface $restProductPriceAttributeMapper
+        RestProductPriceAttributeMapperInterface $restProductPriceAttributeMapper,
+        RestResponseProductImageMapperInterface $restResponseProductImageMapper
     ) {
         $this->config = $config;
         $this->restProductPriceAttributeMapper = $restProductPriceAttributeMapper;
+        $this->restResponseProductImageMapper = $restResponseProductImageMapper;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param int $discountAmount
-     * @param string $uuidDiscountPromotion
+     * @param string $discountPromotionUuid
      *
      * @return \Generated\Shared\Transfer\PromotedProductTransfer
      */
     public function mapProductViewTransferToRestPromotionalProductTransfer(
         ProductViewTransfer $productViewTransfer,
         int $discountAmount,
-        string $uuidDiscountPromotion
+        string $discountPromotionUuid
     ): PromotedProductTransfer {
         $specialPrice = $productViewTransfer->getPrice() - $discountAmount;
         $attributes = $this->mapAttributesFromProductViewTransfer($productViewTransfer);
@@ -54,8 +62,8 @@ class PromotionProductMapper implements PromotionProductMapperInterface
         return (new PromotedProductTransfer())
             ->fromArray($productViewTransfer->toArray(), true)
             ->setAbstractSku('Abstract-' . $productViewTransfer->getSku())
-            ->setUuidDiscountPromotion($uuidDiscountPromotion)
-            ->setImages($this->mapImagesFromProductViewTransfer($productViewTransfer))
+            ->setDiscountPromotionUuid($discountPromotionUuid)
+            ->setImages($this->restResponseProductImageMapper->mapFromProductViewTransfer($productViewTransfer))
             ->setPrices($prices)
             ->setAttributes($attributes);
     }
@@ -77,32 +85,5 @@ class PromotionProductMapper implements PromotionProductMapperInterface
         }
 
         return $attributes;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return array
-     */
-    protected function mapImagesFromProductViewTransfer(ProductViewTransfer $productViewTransfer): array
-    {
-        $images = [];
-
-        foreach ($productViewTransfer->getImageSets() as $collectionName => $imageCollection) {
-            /** @var \Generated\Shared\Transfer\ProductImageStorageTransfer $productImageStorageTransfer */
-            foreach ($imageCollection as $productImageStorageTransfer) {
-                if ($this->config->getImageSetByName() === false) {
-                    $images[$collectionName][] = $productImageStorageTransfer->toArray();
-
-                    continue;
-                }
-
-                if ($this->config->getImageSetByName() === $collectionName) {
-                    return [$collectionName => [$productImageStorageTransfer->toArray()]];
-                }
-            }
-        }
-
-        return $images;
     }
 }

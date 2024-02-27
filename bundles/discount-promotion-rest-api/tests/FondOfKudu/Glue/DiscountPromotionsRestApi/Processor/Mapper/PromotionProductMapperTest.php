@@ -2,10 +2,10 @@
 
 namespace FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper;
 
-use ArrayObject;
 use Codeception\Test\Unit;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig;
 use FondOfKudu\Shared\DiscountPromotionsRestApi\DiscountPromotionsRestApiConstants;
+use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\RestProductPriceAttributesTransfer;
@@ -39,6 +39,13 @@ class PromotionProductMapperTest extends Unit
     protected MockObject|RestProductPriceAttributesTransfer $restProductPriceAttributesTransferMock;
 
     /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Generated\Shared\Transfer\ProductImageStorageTransfer
+     */
+    protected MockObject|ProductImageStorageTransfer $productImageSetStorageTransferMock;
+
+    protected MockObject|RestResponseProductImageMapperInterface $restResponseProductImageMapperMock;
+
+    /**
      * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionProductMapperInterface
      */
     protected PromotionProductMapperInterface $mapper;
@@ -68,9 +75,18 @@ class PromotionProductMapperTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->productImageSetStorageTransferMock = $this->getMockBuilder(ProductImageSetTransfer::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->restResponseProductImageMapperMock = $this->getMockBuilder(RestResponseProductImageMapper::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->mapper = new PromotionProductMapper(
             $this->discountPromotionsRestApiConfigMock,
             $this->restProductPriceAttributeMapperMock,
+            $this->restResponseProductImageMapperMock,
         );
     }
 
@@ -79,15 +95,6 @@ class PromotionProductMapperTest extends Unit
      */
     public function testMapProductViewTransferToRestPromotionalProductTransfer(): void
     {
-        $this->restProductPriceAttributeMapperMock->expects(static::atLeastOnce())
-            ->method('mapFromProductViewTransfer')
-            ->with($this->productViewTransferMock)
-            ->willReturn($this->restProductPriceAttributesTransferMock);
-
-        $this->productViewTransferMock->expects(static::atLeastOnce())
-            ->method('getPrice')
-            ->willReturn(5999);
-
         $this->discountPromotionsRestApiConfigMock->expects(static::atLeastOnce())
             ->method('getProductViewTransferAttributesToMap')
             ->willReturn([
@@ -120,12 +127,16 @@ class PromotionProductMapperTest extends Unit
                 DiscountPromotionsRestApiConstants::PRODUCT_ATTR_URL_KEY => DiscountPromotionsRestApiConstants::PRODUCT_ATTR_URL_KEY,
             ]);
 
+        $this->restProductPriceAttributeMapperMock->expects(static::atLeastOnce())
+            ->method('mapFromProductViewTransfer')
+            ->with($this->productViewTransferMock)
+            ->willReturn($this->restProductPriceAttributesTransferMock);
+
         $this->productViewTransferMock->expects(static::atLeastOnce())
             ->method('toArray')
             ->willReturn([
                 'name' => 'product name',
                 'sku' => 'sku-a',
-                //'abstractSku' => 'Abstract-sku-a',
                 'price' => 5999,
                 'prices' => ['DEFAULT' => 5999],
                 'available' => true,
@@ -135,17 +146,27 @@ class PromotionProductMapperTest extends Unit
             ->method('getSku')
             ->willReturn('sku-a');
 
-        $productImageStorageTransferMock = $this->getMockBuilder(ProductImageStorageTransfer::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
         $this->productViewTransferMock->expects(static::atLeastOnce())
-            ->method('getImageSets')
-            ->willReturn(['ADDITIONALIMAGE' => new ArrayObject([$productImageStorageTransferMock])]);
+            ->method('getPrice')
+            ->willReturn(5999);
 
-        $this->discountPromotionsRestApiConfigMock->expects(static::atLeastOnce())
-            ->method('getImageSetByName')
-            ->willReturn(false);
+        $this->restResponseProductImageMapperMock->expects(static::atLeastOnce())
+            ->method('mapFromProductViewTransfer')
+            ->with($this->productViewTransferMock)
+            ->willReturn([
+                [
+                    'name' => 'Thumbnail',
+                    'images' => [
+                        [
+                            'id_product_image' => 7963228,
+                            'external_url_large' => 'https://fondof.getbynder.com/images/media/5D83D85F-FC78-49AF-874B2C5E88AE38AA?w=768&h=768',
+                            'external_url_small' => 'https://fondof.getbynder.com/images/media/5D83D85F-FC78-49AF-874B2C5E88AE38AA?w=384&h=384',
+                            'image_sets' => [
+                            ],
+                        ],
+                    ],
+                ],
+            ]);
 
         $promotedProductTransfer = $this->mapper->mapProductViewTransferToRestPromotionalProductTransfer(
             $this->productViewTransferMock,
@@ -180,6 +201,5 @@ class PromotionProductMapperTest extends Unit
         static::assertEquals($promotedProductTransfer->getAttributes()[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_RESTOCK_DATE], DiscountPromotionsRestApiConstants::PRODUCT_ATTR_RESTOCK_DATE);
         static::assertEquals($promotedProductTransfer->getAttributes()[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_RELEASE_DATE], DiscountPromotionsRestApiConstants::PRODUCT_ATTR_RELEASE_DATE);
         static::assertEquals($promotedProductTransfer->getAttributes()[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_URL_KEY], DiscountPromotionsRestApiConstants::PRODUCT_ATTR_URL_KEY);
-        static::assertArrayHasKey('ADDITIONALIMAGE', $promotedProductTransfer->getImages());
     }
 }

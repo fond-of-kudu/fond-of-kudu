@@ -38,6 +38,11 @@ class DiscountPromotionsRestApiDependencyProvider extends AbstractBundleDependen
     /**
      * @var string
      */
+    public const CLIENT_PRODUCT_IMAGE_STORAGE = 'CLIENT_PRODUCT_IMAGE_STORAGE';
+
+    /**
+     * @var string
+     */
     public const SERVICE_DISCOUNT = 'SERVICE_DISCOUNT';
 
     /**
