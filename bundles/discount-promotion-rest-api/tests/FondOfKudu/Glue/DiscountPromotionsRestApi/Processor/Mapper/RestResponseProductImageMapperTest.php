@@ -4,7 +4,6 @@ namespace FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper;
 
 use Codeception\Test\Unit;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig;
-use Generated\Shared\Transfer\ProductImageSetStorageTransfer;
 use Generated\Shared\Transfer\ProductImageStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -27,11 +26,6 @@ class RestResponseProductImageMapperTest extends Unit
     protected MockObject|ProductImageStorageTransfer $productImageStorageTransferMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Generated\Shared\Transfer\ProductImageSetStorageTransfer
-     */
-    protected MockObject|ProductImageSetStorageTransfer $productImageSetStorageTransferMock;
-
-    /**
      * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\RestResponseProductImageMapperInterface
      */
     protected RestResponseProductImageMapperInterface $restResponseProductImageMapper;
@@ -49,7 +43,7 @@ class RestResponseProductImageMapperTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->productImageSetStorageTransferMock = $this->getMockBuilder(ProductImageSetStorageTransfer::class)
+        $this->productImageStorageTransferMock = $this->getMockBuilder(ProductImageStorageTransfer::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -65,9 +59,9 @@ class RestResponseProductImageMapperTest extends Unit
     {
         $this->productViewTransferMock->expects(static::atLeastOnce())
             ->method('getImageSets')
-            ->willReturn(['THUMBNAIL' => [$this->productImageSetStorageTransferMock]]);
+            ->willReturn(['THUMBNAIL' => [$this->productImageStorageTransferMock]]);
 
-        $this->productImageSetStorageTransferMock->expects(static::atLeastOnce())
+        $this->productImageStorageTransferMock->expects(static::atLeastOnce())
             ->method('toArray')
             ->willReturn([
                     [
@@ -77,8 +71,7 @@ class RestResponseProductImageMapperTest extends Unit
                                 'id_product_image' => 7963228,
                                 'external_url_large' => 'https://fondof.getbynder.com/images/media/5D83D85F-FC78-49AF-874B2C5E88AE38AA?w=768&h=768',
                                 'external_url_small' => 'https://fondof.getbynder.com/images/media/5D83D85F-FC78-49AF-874B2C5E88AE38AA?w=384&h=384',
-                                'image_sets' => [
-                                ],
+                                'image_sets' => [],
                             ],
                         ],
                     ],

@@ -3,7 +3,7 @@
 namespace FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper;
 
 use FondOfKudu\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig;
-use Generated\Shared\Transfer\ProductImageSetStorageTransfer;
+use Generated\Shared\Transfer\ProductImageStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 
 class RestResponseProductImageMapper implements RestResponseProductImageMapperInterface
@@ -40,17 +40,21 @@ class RestResponseProductImageMapper implements RestResponseProductImageMapperIn
     {
         $images = [];
 
-        /** @var array<\Generated\Shared\Transfer\ProductImageSetStorageTransfer> $productImageSetStorageTransferCollection */
-        foreach ($productViewTransfer->getImageSets() as $index => $productImageSetStorageTransferCollection) {
-            foreach ($productImageSetStorageTransferCollection as $productImageSetStorageTransfer) {
+        /** @var array<\Generated\Shared\Transfer\ProductImageStorageTransfer> $productImageStorageTransferCollection */
+        foreach ($productViewTransfer->getImageSets() as $index => $productImageStorageTransferCollection) {
+            foreach ($productImageStorageTransferCollection as $productImageStorageTransfer) {
+                if (!$productImageStorageTransfer instanceof ProductImageStorageTransfer) {
+                    continue;
+                }
+
                 if ($this->config->getImageSetByName() === false) {
-                    $images[] = $this->buildArray($index, $productImageSetStorageTransfer);
+                    $images[] = $this->buildArray($index, $productImageStorageTransfer);
 
                     continue;
                 }
 
                 if ($this->config->getImageSetByName() === $index) {
-                    return [$this->buildArray($index, $productImageSetStorageTransfer)];
+                    return [$this->buildArray($index, $productImageStorageTransfer)];
                 }
             }
         }
@@ -64,7 +68,7 @@ class RestResponseProductImageMapper implements RestResponseProductImageMapperIn
      *
      * @return array
      */
-    protected function buildArray(string $name, ProductImageSetStorageTransfer $productImageStorageTransfer): array
+    protected function buildArray(string $name, ProductImageStorageTransfer $productImageStorageTransfer): array
     {
         return [
             static::IMAGE_SET_NAME => $name,
