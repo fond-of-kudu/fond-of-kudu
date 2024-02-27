@@ -3,8 +3,6 @@
 namespace FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper;
 
 use Codeception\Test\Unit;
-use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductImageStorageClientBridge;
-use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductImageStorageClientInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig;
 use FondOfKudu\Shared\DiscountPromotionsRestApi\DiscountPromotionsRestApiConstants;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
@@ -41,11 +39,6 @@ class PromotionProductMapperTest extends Unit
     protected MockObject|RestProductPriceAttributesTransfer $restProductPriceAttributesTransferMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductImageStorageClientInterface
-     */
-    protected MockObject|DiscountPromotionsRestApiToProductImageStorageClientInterface $productImageStorageClientMock;
-
-    /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\Generated\Shared\Transfer\ProductImageStorageTransfer
      */
     protected MockObject|ProductImageStorageTransfer $productImageSetStorageTransferMock;
@@ -80,10 +73,6 @@ class PromotionProductMapperTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->productImageStorageClientMock = $this->getMockBuilder(DiscountPromotionsRestApiToProductImageStorageClientBridge::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
         $this->productImageSetStorageTransferMock = $this->getMockBuilder(ProductImageSetTransfer::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -91,7 +80,6 @@ class PromotionProductMapperTest extends Unit
         $this->mapper = new PromotionProductMapper(
             $this->discountPromotionsRestApiConfigMock,
             $this->restProductPriceAttributeMapperMock,
-            $this->productImageStorageClientMock,
         );
     }
 
@@ -100,58 +88,6 @@ class PromotionProductMapperTest extends Unit
      */
     public function testMapProductViewTransferToRestPromotionalProductTransfer(): void
     {
-        $imageSets = [
-            [
-                'name' => 'SmallImage',
-                'images' => [
-                    [
-                        'id_product_image' => 7693814,
-                        'external_url_large' => 'https://fondof.getbynder.com/images/media/1641B355-0209-441F-92CB2E283EC2262C?w=768&h=768',
-                        'external_url_small' => 'https://fondof.getbynder.com/images/media/1641B355-0209-441F-92CB2E283EC2262C?w=384&h=384',
-                        'image_sets' => [
-                        ],
-                    ],
-                ],
-            ], [
-                'name' => 'Thumbnail',
-                'images' => [
-                    [
-                        'id_product_image' => 7693815,
-                        'external_url_large' => 'https://fondof.getbynder.com/images/media/1641B355-0209-441F-92CB2E283EC2262C?w=768&h=768',
-                        'external_url_small' => 'https://fondof.getbynder.com/images/media/1641B355-0209-441F-92CB2E283EC2262C?w=384&h=384',
-                        'image_sets' => [
-                        ],
-                    ],
-                ],
-            ],
-        ];
-
-        $this->restProductPriceAttributeMapperMock->expects(static::atLeastOnce())
-            ->method('mapFromProductViewTransfer')
-            ->with($this->productViewTransferMock)
-            ->willReturn($this->restProductPriceAttributesTransferMock);
-
-        $this->productViewTransferMock->expects(static::atLeastOnce())
-            ->method('getIdProductAbstract')
-            ->willReturn(1);
-
-        $this->productViewTransferMock->expects(static::atLeastOnce())
-            ->method('getIdProductConcrete')
-            ->willReturn(2);
-
-        $this->productImageStorageClientMock->expects(static::atLeastOnce())
-            ->method('resolveProductImageSetStorageTransfers')
-            ->with(1, 2, 'de_DE')
-            ->willReturn([$this->productImageSetStorageTransferMock]);
-
-        $this->productImageSetStorageTransferMock->expects(static::atLeastOnce())
-            ->method('toArray')
-            ->willReturn($imageSets);
-
-        $this->productViewTransferMock->expects(static::atLeastOnce())
-            ->method('getPrice')
-            ->willReturn(5999);
-
         $this->discountPromotionsRestApiConfigMock->expects(static::atLeastOnce())
             ->method('getProductViewTransferAttributesToMap')
             ->willReturn([
@@ -184,6 +120,11 @@ class PromotionProductMapperTest extends Unit
                 DiscountPromotionsRestApiConstants::PRODUCT_ATTR_URL_KEY => DiscountPromotionsRestApiConstants::PRODUCT_ATTR_URL_KEY,
             ]);
 
+        $this->restProductPriceAttributeMapperMock->expects(static::atLeastOnce())
+            ->method('mapFromProductViewTransfer')
+            ->with($this->productViewTransferMock)
+            ->willReturn($this->restProductPriceAttributesTransferMock);
+
         $this->productViewTransferMock->expects(static::atLeastOnce())
             ->method('toArray')
             ->willReturn([
@@ -198,15 +139,26 @@ class PromotionProductMapperTest extends Unit
             ->method('getSku')
             ->willReturn('sku-a');
 
+        $this->productViewTransferMock->expects(static::atLeastOnce())
+            ->method('getPrice')
+            ->willReturn(5999);
+
+        $this->productViewTransferMock->expects(static::atLeastOnce())
+            ->method('getImageSets')
+            ->willReturn(['THUMBNAIL' => [$this->productImageStorageTransferMock]]);
+
         $this->discountPromotionsRestApiConfigMock->expects(static::atLeastOnce())
             ->method('getImageSetByName')
             ->willReturn(false);
+
+        $this->productImageStorageTransferMock->expects(static::atLeastOnce())
+            ->method('toArray')
+            ->willReturn([]);
 
         $promotedProductTransfer = $this->mapper->mapProductViewTransferToRestPromotionalProductTransfer(
             $this->productViewTransferMock,
             2000,
             'uuid',
-            'de_DE',
         );
 
         static::assertEquals($promotedProductTransfer->getName(), 'product name');

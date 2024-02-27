@@ -6,8 +6,6 @@ use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotio
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionRestApiToProductResourceAliasStorageClientInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToCurrencyClientBridge;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToCurrencyClientInterface;
-use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductImageStorageClientBridge;
-use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductImageStorageClientInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductStorageClientBridge;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductStorageClientInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Service\DiscountPromotionsRestApiToDiscountServiceBridge;
@@ -59,7 +57,6 @@ class DiscountPromotionsRestApiDependencyProvider extends AbstractBundleDependen
         $container = $this->addProductStorageClient($container);
         $container = $this->addDiscountService($container);
         $container = $this->addCurrencyClient($container);
-        $container = $this->addProductImageStorageClient($container);
 
         return $container;
     }
@@ -123,22 +120,6 @@ class DiscountPromotionsRestApiDependencyProvider extends AbstractBundleDependen
             Container $container
         ): DiscountPromotionsRestApiToCurrencyClientInterface => new DiscountPromotionsRestApiToCurrencyClientBridge(
             $container->getLocator()->currency()->client(),
-        );
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    protected function addProductImageStorageClient(Container $container): Container
-    {
-        $container[static::CLIENT_PRODUCT_IMAGE_STORAGE] = static fn (
-            Container $container
-        ): DiscountPromotionsRestApiToProductImageStorageClientInterface => new DiscountPromotionsRestApiToProductImageStorageClientBridge(
-            $container->getLocator()->productImageStorage()->client(),
         );
 
         return $container;

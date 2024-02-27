@@ -4,7 +4,6 @@ namespace FondOfKudu\Glue\DiscountPromotionsRestApi;
 
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionRestApiToProductResourceAliasStorageClientInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToCurrencyClientInterface;
-use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductImageStorageClientInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductStorageClientInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Service\DiscountPromotionsRestApiToDiscountServiceInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Expander\PromotionItemByQuoteResourceRelationshipExpander;
@@ -57,7 +56,6 @@ class DiscountPromotionsRestApiFactory extends SprykerDiscountPromotionsRestApiF
         return new PromotionProductMapper(
             $this->getConfig(),
             $this->createRestProductPriceAttributeMapper(),
-            $this->getProductImageStorageClient(),
         );
     }
 
@@ -107,13 +105,5 @@ class DiscountPromotionsRestApiFactory extends SprykerDiscountPromotionsRestApiF
     protected function getCurrencyClient(): DiscountPromotionsRestApiToCurrencyClientInterface
     {
         return $this->getProvidedDependency(DiscountPromotionsRestApiDependencyProvider::CLIENT_CURRENCY);
-    }
-
-    /**
-     * @return \FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductImageStorageClientInterface
-     */
-    protected function getProductImageStorageClient(): DiscountPromotionsRestApiToProductImageStorageClientInterface
-    {
-        return $this->getProvidedDependency(DiscountPromotionsRestApiDependencyProvider::CLIENT_PRODUCT_IMAGE_STORAGE);
     }
 }

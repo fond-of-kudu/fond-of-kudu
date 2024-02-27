@@ -3,7 +3,6 @@
 namespace FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper;
 
 use ArrayObject;
-use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductImageStorageClientInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig;
 use FondOfKudu\Shared\DiscountPromotionsRestApi\DiscountPromotionsRestApiConstants;
 use Generated\Shared\Transfer\ProductViewTransfer;
@@ -22,38 +21,28 @@ class PromotionProductMapper implements PromotionProductMapperInterface
     protected RestProductPriceAttributeMapperInterface $restProductPriceAttributeMapper;
 
     /**
-     * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductImageStorageClientInterface
-     */
-    protected DiscountPromotionsRestApiToProductImageStorageClientInterface $productImageStorageClient;
-
-    /**
      * @param \FondOfKudu\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig $config
      * @param \FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\RestProductPriceAttributeMapperInterface $restProductPriceAttributeMapper
-     * @param \FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductImageStorageClientInterface $productImageStorageClient
      */
     public function __construct(
         DiscountPromotionsRestApiConfig $config,
-        RestProductPriceAttributeMapperInterface $restProductPriceAttributeMapper,
-        DiscountPromotionsRestApiToProductImageStorageClientInterface $productImageStorageClient
+        RestProductPriceAttributeMapperInterface $restProductPriceAttributeMapper
     ) {
         $this->config = $config;
         $this->restProductPriceAttributeMapper = $restProductPriceAttributeMapper;
-        $this->productImageStorageClient = $productImageStorageClient;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param int $discountAmount
      * @param string $discountPromotionUuid
-     * @param string $locale
      *
      * @return \Generated\Shared\Transfer\PromotedProductTransfer
      */
     public function mapProductViewTransferToRestPromotionalProductTransfer(
         ProductViewTransfer $productViewTransfer,
         int $discountAmount,
-        string $discountPromotionUuid,
-        string $locale
+        string $discountPromotionUuid
     ): PromotedProductTransfer {
         $specialPrice = $productViewTransfer->getPrice() - $discountAmount;
         $attributes = $this->mapAttributesFromProductViewTransfer($productViewTransfer);
@@ -66,7 +55,7 @@ class PromotionProductMapper implements PromotionProductMapperInterface
             ->fromArray($productViewTransfer->toArray(), true)
             ->setAbstractSku('Abstract-' . $productViewTransfer->getSku())
             ->setDiscountPromotionUuid($discountPromotionUuid)
-            ->setImages($this->mapImagesFromStorage($productViewTransfer, $locale))
+            ->setImages($this->mapImagesFromStorage($productViewTransfer))
             ->setPrices($prices)
             ->setAttributes($attributes);
     }
@@ -92,31 +81,25 @@ class PromotionProductMapper implements PromotionProductMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param string $locale
      *
      * @return array<array>
      */
-    protected function mapImagesFromStorage(
-        ProductViewTransfer $productViewTransfer,
-        string $locale
-    ): array {
+    protected function mapImagesFromStorage(ProductViewTransfer $productViewTransfer): array
+    {
         $images = [];
-        $productImageSetStorageTransferCollection = $this->productImageStorageClient->resolveProductImageSetStorageTransfers(
-            $productViewTransfer->getIdProductAbstract(),
-            $productViewTransfer->getIdProductConcrete(),
-            $locale,
-        );
 
-        /** @var \Generated\Shared\Transfer\ProductImageSetStorageTransfer $productImageSetStorageTransfer */
-        foreach ($productImageSetStorageTransferCollection as $productImageSetStorageTransfer) {
-            if ($this->config->getImageSetByName() === false) {
-                $images[] = $productImageSetStorageTransfer->toArray();
+        /** @var array<\Generated\Shared\Transfer\ProductImageSetStorageTransfer> $productImageStorageTransferCollection */
+        foreach ($productViewTransfer->getImageSets() as $index => $productImageStorageTransferCollection) {
+            foreach ($productImageStorageTransferCollection as $productImageStorageTransfer) {
+                if ($this->config->getImageSetByName() === false) {
+                    $images[] = $productImageStorageTransfer->toArray();
 
-                continue;
-            }
+                    continue;
+                }
 
-            if ($this->config->getImageSetByName() === $productImageSetStorageTransfer->getName()) {
-                return [[$productImageSetStorageTransfer->toArray()]];
+                if ($this->config->getImageSetByName() === $index) {
+                    return [[$productImageStorageTransfer->toArray()]];
+                }
             }
         }
 
