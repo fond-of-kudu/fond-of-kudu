@@ -110,6 +110,10 @@ class PromotionItemMapper extends SprykerPromotionItemMapper implements Promotio
                     $promotionItemTransfer->getUuid(),
                 );
 
+            if ($promotedProductTransfer === null) {
+                continue;
+            }
+
             $restPromotionalItemsAttributesTransfer->addPromotedProduct($promotedProductTransfer);
         }
 

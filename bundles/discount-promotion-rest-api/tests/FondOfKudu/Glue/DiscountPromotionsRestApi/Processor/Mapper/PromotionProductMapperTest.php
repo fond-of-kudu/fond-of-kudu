@@ -147,6 +147,10 @@ class PromotionProductMapperTest extends Unit
             ->willReturn('sku-a');
 
         $this->productViewTransferMock->expects(static::atLeastOnce())
+            ->method('getAvailable')
+            ->willReturn(true);
+
+        $this->productViewTransferMock->expects(static::atLeastOnce())
             ->method('getPrice')
             ->willReturn(5999);
 
@@ -201,5 +205,24 @@ class PromotionProductMapperTest extends Unit
         static::assertEquals($promotedProductTransfer->getAttributes()[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_RESTOCK_DATE], DiscountPromotionsRestApiConstants::PRODUCT_ATTR_RESTOCK_DATE);
         static::assertEquals($promotedProductTransfer->getAttributes()[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_RELEASE_DATE], DiscountPromotionsRestApiConstants::PRODUCT_ATTR_RELEASE_DATE);
         static::assertEquals($promotedProductTransfer->getAttributes()[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_URL_KEY], DiscountPromotionsRestApiConstants::PRODUCT_ATTR_URL_KEY);
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapProductViewTransferToRestPromotionalProductTransferNotAvailable(): void
+    {
+        $this->productViewTransferMock->expects(static::atLeastOnce())
+            ->method('getAvailable')
+            ->willReturn(false);
+
+        $this->productViewTransferMock->expects(static::never())
+            ->method('getPrice');
+
+        static::assertNull($this->mapper->mapProductViewTransferToRestPromotionalProductTransfer(
+            $this->productViewTransferMock,
+            2000,
+            'uuid',
+        ));
     }
 }

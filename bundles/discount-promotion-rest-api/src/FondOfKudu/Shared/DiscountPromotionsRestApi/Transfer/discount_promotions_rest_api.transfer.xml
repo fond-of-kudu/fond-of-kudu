@@ -81,6 +81,7 @@
         <property name="available" type="bool"/>
         <property name="images" singular="image" type="ProductImageStorage[]"/>
         <property name="imageSets" singular="imageSet" type="[]"/>
+        <property name="available" type="bool"/>
     </transfer>
 
     <transfer name="Discount" />
