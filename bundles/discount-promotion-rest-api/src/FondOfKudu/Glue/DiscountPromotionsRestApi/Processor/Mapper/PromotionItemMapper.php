@@ -91,7 +91,7 @@ class PromotionItemMapper extends SprykerPromotionItemMapper implements Promotio
             $productViewTransfer = $this->productStorageClient
                 ->findProductAbstractViewTransfer($productData[static::ID_PRODUCT_ABSTRACT], $locale);
 
-            if ($productViewTransfer === null) {
+            if ($productViewTransfer === null || !$productViewTransfer->getAvailable()) {
                 continue;
             }
 
@@ -109,10 +109,6 @@ class PromotionItemMapper extends SprykerPromotionItemMapper implements Promotio
                     $discountCalculationResponseTransfer->getAmount(),
                     $promotionItemTransfer->getUuid(),
                 );
-
-            if ($promotedProductTransfer === null) {
-                continue;
-            }
 
             $restPromotionalItemsAttributesTransfer->addPromotedProduct($promotedProductTransfer);
         }

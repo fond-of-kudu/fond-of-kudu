@@ -45,17 +45,13 @@ class PromotionProductMapper implements PromotionProductMapperInterface
      * @param int $discountAmount
      * @param string $discountPromotionUuid
      *
-     * @return \Generated\Shared\Transfer\PromotedProductTransfer|null
+     * @return \Generated\Shared\Transfer\PromotedProductTransfer
      */
     public function mapProductViewTransferToRestPromotionalProductTransfer(
         ProductViewTransfer $productViewTransfer,
         int $discountAmount,
         string $discountPromotionUuid
-    ): ?PromotedProductTransfer {
-        if (!$productViewTransfer->getAvailable()) {
-            return null;
-        }
-
+    ): PromotedProductTransfer {
         $specialPrice = $productViewTransfer->getPrice() - $discountAmount;
         $attributes = $this->mapAttributesFromProductViewTransfer($productViewTransfer);
         $attributes[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_SPECIAL_PRICE] = $specialPrice;

@@ -166,6 +166,10 @@ class PromotionItemMapperTest extends Unit
             ->with(1, $locale)
             ->willReturn($this->productViewTransferMock);
 
+        $this->productViewTransferMock->expects(static::atLeastOnce())
+            ->method('getAvailable')
+            ->willReturn(true);
+
         $this->promotionItemTransferMock->expects(static::atLeastOnce())
             ->method('getDiscount')
             ->willReturn($this->discountTransferMock);
@@ -191,6 +195,45 @@ class PromotionItemMapperTest extends Unit
         $this->discountCalculationResponseTransferMock->expects(static::atLeastOnce())
             ->method('getAmount')
             ->willReturn(2000);
+
+        $result = $this->mapper->mapPromotedProductsToRestPromotionalItemsAttributesTransfer(
+            $this->restPromotionalItemsAttributesTransferMock,
+            $this->promotionItemTransferMock,
+            $locale,
+        );
+
+        static::assertEquals($result, $this->restPromotionalItemsAttributesTransferMock);
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapPromotedProductsToRestPromotionalItemsAttributesTransferNotAvailable()
+    {
+        $locale = 'en_US';
+        $skus = ['sku-a'];
+
+        $this->restPromotionalItemsAttributesTransferMock->expects(static::atLeastOnce())
+            ->method('getSkus')
+            ->willReturn($skus);
+
+        $this->productResourceAliasStorageClientMock->expects(static::atLeastOnce())
+            ->method('getBulkProductAbstractStorageData')
+            ->with($skus, $locale)
+            ->willReturn([[PromotionItemMapper::ID_PRODUCT_ABSTRACT => 1]]);
+
+        $this->productStorageClientMock->expects(static::atLeastOnce())
+            ->method('findProductAbstractViewTransfer')
+            ->with(1, $locale)
+            ->willReturn($this->productViewTransferMock);
+
+        $this->productViewTransferMock->expects(static::atLeastOnce())
+            ->method('getAvailable')
+            ->willReturn(false);
+
+        $this->discountServiceMock->expects(static::never())
+            ->method('calculate')
+            ->with($this->discountCalculationRequestTransferMock);
 
         $result = $this->mapper->mapPromotedProductsToRestPromotionalItemsAttributesTransfer(
             $this->restPromotionalItemsAttributesTransferMock,
