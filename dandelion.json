@@ -32,7 +32,7 @@
     },
     "discount-promotion-rest-api": {
       "path": "bundles/discount-promotion-rest-api",
-      "version": "1.0.2"
+      "version": "1.0.3"
     },
     "product-image-storage-connector": {
       "path": "bundles/product-image-storage-connector",
