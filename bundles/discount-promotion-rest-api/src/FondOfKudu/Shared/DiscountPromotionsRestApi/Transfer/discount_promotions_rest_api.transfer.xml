@@ -84,7 +84,10 @@
         <property name="available" type="bool"/>
     </transfer>
 
-    <transfer name="Discount" />
+    <transfer name="Discount">
+        <property name="validFrom" type="string"/>
+        <property name="validTo" type="string"/>
+    </transfer>
 
     <transfer name="Currency">
         <property name="code" type="string"/>

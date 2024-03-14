@@ -5,9 +5,11 @@ namespace FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper;
 use Codeception\Test\Unit;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig;
 use FondOfKudu\Shared\DiscountPromotionsRestApi\DiscountPromotionsRestApiConstants;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
+use Generated\Shared\Transfer\PromotionItemTransfer;
 use Generated\Shared\Transfer\RestProductPriceAttributesTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -43,7 +45,20 @@ class PromotionProductMapperTest extends Unit
      */
     protected MockObject|ProductImageStorageTransfer $productImageSetStorageTransferMock;
 
+    /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\RestResponseProductImageMapperInterface
+     */
     protected MockObject|RestResponseProductImageMapperInterface $restResponseProductImageMapperMock;
+
+    /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Generated\Shared\Transfer\PromotionItemTransfer
+     */
+    protected MockObject|PromotionItemTransfer $promotionItemTransferMock;
+
+    /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Generated\Shared\Transfer\DiscountTransfer
+     */
+    protected MockObject|DiscountTransfer $discountTransferMock;
 
     /**
      * @var \FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\PromotionProductMapperInterface
@@ -80,6 +95,14 @@ class PromotionProductMapperTest extends Unit
             ->getMock();
 
         $this->restResponseProductImageMapperMock = $this->getMockBuilder(RestResponseProductImageMapper::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->promotionItemTransferMock = $this->getMockBuilder(PromotionItemTransfer::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->discountTransferMock = $this->getMockBuilder(DiscountTransfer::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -150,6 +173,22 @@ class PromotionProductMapperTest extends Unit
             ->method('getPrice')
             ->willReturn(5999);
 
+        $this->promotionItemTransferMock->expects(static::atLeastOnce())
+            ->method('getUuid')
+            ->willReturn('uuid');
+
+        $this->promotionItemTransferMock->expects(static::atLeastOnce())
+            ->method('getDiscount')
+            ->willReturn($this->discountTransferMock);
+
+        $this->discountTransferMock->expects(static::atLeastOnce())
+            ->method('getValidFrom')
+            ->willReturn('2024-01-01 00:00:00.000000');
+
+        $this->discountTransferMock->expects(static::atLeastOnce())
+            ->method('getValidTo')
+            ->willReturn('2025-01-01 00:00:00.000000');
+
         $this->restResponseProductImageMapperMock->expects(static::atLeastOnce())
             ->method('mapFromProductViewTransfer')
             ->with($this->productViewTransferMock)
@@ -170,8 +209,8 @@ class PromotionProductMapperTest extends Unit
 
         $promotedProductTransfer = $this->mapper->mapProductViewTransferToRestPromotionalProductTransfer(
             $this->productViewTransferMock,
+            $this->promotionItemTransferMock,
             2000,
-            'uuid',
         );
 
         static::assertEquals($promotedProductTransfer->getName(), 'product name');
@@ -193,8 +232,8 @@ class PromotionProductMapperTest extends Unit
         static::assertEquals($promotedProductTransfer->getAttributes()[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_STYLE], DiscountPromotionsRestApiConstants::PRODUCT_ATTR_STYLE);
         static::assertEquals($promotedProductTransfer->getAttributes()[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_MODEL], DiscountPromotionsRestApiConstants::PRODUCT_ATTR_MODEL);
         static::assertEquals($promotedProductTransfer->getAttributes()[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_MODEL_KEY], DiscountPromotionsRestApiConstants::PRODUCT_ATTR_MODEL_KEY);
-        static::assertEquals($promotedProductTransfer->getAttributes()[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_SPECIAL_PRICE_FROM], DiscountPromotionsRestApiConstants::PRODUCT_ATTR_SPECIAL_PRICE_FROM);
-        static::assertEquals($promotedProductTransfer->getAttributes()[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_SPECIAL_PRICE_TO], DiscountPromotionsRestApiConstants::PRODUCT_ATTR_SPECIAL_PRICE_TO);
+        static::assertEquals($promotedProductTransfer->getAttributes()[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_SPECIAL_PRICE_FROM], '2024-01-01');
+        static::assertEquals($promotedProductTransfer->getAttributes()[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_SPECIAL_PRICE_TO], '2025-01-01');
         static::assertEquals($promotedProductTransfer->getAttributes()[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_SPECIAL_PRICE], 3999);
         static::assertEquals($promotedProductTransfer->getAttributes()[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_FEATURE_HIGHLIGHT], DiscountPromotionsRestApiConstants::PRODUCT_ATTR_FEATURE_HIGHLIGHT);
         static::assertEquals($promotedProductTransfer->getAttributes()[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_FEATURE_EDITION], DiscountPromotionsRestApiConstants::PRODUCT_ATTR_FEATURE_EDITION);
