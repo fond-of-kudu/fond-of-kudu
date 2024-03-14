@@ -3,10 +3,13 @@
 namespace FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper;
 
 use ArrayObject;
+use DateTime;
+use Exception;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig;
 use FondOfKudu\Shared\DiscountPromotionsRestApi\DiscountPromotionsRestApiConstants;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\PromotedProductTransfer;
+use Generated\Shared\Transfer\PromotionItemTransfer;
 
 class PromotionProductMapper implements PromotionProductMapperInterface
 {
@@ -42,27 +45,39 @@ class PromotionProductMapper implements PromotionProductMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\PromotionItemTransfer $promotionItemTransfer
      * @param int $discountAmount
-     * @param string $discountPromotionUuid
      *
      * @return \Generated\Shared\Transfer\PromotedProductTransfer
      */
     public function mapProductViewTransferToRestPromotionalProductTransfer(
         ProductViewTransfer $productViewTransfer,
-        int $discountAmount,
-        string $discountPromotionUuid
+        PromotionItemTransfer $promotionItemTransfer,
+        int $discountAmount
     ): PromotedProductTransfer {
         $specialPrice = $productViewTransfer->getPrice() - $discountAmount;
-        $attributes = $this->mapAttributesFromProductViewTransfer($productViewTransfer);
-        $attributes[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_SPECIAL_PRICE] = $specialPrice;
+
+        try {
+            $specialPriceFrom = (new DateTime($promotionItemTransfer->getDiscount()->getValidFrom()))->format('Y-m-d');
+            $specialPriceTo = (new DateTime($promotionItemTransfer->getDiscount()->getValidTo()))->format('Y-m-d');
+        } catch (Exception $e) {
+            $specialPriceFrom = (new DateTime())->modify('-3 day')->format('Y-m-d');
+            $specialPriceTo = (new DateTime())->modify('+3 day')->format('Y-m-d');
+        }
+
         $prices = new ArrayObject([
             $this->restProductPriceAttributeMapper->mapFromProductViewTransfer($productViewTransfer),
         ]);
 
+        $attributes = $this->mapAttributesFromProductViewTransfer($productViewTransfer);
+        $attributes[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_SPECIAL_PRICE] = $specialPrice;
+        $attributes[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_SPECIAL_PRICE_FROM] = $specialPriceFrom;
+        $attributes[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_SPECIAL_PRICE_TO] = $specialPriceTo;
+
         return (new PromotedProductTransfer())
             ->fromArray($productViewTransfer->toArray(), true)
             ->setAbstractSku('Abstract-' . $productViewTransfer->getSku())
-            ->setDiscountPromotionUuid($discountPromotionUuid)
+            ->setDiscountPromotionUuid($promotionItemTransfer->getUuid())
             ->setImages($this->restResponseProductImageMapper->mapFromProductViewTransfer($productViewTransfer))
             ->setPrices($prices)
             ->setAttributes($attributes);
