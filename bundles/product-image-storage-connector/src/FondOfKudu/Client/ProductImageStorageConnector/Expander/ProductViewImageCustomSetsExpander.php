@@ -113,13 +113,6 @@ class ProductViewImageCustomSetsExpander implements ProductViewImageCustomSetsEx
             return $productImageSetStorageTransfer;
         }
 
-        if ($imageSetName !== ProductImageStorageConnectorConstants::DEFAULT_IMAGE_SET_NAME) {
-            return $this->getImageSetImages(
-                $ProductImageSetStorageTransferCollection,
-                ProductImageStorageConnectorConstants::DEFAULT_IMAGE_SET_NAME,
-            );
-        }
-
         return null;
     }
 }
