@@ -50,7 +50,8 @@
     "fond-of-kudu/product-image-storage-connector": "*",
     "fond-of-kudu/oms-order-confirmation": "*",
     "fond-of-kudu/oms-payone-error": "*",
-    "fond-of-kudu/oms-retry-capture-process": "*"
+    "fond-of-kudu/oms-retry-capture-process": "*",
+    "fond-of-kudu/quote": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
