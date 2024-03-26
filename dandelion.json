@@ -34,7 +34,7 @@
       "path": "bundles/discount-promotion-rest-api",
       "version": "1.0.4"
     },
-    "product-api-schedule-price-import": {
+    "product-connector": {
       "path": "bundles/product-api-schedule-price-import",
       "version": "1.0.0-alpha.0"
     },
