@@ -34,6 +34,10 @@
       "path": "bundles/discount-promotion-rest-api",
       "version": "1.0.4"
     },
+    "product-connector": {
+      "path": "bundles/product-connector",
+      "version": "1.0.0-alpha.0"
+    },
     "product-image-storage-connector": {
       "path": "bundles/product-image-storage-connector",
       "version": "1.0.4"
