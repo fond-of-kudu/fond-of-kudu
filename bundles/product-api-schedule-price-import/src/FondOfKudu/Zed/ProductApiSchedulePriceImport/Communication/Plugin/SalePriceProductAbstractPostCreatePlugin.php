@@ -19,6 +19,6 @@ class SalePriceProductAbstractPostCreatePlugin extends AbstractPlugin implements
      */
     public function postCreate(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
     {
-        return $this->getFacade()->persistProductAbstractSalePrice($productAbstractTransfer);
+        return $this->getFacade()->createPriceProductAbstractSchedule($productAbstractTransfer);
     }
 }

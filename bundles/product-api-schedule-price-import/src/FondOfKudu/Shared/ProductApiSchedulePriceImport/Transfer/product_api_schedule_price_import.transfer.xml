@@ -23,4 +23,7 @@
         <property name="url" type="ProductUrl"/>
         <property name="searchMetadata" type="array" singular="searchMetadata" associative="true"/>
     </transfer>
+
+    <transfer name="PriceProductSchedule"/>
+    <transfer name="PriceProductScheduleResponse"/>
 </transfers>

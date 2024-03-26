@@ -19,6 +19,6 @@ class SalePriceProductAbstractUpdatePlugin extends AbstractPlugin implements Pro
      */
     public function update(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
     {
-        return $this->getFacade()->persistProductAbstractSalePrice($productAbstractTransfer);
+        return $this->getFacade()->updatePriceProductAbstractSchedule($productAbstractTransfer);
     }
 }

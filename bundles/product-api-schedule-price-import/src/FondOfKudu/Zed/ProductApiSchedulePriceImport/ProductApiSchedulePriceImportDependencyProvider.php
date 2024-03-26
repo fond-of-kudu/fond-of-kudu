@@ -24,7 +24,10 @@ class ProductApiSchedulePriceImportDependencyProvider extends AbstractBundleDepe
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
-        return parent::provideBusinessLayerDependencies($container);
+        $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addPriceProductScheduleFacade($container);
+
+        return $container;
     }
 
     /**
