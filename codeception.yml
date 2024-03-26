@@ -7,6 +7,7 @@ include:
   - bundles/checkout-rest-api
   - bundles/checkout-rest-api-country-connector
   - bundles/country-zipcode-restriction
+  - bundles/product-api-schedule-price-import
   - bundles/product-image-storage-connector
   - bundles/quote
   - bundles/oms-order-confirmation
