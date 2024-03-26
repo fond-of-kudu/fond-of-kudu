@@ -1,10 +1,10 @@
 <?php
 
-namespace FondOfKudu\Zed\ProductConnector\Dependency\Facade;
+namespace FondOfKudu\Zed\ProductApiSchedulePriceImport\Communication\Plugin;
 
 use Codeception\Test\Unit;
 
-class ProductConnectorToPriceProductScheduleFacadeBridgeTest extends Unit
+class SalePriceProductAbstractUpdatePluginTest extends Unit
 {
     /**
      * @return void

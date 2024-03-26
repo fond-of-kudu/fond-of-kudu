@@ -1,5 +1,5 @@
 {
-  "name": "fond-of-kudu/product-connector",
+  "name": "fond-of-kudu/product-api-schedule-price-import",
   "description": "",
   "license": "MIT",
   "authors": [
@@ -11,6 +11,7 @@
   "require": {
     "php": ">=8.0",
     "spryker/product": "^6.24.0",
+    "spryker/product-extension": "^1.5.0",
     "spryker/price-product-schedule": "^2.7.0"
   },
   "require-dev": {

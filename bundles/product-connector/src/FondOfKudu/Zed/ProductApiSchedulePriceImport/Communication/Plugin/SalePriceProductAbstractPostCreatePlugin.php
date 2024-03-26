@@ -1,14 +1,14 @@
 <?php
 
-namespace FondOfKudu\Zed\ProductConnector\Communication\Plugin;
+namespace FondOfKudu\Zed\ProductApiSchedulePriceImport\Communication\Plugin;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPostCreatePluginInterface;
 
 /**
- * @method \FondOfKudu\Zed\ProductConnector\Business\ProductConnectorBusinessFacadeInterface getFacade()
- * @method \FondOfKudu\Zed\ProductConnector\ProductConnectorConfig getConfig()
+ * @method \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\ProductApiSchedulePriceImportBusinessFacadeInterface getFacade()
+ * @method \FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConfig getConfig()
  */
 class SalePriceProductAbstractPostCreatePlugin extends AbstractPlugin implements ProductAbstractPostCreatePluginInterface
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace FondOfKudu\Zed\ProductConnector\Dependency\Facade;
+namespace FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade;
 
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleFacadeInterface;
 
-class ProductConnectorToPriceProductScheduleFacadeBridge implements ProductConnectorToPriceProductScheduleFacadeInterface
+class ProductApiSchedulePriceImportToPriceProductScheduleFacadeBridge implements ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface
 {
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleFacadeInterface

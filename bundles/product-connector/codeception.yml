@@ -1,4 +1,4 @@
-namespace: fond-of-kudu/product-connector
+namespace: fond-of-kudu/product-api-schedule-price-import
 
 suites:
   unit:

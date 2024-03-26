@@ -49,7 +49,7 @@
     "fond-of-kudu/checkout-data-product-country-filter": "*",
     "fond-of-kudu/country-zipcode-restriction": "*",
     "fond-of-kudu/discount-promotion-rest-api": "*",
-    "fond-of-kudu/product-connector": "*",
+    "fond-of-kudu/product-api-schedule-price-import": "*",
     "fond-of-kudu/product-image-storage-connector": "*",
     "fond-of-kudu/oms-order-confirmation": "*",
     "fond-of-kudu/oms-payone-error": "*",
@@ -84,8 +84,8 @@
       "FondOfKudu\\Shared\\OmsRetryCaptureProcess\\": "bundles/oms-retry-capture-process/src/FondOfKudu/Shared/OmsRetryCaptureProcess",
       "FondOfKudu\\Zed\\OmsPayoneError\\": "bundles/oms-payone-error/src/FondOfKudu/Zed/OmsPayoneError",
       "FondOfKudu\\Shared\\OmsPayoneError\\": "bundles/oms-payone-error/src/FondOfKudu/Shared/OmsPayoneError",
-      "FondOfKudu\\Zed\\ProductConnector\\": "bundles/product-connector/src/FondOfKudu/Zed/ProductConnector",
-      "FondOfKudu\\Shared\\ProductConnector\\": "bundles/product-connector/src/FondOfKudu/Shared/ProductConnector"
+      "FondOfKudu\\Zed\\ProductApiSchedulePriceImport\\": "bundles/product-api-schedule-price-import/src/FondOfKudu/Zed/ProductApiSchedulePriceImport",
+      "FondOfKudu\\Shared\\ProductApiSchedulePriceImport\\": "bundles/product-api-schedule-price-import/src/FondOfKudu/Shared/ProductApiSchedulePriceImport"
     }
   },
   "autoload-dev": {
@@ -102,7 +102,7 @@
       "FondOfKudu\\Zed\\OmsOrderConfirmation\\": "bundles/oms-order-confirmation/tests/FondOfKudu/Zed/OmsOrderConfirmation",
       "FondOfKudu\\Zed\\OmsRetryCaptureProcess\\": "bundles/oms-retry-capture-process/tests/FondOfKudu/Zed/OmsRetryCaptureProcess",
       "FondOfKudu\\Zed\\OmsPayoneError\\": "bundles/oms-payone-error/tests/FondOfKudu/Zed/OmsPayoneError",
-      "FondOfKudu\\Zed\\ProductConnector\\": "bundles/product-connector/tests/FondOfKudu/Zed/ProductConnector",
+      "FondOfKudu\\Zed\\ProductApiSchedulePriceImport\\": "bundles/product-api-schedule-price-import/tests/FondOfKudu/Zed/ProductConnector",
       "Generated\\": "src/Generated/",
       "Orm\\Zed\\": "src/Orm/Zed/"
     }

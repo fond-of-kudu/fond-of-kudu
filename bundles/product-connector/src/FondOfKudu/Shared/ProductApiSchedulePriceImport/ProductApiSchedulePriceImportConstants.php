@@ -1,8 +1,8 @@
 <?php
 
-namespace FondOfKudu\Shared\ProductConnector;
+namespace FondOfKudu\Shared\ProductApiSchedulePriceImport;
 
-interface ProductConnectorConstants
+interface ProductApiSchedulePriceImportConstants
 {
     /**
      * @var string

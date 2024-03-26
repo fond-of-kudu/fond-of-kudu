@@ -1,16 +1,16 @@
 <?php
 
-namespace FondOfKudu\Zed\ProductConnector;
+namespace FondOfKudu\Zed\ProductApiSchedulePriceImport;
 
-use FondOfKudu\Zed\ProductConnector\Dependency\Facade\ProductConnectorToPriceProductScheduleFacadeBridge;
-use FondOfKudu\Zed\ProductConnector\Dependency\Facade\ProductConnectorToPriceProductScheduleFacadeInterface;
+use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductScheduleFacadeBridge;
+use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 /**
- * @method \FondOfKudu\Zed\ProductConnector\ProductConnectorConfig getConfig()
+ * @method \FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConfig getConfig()
  */
-class ProductConnectorDependencyProvider extends AbstractBundleDependencyProvider
+class ProductApiSchedulePriceImportDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**
      * @var string
@@ -56,7 +56,7 @@ class ProductConnectorDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container[static::FACADE_PRICE_PRODUCT_SCHEDULE] = static fn (
             Container $container
-        ): ProductConnectorToPriceProductScheduleFacadeInterface => new ProductConnectorToPriceProductScheduleFacadeBridge(
+        ): ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface => new ProductApiSchedulePriceImportToPriceProductScheduleFacadeBridge(
             $container->getLocator()->priceProductSchedule()->facade(),
         );
 
