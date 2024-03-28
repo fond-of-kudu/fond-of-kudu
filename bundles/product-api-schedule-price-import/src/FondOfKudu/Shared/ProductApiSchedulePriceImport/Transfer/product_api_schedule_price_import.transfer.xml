@@ -8,6 +8,7 @@
         <property name="isActive" type="bool"/>
         <property name="storeRelation" type="StoreRelation"/>
         <property name="searchMetadata" type="array" singular="searchMetadata" associative="true"/>
+        <property name="prices" type="PriceProduct[]" singular="price"/>
     </transfer>
 
     <transfer name="ProductConcrete">
@@ -24,6 +25,19 @@
         <property name="searchMetadata" type="array" singular="searchMetadata" associative="true"/>
     </transfer>
 
-    <transfer name="PriceProductSchedule"/>
+    <transfer name="PriceProduct">
+        <property name="moneyValue" type="MoneyValue"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="currency" type="Currency"/>
+    </transfer>
+
+    <transfer name="PriceProductSchedule">
+        <property name="priceProduct" type="PriceProduct"/>
+    </transfer>
+
+    <transfer name="Currency"/>
+
     <transfer name="PriceProductScheduleResponse"/>
 </transfers>

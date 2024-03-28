@@ -2,6 +2,7 @@
 
 namespace FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper;
 
+use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductFacadeInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConfig;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
@@ -15,11 +16,20 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
     protected ProductApiSchedulePriceImportConfig $apiSchedulePriceImportConfig;
 
     /**
+     * @var \FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductFacadeInterface
+     */
+    protected ProductApiSchedulePriceImportToPriceProductFacadeInterface $priceProductFacade;
+
+    /**
+     * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductFacadeInterface $priceProductFacade
      * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConfig $apiSchedulePriceImportConfig
      */
-    public function __construct(ProductApiSchedulePriceImportConfig $apiSchedulePriceImportConfig)
-    {
+    public function __construct(
+        ProductApiSchedulePriceImportToPriceProductFacadeInterface $priceProductFacade,
+        ProductApiSchedulePriceImportConfig $apiSchedulePriceImportConfig
+    ) {
         $this->apiSchedulePriceImportConfig = $apiSchedulePriceImportConfig;
+        $this->priceProductFacade = $priceProductFacade;
     }
 
     /**
@@ -34,11 +44,13 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         $specialPriceFrom = $productAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePriceFrom()];
         $specialPriceTo = $productAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePriceTo()];
 
-        $priceProductScheduleListTransfer = (new PriceProductScheduleListTransfer())->setIdPriceProductScheduleList(1);
-        $priceProductScheduleTransfer = new PriceProductScheduleTransfer();
-        $priceProductScheduleTransfer->setPriceProductScheduleList($priceProductScheduleListTransfer);
-        $priceProductScheduleTransfer->setActiveFrom($specialPriceFrom);
-        $priceProductScheduleTransfer->setActiveTo($specialPriceTo);
+        $priceProductScheduleListTransfer = (new PriceProductScheduleListTransfer())
+            ->setIdPriceProductScheduleList(1);
+
+        $priceProductScheduleTransfer = (new PriceProductScheduleTransfer())
+            ->setPriceProductScheduleList($priceProductScheduleListTransfer)
+            ->setActiveFrom($specialPriceFrom)
+            ->setActiveTo($specialPriceTo);
 
         foreach ($productAbstractTransfer->getStoreRelation()->getStores() as $storeTransfer) {
             $priceProductScheduleTransfer->setStore($storeTransfer);
@@ -47,7 +59,11 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         }
 
         foreach ($productAbstractTransfer->getPrices() as $priceProductTransfer) {
-            $priceProductScheduleTransfer->setPriceProduct($priceProductTransfer);
+            $priceTypeTransfer = $this->priceProductFacade->findPriceTypeByName(
+                $priceProductTransfer->getPriceTypeName(),
+            );
+
+            $priceProductScheduleTransfer->setPriceProduct($priceProductTransfer->setPriceType($priceTypeTransfer));
             $priceProductScheduleTransfer->setCurrency($priceProductTransfer->getMoneyValue()->getCurrency());
 
             break;

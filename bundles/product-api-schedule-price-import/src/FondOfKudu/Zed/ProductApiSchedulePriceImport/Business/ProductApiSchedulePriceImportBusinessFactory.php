@@ -6,6 +6,7 @@ use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\PriceProductSch
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\PriceProductScheduleMapperInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductAbstractCreator;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductAbstractCreatorInterface;
+use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductFacadeInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -32,7 +33,10 @@ class ProductApiSchedulePriceImportBusinessFactory extends AbstractBusinessFacto
      */
     protected function createPriceProductScheduleMapper(): PriceProductScheduleMapperInterface
     {
-        return new PriceProductScheduleMapper($this->getConfig());
+        return new PriceProductScheduleMapper(
+            $this->getPriceProductFacade(),
+            $this->getConfig(),
+        );
     }
 
     /**
@@ -41,5 +45,13 @@ class ProductApiSchedulePriceImportBusinessFactory extends AbstractBusinessFacto
     protected function getPriceProductScheduleFacade(): ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface
     {
         return $this->getProvidedDependency(ProductApiSchedulePriceImportDependencyProvider::FACADE_PRICE_PRODUCT_SCHEDULE);
+    }
+
+    /**
+     * @return \FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductFacadeInterface
+     */
+    protected function getPriceProductFacade(): ProductApiSchedulePriceImportToPriceProductFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductApiSchedulePriceImportDependencyProvider::FACADE_PRICE_PRODUCT);
     }
 }
