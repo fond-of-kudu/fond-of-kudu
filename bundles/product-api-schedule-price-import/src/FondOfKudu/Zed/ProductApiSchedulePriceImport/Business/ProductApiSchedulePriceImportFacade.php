@@ -4,8 +4,12 @@ namespace FondOfKudu\Zed\ProductApiSchedulePriceImport\Business;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
-interface ProductApiSchedulePriceImportBusinessFacadeInterface
+/**
+ * @method \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\ProductApiSchedulePriceImportBusinessFactory getFactory()
+ */
+class ProductApiSchedulePriceImportFacade extends AbstractFacade implements ProductApiSchedulePriceImportFacadeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
@@ -14,7 +18,11 @@ interface ProductApiSchedulePriceImportBusinessFacadeInterface
      */
     public function createPriceProductAbstractSchedule(
         ProductAbstractTransfer $productAbstractTransfer
-    ): ProductAbstractTransfer;
+    ): ProductAbstractTransfer {
+        return $this->getFactory()
+            ->createSalePriceProductAbstractCreator()
+            ->createProductSchedulePriceByProductAbstractTransfer($productAbstractTransfer);
+    }
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
@@ -23,7 +31,9 @@ interface ProductApiSchedulePriceImportBusinessFacadeInterface
      */
     public function updatePriceProductAbstractSchedule(
         ProductAbstractTransfer $productAbstractTransfer
-    ): ProductAbstractTransfer;
+    ): ProductAbstractTransfer {
+        return $productAbstractTransfer;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
@@ -32,7 +42,9 @@ interface ProductApiSchedulePriceImportBusinessFacadeInterface
      */
     public function createPriceProductConcreteSchedule(
         ProductConcreteTransfer $productConcreteTransfer
-    ): ProductConcreteTransfer;
+    ): ProductConcreteTransfer {
+        return $productConcreteTransfer;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
@@ -41,5 +53,7 @@ interface ProductApiSchedulePriceImportBusinessFacadeInterface
      */
     public function updatePriceProductConcreteSchedule(
         ProductConcreteTransfer $productConcreteTransfer
-    ): ProductConcreteTransfer;
+    ): ProductConcreteTransfer {
+        return $productConcreteTransfer;
+    }
 }

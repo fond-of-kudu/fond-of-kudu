@@ -23,6 +23,7 @@ class ProductApiSchedulePriceImportBusinessFactory extends AbstractBusinessFacto
         return new SalePriceProductAbstractCreator(
             $this->getPriceProductScheduleFacade(),
             $this->createPriceProductScheduleMapper(),
+            $this->getConfig(),
         );
     }
 

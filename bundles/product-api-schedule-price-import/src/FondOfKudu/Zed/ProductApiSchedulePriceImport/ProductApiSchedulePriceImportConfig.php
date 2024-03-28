@@ -28,4 +28,37 @@ class ProductApiSchedulePriceImportConfig extends AbstractBundleConfig
             ProductApiSchedulePriceImportConstants::PRICE_DEFAULT,
         );
     }
+
+    /**
+     * @return string
+     */
+    public function getProductAttributeSalePrice(): string
+    {
+        return $this->get(
+            ProductApiSchedulePriceImportConstants::PRODUCT_ATTR_SPECIAL_PRICE,
+            ProductApiSchedulePriceImportConstants::SPECIAL_PRICE,
+        );
+    }
+
+    /**
+     * @return string
+     */
+    public function getProductAttributeSalePriceFrom(): string
+    {
+        return $this->get(
+            ProductApiSchedulePriceImportConstants::PRODUCT_ATTR_SPECIAL_PRICE_FROM,
+            ProductApiSchedulePriceImportConstants::SPECIAL_PRICE_FROM,
+        );
+    }
+
+    /**
+     * @return string
+     */
+    public function getProductAttributeSalePriceTo(): string
+    {
+        return $this->get(
+            ProductApiSchedulePriceImportConstants::PRODUCT_ATTR_SPECIAL_PRICE_TO,
+            ProductApiSchedulePriceImportConstants::SPECIAL_PRICE_TO,
+        );
+    }
 }
