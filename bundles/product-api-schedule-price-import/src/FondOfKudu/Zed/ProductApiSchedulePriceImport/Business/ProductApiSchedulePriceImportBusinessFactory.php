@@ -32,7 +32,7 @@ class ProductApiSchedulePriceImportBusinessFactory extends AbstractBusinessFacto
      */
     protected function createPriceProductScheduleMapper(): PriceProductScheduleMapperInterface
     {
-        return new PriceProductScheduleMapper();
+        return new PriceProductScheduleMapper($this->getConfig());
     }
 
     /**

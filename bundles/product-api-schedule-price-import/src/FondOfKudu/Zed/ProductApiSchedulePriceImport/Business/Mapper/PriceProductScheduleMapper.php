@@ -2,13 +2,26 @@
 
 namespace FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper;
 
-use FondOfKudu\Shared\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConstants;
+use FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConfig;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 
 class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
 {
+    /**
+     * @var \FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConfig
+     */
+    protected ProductApiSchedulePriceImportConfig $apiSchedulePriceImportConfig;
+
+    /**
+     * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConfig $apiSchedulePriceImportConfig
+     */
+    public function __construct(ProductApiSchedulePriceImportConfig $apiSchedulePriceImportConfig)
+    {
+        $this->apiSchedulePriceImportConfig = $apiSchedulePriceImportConfig;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
@@ -18,8 +31,8 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         ProductAbstractTransfer $productAbstractTransfer
     ): PriceProductScheduleTransfer {
         $productAttributes = $productAbstractTransfer->getAttributes();
-        $specialPriceFrom = $productAttributes[ProductApiSchedulePriceImportConstants::PRODUCT_ATTR_SPECIAL_PRICE_FROM];
-        $specialPriceTo = $productAttributes[ProductApiSchedulePriceImportConstants::PRODUCT_ATTR_SPECIAL_PRICE_TO];
+        $specialPriceFrom = $productAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePriceFrom()];
+        $specialPriceTo = $productAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePriceTo()];
 
         $priceProductScheduleListTransfer = (new PriceProductScheduleListTransfer())->setIdPriceProductScheduleList(1);
         $priceProductScheduleTransfer = new PriceProductScheduleTransfer();
