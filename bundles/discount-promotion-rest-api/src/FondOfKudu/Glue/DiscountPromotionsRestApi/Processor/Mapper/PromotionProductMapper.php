@@ -74,9 +74,15 @@ class PromotionProductMapper implements PromotionProductMapperInterface
         $attributes[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_SPECIAL_PRICE_FROM] = $specialPriceFrom;
         $attributes[DiscountPromotionsRestApiConstants::PRODUCT_ATTR_SPECIAL_PRICE_TO] = $specialPriceTo;
 
+        if (getenv('DISCOUNT_PROMOTION_REST_API_FF_PRODUCT_PRICE')) {
+            $sku = $productViewTransfer->getSku();
+        } else {
+            $sku = 'Abstract-' . $productViewTransfer->getSku();
+        }
+
         return (new PromotedProductTransfer())
             ->fromArray($productViewTransfer->toArray(), true)
-            ->setAbstractSku('Abstract-' . $productViewTransfer->getSku())
+            ->setAbstractSku($sku)
             ->setDiscountPromotionUuid($promotionItemTransfer->getUuid())
             ->setImages($this->restResponseProductImageMapper->mapFromProductViewTransfer($productViewTransfer))
             ->setPrices($prices)
