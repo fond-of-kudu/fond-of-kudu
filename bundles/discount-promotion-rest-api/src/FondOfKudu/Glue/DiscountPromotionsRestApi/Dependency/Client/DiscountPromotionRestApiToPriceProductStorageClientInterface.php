@@ -5,6 +5,7 @@ namespace FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client;
 interface DiscountPromotionRestApiToPriceProductStorageClientInterface
 {
     /**
+     *
      * Specification:
      *  - Returns abstract product prices from Storage.
      * @api

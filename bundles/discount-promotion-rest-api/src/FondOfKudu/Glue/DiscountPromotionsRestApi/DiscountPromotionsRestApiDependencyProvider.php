@@ -105,7 +105,7 @@ class DiscountPromotionsRestApiDependencyProvider extends AbstractBundleDependen
 
         return $container;
     }
-    
+
     /**
      * @param \Spryker\Glue\Kernel\Container $container
      *

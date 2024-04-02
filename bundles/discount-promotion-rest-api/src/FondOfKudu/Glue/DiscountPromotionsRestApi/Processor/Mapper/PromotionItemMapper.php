@@ -99,7 +99,7 @@ class PromotionItemMapper extends SprykerPromotionItemMapper implements Promotio
             }
 
             if (getenv('DISCOUNT_PROMOTION_REST_API_FF_PRODUCT_PRICE')) {
-                /** @var array<\Generated\Shared\Transfer\PriceProductTransfer>*/
+                /** @var array<\Generated\Shared\Transfer\PriceProductTransfer> $priceTransfers*/
                 $priceTransfers = $this->priceProductStorageClient->getPriceProductAbstractTransfers($productData[static::ID_PRODUCT_ABSTRACT]);
                 $price = null;
                 foreach ($priceTransfers as $priceTransfer) {
