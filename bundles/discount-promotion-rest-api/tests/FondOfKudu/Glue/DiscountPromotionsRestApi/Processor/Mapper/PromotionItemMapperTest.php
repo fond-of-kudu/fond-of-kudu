@@ -146,7 +146,7 @@ class PromotionItemMapperTest extends Unit
             $this->discountServiceMock,
             $this->promotionProductMapperMock,
             $this->discountCalculationRequestMapperMock,
-            $this->priceProductStorageClientMock
+            $this->priceProductStorageClientMock,
         );
     }
 
