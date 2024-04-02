@@ -6,7 +6,6 @@ use Codeception\Test\Unit;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiConfig;
 use FondOfKudu\Shared\DiscountPromotionsRestApi\DiscountPromotionsRestApiConstants;
 use Generated\Shared\Transfer\DiscountTransfer;
-use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\PromotionItemTransfer;
@@ -39,11 +38,6 @@ class PromotionProductMapperTest extends Unit
      * @var \PHPUnit\Framework\MockObject\MockObject|\Generated\Shared\Transfer\RestProductPriceAttributesTransfer
      */
     protected MockObject|RestProductPriceAttributesTransfer $restProductPriceAttributesTransferMock;
-
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Generated\Shared\Transfer\ProductImageStorageTransfer
-     */
-    protected MockObject|ProductImageStorageTransfer $productImageSetStorageTransferMock;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper\RestResponseProductImageMapperInterface
@@ -87,10 +81,6 @@ class PromotionProductMapperTest extends Unit
             ->getMock();
 
         $this->restProductPriceAttributesTransferMock = $this->getMockBuilder(RestProductPriceAttributesTransfer::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->productImageSetStorageTransferMock = $this->getMockBuilder(ProductImageSetTransfer::class)
             ->disableOriginalConstructor()
             ->getMock();
 

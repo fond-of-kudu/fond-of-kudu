@@ -84,6 +84,11 @@ class PromotionItemMapperTest extends Unit
     protected PromotionItemMapper $mapper;
 
     /**
+     * @var (\FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionRestApiToPriceProductStorageClientBridge&\PHPUnit\Framework\MockObject\MockObject)|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected MockObject|DiscountPromotionRestApiToPriceProductStorageClientBridge $priceProductStorageClientMock;
+
+    /**
      * @return void
      */
     protected function _before(): void
