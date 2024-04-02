@@ -6,6 +6,7 @@ use Spryker\Client\PriceProductStorage\PriceProductStorageClientInterface;
 
 class DiscountPromotionRestApiToPriceProductStorageClientBridge implements DiscountPromotionRestApiToPriceProductStorageClientInterface
 {
+
     /**
      * @var \Spryker\Client\PriceProductStorage\PriceProductStorageClientInterface
      */

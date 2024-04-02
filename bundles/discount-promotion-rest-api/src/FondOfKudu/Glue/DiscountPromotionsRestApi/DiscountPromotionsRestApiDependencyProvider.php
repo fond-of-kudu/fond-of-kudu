@@ -99,14 +99,13 @@ class DiscountPromotionsRestApiDependencyProvider extends AbstractBundleDependen
     {
         $container[static::CLIENT_PRICE_PRODUCT_STORAGE] = static fn (
             Container $container
-        ):DiscountPromotionRestApiToPriceProductStorageClientInterface  => new DiscountPromotionRestApiToPriceProductStorageClientBridge(
+        ): DiscountPromotionRestApiToPriceProductStorageClientInterface => new DiscountPromotionRestApiToPriceProductStorageClientBridge(
             $container->getLocator()->priceProductStorage()->client(),
         );
 
         return $container;
     }
-
-
+    
     /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
