@@ -2,6 +2,8 @@
 
 namespace FondOfKudu\Glue\DiscountPromotionsRestApi;
 
+use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionRestApiToPriceProductStorageClientBridge;
+use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionRestApiToPriceProductStorageClientInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionRestApiToProductResourceAliasStorageClientBridge;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionRestApiToProductResourceAliasStorageClientInterface;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToCurrencyClientBridge;
@@ -34,11 +36,6 @@ class DiscountPromotionsRestApiDependencyProvider extends AbstractBundleDependen
      * @var string
      */
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
-
-    /**
-     * @var string
-     */
-    public const CLIENT_PRODUCT_IMAGE_STORAGE = 'CLIENT_PRODUCT_IMAGE_STORAGE';
 
     /**
      * @var string
@@ -88,6 +85,22 @@ class DiscountPromotionsRestApiDependencyProvider extends AbstractBundleDependen
             Container $container
         ): DiscountPromotionsRestApiToProductStorageClientInterface => new DiscountPromotionsRestApiToProductStorageClientBridge(
             $container->getLocator()->productStorage()->client(),
+        );
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addPriceProductStorageClient(Container $container): Container
+    {
+        $container[static::CLIENT_PRICE_PRODUCT_STORAGE] = static fn (
+            Container $container
+        ): DiscountPromotionRestApiToPriceProductStorageClientInterface => new DiscountPromotionRestApiToPriceProductStorageClientBridge(
+            $container->getLocator()->priceProductStorage()->client(),
         );
 
         return $container;

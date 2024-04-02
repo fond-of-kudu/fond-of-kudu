@@ -3,6 +3,7 @@
 namespace FondOfKudu\Glue\DiscountPromotionsRestApi\Processor\Mapper;
 
 use Codeception\Test\Unit;
+use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionRestApiToPriceProductStorageClientBridge;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionRestApiToProductResourceAliasStorageClientBridge;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Client\DiscountPromotionsRestApiToProductStorageClientBridge;
 use FondOfKudu\Glue\DiscountPromotionsRestApi\Dependency\Service\DiscountPromotionsRestApiToDiscountServiceBridge;
@@ -95,6 +96,10 @@ class PromotionItemMapperTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->priceProductStorageClientMock = $this->getMockBuilder(DiscountPromotionRestApiToPriceProductStorageClientBridge::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->discountServiceMock = $this->getMockBuilder(DiscountPromotionsRestApiToDiscountServiceBridge::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -141,6 +146,7 @@ class PromotionItemMapperTest extends Unit
             $this->discountServiceMock,
             $this->promotionProductMapperMock,
             $this->discountCalculationRequestMapperMock,
+            $this->priceProductStorageClientMock,
         );
     }
 
