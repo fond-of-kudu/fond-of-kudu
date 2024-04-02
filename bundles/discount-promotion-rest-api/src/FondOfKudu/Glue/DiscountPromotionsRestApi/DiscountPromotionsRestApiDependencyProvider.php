@@ -54,6 +54,7 @@ class DiscountPromotionsRestApiDependencyProvider extends AbstractBundleDependen
         $container = $this->addProductStorageClient($container);
         $container = $this->addDiscountService($container);
         $container = $this->addCurrencyClient($container);
+        $container = $this->addPriceProductStorageClient($container);
 
         return $container;
     }
