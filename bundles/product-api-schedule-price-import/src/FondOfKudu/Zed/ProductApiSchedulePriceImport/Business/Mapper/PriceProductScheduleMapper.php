@@ -46,7 +46,7 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         $priceProductScheduleTransfers = [];
 
         $priceProductScheduleListTransfer = (new PriceProductScheduleListTransfer())
-            ->setIdPriceProductScheduleList(1);
+            ->setIdPriceProductScheduleList($this->apiSchedulePriceImportConfig->getIdPriceProductScheduleList());
 
         $priceProductScheduleTransfer = (new PriceProductScheduleTransfer())
             ->setPriceProductScheduleList($priceProductScheduleListTransfer)
@@ -55,14 +55,12 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
 
         foreach ($productAbstractTransfer->getPrices() as $priceProductTransfer) {
             foreach ($productAbstractTransfer->getStoreRelation()->getStores() as $storeTransfer) {
-                $priceProductScheduleTransfer->setStore($storeTransfer);
-
                 $priceTypeTransfer = $this->priceProductFacade->findPriceTypeByName(
                     $this->apiSchedulePriceImportConfig->getPriceDimensionRrp(),
                 );
 
                 $priceProductTransfer->getMoneyValue()->setGrossAmount($specialPrice);
-
+                $priceProductScheduleTransfer->setStore($storeTransfer);
                 $priceProductScheduleTransfer->setPriceProduct($priceProductTransfer->setPriceType($priceTypeTransfer));
                 $priceProductScheduleTransfer->setCurrency($priceProductTransfer->getMoneyValue()->getCurrency());
 

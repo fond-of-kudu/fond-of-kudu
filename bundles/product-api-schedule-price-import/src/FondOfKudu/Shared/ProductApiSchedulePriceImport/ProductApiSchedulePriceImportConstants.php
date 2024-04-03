@@ -55,4 +55,14 @@ interface ProductApiSchedulePriceImportConstants
      * @var string
      */
     public const SPECIAL_PRICE_TO = 'special_price_to';
+
+    /**
+     * @var string
+     */
+    public const ID_PRICE_PRODUCT_SCHEDULE_LIST = 'ID_PRICE_PRODUCT_SCHEDULE_LIST';
+
+    /**
+     * @var int
+     */
+    public const ID_PRICE_PRODUCT_SCHEDULE_LIST_DEFAULT_VALUE = 1;
 }

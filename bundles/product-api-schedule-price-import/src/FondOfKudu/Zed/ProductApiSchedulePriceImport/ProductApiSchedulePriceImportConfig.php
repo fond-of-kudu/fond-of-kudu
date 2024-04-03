@@ -61,4 +61,15 @@ class ProductApiSchedulePriceImportConfig extends AbstractBundleConfig
             ProductApiSchedulePriceImportConstants::SPECIAL_PRICE_TO,
         );
     }
+
+    /**
+     * @return int
+     */
+    public function getIdPriceProductScheduleList(): int
+    {
+        return $this->get(
+            ProductApiSchedulePriceImportConstants::ID_PRICE_PRODUCT_SCHEDULE_LIST,
+            ProductApiSchedulePriceImportConstants::ID_PRICE_PRODUCT_SCHEDULE_LIST_DEFAULT_VALUE,
+        );
+    }
 }
