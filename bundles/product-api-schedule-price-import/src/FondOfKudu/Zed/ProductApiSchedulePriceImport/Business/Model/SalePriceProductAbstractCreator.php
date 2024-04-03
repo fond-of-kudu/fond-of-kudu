@@ -51,10 +51,14 @@ class SalePriceProductAbstractCreator implements SalePriceProductAbstractCreator
             return $productAbstractTransfer;
         }
 
-        $priceProductScheduleTransfer = $this->priceProductScheduleMapper->fromProductAbstractTransfer($productAbstractTransfer);
-        $this->priceProductScheduleFacade->createAndApplyPriceProductSchedule($priceProductScheduleTransfer);
+        $priceProductScheduleTransfers = $this->priceProductScheduleMapper
+            ->fromProductAbstractTransfer($productAbstractTransfer);
 
-         return $productAbstractTransfer;
+        foreach ($priceProductScheduleTransfers as $priceProductScheduleTransfer) {
+            $this->priceProductScheduleFacade->createAndApplyPriceProductSchedule($priceProductScheduleTransfer);
+        }
+
+        return $productAbstractTransfer;
     }
 
     /**

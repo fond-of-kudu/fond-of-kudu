@@ -14,7 +14,7 @@ class ProductApiSchedulePriceImportConfig extends AbstractBundleConfig
     {
         return $this->get(
             ProductApiSchedulePriceImportConstants::PRICE_DIMENSION_RRP,
-            ProductApiSchedulePriceImportConstants::PRICE_ORIGINAL,
+            ProductApiSchedulePriceImportConstants::PRICE_DEFAULT,
         );
     }
 
@@ -25,7 +25,7 @@ class ProductApiSchedulePriceImportConfig extends AbstractBundleConfig
     {
         return $this->get(
             ProductApiSchedulePriceImportConstants::PRICE_DIMENSION_SALE,
-            ProductApiSchedulePriceImportConstants::PRICE_DEFAULT,
+            ProductApiSchedulePriceImportConstants::PRICE_ORIGINAL,
         );
     }
 

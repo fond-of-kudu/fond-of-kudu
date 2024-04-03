@@ -35,14 +35,15 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
-    public function fromProductAbstractTransfer(
-        ProductAbstractTransfer $productAbstractTransfer
-    ): PriceProductScheduleTransfer {
+    public function fromProductAbstractTransfer(ProductAbstractTransfer $productAbstractTransfer): array
+    {
         $productAttributes = $productAbstractTransfer->getAttributes();
         $specialPriceFrom = $productAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePriceFrom()];
         $specialPriceTo = $productAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePriceTo()];
+        $specialPrice = $productAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePrice()];
+        $priceProductScheduleTransfers = [];
 
         $priceProductScheduleListTransfer = (new PriceProductScheduleListTransfer())
             ->setIdPriceProductScheduleList(1);
@@ -52,23 +53,23 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
             ->setActiveFrom($specialPriceFrom)
             ->setActiveTo($specialPriceTo);
 
-        foreach ($productAbstractTransfer->getStoreRelation()->getStores() as $storeTransfer) {
-            $priceProductScheduleTransfer->setStore($storeTransfer);
-
-            break;
-        }
-
         foreach ($productAbstractTransfer->getPrices() as $priceProductTransfer) {
-            $priceTypeTransfer = $this->priceProductFacade->findPriceTypeByName(
-                $priceProductTransfer->getPriceTypeName(),
-            );
+            foreach ($productAbstractTransfer->getStoreRelation()->getStores() as $storeTransfer) {
+                $priceProductScheduleTransfer->setStore($storeTransfer);
 
-            $priceProductScheduleTransfer->setPriceProduct($priceProductTransfer->setPriceType($priceTypeTransfer));
-            $priceProductScheduleTransfer->setCurrency($priceProductTransfer->getMoneyValue()->getCurrency());
+                $priceTypeTransfer = $this->priceProductFacade->findPriceTypeByName(
+                    $this->apiSchedulePriceImportConfig->getPriceDimensionRrp(),
+                );
 
-            break;
+                $priceProductTransfer->getMoneyValue()->setGrossAmount($specialPrice);
+
+                $priceProductScheduleTransfer->setPriceProduct($priceProductTransfer->setPriceType($priceTypeTransfer));
+                $priceProductScheduleTransfer->setCurrency($priceProductTransfer->getMoneyValue()->getCurrency());
+
+                $priceProductScheduleTransfers[] = $priceProductScheduleTransfer;
+            }
         }
 
-        return $priceProductScheduleTransfer;
+        return $priceProductScheduleTransfers;
     }
 }
