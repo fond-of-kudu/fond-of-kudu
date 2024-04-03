@@ -60,9 +60,10 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
                 );
 
                 $priceProductTransfer->getMoneyValue()->setGrossAmount($specialPrice);
-                $priceProductScheduleTransfer->setStore($storeTransfer);
-                $priceProductScheduleTransfer->setPriceProduct($priceProductTransfer->setPriceType($priceTypeTransfer));
-                $priceProductScheduleTransfer->setCurrency($priceProductTransfer->getMoneyValue()->getCurrency());
+                $priceProductScheduleTransfer
+                    ->setStore($storeTransfer)
+                    ->setPriceProduct($priceProductTransfer->setPriceType($priceTypeTransfer))
+                    ->setCurrency($priceProductTransfer->getMoneyValue()->getCurrency());
 
                 $priceProductScheduleTransfers[] = $priceProductScheduleTransfer;
             }

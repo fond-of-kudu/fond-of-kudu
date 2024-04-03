@@ -25,8 +25,6 @@ interface ProductApiSchedulePriceImportConstants
     public const PRICE_DEFAULT = 'DEFAULT';
 
     /**
-     * @string
-     *
      * @var string
      */
     public const PRODUCT_ATTR_SPECIAL_PRICE = 'PRODUCT_ATTR_SPECIAL_PRICE';
