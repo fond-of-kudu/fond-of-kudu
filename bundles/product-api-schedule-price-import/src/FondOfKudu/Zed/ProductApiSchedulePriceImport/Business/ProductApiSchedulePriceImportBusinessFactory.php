@@ -4,8 +4,8 @@ namespace FondOfKudu\Zed\ProductApiSchedulePriceImport\Business;
 
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\PriceProductScheduleMapper;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\PriceProductScheduleMapperInterface;
-use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductAbstractCreator;
-use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductAbstractCreatorInterface;
+use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductAbstractHandler;
+use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductAbstractHandlerInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductFacadeInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportDependencyProvider;
@@ -13,17 +13,19 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConfig getConfig()
+ * @method \FondOfKudu\Zed\ProductApiSchedulePriceImport\Persistence\ProductApiSchedulePriceImportRepositoryInterface getRepository()
  */
 class ProductApiSchedulePriceImportBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductAbstractCreatorInterface
+     * @return \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductAbstractHandlerInterface
      */
-    public function createSalePriceProductAbstractCreator(): SalePriceProductAbstractCreatorInterface
+    public function createSalePriceProductAbstractHandler(): SalePriceProductAbstractHandlerInterface
     {
-        return new SalePriceProductAbstractCreator(
+        return new SalePriceProductAbstractHandler(
             $this->getPriceProductScheduleFacade(),
             $this->createPriceProductScheduleMapper(),
+            $this->getRepository(),
             $this->getConfig(),
         );
     }

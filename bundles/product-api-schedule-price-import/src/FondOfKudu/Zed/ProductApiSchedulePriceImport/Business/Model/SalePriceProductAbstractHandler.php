@@ -4,10 +4,11 @@ namespace FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model;
 
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\PriceProductScheduleMapperInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface;
+use FondOfKudu\Zed\ProductApiSchedulePriceImport\Persistence\ProductApiSchedulePriceImportRepositoryInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConfig;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 
-class SalePriceProductAbstractCreator implements SalePriceProductAbstractCreatorInterface
+class SalePriceProductAbstractHandler implements SalePriceProductAbstractHandlerInterface
 {
     /**
      * @var \FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface
@@ -25,18 +26,26 @@ class SalePriceProductAbstractCreator implements SalePriceProductAbstractCreator
     protected ProductApiSchedulePriceImportConfig $apiSchedulePriceImportConfig;
 
     /**
+     * @var \FondOfKudu\Zed\ProductApiSchedulePriceImport\Persistence\ProductApiSchedulePriceImportRepositoryInterface
+     */
+    protected ProductApiSchedulePriceImportRepositoryInterface $productApiSchedulePriceImportRepository;
+
+    /**
      * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface $priceProductScheduleFacade
      * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\PriceProductScheduleMapperInterface $priceProductScheduleMapper
+     * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Persistence\ProductApiSchedulePriceImportRepositoryInterface $productApiSchedulePriceImportRepository
      * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConfig $apiSchedulePriceImportConfig
      */
     public function __construct(
         ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface $priceProductScheduleFacade,
         PriceProductScheduleMapperInterface $priceProductScheduleMapper,
+        ProductApiSchedulePriceImportRepositoryInterface $productApiSchedulePriceImportRepository,
         ProductApiSchedulePriceImportConfig $apiSchedulePriceImportConfig
     ) {
         $this->priceProductScheduleFacade = $priceProductScheduleFacade;
         $this->priceProductScheduleMapper = $priceProductScheduleMapper;
         $this->apiSchedulePriceImportConfig = $apiSchedulePriceImportConfig;
+        $this->productApiSchedulePriceImportRepository = $productApiSchedulePriceImportRepository;
     }
 
     /**
@@ -44,10 +53,10 @@ class SalePriceProductAbstractCreator implements SalePriceProductAbstractCreator
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function createProductSchedulePriceByProductAbstractTransfer(
+    public function onCreateProductAbstract(
         ProductAbstractTransfer $productAbstractTransfer
     ): ProductAbstractTransfer {
-        if ($this->validateSpecialPriceAttributes($productAbstractTransfer) === false) {
+        if (!$this->validateSpecialPriceAttributes($productAbstractTransfer)) {
             return $productAbstractTransfer;
         }
 
@@ -56,6 +65,28 @@ class SalePriceProductAbstractCreator implements SalePriceProductAbstractCreator
 
         foreach ($priceProductScheduleTransfers as $priceProductScheduleTransfer) {
             $this->priceProductScheduleFacade->createAndApplyPriceProductSchedule($priceProductScheduleTransfer);
+        }
+
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function onUpdateProductAbstract(
+        ProductAbstractTransfer $productAbstractTransfer
+    ): ProductAbstractTransfer {
+        if (!$this->validateSpecialPriceAttributes($productAbstractTransfer)) {
+            return $productAbstractTransfer;
+        }
+
+        $priceProductScheduleTransfers = $this->productApiSchedulePriceImportRepository
+            ->findLatestPriceProductScheduleByIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
+
+        if ($priceProductScheduleTransfers === null) {
+            $this->onCreateProductAbstract($productAbstractTransfer);
         }
 
         return $productAbstractTransfer;

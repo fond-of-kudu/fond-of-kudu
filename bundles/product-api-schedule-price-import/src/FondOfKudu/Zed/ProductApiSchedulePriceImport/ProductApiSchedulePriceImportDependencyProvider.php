@@ -6,6 +6,7 @@ use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSch
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductFacadeInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductScheduleFacadeBridge;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface;
+use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -23,6 +24,11 @@ class ProductApiSchedulePriceImportDependencyProvider extends AbstractBundleDepe
      * @var string
      */
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+
+    /**
+     * @var string
+     */
+    public const QUERY_PRICE_PRODUCT_SCHEDULE = 'QUERY_PRICE_PRODUCT_SCHEDULE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -55,7 +61,10 @@ class ProductApiSchedulePriceImportDependencyProvider extends AbstractBundleDepe
      */
     public function providePersistenceLayerDependencies(Container $container): Container
     {
-        return parent::providePersistenceLayerDependencies($container);
+        $container = parent::providePersistenceLayerDependencies($container);
+        $container = $this->addPriceProductScheduleQuery($container);
+
+        return $container;
     }
 
     /**
@@ -86,6 +95,18 @@ class ProductApiSchedulePriceImportDependencyProvider extends AbstractBundleDepe
         ): ProductApiSchedulePriceImportToPriceProductFacadeInterface => new ProductApiSchedulePriceImportToPriceProductFacadeBridge(
             $container->getLocator()->priceProduct()->facade(),
         );
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductScheduleQuery(Container $container): Container
+    {
+        $container[static::QUERY_PRICE_PRODUCT_SCHEDULE] = SpyPriceProductScheduleQuery::create();
 
         return $container;
     }
