@@ -6,6 +6,7 @@ use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSch
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConfig;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 
 class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
@@ -28,47 +29,41 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         ProductApiSchedulePriceImportToPriceProductFacadeInterface $priceProductFacade,
         ProductApiSchedulePriceImportConfig $apiSchedulePriceImportConfig
     ) {
-        $this->apiSchedulePriceImportConfig = $apiSchedulePriceImportConfig;
         $this->priceProductFacade = $priceProductFacade;
+        $this->apiSchedulePriceImportConfig = $apiSchedulePriceImportConfig;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
      */
-    public function fromProductAbstractTransfer(ProductAbstractTransfer $productAbstractTransfer): array
-    {
+    public function createFromProductAbstractTransfer(
+        ProductAbstractTransfer $productAbstractTransfer,
+        PriceProductTransfer $priceProductTransfer
+    ): PriceProductScheduleTransfer {
         $productAttributes = $productAbstractTransfer->getAttributes();
         $specialPriceFrom = $productAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePriceFrom()];
         $specialPriceTo = $productAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePriceTo()];
         $specialPrice = $productAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePrice()];
-        $priceProductScheduleTransfers = [];
+        $priceProductTransfer->getMoneyValue()->setGrossAmount($specialPrice);
 
         $priceProductScheduleListTransfer = (new PriceProductScheduleListTransfer())
             ->setIdPriceProductScheduleList($this->apiSchedulePriceImportConfig->getIdPriceProductScheduleList());
 
+        $priceTypeTransfer = $this->priceProductFacade->findPriceTypeByName(
+            $this->apiSchedulePriceImportConfig->getPriceDimensionRrp(),
+        );
+
         $priceProductScheduleTransfer = (new PriceProductScheduleTransfer())
-            ->setPriceProductScheduleList($priceProductScheduleListTransfer)
             ->setActiveFrom($specialPriceFrom)
-            ->setActiveTo($specialPriceTo);
+            ->setActiveTo($specialPriceTo)
+            ->setPriceProductScheduleList($priceProductScheduleListTransfer)
+            ->setStore($priceProductTransfer->getMoneyValue()->getStore())
+            ->setPriceProduct($priceProductTransfer->setPriceType($priceTypeTransfer))
+            ->setCurrency($priceProductTransfer->getMoneyValue()->getCurrency());
 
-        foreach ($productAbstractTransfer->getPrices() as $priceProductTransfer) {
-            foreach ($productAbstractTransfer->getStoreRelation()->getStores() as $storeTransfer) {
-                $priceTypeTransfer = $this->priceProductFacade->findPriceTypeByName(
-                    $this->apiSchedulePriceImportConfig->getPriceDimensionRrp(),
-                );
-
-                $priceProductTransfer->getMoneyValue()->setGrossAmount($specialPrice);
-                $priceProductScheduleTransfer
-                    ->setStore($storeTransfer)
-                    ->setPriceProduct($priceProductTransfer->setPriceType($priceTypeTransfer))
-                    ->setCurrency($priceProductTransfer->getMoneyValue()->getCurrency());
-
-                $priceProductScheduleTransfers[] = $priceProductScheduleTransfer;
-            }
-        }
-
-        return $priceProductScheduleTransfers;
+        return $priceProductScheduleTransfer;
     }
 }

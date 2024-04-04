@@ -33,14 +33,20 @@ class PriceProductScheduleFinder implements PriceProductScheduleFinderInterface
 
     /**
      * @param int $idProductAbstract
+     * @param int $idCurrency
+     * @param int $idStore
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer|null
      */
-    public function findLatestPriceProductScheduleByIdProductAbstract(
-        int $idProductAbstract
+    public function findPriceProductScheduleByIdProductAbstractAndIdCurrencyAndIdStore(
+        int $idProductAbstract,
+        int $idCurrency,
+        int $idStore
     ): ?PriceProductScheduleTransfer {
         $priceProductScheduleEntity = $this->priceProductScheduleQuery
             ->filterByFkProductAbstract($idProductAbstract)
+            ->filterByFkCurrency($idCurrency)
+            ->filterByFkStore($idStore)
             ->orderByActiveTo(Criteria::DESC)
             ->findOne();
 

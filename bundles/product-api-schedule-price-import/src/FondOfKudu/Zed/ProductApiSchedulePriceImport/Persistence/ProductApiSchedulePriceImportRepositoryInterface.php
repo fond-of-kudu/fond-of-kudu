@@ -8,10 +8,14 @@ interface ProductApiSchedulePriceImportRepositoryInterface
 {
     /**
      * @param int $idProductAbstract
+     * @param int $idCurrency
+     * @param int $idStore
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer|null
      */
-    public function findLatestPriceProductScheduleByIdProductAbstract(
-        int $idProductAbstract
+    public function findPriceProductScheduleByIdProductAbstractAndIdCurrencyAndIdStore(
+        int $idProductAbstract,
+        int $idCurrency,
+        int $idStore
     ): ?PriceProductScheduleTransfer;
 }

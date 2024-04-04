@@ -15,4 +15,13 @@ interface ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface
     public function createAndApplyPriceProductSchedule(
         PriceProductScheduleTransfer $priceProductScheduleTransfer
     ): PriceProductScheduleResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleResponseTransfer
+     */
+    public function updateAndApplyPriceProductSchedule(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): PriceProductScheduleResponseTransfer;
 }
