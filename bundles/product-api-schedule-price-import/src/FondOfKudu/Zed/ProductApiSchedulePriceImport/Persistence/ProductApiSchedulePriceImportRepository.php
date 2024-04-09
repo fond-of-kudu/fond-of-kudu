@@ -30,4 +30,25 @@ class ProductApiSchedulePriceImportRepository extends AbstractRepository impleme
                 $idStore,
             );
     }
+
+    /**
+     * @param int $idProductConcrete
+     * @param int $idCurrency
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer|null
+     */
+    public function findPriceProductScheduleByIdProductConcreteAndIdCurrencyAndIdStore(
+        int $idProductConcrete,
+        int $idCurrency,
+        int $idStore
+    ): ?PriceProductScheduleTransfer {
+        return $this->getFactory()
+            ->createPriceProductScheduleFinder()
+            ->findPriceProductScheduleByIdProductConcreteAndIdCurrencyAndIdStore(
+                $idProductConcrete,
+                $idCurrency,
+                $idStore,
+            );
+    }
 }

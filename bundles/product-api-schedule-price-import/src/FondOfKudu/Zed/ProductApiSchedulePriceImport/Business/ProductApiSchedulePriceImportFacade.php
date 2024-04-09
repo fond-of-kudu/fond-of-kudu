@@ -46,7 +46,9 @@ class ProductApiSchedulePriceImportFacade extends AbstractFacade implements Prod
     public function createPriceProductConcreteSchedule(
         ProductConcreteTransfer $productConcreteTransfer
     ): ProductConcreteTransfer {
-        return $productConcreteTransfer;
+        return $this->getFactory()
+            ->createSalePriceProductConcreteHandler()
+            ->handle($productConcreteTransfer);
     }
 
     /**
@@ -57,6 +59,8 @@ class ProductApiSchedulePriceImportFacade extends AbstractFacade implements Prod
     public function updatePriceProductConcreteSchedule(
         ProductConcreteTransfer $productConcreteTransfer
     ): ProductConcreteTransfer {
-        return $productConcreteTransfer;
+        return $this->getFactory()
+            ->createSalePriceProductConcreteHandler()
+            ->handle($productConcreteTransfer);
     }
 }

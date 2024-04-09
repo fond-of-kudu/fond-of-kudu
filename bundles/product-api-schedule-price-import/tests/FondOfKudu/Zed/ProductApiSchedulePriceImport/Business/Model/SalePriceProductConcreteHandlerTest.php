@@ -4,7 +4,7 @@ namespace FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model;
 
 use Codeception\Test\Unit;
 
-class SalePriceProductAbstractCreatorTest extends Unit
+class SalePriceProductConcreteHandlerTest extends Unit
 {
     /**
      * @return void

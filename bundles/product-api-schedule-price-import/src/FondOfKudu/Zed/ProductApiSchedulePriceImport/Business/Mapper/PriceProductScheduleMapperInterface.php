@@ -5,6 +5,7 @@ namespace FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface PriceProductScheduleMapperInterface
 {
@@ -16,6 +17,17 @@ interface PriceProductScheduleMapperInterface
      */
     public function createFromProductAbstractTransfer(
         ProductAbstractTransfer $productAbstractTransfer,
+        PriceProductTransfer $priceProductTransfer
+    ): PriceProductScheduleTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
+     */
+    public function createFromProductConcreteTransfer(
+        ProductConcreteTransfer $productConcreteTransfer,
         PriceProductTransfer $priceProductTransfer
     ): PriceProductScheduleTransfer;
 }

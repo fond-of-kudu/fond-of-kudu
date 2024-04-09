@@ -60,4 +60,30 @@ class PriceProductScheduleFinder implements PriceProductScheduleFinderInterface
                 new PriceProductScheduleTransfer(),
             );
     }
+
+    /**
+     * @param int $idProductConcrete
+     * @param int $idCurrency
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer|null
+     */
+    public function findPriceProductScheduleByIdProductConcreteAndIdCurrencyAndIdStore(
+        int $idProductConcrete,
+        int $idCurrency,
+        int $idStore
+    ): ?PriceProductScheduleTransfer {
+        $priceProductScheduleEntity = $this->priceProductScheduleQuery
+            ->filterByFkProduct($idProductConcrete)
+            ->filterByFkCurrency($idCurrency)
+            ->filterByFkStore($idStore)
+            ->orderByActiveTo(Criteria::DESC)
+            ->findOne();
+
+        return $this->priceProductScheduleMapper
+            ->mapPriceProductScheduleEntityToPriceProductScheduleTransfer(
+                $priceProductScheduleEntity,
+                new PriceProductScheduleTransfer(),
+            );
+    }
 }
