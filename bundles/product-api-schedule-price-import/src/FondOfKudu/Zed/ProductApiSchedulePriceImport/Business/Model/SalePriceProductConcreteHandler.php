@@ -52,15 +52,14 @@ class SalePriceProductConcreteHandler implements SalePriceProductConcreteHandler
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param array $attributes
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @return void
      */
-    public function handle(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
-    {
-        if (!$this->validateSpecialPriceAttributes($productConcreteTransfer)) {
-            return $productConcreteTransfer;
-        }
-
+    public function handle(
+        ProductConcreteTransfer $productConcreteTransfer,
+        array $attributes = []
+    ): void {
         foreach ($productConcreteTransfer->getPrices() as $priceProductTransfer) {
             $priceProductScheduleTransfer = $this->productApiSchedulePriceImportRepository
                 ->findPriceProductScheduleByIdProductAbstractAndIdCurrencyAndIdStore(
@@ -70,28 +69,24 @@ class SalePriceProductConcreteHandler implements SalePriceProductConcreteHandler
                 );
 
             if ($priceProductScheduleTransfer === null) {
-                $this->create($productConcreteTransfer, $priceProductTransfer);
+                $this->create($priceProductTransfer, $attributes);
             } else {
                 $this->update($productConcreteTransfer, $priceProductScheduleTransfer);
             }
         }
-
-        return $productConcreteTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param array $attributes
      *
      * @return void
      */
-    protected function create(
-        ProductConcreteTransfer $productConcreteTransfer,
-        PriceProductTransfer $priceProductTransfer
-    ): void {
+    protected function create(PriceProductTransfer $priceProductTransfer, array $attributes): void
+    {
         $priceProductScheduleTransfer = $this->priceProductScheduleMapper->createFromProductConcreteTransfer(
-            $productConcreteTransfer,
             $priceProductTransfer,
+            $attributes,
         );
 
         $this->priceProductScheduleFacade->createAndApplyPriceProductSchedule($priceProductScheduleTransfer);
@@ -118,31 +113,5 @@ class SalePriceProductConcreteHandler implements SalePriceProductConcreteHandler
             ->getPriceProduct()->getMoneyValue()->setGrossAmount($specialPrice);
 
         $this->priceProductScheduleFacade->updateAndApplyPriceProductSchedule($priceProductScheduleTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return bool
-     */
-    protected function validateSpecialPriceAttributes(ProductConcreteTransfer $productConcreteTransfer): bool
-    {
-        $required = [
-            $this->apiSchedulePriceImportConfig->getProductAttributeSalePrice(),
-            $this->apiSchedulePriceImportConfig->getProductAttributeSalePriceFrom(),
-            $this->apiSchedulePriceImportConfig->getProductAttributeSalePriceTo(),
-        ];
-
-        foreach ($required as $attribute) {
-            if (!isset($productConcreteTransfer->getAttributes()[$attribute])) {
-                return false;
-            }
-
-            if (!$productConcreteTransfer->getAttributes()[$attribute]) {
-                return false;
-            }
-        }
-
-        return true;
     }
 }

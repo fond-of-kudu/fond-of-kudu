@@ -8,7 +8,6 @@ use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
 {
@@ -51,18 +50,18 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param array $attributes
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
      */
     public function createFromProductConcreteTransfer(
-        ProductConcreteTransfer $productConcreteTransfer,
-        PriceProductTransfer $priceProductTransfer
+        PriceProductTransfer $priceProductTransfer,
+        array $attributes
     ): PriceProductScheduleTransfer {
         return $this->createPriceProductScheduleTransfer(
             $priceProductTransfer,
-            $productConcreteTransfer->getAttributes(),
+            $attributes,
         );
     }
 

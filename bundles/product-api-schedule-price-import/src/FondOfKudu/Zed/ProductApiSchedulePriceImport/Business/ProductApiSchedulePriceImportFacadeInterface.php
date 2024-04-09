@@ -3,7 +3,6 @@
 namespace FondOfKudu\Zed\ProductApiSchedulePriceImport\Business;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductApiSchedulePriceImportFacadeInterface
 {
@@ -24,22 +23,4 @@ interface ProductApiSchedulePriceImportFacadeInterface
     public function onUpdateProductAbstract(
         ProductAbstractTransfer $productAbstractTransfer
     ): ProductAbstractTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    public function createPriceProductConcreteSchedule(
-        ProductConcreteTransfer $productConcreteTransfer
-    ): ProductConcreteTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    public function updatePriceProductConcreteSchedule(
-        ProductConcreteTransfer $productConcreteTransfer
-    ): ProductConcreteTransfer;
 }

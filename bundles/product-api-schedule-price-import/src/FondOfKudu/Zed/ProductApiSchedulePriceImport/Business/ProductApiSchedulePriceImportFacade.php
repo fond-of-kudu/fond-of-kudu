@@ -3,7 +3,6 @@
 namespace FondOfKudu\Zed\ProductApiSchedulePriceImport\Business;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -36,31 +35,5 @@ class ProductApiSchedulePriceImportFacade extends AbstractFacade implements Prod
         return $this->getFactory()
             ->createSalePriceProductAbstractHandler()
             ->handle($productAbstractTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    public function createPriceProductConcreteSchedule(
-        ProductConcreteTransfer $productConcreteTransfer
-    ): ProductConcreteTransfer {
-        return $this->getFactory()
-            ->createSalePriceProductConcreteHandler()
-            ->handle($productConcreteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    public function updatePriceProductConcreteSchedule(
-        ProductConcreteTransfer $productConcreteTransfer
-    ): ProductConcreteTransfer {
-        return $this->getFactory()
-            ->createSalePriceProductConcreteHandler()
-            ->handle($productConcreteTransfer);
     }
 }
