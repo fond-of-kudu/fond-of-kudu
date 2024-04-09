@@ -5,7 +5,7 @@ namespace FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConfig;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 
-class SalePriceModel
+class SalePriceModel implements SalePriceModelInterface
 {
     /**
      * @var \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductAbstractHandlerInterface

@@ -3,7 +3,7 @@
 namespace FondOfKudu\Zed\ProductApiSchedulePriceImport\Business;
 
 use Codeception\Test\Unit;
-use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductAbstractHandler;
+use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceModel;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -20,9 +20,9 @@ class ProductApiSchedulePriceImportFacadeTest extends Unit
     protected MockObject|ProductApiSchedulePriceImportBusinessFactory $productApiSchedulePriceImportBusinessFactoryMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductAbstractHandler
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceModel
      */
-    protected MockObject|SalePriceProductAbstractHandler $salePriceProductAbstractHandlerMock;
+    protected MockObject|SalePriceModel $salePriceModelMock;
 
     /**
      * @var \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\ProductApiSchedulePriceImportFacadeInterface
@@ -38,7 +38,7 @@ class ProductApiSchedulePriceImportFacadeTest extends Unit
 
         $this->productAbstractTransferMock = $this->createMock(ProductAbstractTransfer::class);
         $this->productApiSchedulePriceImportBusinessFactoryMock = $this->createMock(ProductApiSchedulePriceImportBusinessFactory::class);
-        $this->salePriceProductAbstractHandlerMock = $this->createMock(SalePriceProductAbstractHandler::class);
+        $this->salePriceModelMock = $this->createMock(SalePriceModel::class);
 
         $this->apiSchedulePriceImportFacade = new ProductApiSchedulePriceImportFacade();
         $this->apiSchedulePriceImportFacade->setFactory($this->productApiSchedulePriceImportBusinessFactoryMock);
@@ -50,10 +50,10 @@ class ProductApiSchedulePriceImportFacadeTest extends Unit
     public function testOnCreateProductAbstract(): void
     {
         $this->productApiSchedulePriceImportBusinessFactoryMock->expects(static::once())
-            ->method('createSalePriceProductAbstractHandler')
-            ->willReturn($this->salePriceProductAbstractHandlerMock);
+            ->method('createSalePriceModel')
+            ->willReturn($this->salePriceModelMock);
 
-        $this->salePriceProductAbstractHandlerMock->expects(static::once())
+        $this->salePriceModelMock->expects(static::once())
             ->method('handle')
             ->with($this->productAbstractTransferMock)
             ->willReturn($this->productAbstractTransferMock);
@@ -70,10 +70,10 @@ class ProductApiSchedulePriceImportFacadeTest extends Unit
     public function testOnUpdateProductAbstract(): void
     {
         $this->productApiSchedulePriceImportBusinessFactoryMock->expects(static::once())
-            ->method('createSalePriceProductAbstractHandler')
-            ->willReturn($this->salePriceProductAbstractHandlerMock);
+            ->method('createSalePriceModel')
+            ->willReturn($this->salePriceModelMock);
 
-        $this->salePriceProductAbstractHandlerMock->expects(static::once())
+        $this->salePriceModelMock->expects(static::once())
             ->method('handle')
             ->with($this->productAbstractTransferMock)
             ->willReturn($this->productAbstractTransferMock);

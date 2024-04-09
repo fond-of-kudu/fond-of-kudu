@@ -20,7 +20,7 @@ class ProductApiSchedulePriceImportFacade extends AbstractFacade implements Prod
         ProductAbstractTransfer $productAbstractTransfer
     ): ProductAbstractTransfer {
         return $this->getFactory()
-            ->createSalePriceProductAbstractHandler()
+            ->createSalePriceModel()
             ->handle($productAbstractTransfer);
     }
 
@@ -33,7 +33,7 @@ class ProductApiSchedulePriceImportFacade extends AbstractFacade implements Prod
         ProductAbstractTransfer $productAbstractTransfer
     ): ProductAbstractTransfer {
         return $this->getFactory()
-            ->createSalePriceProductAbstractHandler()
+            ->createSalePriceModel()
             ->handle($productAbstractTransfer);
     }
 }
