@@ -36,6 +36,9 @@ class ProductApiSchedulePriceImportFacadeTest extends Unit
      */
     protected MockObject|SalePriceProductConcreteHandler $salePriceProductConcreteHandlerMock;
 
+    /**
+     * @var ProductApiSchedulePriceImportFacadeInterface
+     */
     protected ProductApiSchedulePriceImportFacadeInterface $apiSchedulePriceImportFacade;
 
     /**
