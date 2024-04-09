@@ -4,6 +4,8 @@ namespace FondOfKudu\Zed\ProductApiSchedulePriceImport\Business;
 
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\PriceProductScheduleMapper;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\PriceProductScheduleMapperInterface;
+use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\ProductConcreteMapper;
+use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\ProductConcreteMapperInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceModel;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceModelInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductAbstractHandler;
@@ -32,6 +34,7 @@ class ProductApiSchedulePriceImportBusinessFactory extends AbstractBusinessFacto
         return new SalePriceModel(
             $this->createSalePriceProductAbstractHandler(),
             $this->createSalePriceProductConcreteHandler(),
+            $this->createProductConcreteMapper(),
             $this->getConfig(),
         );
     }
@@ -72,6 +75,14 @@ class ProductApiSchedulePriceImportBusinessFactory extends AbstractBusinessFacto
             $this->getPriceProductFacade(),
             $this->getConfig(),
         );
+    }
+
+    /**
+     * @return \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\ProductConcreteMapperInterface
+     */
+    protected function createProductConcreteMapper(): ProductConcreteMapperInterface
+    {
+        return new ProductConcreteMapper();
     }
 
     /**

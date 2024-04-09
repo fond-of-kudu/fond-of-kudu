@@ -2,6 +2,7 @@
 
 namespace FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model;
 
+use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\ProductConcreteMapperInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConfig;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 
@@ -23,18 +24,26 @@ class SalePriceModel implements SalePriceModelInterface
     protected ProductApiSchedulePriceImportConfig $productApiSchedulePriceImportConfig;
 
     /**
+     * @var \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\ProductConcreteMapperInterface
+     */
+    protected ProductConcreteMapperInterface $productConcreteMapper;
+
+    /**
      * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductAbstractHandlerInterface $salePriceProductAbstractHandler
      * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductConcreteHandlerInterface $salePriceProductConcreteHandler
+     * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\ProductConcreteMapperInterface $productConcreteMapper
      * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConfig $productApiSchedulePriceImportConfig
      */
     public function __construct(
         SalePriceProductAbstractHandlerInterface $salePriceProductAbstractHandler,
         SalePriceProductConcreteHandlerInterface $salePriceProductConcreteHandler,
+        ProductConcreteMapperInterface $productConcreteMapper,
         ProductApiSchedulePriceImportConfig $productApiSchedulePriceImportConfig
     ) {
         $this->salePriceProductAbstractHandler = $salePriceProductAbstractHandler;
         $this->salePriceProductConcreteHandler = $salePriceProductConcreteHandler;
         $this->productApiSchedulePriceImportConfig = $productApiSchedulePriceImportConfig;
+        $this->productConcreteMapper = $productConcreteMapper;
     }
 
     /**
@@ -52,7 +61,9 @@ class SalePriceModel implements SalePriceModelInterface
 
         $this->salePriceProductAbstractHandler->handle($productAbstractTransfer);
 
-        foreach ($productAbstractTransfer->getProductConcretes() as $productConcreteTransfer) {
+        foreach ($productAbstractTransfer->getProductConcretes() as $productConcreteData) {
+            $productConcreteTransfer = $this->productConcreteMapper->fromArray($productConcreteData);
+
             $this->salePriceProductConcreteHandler->handle($productConcreteTransfer, $attributes);
         }
 
