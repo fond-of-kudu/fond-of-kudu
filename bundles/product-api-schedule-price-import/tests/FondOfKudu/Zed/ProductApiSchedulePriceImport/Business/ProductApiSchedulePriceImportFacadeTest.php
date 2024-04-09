@@ -37,7 +37,7 @@ class ProductApiSchedulePriceImportFacadeTest extends Unit
     protected MockObject|SalePriceProductConcreteHandler $salePriceProductConcreteHandlerMock;
 
     /**
-     * @var ProductApiSchedulePriceImportFacadeInterface
+     * @var \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\ProductApiSchedulePriceImportFacadeInterface
      */
     protected ProductApiSchedulePriceImportFacadeInterface $apiSchedulePriceImportFacade;
 
