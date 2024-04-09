@@ -13,6 +13,7 @@ use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProduct
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductFacadeInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportDependencyProvider;
+use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -21,6 +22,8 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class ProductApiSchedulePriceImportBusinessFactory extends AbstractBusinessFactory
 {
+    use LoggerTrait;
+
     /**
      * @return \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceModelInterface
      */
@@ -56,6 +59,7 @@ class ProductApiSchedulePriceImportBusinessFactory extends AbstractBusinessFacto
             $this->createPriceProductScheduleMapper(),
             $this->getRepository(),
             $this->getConfig(),
+            $this->getLogger(),
         );
     }
 

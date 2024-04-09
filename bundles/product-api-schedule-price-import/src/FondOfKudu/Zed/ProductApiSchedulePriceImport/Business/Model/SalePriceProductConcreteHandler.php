@@ -9,6 +9,8 @@ use FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportCo
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Psr\Log\LoggerInterface;
+use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 
 class SalePriceProductConcreteHandler implements SalePriceProductConcreteHandlerInterface
 {
@@ -32,22 +34,27 @@ class SalePriceProductConcreteHandler implements SalePriceProductConcreteHandler
      */
     protected ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface $priceProductScheduleFacade;
 
+    private LoggerInterface $logger;
+
     /**
      * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface $priceProductScheduleFacade
      * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\PriceProductScheduleMapperInterface $priceProductScheduleMapper
      * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Persistence\ProductApiSchedulePriceImportRepositoryInterface $productApiSchedulePriceImportRepository
      * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConfig $apiSchedulePriceImportConfig
+     * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
         ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface $priceProductScheduleFacade,
         PriceProductScheduleMapperInterface $priceProductScheduleMapper,
         ProductApiSchedulePriceImportRepositoryInterface $productApiSchedulePriceImportRepository,
-        ProductApiSchedulePriceImportConfig $apiSchedulePriceImportConfig
+        ProductApiSchedulePriceImportConfig $apiSchedulePriceImportConfig,
+        LoggerInterface $logger
     ) {
         $this->apiSchedulePriceImportConfig = $apiSchedulePriceImportConfig;
         $this->productApiSchedulePriceImportRepository = $productApiSchedulePriceImportRepository;
         $this->priceProductScheduleMapper = $priceProductScheduleMapper;
         $this->priceProductScheduleFacade = $priceProductScheduleFacade;
+        $this->logger = $logger;
     }
 
     /**
@@ -61,17 +68,23 @@ class SalePriceProductConcreteHandler implements SalePriceProductConcreteHandler
         array $attributes = []
     ): void {
         foreach ($productConcreteTransfer->getPrices() as $priceProductTransfer) {
-            $priceProductScheduleTransfer = $this->productApiSchedulePriceImportRepository
-                ->findPriceProductScheduleByIdProductAbstractAndIdCurrencyAndIdStore(
-                    $productConcreteTransfer->getIdProductConcrete(),
-                    $priceProductTransfer->getMoneyValue()->getFkCurrency(),
-                    $priceProductTransfer->getMoneyValue()->getFkStore(),
-                );
+            try {
+                $priceProductScheduleTransfer = $this->productApiSchedulePriceImportRepository
+                    ->findPriceProductScheduleByIdProductAbstractAndIdCurrencyAndIdStore(
+                        $productConcreteTransfer->getIdProductConcreteOrFail(),
+                        $priceProductTransfer->getMoneyValue()->getFkCurrencyOrFail(),
+                        $priceProductTransfer->getMoneyValue()->getFkStoreOrFail(),
+                    );
+            } catch (NullValueException $exception) {
+                $this->logger->critical($exception->getMessage());
+
+                continue;
+            }
 
             if ($priceProductScheduleTransfer === null) {
                 $this->create($priceProductTransfer, $attributes);
             } else {
-                $this->update($productConcreteTransfer, $priceProductScheduleTransfer);
+                $this->update($priceProductScheduleTransfer, $attributes);
             }
         }
     }
@@ -93,19 +106,18 @@ class SalePriceProductConcreteHandler implements SalePriceProductConcreteHandler
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     * @param array $attributes
      *
      * @return void
      */
     protected function update(
-        ProductConcreteTransfer $productConcreteTransfer,
-        PriceProductScheduleTransfer $priceProductScheduleTransfer
+        PriceProductScheduleTransfer $priceProductScheduleTransfer,
+        array $attributes
     ): void {
-        $productAttributes = $productConcreteTransfer->getAttributes();
-        $specialPriceFrom = $productAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePriceFrom()];
-        $specialPriceTo = $productAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePriceTo()];
-        $specialPrice = $productAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePrice()];
+        $specialPriceFrom = $attributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePriceFrom()];
+        $specialPriceTo = $attributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePriceTo()];
+        $specialPrice = $attributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePrice()];
 
         $priceProductScheduleTransfer
             ->setActiveFrom($specialPriceFrom)
