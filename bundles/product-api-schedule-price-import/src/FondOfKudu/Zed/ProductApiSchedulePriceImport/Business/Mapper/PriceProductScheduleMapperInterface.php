@@ -21,12 +21,14 @@ interface PriceProductScheduleMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param array $attributes
+     * @param array $productAbstractAttributes
+     * @param int|null $idProductConcrete
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
      */
     public function createFromProductConcreteTransfer(
         PriceProductTransfer $priceProductTransfer,
-        array $attributes
+        array $productAbstractAttributes,
+        ?int $idProductConcrete = null
     ): PriceProductScheduleTransfer;
 }

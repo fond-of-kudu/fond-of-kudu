@@ -8,12 +8,12 @@ interface SalePriceProductConcreteHandlerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param array $attributes
+     * @param array $productAbstractAttributes
      *
      * @return void
      */
     public function handle(
         ProductConcreteTransfer $productConcreteTransfer,
-        array $attributes = []
+        array $productAbstractAttributes
     ): void;
 }

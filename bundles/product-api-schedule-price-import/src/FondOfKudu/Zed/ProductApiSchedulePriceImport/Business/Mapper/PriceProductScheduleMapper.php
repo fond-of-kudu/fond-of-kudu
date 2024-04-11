@@ -51,34 +51,44 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param array $attributes
+     * @param array $productAbstractAttributes
+     * @param int|null $idProductConcrete
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
      */
     public function createFromProductConcreteTransfer(
         PriceProductTransfer $priceProductTransfer,
-        array $attributes
+        array $productAbstractAttributes,
+        ?int $idProductConcrete = null
     ): PriceProductScheduleTransfer {
         return $this->createPriceProductScheduleTransfer(
             $priceProductTransfer,
-            $attributes,
+            $productAbstractAttributes,
+            $idProductConcrete,
         );
     }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param array $productAttributes
+     * @param array $productAbstractAttributes
+     * @param int|null $idProductConcrete
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
      */
     protected function createPriceProductScheduleTransfer(
         PriceProductTransfer $priceProductTransfer,
-        array $productAttributes
+        array $productAbstractAttributes,
+        ?int $idProductConcrete = null
     ): PriceProductScheduleTransfer {
-        $specialPriceFrom = $productAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePriceFrom()];
-        $specialPriceTo = $productAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePriceTo()];
-        $specialPrice = $productAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePrice()];
+        $specialPriceFrom = $productAbstractAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePriceFrom()];
+        $specialPriceTo = $productAbstractAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePriceTo()];
+        $specialPrice = $productAbstractAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePrice()];
+
         $priceProductTransfer->getMoneyValue()->setGrossAmount($specialPrice);
+
+        if ($idProductConcrete !== null) {
+            $priceProductTransfer->setIdProduct($idProductConcrete);
+        }
 
         $priceProductScheduleListTransfer = (new PriceProductScheduleListTransfer())
             ->setIdPriceProductScheduleList($this->apiSchedulePriceImportConfig->getIdPriceProductScheduleList());

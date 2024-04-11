@@ -59,13 +59,13 @@ class SalePriceProductConcreteHandler implements SalePriceProductConcreteHandler
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param array $attributes
+     * @param array $productAbstractAttributes
      *
      * @return void
      */
     public function handle(
         ProductConcreteTransfer $productConcreteTransfer,
-        array $attributes = []
+        array $productAbstractAttributes
     ): void {
         foreach ($productConcreteTransfer->getPrices() as $priceProductTransfer) {
             try {
@@ -82,24 +82,33 @@ class SalePriceProductConcreteHandler implements SalePriceProductConcreteHandler
             }
 
             if ($priceProductScheduleTransfer === null) {
-                $this->create($priceProductTransfer, $attributes);
+                $this->create(
+                    $priceProductTransfer,
+                    $productAbstractAttributes,
+                    $productConcreteTransfer->getIdProductConcrete(),
+                );
             } else {
-                $this->update($priceProductScheduleTransfer, $attributes);
+                $this->update($priceProductScheduleTransfer, $productAbstractAttributes);
             }
         }
     }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param array $attributes
+     * @param array $productAbstractAttributes
+     * @param int|null $idProductConcrete
      *
      * @return void
      */
-    protected function create(PriceProductTransfer $priceProductTransfer, array $attributes): void
-    {
+    protected function create(
+        PriceProductTransfer $priceProductTransfer,
+        array $productAbstractAttributes,
+        ?int $idProductConcrete = null
+    ): void {
         $priceProductScheduleTransfer = $this->priceProductScheduleMapper->createFromProductConcreteTransfer(
             $priceProductTransfer,
-            $attributes,
+            $productAbstractAttributes,
+            $idProductConcrete,
         );
 
         $this->priceProductScheduleFacade->createAndApplyPriceProductSchedule($priceProductScheduleTransfer);
@@ -107,17 +116,17 @@ class SalePriceProductConcreteHandler implements SalePriceProductConcreteHandler
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
-     * @param array $attributes
+     * @param array $productAbstractAttributes
      *
      * @return void
      */
     protected function update(
         PriceProductScheduleTransfer $priceProductScheduleTransfer,
-        array $attributes
+        array $productAbstractAttributes
     ): void {
-        $specialPriceFrom = $attributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePriceFrom()];
-        $specialPriceTo = $attributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePriceTo()];
-        $specialPrice = $attributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePrice()];
+        $specialPriceFrom = $productAbstractAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePriceFrom()];
+        $specialPriceTo = $productAbstractAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePriceTo()];
+        $specialPrice = $productAbstractAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePrice()];
 
         $priceProductScheduleTransfer
             ->setActiveFrom($specialPriceFrom)

@@ -53,9 +53,9 @@ class SalePriceModel implements SalePriceModelInterface
      */
     public function handle(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
     {
-        $attributes = $productAbstractTransfer->getAttributes();
+        $productAbstractAttributes = $productAbstractTransfer->getAttributes();
 
-        if (!$this->validateSpecialPriceAttributes($attributes)) {
+        if (!$this->validateSpecialPriceAttributes($productAbstractAttributes)) {
             return $productAbstractTransfer;
         }
 
@@ -64,18 +64,18 @@ class SalePriceModel implements SalePriceModelInterface
         foreach ($productAbstractTransfer->getProductConcretes() as $productConcreteData) {
             $productConcreteTransfer = $this->productConcreteMapper->fromArray($productConcreteData);
 
-            $this->salePriceProductConcreteHandler->handle($productConcreteTransfer, $attributes);
+            $this->salePriceProductConcreteHandler->handle($productConcreteTransfer, $productAbstractAttributes);
         }
 
         return $productAbstractTransfer;
     }
 
     /**
-     * @param array $attributes
+     * @param array $productAbstractAttributes
      *
      * @return bool
      */
-    protected function validateSpecialPriceAttributes(array $attributes): bool
+    protected function validateSpecialPriceAttributes(array $productAbstractAttributes): bool
     {
         $required = [
             $this->productApiSchedulePriceImportConfig->getProductAttributeSalePrice(),
@@ -84,11 +84,11 @@ class SalePriceModel implements SalePriceModelInterface
         ];
 
         foreach ($required as $item) {
-            if (!isset($attributes[$item])) {
+            if (!isset($productAbstractAttributes[$item])) {
                 return false;
             }
 
-            if (!$attributes[$item]) {
+            if (!$productAbstractAttributes[$item]) {
                 return false;
             }
         }
