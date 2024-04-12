@@ -80,6 +80,10 @@ class PriceProductScheduleFinder implements PriceProductScheduleFinderInterface
             ->orderByActiveTo(Criteria::DESC)
             ->findOne();
 
+        if ($priceProductScheduleEntity === null) {
+            return null;
+        }
+
         return $this->priceProductScheduleMapper
             ->mapPriceProductScheduleEntityToPriceProductScheduleTransfer(
                 $priceProductScheduleEntity,
