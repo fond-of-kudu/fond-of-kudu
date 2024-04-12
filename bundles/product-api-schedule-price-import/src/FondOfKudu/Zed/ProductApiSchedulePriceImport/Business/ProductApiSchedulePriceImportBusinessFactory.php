@@ -6,8 +6,6 @@ use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\PriceProductSch
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\PriceProductScheduleMapperInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\ProductConcreteMapper;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\ProductConcreteMapperInterface;
-use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceModel;
-use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceModelInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductAbstractHandler;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductAbstractHandlerInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductConcreteHandler;
@@ -27,22 +25,9 @@ class ProductApiSchedulePriceImportBusinessFactory extends AbstractBusinessFacto
     use LoggerTrait;
 
     /**
-     * @return \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceModelInterface
-     */
-    public function createSalePriceModel(): SalePriceModelInterface
-    {
-        return new SalePriceModel(
-            $this->createSalePriceProductAbstractHandler(),
-            $this->createSalePriceProductConcreteHandler(),
-            $this->createProductConcreteMapper(),
-            $this->getConfig(),
-        );
-    }
-
-    /**
      * @return \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductAbstractHandlerInterface
      */
-    protected function createSalePriceProductAbstractHandler(): SalePriceProductAbstractHandlerInterface
+    public function createSalePriceProductAbstractHandler(): SalePriceProductAbstractHandlerInterface
     {
         return new SalePriceProductAbstractHandler(
             $this->getPriceProductScheduleFacade(),
@@ -55,7 +40,7 @@ class ProductApiSchedulePriceImportBusinessFactory extends AbstractBusinessFacto
     /**
      * @return \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductConcreteHandlerInterface
      */
-    protected function createSalePriceProductConcreteHandler(): SalePriceProductConcreteHandlerInterface
+    public function createSalePriceProductConcreteHandler(): SalePriceProductConcreteHandlerInterface
     {
         return new SalePriceProductConcreteHandler(
             $this->getPriceProductScheduleFacade(),
