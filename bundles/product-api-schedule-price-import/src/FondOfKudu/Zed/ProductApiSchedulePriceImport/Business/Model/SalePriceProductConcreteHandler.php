@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Psr\Log\LoggerInterface;
-use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 
 class SalePriceProductConcreteHandler implements SalePriceProductConcreteHandlerInterface
 {
@@ -34,7 +33,10 @@ class SalePriceProductConcreteHandler implements SalePriceProductConcreteHandler
      */
     protected ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface $priceProductScheduleFacade;
 
-    private LoggerInterface $logger;
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    protected LoggerInterface $logger;
 
     /**
      * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface $priceProductScheduleFacade
@@ -69,18 +71,12 @@ class SalePriceProductConcreteHandler implements SalePriceProductConcreteHandler
         }
 
         foreach ($productConcreteTransfer->getPrices() as $priceProductTransfer) {
-            try {
-                $priceProductScheduleTransfer = $this->productApiSchedulePriceImportRepository
-                    ->findPriceProductScheduleByIdProductAbstractAndIdCurrencyAndIdStore(
-                        $productConcreteTransfer->getIdProductConcreteOrFail(),
-                        $priceProductTransfer->getMoneyValue()->getFkCurrencyOrFail(),
-                        $priceProductTransfer->getMoneyValue()->getFkStoreOrFail(),
-                    );
-            } catch (NullValueException $exception) {
-                $this->logger->critical($exception->getMessage());
-
-                continue;
-            }
+            $priceProductScheduleTransfer = $this->productApiSchedulePriceImportRepository
+                ->findPriceProductScheduleByIdProductConcreteAndIdCurrencyAndIdStore(
+                    $productConcreteTransfer->getIdProductConcrete(),
+                    $priceProductTransfer->getMoneyValue()->getFkCurrency(),
+                    $priceProductTransfer->getMoneyValue()->getFkStore(),
+                );
 
             if ($priceProductScheduleTransfer === null) {
                 $this->create($priceProductTransfer, $productConcreteTransfer);
