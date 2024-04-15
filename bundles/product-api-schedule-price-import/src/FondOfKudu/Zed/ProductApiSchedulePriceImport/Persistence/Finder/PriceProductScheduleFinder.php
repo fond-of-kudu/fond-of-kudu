@@ -74,10 +74,10 @@ class PriceProductScheduleFinder implements PriceProductScheduleFinderInterface
         int $idStore
     ): ?PriceProductScheduleTransfer {
         $priceProductScheduleEntity = $this->priceProductScheduleQuery
+            ->clear()
             ->filterByFkProduct($idProductConcrete)
             ->filterByFkCurrency($idCurrency)
             ->filterByFkStore($idStore)
-            ->orderByActiveTo(Criteria::DESC)
             ->findOne();
 
         if ($priceProductScheduleEntity === null) {
