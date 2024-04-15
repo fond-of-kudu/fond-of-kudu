@@ -71,9 +71,11 @@ class SalePriceProductAbstractHandler implements SalePriceProductAbstractHandler
 
             if ($priceProductScheduleTransfer === null) {
                 $this->create($productAbstractTransfer, $priceProductTransfer);
-            } else {
-                $this->update($productAbstractTransfer, $priceProductScheduleTransfer);
+
+                continue;
             }
+
+            $this->update($productAbstractTransfer, $priceProductScheduleTransfer);
         }
 
         return $productAbstractTransfer;

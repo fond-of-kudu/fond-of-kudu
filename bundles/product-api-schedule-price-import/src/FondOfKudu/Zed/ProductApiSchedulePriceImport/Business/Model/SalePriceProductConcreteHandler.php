@@ -80,9 +80,11 @@ class SalePriceProductConcreteHandler implements SalePriceProductConcreteHandler
 
             if ($priceProductScheduleTransfer === null) {
                 $this->create($priceProductTransfer, $productConcreteTransfer);
-            } else {
-                $this->update($priceProductScheduleTransfer, $productConcreteTransfer);
+
+                continue;
             }
+
+            $this->update($priceProductScheduleTransfer, $productConcreteTransfer);
         }
 
         return $productConcreteTransfer;
