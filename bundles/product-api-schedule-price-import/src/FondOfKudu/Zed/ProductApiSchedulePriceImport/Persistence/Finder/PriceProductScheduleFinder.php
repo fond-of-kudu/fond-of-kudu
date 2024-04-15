@@ -44,6 +44,7 @@ class PriceProductScheduleFinder implements PriceProductScheduleFinderInterface
         int $idStore
     ): ?PriceProductScheduleTransfer {
         $priceProductScheduleEntity = $this->priceProductScheduleQuery
+            ->clear()
             ->filterByFkProductAbstract($idProductAbstract)
             ->filterByFkCurrency($idCurrency)
             ->filterByFkStore($idStore)
