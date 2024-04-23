@@ -75,7 +75,7 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         ProductConcreteTransfer $productConcreteTransfer
     ): PriceProductScheduleTransfer {
         $priceProductTransfer = (new PriceProductTransfer())
-            ->setIdProductAbstract($productConcreteTransfer->getIdProductConcrete());
+            ->setIdProduct($productConcreteTransfer->getIdProductConcrete());
 
         return $this->create($priceProductTransfer, $productConcreteTransfer->getAttributes());
     }
