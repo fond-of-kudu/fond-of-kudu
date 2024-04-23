@@ -3,8 +3,7 @@
 namespace FondOfKudu\Zed\ProductApiSchedulePriceImport\Business;
 
 use Codeception\Test\Unit;
-use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductAbstractHandler;
-use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductConcreteHandler;
+use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceHandler;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -27,14 +26,9 @@ class ProductApiSchedulePriceImportFacadeTest extends Unit
     protected MockObject|ProductApiSchedulePriceImportBusinessFactory $productApiSchedulePriceImportBusinessFactoryMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductAbstractHandler
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceHandler
      */
-    protected MockObject|SalePriceProductAbstractHandler $salePriceProductAbstractHandlerMock;
-
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductConcreteHandler
-     */
-    protected MockObject|SalePriceProductConcreteHandler $salePriceProductConcreteHandlerMock;
+    protected MockObject|SalePriceHandler $salePriceHandlerMock;
 
     /**
      * @var \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\ProductApiSchedulePriceImportFacadeInterface
@@ -51,8 +45,7 @@ class ProductApiSchedulePriceImportFacadeTest extends Unit
         $this->productAbstractTransferMock = $this->createMock(ProductAbstractTransfer::class);
         $this->productAbstractConcreteMock = $this->createMock(ProductConcreteTransfer::class);
         $this->productApiSchedulePriceImportBusinessFactoryMock = $this->createMock(ProductApiSchedulePriceImportBusinessFactory::class);
-        $this->salePriceProductAbstractHandlerMock = $this->createMock(SalePriceProductAbstractHandler::class);
-        $this->salePriceProductConcreteHandlerMock = $this->createMock(SalePriceProductConcreteHandler::class);
+        $this->salePriceHandlerMock = $this->createMock(SalePriceHandler::class);
 
         $this->apiSchedulePriceImportFacade = new ProductApiSchedulePriceImportFacade();
         $this->apiSchedulePriceImportFacade->setFactory($this->productApiSchedulePriceImportBusinessFactoryMock);
@@ -64,11 +57,11 @@ class ProductApiSchedulePriceImportFacadeTest extends Unit
     public function testOnCreateProductAbstract(): void
     {
         $this->productApiSchedulePriceImportBusinessFactoryMock->expects(static::once())
-            ->method('createSalePriceProductAbstractHandler')
-            ->willReturn($this->salePriceProductAbstractHandlerMock);
+            ->method('createSalePriceHandler')
+            ->willReturn($this->salePriceHandlerMock);
 
-        $this->salePriceProductAbstractHandlerMock->expects(static::once())
-            ->method('handle')
+        $this->salePriceHandlerMock->expects(static::once())
+            ->method('handleProductAbstract')
             ->with($this->productAbstractTransferMock)
             ->willReturn($this->productAbstractTransferMock);
 
@@ -84,11 +77,11 @@ class ProductApiSchedulePriceImportFacadeTest extends Unit
     public function testOnUpdateProductAbstract(): void
     {
         $this->productApiSchedulePriceImportBusinessFactoryMock->expects(static::once())
-            ->method('createSalePriceProductAbstractHandler')
-            ->willReturn($this->salePriceProductAbstractHandlerMock);
+            ->method('createSalePriceHandler')
+            ->willReturn($this->salePriceHandlerMock);
 
-        $this->salePriceProductAbstractHandlerMock->expects(static::once())
-            ->method('handle')
+        $this->salePriceHandlerMock->expects(static::once())
+            ->method('handleProductAbstract')
             ->with($this->productAbstractTransferMock)
             ->willReturn($this->productAbstractTransferMock);
 
@@ -104,11 +97,11 @@ class ProductApiSchedulePriceImportFacadeTest extends Unit
     public function testOnCreateProductConcrete(): void
     {
         $this->productApiSchedulePriceImportBusinessFactoryMock->expects(static::once())
-            ->method('createSalePriceProductConcreteHandler')
-            ->willReturn($this->salePriceProductConcreteHandlerMock);
+            ->method('createSalePriceHandler')
+            ->willReturn($this->salePriceHandlerMock);
 
-        $this->salePriceProductConcreteHandlerMock->expects(static::atLeastOnce())
-            ->method('handle')
+        $this->salePriceHandlerMock->expects(static::atLeastOnce())
+            ->method('handleProductConcrete')
             ->with($this->productAbstractConcreteMock)
             ->willReturn($this->productAbstractConcreteMock);
 
@@ -124,11 +117,11 @@ class ProductApiSchedulePriceImportFacadeTest extends Unit
     public function testOnUpdateProductConcrete(): void
     {
         $this->productApiSchedulePriceImportBusinessFactoryMock->expects(static::once())
-            ->method('createSalePriceProductConcreteHandler')
-            ->willReturn($this->salePriceProductConcreteHandlerMock);
+            ->method('createSalePriceHandler')
+            ->willReturn($this->salePriceHandlerMock);
 
-        $this->salePriceProductConcreteHandlerMock->expects(static::atLeastOnce())
-            ->method('handle')
+        $this->salePriceHandlerMock->expects(static::atLeastOnce())
+            ->method('handleProductConcrete')
             ->with($this->productAbstractConcreteMock)
             ->willReturn($this->productAbstractConcreteMock);
 

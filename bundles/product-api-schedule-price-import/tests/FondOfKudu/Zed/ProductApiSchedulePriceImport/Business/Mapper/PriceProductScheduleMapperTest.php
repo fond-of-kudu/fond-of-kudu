@@ -4,7 +4,9 @@ namespace FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper;
 
 use Codeception\Test\Unit;
 use FondOfKudu\Shared\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConstants;
+use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToCurrencyFacadeBridge;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductFacadeBridge;
+use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToStoreFacadeBridge;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConfig;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
@@ -58,6 +60,16 @@ class PriceProductScheduleMapperTest extends Unit
     protected MockObject|CurrencyTransfer $currencyTransferMock;
 
     /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToCurrencyFacadeBridge
+     */
+    protected MockObject|ProductApiSchedulePriceImportToCurrencyFacadeBridge $currencyFacadeMock;
+
+    /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToStoreFacadeBridge
+     */
+    protected MockObject|ProductApiSchedulePriceImportToStoreFacadeBridge $storeFacadeMock;
+
+    /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\Generated\Shared\Transfer\ProductConcreteTransfer
      */
     protected MockObject|ProductConcreteTransfer $productConcreteTransferMock;
@@ -83,10 +95,14 @@ class PriceProductScheduleMapperTest extends Unit
         $this->storeTransferMock = $this->createMock(StoreTransfer::class);
         $this->currencyTransferMock = $this->createMock(CurrencyTransfer::class);
         $this->productConcreteTransferMock = $this->createMock(ProductConcreteTransfer::class);
+        $this->currencyFacadeMock = $this->createMock(ProductApiSchedulePriceImportToCurrencyFacadeBridge::class);
+        $this->storeFacadeMock = $this->createMock(ProductApiSchedulePriceImportToStoreFacadeBridge::class);
 
         $this->priceProductScheduleMapper = new PriceProductScheduleMapper(
             $this->priceProductFacadeMock,
             $this->apiSchedulePriceImportConfigMock,
+            $this->currencyFacadeMock,
+            $this->storeFacadeMock,
         );
     }
 
@@ -95,10 +111,14 @@ class PriceProductScheduleMapperTest extends Unit
      */
     public function testCreateFromProductAbstractTransfer(): void
     {
+        $this->productAbstractTransferMock->expects(static::atLeastOnce())
+            ->method('getIdProductAbstract')
+            ->willReturn(1);
+
         $this->productAbstractTransferMock->expects(static::once())
             ->method('getAttributes')
             ->willReturn([
-                ProductApiSchedulePriceImportConstants::SPECIAL_PRICE => 1000,
+                ProductApiSchedulePriceImportConstants::SPECIAL_PRICE => 2500,
                 ProductApiSchedulePriceImportConstants::SPECIAL_PRICE_FROM => '2024-01-01',
                 ProductApiSchedulePriceImportConstants::SPECIAL_PRICE_TO => '2024-12-31',
             ]);
@@ -115,119 +135,42 @@ class PriceProductScheduleMapperTest extends Unit
             ->method('getProductAttributeSalePriceTo')
             ->willReturn(ProductApiSchedulePriceImportConstants::SPECIAL_PRICE_TO);
 
-        $this->priceProductTransferMock->expects(static::atLeastOnce())
-            ->method('getMoneyValue')
-            ->willReturn($this->moneyValueTransferMock);
+        $this->currencyFacadeMock->expects(static::atLeastOnce())
+            ->method('getCurrent')
+            ->willReturn($this->currencyTransferMock);
 
-        $this->moneyValueTransferMock->expects(static::once())
-            ->method('setGrossAmount')
-            ->with(1000)
-            ->willReturnSelf();
+        $this->currencyTransferMock->expects(static::atLeastOnce())
+            ->method('getCode')
+            ->willReturn('EUR');
 
-        $this->apiSchedulePriceImportConfigMock->expects(static::once())
-            ->method('getIdPriceProductScheduleList')
-            ->willReturn(1);
+        $this->currencyFacadeMock->expects(static::atLeastOnce())
+            ->method('findCurrencyByIsoCode')
+            ->with('EUR')
+            ->willReturn($this->currencyTransferMock);
 
-        $this->apiSchedulePriceImportConfigMock->expects(static::once())
-            ->method('getPriceDimensionRrp')
-            ->willReturn(ProductApiSchedulePriceImportConstants::PRICE_DEFAULT);
+        $this->storeFacadeMock->expects(static::atLeastOnce())
+            ->method('getCurrentStore')
+            ->willReturn($this->storeTransferMock);
 
         $this->priceProductFacadeMock->expects(static::once())
             ->method('findPriceTypeByName')
             ->with(ProductApiSchedulePriceImportConstants::PRICE_DEFAULT)
             ->willReturn($this->priceTypeTransferMock);
 
-        $this->moneyValueTransferMock->expects(static::once())
-            ->method('getStore')
-            ->willReturn($this->storeTransferMock);
+        $this->apiSchedulePriceImportConfigMock->expects(static::once())
+            ->method('getPriceDimensionRrp')
+            ->willReturn(ProductApiSchedulePriceImportConstants::PRICE_DEFAULT);
 
-        $this->priceProductTransferMock->expects(static::once())
-            ->method('setPriceType')
-            ->with($this->priceTypeTransferMock)
-            ->willReturnSelf();
+        $this->storeTransferMock->expects(static::atLeastOnce())
+            ->method('getIdStore')
+            ->willReturn(1);
 
-        $this->moneyValueTransferMock->expects(static::once())
-            ->method('getCurrency')
-            ->willReturn($this->currencyTransferMock);
-
-        $this->priceProductScheduleMapper->createFromProductAbstractTransfer(
-            $this->productAbstractTransferMock,
-            $this->priceProductTransferMock,
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testCreateFromProductConcreteTransfer(): void
-    {
-        $this->productConcreteTransferMock->expects(static::once())
-            ->method('getIdProductConcrete')
+        $this->currencyTransferMock->expects(static::atLeastOnce())
+            ->method('getIdCurrency')
             ->willReturn(99);
 
-        $this->priceProductTransferMock->expects(static::once())
-            ->method('setIdProduct')
-            ->with(99)
-            ->willReturnSelf();
-
-        $this->productConcreteTransferMock->expects(static::once())
-            ->method('getAttributes')
-            ->willReturn([
-                ProductApiSchedulePriceImportConstants::SPECIAL_PRICE => 1000,
-                ProductApiSchedulePriceImportConstants::SPECIAL_PRICE_FROM => '2024-01-01',
-                ProductApiSchedulePriceImportConstants::SPECIAL_PRICE_TO => '2024-12-31',
-            ]);
-
-        $this->apiSchedulePriceImportConfigMock->expects(static::once())
-            ->method('getProductAttributeSalePrice')
-            ->willReturn(ProductApiSchedulePriceImportConstants::SPECIAL_PRICE);
-
-        $this->apiSchedulePriceImportConfigMock->expects(static::once())
-            ->method('getProductAttributeSalePriceFrom')
-            ->willReturn(ProductApiSchedulePriceImportConstants::SPECIAL_PRICE_FROM);
-
-        $this->apiSchedulePriceImportConfigMock->expects(static::once())
-            ->method('getProductAttributeSalePriceTo')
-            ->willReturn(ProductApiSchedulePriceImportConstants::SPECIAL_PRICE_TO);
-
-        $this->priceProductTransferMock->expects(static::atLeastOnce())
-            ->method('getMoneyValue')
-            ->willReturn($this->moneyValueTransferMock);
-
-        $this->moneyValueTransferMock->expects(static::once())
-            ->method('setGrossAmount')
-            ->with(1000)
-            ->willReturnSelf();
-
-        $this->apiSchedulePriceImportConfigMock->expects(static::once())
-            ->method('getIdPriceProductScheduleList')
-            ->willReturn(1);
-
-        $this->apiSchedulePriceImportConfigMock->expects(static::once())
-            ->method('getPriceDimensionRrp')
-            ->willReturn(ProductApiSchedulePriceImportConstants::PRICE_DEFAULT);
-
-        $this->priceProductFacadeMock->expects(static::once())
-            ->method('findPriceTypeByName')
-            ->with(ProductApiSchedulePriceImportConstants::PRICE_DEFAULT)
-            ->willReturn($this->priceTypeTransferMock);
-
-        $this->moneyValueTransferMock->expects(static::once())
-            ->method('getStore')
-            ->willReturn($this->storeTransferMock);
-
-        $this->priceProductTransferMock->expects(static::once())
-            ->method('setPriceType')
-            ->with($this->priceTypeTransferMock)
-            ->willReturnSelf();
-
-        $this->moneyValueTransferMock->expects(static::once())
-            ->method('getCurrency')
-            ->willReturn($this->currencyTransferMock);
-
-        $this->priceProductScheduleMapper->createFromProductConcreteTransfer(
-            $this->priceProductTransferMock,
-            $this->productConcreteTransferMock,
+        $priceProductScheduleTransfer = $this->priceProductScheduleMapper->createFromProductAbstractTransfer(
+            $this->productAbstractTransferMock,
         );
     }
 }

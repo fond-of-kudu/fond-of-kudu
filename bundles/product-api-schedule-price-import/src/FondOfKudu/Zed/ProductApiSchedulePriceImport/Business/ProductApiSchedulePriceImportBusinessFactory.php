@@ -6,16 +6,13 @@ use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\PriceProductSch
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\PriceProductScheduleMapperInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\ProductConcreteMapper;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\ProductConcreteMapperInterface;
-use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductAbstractHandler;
-use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductAbstractHandlerInterface;
-use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductConcreteHandler;
-use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductConcreteHandlerInterface;
+use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceHandler;
+use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceHandlerInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToCurrencyFacadeInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductFacadeInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToStoreFacadeInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportDependencyProvider;
-use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -24,34 +21,18 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class ProductApiSchedulePriceImportBusinessFactory extends AbstractBusinessFactory
 {
-    use LoggerTrait;
-
     /**
-     * @return \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductAbstractHandlerInterface
+     * @return \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceHandlerInterface
      */
-    public function createSalePriceProductAbstractHandler(): SalePriceProductAbstractHandlerInterface
+    public function createSalePriceHandler(): SalePriceHandlerInterface
     {
-        return new SalePriceProductAbstractHandler(
+        return new SalePriceHandler(
+            $this->createPriceProductScheduleMapper(),
             $this->getPriceProductScheduleFacade(),
             $this->getCurrencyFacade(),
             $this->getStoreFacade(),
-            $this->getPriceProductFacade(),
             $this->getRepository(),
             $this->getConfig(),
-        );
-    }
-
-    /**
-     * @return \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductConcreteHandlerInterface
-     */
-    public function createSalePriceProductConcreteHandler(): SalePriceProductConcreteHandlerInterface
-    {
-        return new SalePriceProductConcreteHandler(
-            $this->getPriceProductScheduleFacade(),
-            $this->createPriceProductScheduleMapper(),
-            $this->getRepository(),
-            $this->getConfig(),
-            $this->getLogger(),
         );
     }
 
@@ -63,6 +44,8 @@ class ProductApiSchedulePriceImportBusinessFactory extends AbstractBusinessFacto
         return new PriceProductScheduleMapper(
             $this->getPriceProductFacade(),
             $this->getConfig(),
+            $this->getCurrencyFacade(),
+            $this->getStoreFacade(),
         );
     }
 

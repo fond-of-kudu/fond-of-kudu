@@ -10,4 +10,11 @@ interface ProductApiSchedulePriceImportToCurrencyFacadeInterface
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function getCurrent(): CurrencyTransfer;
+
+    /**
+     * @param string $isoCode
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer|null
+     */
+    public function findCurrencyByIsoCode(string $isoCode): ?CurrencyTransfer;
 }

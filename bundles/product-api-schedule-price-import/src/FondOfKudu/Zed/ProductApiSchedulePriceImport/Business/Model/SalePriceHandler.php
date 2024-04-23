@@ -3,18 +3,17 @@
 namespace FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model;
 
 use DateTime;
+use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\PriceProductScheduleMapperInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToCurrencyFacadeInterface;
-use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductFacadeInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToStoreFacadeInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Persistence\ProductApiSchedulePriceImportRepositoryInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConfig;
-use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 
-class SalePriceProductAbstractHandler implements SalePriceProductAbstractHandlerInterface
+class SalePriceHandler implements SalePriceHandlerInterface
 {
     /**
      * @var \FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface
@@ -42,32 +41,32 @@ class SalePriceProductAbstractHandler implements SalePriceProductAbstractHandler
     protected ProductApiSchedulePriceImportToStoreFacadeInterface $storeFacade;
 
     /**
-     * @var \FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductFacadeInterface
+     * @var \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\PriceProductScheduleMapperInterface
      */
-    protected ProductApiSchedulePriceImportToPriceProductFacadeInterface $priceProductFacade;
+    protected PriceProductScheduleMapperInterface $priceProductScheduleMapper;
 
     /**
+     * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\PriceProductScheduleMapperInterface $priceProductScheduleMapper
      * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface $priceProductScheduleFacade
      * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToCurrencyFacadeInterface $currencyFacade
      * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToStoreFacadeInterface $storeFacade
-     * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductFacadeInterface $priceProductFacade
      * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Persistence\ProductApiSchedulePriceImportRepositoryInterface $productApiSchedulePriceImportRepository
      * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConfig $apiSchedulePriceImportConfig
      */
     public function __construct(
+        PriceProductScheduleMapperInterface $priceProductScheduleMapper,
         ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface $priceProductScheduleFacade,
         ProductApiSchedulePriceImportToCurrencyFacadeInterface $currencyFacade,
         ProductApiSchedulePriceImportToStoreFacadeInterface $storeFacade,
-        ProductApiSchedulePriceImportToPriceProductFacadeInterface $priceProductFacade,
         ProductApiSchedulePriceImportRepositoryInterface $productApiSchedulePriceImportRepository,
         ProductApiSchedulePriceImportConfig $apiSchedulePriceImportConfig
     ) {
+        $this->priceProductScheduleMapper = $priceProductScheduleMapper;
         $this->priceProductScheduleFacade = $priceProductScheduleFacade;
-        $this->apiSchedulePriceImportConfig = $apiSchedulePriceImportConfig;
-        $this->productApiSchedulePriceImportRepository = $productApiSchedulePriceImportRepository;
         $this->currencyFacade = $currencyFacade;
         $this->storeFacade = $storeFacade;
-        $this->priceProductFacade = $priceProductFacade;
+        $this->productApiSchedulePriceImportRepository = $productApiSchedulePriceImportRepository;
+        $this->apiSchedulePriceImportConfig = $apiSchedulePriceImportConfig;
     }
 
     /**
@@ -75,13 +74,14 @@ class SalePriceProductAbstractHandler implements SalePriceProductAbstractHandler
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function handle(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
+    public function handleProductAbstract(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
     {
-        if (!$this->validateSpecialPriceAttributes($productAbstractTransfer)) {
+        if (!$this->validateSpecialPriceAttributes($productAbstractTransfer->getAttributes())) {
             return $productAbstractTransfer;
         }
 
         $currencyTransfer = $this->currencyFacade->getCurrent();
+        $currencyTransfer = $this->currencyFacade->findCurrencyByIsoCode($currencyTransfer->getCode());
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
         $priceProductScheduleTransfer = $this->productApiSchedulePriceImportRepository
@@ -97,34 +97,51 @@ class SalePriceProductAbstractHandler implements SalePriceProductAbstractHandler
             );
         }
 
-        $grossAmount = $productAbstractTransfer->getAttributes()[$this->apiSchedulePriceImportConfig->getProductAttributeSalePrice()];
-        $activeFrom = $productAbstractTransfer->getAttributes()[$this->apiSchedulePriceImportConfig->getProductAttributeSalePriceFrom()];
-        $activeTo = $productAbstractTransfer->getAttributes()[$this->apiSchedulePriceImportConfig->getProductAttributeSalePriceTo()];
-
-        $priceTypeTransfer = $this->priceProductFacade->findPriceTypeByName(
-            $this->apiSchedulePriceImportConfig->getPriceDimensionRrp(),
-        );
-
-        $moneyValueTransfer = (new MoneyValueTransfer())
-            ->setFkStore($storeTransfer->getIdStore())
-            ->setFkCurrency($currencyTransfer->getIdCurrency())
-            ->setCurrency($currencyTransfer)
-            ->setGrossAmount($grossAmount)
-            ->setStore($storeTransfer);
-
-        $priceProductTransfer = (new PriceProductTransfer())
-            ->setMoneyValue($moneyValueTransfer)
-            ->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract())
-            ->setPriceType($priceTypeTransfer);
-
-        $priceProductScheduleTransfer = (new PriceProductScheduleTransfer())
-            ->setPriceProduct($priceProductTransfer)
-            ->setActiveFrom($activeFrom)
-            ->setActiveTo($activeTo);
+        $priceProductScheduleTransfer = $this->priceProductScheduleMapper
+            ->createFromProductAbstractTransfer($productAbstractTransfer);
 
         $this->priceProductScheduleFacade->createAndApplyPriceProductSchedule($priceProductScheduleTransfer);
 
         return $productAbstractTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function handleProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    {
+        if (!$this->validateSpecialPriceAttributes($productConcreteTransfer->getAttributes())) {
+            return $productConcreteTransfer;
+        }
+
+        $currencyTransfer = $this->currencyFacade->getCurrent();
+        $currencyTransfer = $this->currencyFacade->findCurrencyByIsoCode($currencyTransfer->getCode());
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+
+        $priceProductScheduleTransfer = $this->productApiSchedulePriceImportRepository
+            ->findPriceProductScheduleByIdProductConcreteAndIdCurrencyAndIdStore(
+                $productConcreteTransfer->getIdProductConcrete(),
+                $currencyTransfer->getIdCurrency(),
+                $storeTransfer->getIdStore(),
+            );
+
+        if (
+            $priceProductScheduleTransfer !== null
+            && $this->hasDataChanged($priceProductScheduleTransfer, $productConcreteTransfer->getAttributes())
+        ) {
+            $this->priceProductScheduleFacade->removeAndApplyPriceProductSchedule(
+                $priceProductScheduleTransfer->getIdPriceProductSchedule(),
+            );
+        }
+
+        $priceProductScheduleTransfer = $this->priceProductScheduleMapper
+            ->createFromProductConcreteTransfer($productConcreteTransfer);
+
+        $this->priceProductScheduleFacade->createAndApplyPriceProductSchedule($priceProductScheduleTransfer);
+
+        return $productConcreteTransfer;
     }
 
     /**
@@ -164,11 +181,11 @@ class SalePriceProductAbstractHandler implements SalePriceProductAbstractHandler
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $productAttributes
      *
      * @return bool
      */
-    protected function validateSpecialPriceAttributes(ProductAbstractTransfer $productAbstractTransfer): bool
+    protected function validateSpecialPriceAttributes(array $productAttributes): bool
     {
         $required = [
             $this->apiSchedulePriceImportConfig->getProductAttributeSalePrice(),
@@ -177,11 +194,11 @@ class SalePriceProductAbstractHandler implements SalePriceProductAbstractHandler
         ];
 
         foreach ($required as $attribute) {
-            if (!isset($productAbstractTransfer->getAttributes()[$attribute])) {
+            if (!isset($productAttributes[$attribute])) {
                 return false;
             }
 
-            if (!$productAbstractTransfer->getAttributes()[$attribute]) {
+            if (!$productAttributes[$attribute]) {
                 return false;
             }
         }

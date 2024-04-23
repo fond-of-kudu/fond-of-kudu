@@ -5,7 +5,7 @@ namespace FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
 
-class ProductApiSchedulePriceImportToCurrencyBridgeFacade implements ProductApiSchedulePriceImportToCurrencyFacadeInterface
+class ProductApiSchedulePriceImportToCurrencyFacadeBridge implements ProductApiSchedulePriceImportToCurrencyFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Currency\Business\CurrencyFacadeInterface
@@ -26,5 +26,15 @@ class ProductApiSchedulePriceImportToCurrencyBridgeFacade implements ProductApiS
     public function getCurrent(): CurrencyTransfer
     {
         return $this->currencyFacade->getCurrent();
+    }
+
+    /**
+     * @param string $isoCode
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer|null
+     */
+    public function findCurrencyByIsoCode(string $isoCode): ?CurrencyTransfer
+    {
+        return $this->currencyFacade->findCurrencyByIsoCode($isoCode);
     }
 }

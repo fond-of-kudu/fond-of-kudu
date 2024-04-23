@@ -2,7 +2,7 @@
 
 namespace FondOfKudu\Zed\ProductApiSchedulePriceImport;
 
-use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToCurrencyBridgeFacade;
+use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToCurrencyFacadeBridge;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToCurrencyFacadeInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductFacadeBridge;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductFacadeInterface;
@@ -124,7 +124,7 @@ class ProductApiSchedulePriceImportDependencyProvider extends AbstractBundleDepe
     {
         $container[static::FACADE_CURRENCY] = static fn (
             Container $container
-        ): ProductApiSchedulePriceImportToCurrencyFacadeInterface => new ProductApiSchedulePriceImportToCurrencyBridgeFacade(
+        ): ProductApiSchedulePriceImportToCurrencyFacadeInterface => new ProductApiSchedulePriceImportToCurrencyFacadeBridge(
             $container->getLocator()->currency()->facade(),
         );
 
