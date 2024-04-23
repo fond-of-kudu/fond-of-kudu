@@ -10,8 +10,10 @@ use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProduct
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductAbstractHandlerInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductConcreteHandler;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceProductConcreteHandlerInterface;
+use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToCurrencyFacadeInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductFacadeInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface;
+use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToStoreFacadeInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportDependencyProvider;
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -31,7 +33,9 @@ class ProductApiSchedulePriceImportBusinessFactory extends AbstractBusinessFacto
     {
         return new SalePriceProductAbstractHandler(
             $this->getPriceProductScheduleFacade(),
-            $this->createPriceProductScheduleMapper(),
+            $this->getCurrencyFacade(),
+            $this->getStoreFacade(),
+            $this->getPriceProductFacade(),
             $this->getRepository(),
             $this->getConfig(),
         );
@@ -84,5 +88,21 @@ class ProductApiSchedulePriceImportBusinessFactory extends AbstractBusinessFacto
     protected function getPriceProductFacade(): ProductApiSchedulePriceImportToPriceProductFacadeInterface
     {
         return $this->getProvidedDependency(ProductApiSchedulePriceImportDependencyProvider::FACADE_PRICE_PRODUCT);
+    }
+
+    /**
+     * @return \FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToCurrencyFacadeInterface
+     */
+    protected function getCurrencyFacade(): ProductApiSchedulePriceImportToCurrencyFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductApiSchedulePriceImportDependencyProvider::FACADE_CURRENCY);
+    }
+
+    /**
+     * @return \FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToStoreFacadeInterface
+     */
+    protected function getStoreFacade(): ProductApiSchedulePriceImportToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductApiSchedulePriceImportDependencyProvider::FACADE_STORE);
     }
 }

@@ -24,4 +24,11 @@ interface ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface
     public function updateAndApplyPriceProductSchedule(
         PriceProductScheduleTransfer $priceProductScheduleTransfer
     ): PriceProductScheduleResponseTransfer;
+
+    /**
+     * @param int $idPriceProductSchedule
+     *
+     * @return void
+     */
+    public function removeAndApplyPriceProductSchedule(int $idPriceProductSchedule): void;
 }

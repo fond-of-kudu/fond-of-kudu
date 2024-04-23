@@ -78,13 +78,13 @@ class SalePriceProductConcreteHandler implements SalePriceProductConcreteHandler
                     $priceProductTransfer->getMoneyValue()->getFkStore(),
                 );
 
-            if ($priceProductScheduleTransfer === null) {
-                $this->create($priceProductTransfer, $productConcreteTransfer);
-
-                continue;
+            if ($priceProductScheduleTransfer !== null) {
+                $this->priceProductScheduleFacade->removeAndApplyPriceProductSchedule(
+                    $priceProductScheduleTransfer->getIdPriceProductSchedule(),
+                );
             }
 
-            $this->update($priceProductScheduleTransfer, $productConcreteTransfer);
+            $this->create($priceProductTransfer, $productConcreteTransfer);
         }
 
         return $productConcreteTransfer;
@@ -127,6 +127,10 @@ class SalePriceProductConcreteHandler implements SalePriceProductConcreteHandler
             ->setActiveFrom($specialPriceFrom)
             ->setActiveTo($specialPriceTo)
             ->getPriceProduct()->getMoneyValue()->setGrossAmount($specialPrice);
+
+        $this->priceProductScheduleFacade->removeAndApplyPriceProductSchedule(
+            $priceProductScheduleTransfer->getIdPriceProductSchedule(),
+        );
 
         $this->priceProductScheduleFacade->updateAndApplyPriceProductSchedule($priceProductScheduleTransfer);
     }
