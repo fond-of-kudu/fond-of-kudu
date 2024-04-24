@@ -327,6 +327,7 @@ class SalePriceHandlerTest extends Unit
         static::assertEquals($productAbstractTransfer, $this->productAbstractTransferMock);
     }
 
+
     /**
      * @return void
      */
