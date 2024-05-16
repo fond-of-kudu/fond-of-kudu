@@ -17,6 +17,7 @@ class ProductAttributesExpanderTest extends Unit
     public function testExpandItems(): void
     {
         $repositoryMock = $this->getMockBuilder(ProductAttributesCartConnectorRepository::class)
+            ->onlyMethods(['getProductAbstractAttributes'])
             ->disableOriginalConstructor()
             ->getMock();
 

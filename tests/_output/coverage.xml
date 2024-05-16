@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1715849686">
-  <project timestamp="1715849686">
+<coverage generated="1715856981">
+  <project timestamp="1715856981">
     <file name="/Users/cre/code/fond-of-kudu/bundles/carts-rest-api/src/FondOfKudu/Client/CartsRestApi/CartsRestApiClient.php">
       <class name="FondOfKudu\Client\CartsRestApi\CartsRestApiClient" namespace="global">
         <metrics complexity="2" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="0" elements="8" coveredelements="0"/>
@@ -1303,6 +1303,52 @@
       <line num="73" type="stmt" count="0"/>
       <metrics loc="76" ncloc="58" classes="1" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="0" elements="30" coveredelements="0"/>
     </file>
+    <file name="/Users/cre/code/fond-of-kudu/bundles/product-attributes-cart-connector/src/FondOfKudu/Zed/ProductAttributesCartConnector/Business/Expander/ProductAttributesExpander.php">
+      <class name="FondOfKudu\Zed\ProductAttributesCartConnector\Business\Expander\ProductAttributesExpander" namespace="global">
+        <metrics complexity="5" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="9" coveredstatements="9" elements="12" coveredelements="12"/>
+      </class>
+      <line num="18" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="21" type="stmt" count="1"/>
+      <line num="29" type="method" name="expandItems" visibility="public" complexity="2" crap="2" count="1"/>
+      <line num="31" type="stmt" count="1"/>
+      <line num="32" type="stmt" count="1"/>
+      <line num="33" type="stmt" count="1"/>
+      <line num="36" type="stmt" count="1"/>
+      <line num="38" type="stmt" count="1"/>
+      <line num="46" type="method" name="expandItemsWithAbstractAttributes" visibility="protected" complexity="2" crap="2" count="1"/>
+      <line num="48" type="stmt" count="1"/>
+      <line num="50" type="stmt" count="1"/>
+      <line num="51" type="stmt" count="1"/>
+      <metrics loc="55" ncloc="39" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="9" coveredstatements="9" elements="12" coveredelements="12"/>
+    </file>
+    <file name="/Users/cre/code/fond-of-kudu/bundles/product-attributes-cart-connector/src/FondOfKudu/Zed/ProductAttributesCartConnector/Business/Expander/ProductAttributesExpanderInterface.php">
+      <metrics loc="16" ncloc="11" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+    </file>
+    <file name="/Users/cre/code/fond-of-kudu/bundles/product-attributes-cart-connector/src/FondOfKudu/Zed/ProductAttributesCartConnector/Persistence/Mapper/AttributesMapper.php">
+      <class name="FondOfKudu\Zed\ProductAttributesCartConnector\Persistence\Mapper\AttributesMapper" namespace="global">
+        <metrics complexity="3" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="5" elements="7" coveredelements="7"/>
+      </class>
+      <line num="22" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="25" type="stmt" count="1"/>
+      <line num="32" type="method" name="mapEntityToTransfer" visibility="public" complexity="2" crap="2" count="1"/>
+      <line num="34" type="stmt" count="1"/>
+      <line num="35" type="stmt" count="1"/>
+      <line num="36" type="stmt" count="1"/>
+      <line num="39" type="stmt" count="1"/>
+      <metrics loc="42" ncloc="28" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="5" elements="7" coveredelements="7"/>
+    </file>
+    <file name="/Users/cre/code/fond-of-kudu/bundles/product-attributes-cart-connector/src/FondOfKudu/Zed/ProductAttributesCartConnector/Persistence/ProductAttributesCartConnectorRepository.php">
+      <class name="FondOfKudu\Zed\ProductAttributesCartConnector\Persistence\ProductAttributesCartConnectorRepository" namespace="global">
+        <metrics complexity="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="0" elements="6" coveredelements="0"/>
+      </class>
+      <line num="17" type="method" name="getProductAbstractAttributes" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="20" type="stmt" count="0"/>
+      <line num="21" type="stmt" count="0"/>
+      <line num="22" type="stmt" count="0"/>
+      <line num="23" type="stmt" count="0"/>
+      <line num="25" type="stmt" count="0"/>
+      <metrics loc="28" ncloc="19" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="0" elements="6" coveredelements="0"/>
+    </file>
     <file name="/Users/cre/code/fond-of-kudu/bundles/product-image-storage-connector/src/FondOfKudu/Client/ProductImageStorageConnector/Dependency/Client/ProductImageStorageConnectorToProductImageStorageClientBridge.php">
       <class name="FondOfKudu\Client\ProductImageStorageConnector\Dependency\Client\ProductImageStorageConnectorToProductImageStorageClientBridge" namespace="global">
         <metrics complexity="2" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="2" elements="4" coveredelements="4"/>
@@ -1438,6 +1484,6 @@
     <file name="/Users/cre/code/fond-of-kudu/bundles/product-image-storage-connector/src/FondOfKudu/Shared/ProductImageStorageConnector/ProductImageStorageConnectorConstants.php">
       <metrics loc="242" ncloc="101" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
     </file>
-    <metrics files="118" loc="4955" ncloc="3385" classes="75" methods="162" coveredmethods="94" conditionals="0" coveredconditionals="0" statements="696" coveredstatements="438" elements="858" coveredelements="532"/>
+    <metrics files="122" loc="5096" ncloc="3482" classes="78" methods="168" coveredmethods="99" conditionals="0" coveredconditionals="0" statements="715" coveredstatements="452" elements="883" coveredelements="551"/>
   </project>
 </coverage>
