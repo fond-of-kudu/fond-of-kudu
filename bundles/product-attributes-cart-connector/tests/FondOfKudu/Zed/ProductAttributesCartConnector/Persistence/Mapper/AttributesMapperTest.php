@@ -31,8 +31,6 @@ class AttributesMapperTest extends Unit
         $attributes = (new AttributesMapper($encodingMock))->mapEntityToTransfer($abstractProductEntities);
 
         $this->assertIsArray($attributes);
-        var_dump($attributes);
-//        $this->assertArrayHasKey('_', $attributes[0]);
-//        $this->assertArrayHasKey('key', $attributes[0]['_']);
+        $this->assertArrayHasKey('key', $attributes[1]);
     }
 }

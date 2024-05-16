@@ -31,9 +31,7 @@ class ProductAttributesExpanderTest extends Unit
 
         $repositoryMock->method('getProductAbstractAttributes')
             ->willReturn([
-                1 => [
-                    '_' => ['key' => 'value'],
-                ],
+                1 => ['key' => 'value'],
             ]);
 
         $expander = new ProductAttributesExpander($repositoryMock);
