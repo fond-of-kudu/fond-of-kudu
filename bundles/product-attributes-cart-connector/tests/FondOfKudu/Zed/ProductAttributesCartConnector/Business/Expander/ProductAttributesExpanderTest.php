@@ -2,14 +2,19 @@
 
 namespace FondOfKudu\Zed\ProductsAttributesCartConnector\Business\Expander;
 
+use ArrayObject;
 use Codeception\Test\Unit;
+use FondOfKudu\Zed\ProductAttributesCartConnector\Business\Expander\ProductAttributesExpander;
+use FondOfKudu\Zed\ProductAttributesCartConnector\Persistence\ProductAttributesCartConnectorRepository;
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 
 class ProductAttributesExpanderTest extends Unit
 {
     /**
      * @return void
      */
-    public function testExpandItems()
+    public function testExpandItems(): void
     {
         $repositoryMock = $this->getMockBuilder(ProductAttributesCartConnectorRepository::class)
             ->disableOriginalConstructor()
@@ -18,7 +23,10 @@ class ProductAttributesExpanderTest extends Unit
         $cartChangeTransfer = new CartChangeTransfer();
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setIdProductAbstract(1);
-        $cartChangeTransfer->setItems([$itemTransfer]);
+
+        $items = new ArrayObject();
+        $items->append($itemTransfer);
+        $cartChangeTransfer->setItems($items);
 
         $repositoryMock->method('getProductAbstractAttributes')
             ->willReturn([

@@ -11,7 +11,7 @@ class AttributesMapperTest extends Unit
     /**
      * @return void
      */
-    public function testMapEntityToTransfer()
+    public function testMapEntityToTransfer(): void
     {
         $encodingMock = $this->getMockBuilder(UtilEncodingServiceInterface::class)
             ->disableOriginalConstructor()
