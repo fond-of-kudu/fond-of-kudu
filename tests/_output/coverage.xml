@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1715848889">
-  <project timestamp="1715848889">
+<coverage generated="1715849686">
+  <project timestamp="1715849686">
     <file name="/Users/cre/code/fond-of-kudu/bundles/carts-rest-api/src/FondOfKudu/Client/CartsRestApi/CartsRestApiClient.php">
       <class name="FondOfKudu\Client\CartsRestApi\CartsRestApiClient" namespace="global">
         <metrics complexity="2" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="0" elements="8" coveredelements="0"/>
