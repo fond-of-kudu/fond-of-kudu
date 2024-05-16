@@ -1,4 +1,4 @@
-namespace: fond-of-kudu/product-image-storage-connector
+namespace: fond-of-kudu/product-attributes-cart-connector
 
 suites:
   unit:
