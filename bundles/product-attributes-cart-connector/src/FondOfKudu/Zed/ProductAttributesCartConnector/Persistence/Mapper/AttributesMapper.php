@@ -33,7 +33,7 @@ class AttributesMapper
     {
         $abstractProductAttributes = [];
         foreach ($abstractProductEntities as $abstractProduct) {
-            $abstractProductAttributes[$abstractProduct[static::ID_PRODUCT_ABSTRACT]] = $this->utilEncodingService->decodeJson($abstractProduct[static::ATTRIBUTES]);
+            $abstractProductAttributes[$abstractProduct[static::ID_PRODUCT_ABSTRACT]] = $this->utilEncodingService->decodeJson($abstractProduct[static::ATTRIBUTES], true);
         }
 
         return $abstractProductAttributes;
