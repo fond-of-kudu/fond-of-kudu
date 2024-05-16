@@ -89,6 +89,8 @@
       "FondOfKudu\\Shared\\OmsRetryCaptureProcess\\": "bundles/oms-retry-capture-process/src/FondOfKudu/Shared/OmsRetryCaptureProcess",
       "FondOfKudu\\Zed\\OmsPayoneError\\": "bundles/oms-payone-error/src/FondOfKudu/Zed/OmsPayoneError",
       "FondOfKudu\\Shared\\OmsPayoneError\\": "bundles/oms-payone-error/src/FondOfKudu/Shared/OmsPayoneError",
+      "FondOfKudu\\Zed\\ProductAttributesCartConnector\\": "bundles/product-attributes-cart-connector/src/FondOfKudu/Zed/ProductAttributesCartConnector",
+      "FondOfKudu\\Shared\\ProductAttributesCartConnector\\": "bundles/product-attributes-cart-connector/src/FondOfKudu/Shared/ProductAttributesCartConnector",
       "FondOfKudu\\Zed\\ProductApiSchedulePriceImport\\": "bundles/product-api-schedule-price-import/src/FondOfKudu/Zed/ProductApiSchedulePriceImport",
       "FondOfKudu\\Shared\\ProductApiSchedulePriceImport\\": "bundles/product-api-schedule-price-import/src/FondOfKudu/Shared/ProductApiSchedulePriceImport"
     }
@@ -107,6 +109,7 @@
       "FondOfKudu\\Zed\\OmsOrderConfirmation\\": "bundles/oms-order-confirmation/tests/FondOfKudu/Zed/OmsOrderConfirmation",
       "FondOfKudu\\Zed\\OmsRetryCaptureProcess\\": "bundles/oms-retry-capture-process/tests/FondOfKudu/Zed/OmsRetryCaptureProcess",
       "FondOfKudu\\Zed\\OmsPayoneError\\": "bundles/oms-payone-error/tests/FondOfKudu/Zed/OmsPayoneError",
+      "FondOfKudu\\Zed\\ProductAttributesCartConnector\\": "bundles/product-attributes-cart-connector/tests/FondOfKudu/Zed/ProductAttributesCartConnector",
       "FondOfKudu\\Zed\\ProductApiSchedulePriceImport\\": "bundles/product-api-schedule-price-import/tests/FondOfKudu/Zed/ProductConnector",
       "Generated\\": "src/Generated/",
       "Orm\\Zed\\": "src/Orm/Zed/"
