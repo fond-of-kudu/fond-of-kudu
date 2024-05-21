@@ -22,6 +22,6 @@ class ProductAttributesCartConnectorRepository extends AbstractRepository
             ->filterByIdProductAbstract_In($idsProductAbstract)
             ->find();
 
-        return $this->getFactory()->getAttributesMapper()->mapEntityToTransfer($entities->toArray());
+        return $this->getFactory()->getAttributesMapper()->mapEntityToTransfer($entities);
     }
 }
