@@ -22,7 +22,8 @@
     "autoload-dev": {
       "psr-4": {
         "FondOfKudu\\": "tests/FondOfKudu/",
-        "Generated\\": "src/Generated/"
+        "Generated\\": "src/Generated/",
+        "Orm\\": "src/Orm/"
       }
     },
     "config": {

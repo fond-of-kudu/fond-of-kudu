@@ -2,6 +2,7 @@
 
 namespace FondOfKudu\Zed\ProductAttributesCartConnector\Persistence\Mapper;
 
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
 
 class AttributesMapper
@@ -25,15 +26,15 @@ class AttributesMapper
     }
 
     /**
-     * @param array $abstractProductEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection $entities
      *
      * @return array
      */
-    public function mapEntityToTransfer(array $abstractProductEntities): array
+    public function mapEntityToTransfer(ObjectCollection $entities): array
     {
         $abstractProductAttributes = [];
-        foreach ($abstractProductEntities as $abstractProduct) {
-            $abstractProductAttributes[$abstractProduct[static::ID_PRODUCT_ABSTRACT]] = $this->utilEncodingService->decodeJson($abstractProduct[static::ATTRIBUTES], true);
+        foreach ($entities as $abstractProduct) {
+            $abstractProductAttributes[$abstractProduct->getIdProductAbstract()] = $this->utilEncodingService->decodeJson($abstractProduct->getAttributes(), true);
         }
 
         return $abstractProductAttributes;
