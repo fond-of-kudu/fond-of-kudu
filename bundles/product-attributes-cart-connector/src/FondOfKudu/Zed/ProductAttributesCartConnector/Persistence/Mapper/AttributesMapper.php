@@ -26,7 +26,7 @@ class AttributesMapper
     }
 
     /**
-     * @param array $abstractProductEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection $entities
      *
      * @return array
      */
@@ -34,7 +34,6 @@ class AttributesMapper
     {
         $abstractProductAttributes = [];
         foreach ($entities as $abstractProduct) {
-
             $abstractProductAttributes[$abstractProduct->getIdProductAbstract()] = $this->utilEncodingService->decodeJson($abstractProduct->getAttributes(), true);
         }
 
