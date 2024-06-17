@@ -55,6 +55,7 @@
     "fond-of-kudu/checkout-data-product-country-filter": "*",
     "fond-of-kudu/country-zipcode-restriction": "*",
     "fond-of-kudu/discount-promotion-rest-api": "*",
+    "fond-of-kudu/customer-password-changed-at-connector": "*",
     "fond-of-kudu/product-api-schedule-price-import": "*",
     "fond-of-kudu/product-image-storage-connector": "*",
     "fond-of-kudu/oms-order-confirmation": "*",
