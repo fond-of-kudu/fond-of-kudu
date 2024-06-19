@@ -8,5 +8,5 @@ This Composer package extends the Customer model by adding an additional column 
 ## Installation
 
 ```
-composer require fond-of-kudu/customer-password-changed-at-connector
+composer require fond-of-kudu/customer-password-updated-at-connector
 ```

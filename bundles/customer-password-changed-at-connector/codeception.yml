@@ -1,4 +1,4 @@
-namespace: fond-of-kudu/customer-password-changed-at-connector
+namespace: fond-of-kudu/customer-password-updated-at-connector
 
 suites:
   unit:

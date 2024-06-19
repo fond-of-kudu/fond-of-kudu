@@ -1,7 +1,7 @@
 <?php
 
-namespace Shared\CustomerPasswordChangedAtConnector;
+namespace Shared\CustomerPasswordUpdatedAtConnector;
 
-interface CustomerPasswordChangedAtConnectorConstants
+interface CustomerPasswordUpdatedAtConnectorConstants
 {
 }

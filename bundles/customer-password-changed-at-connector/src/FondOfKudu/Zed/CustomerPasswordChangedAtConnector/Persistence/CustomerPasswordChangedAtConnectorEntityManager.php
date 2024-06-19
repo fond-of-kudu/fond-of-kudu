@@ -1,9 +1,0 @@
-<?php
-
-namespace Zed\CustomerPasswordChangedAtConnector\Persistence;
-
-use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
-
-class CustomerPasswordChangedAtConnectorEntityManager extends AbstractEntityManager implements CustomerPasswordChangedAtConnectorEntityManagerInterface
-{
-}
