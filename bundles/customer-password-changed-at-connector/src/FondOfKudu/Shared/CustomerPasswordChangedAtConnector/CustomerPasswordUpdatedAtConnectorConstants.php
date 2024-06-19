@@ -1,6 +1,6 @@
 <?php
 
-namespace Shared\CustomerPasswordUpdatedAtConnector;
+namespace FondOfKudu\Shared\CustomerPasswordChangedAtConnector;
 
 interface CustomerPasswordUpdatedAtConnectorConstants
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\Business;
+namespace FondOfKudu\Client\CustomerPasswordUpdatedAtConnector\Zed;
 
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
-interface CustomerPasswordUpdatedAtConnectorFacadeInterface
+interface CustomerPasswordUpdatedAtConnectorStubInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
