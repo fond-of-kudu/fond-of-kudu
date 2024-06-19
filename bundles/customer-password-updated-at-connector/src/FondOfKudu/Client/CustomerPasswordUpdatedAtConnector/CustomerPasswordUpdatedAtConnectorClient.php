@@ -2,6 +2,7 @@
 
 namespace FondOfKudu\Client\CustomerPasswordUpdatedAtConnector;
 
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -15,7 +16,7 @@ class CustomerPasswordUpdatedAtConnectorClient extends AbstractClient implements
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function restorePassword(CustomerTransfer $customerTransfer)
+    public function restorePassword(CustomerTransfer $customerTransfer): CustomerResponseTransfer
     {
         return $this->getFactory()
             ->createZedCustomerStub()
