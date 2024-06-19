@@ -21,6 +21,8 @@ class CustomersRestApiConnectorDependencyProvider extends AbstractBundleDependen
      */
     public function provideDependencies(Container $container): Container
     {
+        $container = $this->addCustomerPasswordUpdateAtConnectorClient($container);
+
         return $container;
     }
 
