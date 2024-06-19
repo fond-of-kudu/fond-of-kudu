@@ -26,8 +26,8 @@
       "path": "bundles/checkout-rest-api-country-extension",
       "version": "1.0.0"
     },
-    "customer-password-changed-at-connector": {
-      "path": "bundles/customer-password-changed-at-connector",
+    "customer-password-updated-at-connector": {
+      "path": "bundles/customer-password-updated-at-connector",
       "version": "1.0.0-alpha.0"
     },
     "country-zipcode-restriction": {
