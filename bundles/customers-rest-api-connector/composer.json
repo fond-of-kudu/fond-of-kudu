@@ -10,7 +10,8 @@
   ],
   "require": {
     "php": ">=8.0",
-    "spryker/customers-rest-api": "^1.22"
+    "spryker/customers-rest-api": "^1.22",
+    "fond-of-kudu/customer-password-updated-at-connector": "*"
   },
   "require-dev": {
     "fond-of-codeception/spryker": "*",
