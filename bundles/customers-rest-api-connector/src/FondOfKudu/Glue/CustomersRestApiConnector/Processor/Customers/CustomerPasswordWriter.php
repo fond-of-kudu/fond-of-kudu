@@ -1,9 +1,8 @@
 <?php
 
-namespace Glue\CustomersRestApiConnector\Processor;
+namespace FondOfKudu\Glue\CustomersRestApiConnector\Processor\Customers;
 
 use Generated\Shared\Transfer\RestCustomerRestorePasswordAttributesTransfer;
-use Glue\CustomersRestApiConnector\Processor\Customers\CustomerPasswordWriterInterface;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResourceMapperInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface;

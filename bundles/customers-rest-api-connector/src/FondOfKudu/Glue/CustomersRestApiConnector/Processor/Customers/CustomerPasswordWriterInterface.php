@@ -1,6 +1,6 @@
 <?php
 
-namespace Glue\CustomersRestApiConnector\Processor\Customers;
+namespace FondOfKudu\Glue\CustomersRestApiConnector\Processor\Customers;
 
 use Generated\Shared\Transfer\RestCustomerRestorePasswordAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
