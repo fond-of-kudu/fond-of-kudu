@@ -37,7 +37,7 @@ class CustomersRestApiConnectorDependencyProvider extends AbstractBundleDependen
             static::CLIENT_CUSTOMER_PASSWORD_UPDATE_AT_CONNECTOR,
             static fn (Container $container): CustomersRestApiConnectorToCustomerPasswordUpdateAtConnectorClientInterface => new CustomersRestApiConnectorToCustomerPasswordUpdateAtConnectorClientBridge(
                 $container->getLocator()->customerPasswordUpdatedAtConnector()->client(),
-            )
+            ),
         );
 
         return $container;
