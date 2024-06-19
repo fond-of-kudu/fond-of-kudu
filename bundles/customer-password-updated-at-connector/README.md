@@ -5,6 +5,8 @@
 
 This Composer package extends the Customer model by adding an additional column passwordUpdatedAt. This column stores the date and time of the customer's last password update. This allows developers to track the last password change of a customer and take appropriate actions, such as notifications about outdated passwords or enforcing password changes after a certain period.
 
+Please note that the entire code is based on the Spryker Customer module. Only the function for setting a new password has been incorporated into this module.
+
 ## Installation
 
 ```
