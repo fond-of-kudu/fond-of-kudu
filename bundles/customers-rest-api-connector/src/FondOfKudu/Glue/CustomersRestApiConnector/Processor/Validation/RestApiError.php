@@ -2,9 +2,9 @@
 
 namespace FondOfKudu\Glue\CustomersRestApiConnector\Processor\Validation;
 
+use FondOfKudu\Glue\CustomersRestApiConnector\CustomersRestApiConnectorConfig;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,9 +23,9 @@ class RestApiError implements RestApiErrorInterface
         string $passwordConfirmFieldName
     ): RestResponseInterface {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_PASSWORDS_DONT_MATCH)
+            ->setCode(CustomersRestApiConnectorConfig::RESPONSE_CODE_PASSWORDS_DONT_MATCH)
             ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->setDetail(sprintf(CustomersRestApiConfig::RESPONSE_DETAILS_PASSWORDS_DONT_MATCH, $passwordFieldName, $passwordConfirmFieldName));
+            ->setDetail(sprintf(CustomersRestApiConnectorConfig::RESPONSE_DETAILS_PASSWORDS_DONT_MATCH, $passwordFieldName, $passwordConfirmFieldName));
 
         return $restResponse->addError($restErrorMessageTransfer);
     }
@@ -45,7 +45,7 @@ class RestApiError implements RestApiErrorInterface
         if (!count($restResponse->getErrors())) {
             return $this->addPasswordChangeError(
                 $restResponse,
-                CustomersRestApiConfig::RESPONSE_DETAILS_PASSWORD_CHANGE_FAILED,
+                CustomersRestApiConnectorConfig::RESPONSE_DETAILS_PASSWORD_CHANGE_FAILED,
             );
         }
 
@@ -120,6 +120,12 @@ class RestApiError implements RestApiErrorInterface
 
                 continue;
             }
+
+            if ($customerErrorTransfer->getMessage() === static::ERROR_CUSTOMER_NOT_FOUND) {
+                $restResponse = $this->addCustomerNotFoundError($restResponse);
+
+                continue;
+            }
         }
 
         return $restResponse;
@@ -133,9 +139,9 @@ class RestApiError implements RestApiErrorInterface
     protected function addInvalidTokenError(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_RESTORE_PASSWORD_KEY_INVALID)
+            ->setCode(CustomersRestApiConnectorConfig::RESPONSE_CODE_RESTORE_PASSWORD_KEY_INVALID)
             ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_RESTORE_PASSWORD_KEY_INVALID);
+            ->setDetail(CustomersRestApiConnectorConfig::RESPONSE_DETAILS_RESTORE_PASSWORD_KEY_INVALID);
 
         return $restResponse->addError($restErrorMessageTransfer);
     }
@@ -148,9 +154,9 @@ class RestApiError implements RestApiErrorInterface
     protected function addCustomerAlreadyExistsError(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_ALREADY_EXISTS)
+            ->setCode(CustomersRestApiConnectorConfig::RESPONSE_CODE_CUSTOMER_ALREADY_EXISTS)
             ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_ALREADY_EXISTS);
+            ->setDetail(CustomersRestApiConnectorConfig::RESPONSE_MESSAGE_CUSTOMER_ALREADY_EXISTS);
 
         return $restResponse->addError($restErrorMessageTransfer);
     }
@@ -163,9 +169,9 @@ class RestApiError implements RestApiErrorInterface
     protected function addCustomerEmailInvalidError(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_EMAIL_INVALID)
+            ->setCode(CustomersRestApiConnectorConfig::RESPONSE_CODE_CUSTOMER_EMAIL_INVALID)
             ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_EMAIL_INVALID);
+            ->setDetail(CustomersRestApiConnectorConfig::RESPONSE_MESSAGE_CUSTOMER_EMAIL_INVALID);
 
         return $restResponse->addError($restErrorMessageTransfer);
     }
@@ -178,9 +184,9 @@ class RestApiError implements RestApiErrorInterface
     protected function addCustomerEmailLengthExceededError(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_EMAIL_LENGTH_EXCEEDED)
+            ->setCode(CustomersRestApiConnectorConfig::RESPONSE_CODE_CUSTOMER_EMAIL_LENGTH_EXCEEDED)
             ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_EMAIL_LENGTH_EXCEEDED);
+            ->setDetail(CustomersRestApiConnectorConfig::RESPONSE_MESSAGE_CUSTOMER_EMAIL_LENGTH_EXCEEDED);
 
         return $restResponse->addError($restErrorMessageTransfer);
     }
@@ -193,9 +199,9 @@ class RestApiError implements RestApiErrorInterface
     protected function addPasswordNotValidError(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_INVALID_PASSWORD)
+            ->setCode(CustomersRestApiConnectorConfig::RESPONSE_CODE_INVALID_PASSWORD)
             ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_INVALID_PASSWORD);
+            ->setDetail(CustomersRestApiConnectorConfig::RESPONSE_DETAILS_INVALID_PASSWORD);
 
         return $restResponse->addError($restErrorMessageTransfer);
     }
@@ -208,9 +214,9 @@ class RestApiError implements RestApiErrorInterface
     protected function addPasswordTooLong(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_PASSWORD_TOO_LONG)
+            ->setCode(CustomersRestApiConnectorConfig::RESPONSE_CODE_CUSTOMER_PASSWORD_TOO_LONG)
             ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_PASSWORD_TOO_LONG);
+            ->setDetail(CustomersRestApiConnectorConfig::RESPONSE_MESSAGE_CUSTOMER_PASSWORD_TOO_LONG);
 
         return $restResponse->addError($restErrorMessageTransfer);
     }
@@ -223,9 +229,9 @@ class RestApiError implements RestApiErrorInterface
     protected function addPasswordTooShort(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_PASSWORD_TOO_SHORT)
+            ->setCode(CustomersRestApiConnectorConfig::RESPONSE_CODE_CUSTOMER_PASSWORD_TOO_SHORT)
             ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_PASSWORD_TOO_SHORT);
+            ->setDetail(CustomersRestApiConnectorConfig::RESPONSE_MESSAGE_CUSTOMER_PASSWORD_TOO_SHORT);
 
         return $restResponse->addError($restErrorMessageTransfer);
     }
@@ -238,9 +244,9 @@ class RestApiError implements RestApiErrorInterface
     protected function addPasswordInvalidCharacterSet(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_PASSWORD_INVALID_CHARACTER_SET)
+            ->setCode(CustomersRestApiConnectorConfig::RESPONSE_CODE_CUSTOMER_PASSWORD_INVALID_CHARACTER_SET)
             ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_PASSWORD_INVALID_CHARACTER_SET);
+            ->setDetail(CustomersRestApiConnectorConfig::RESPONSE_MESSAGE_CUSTOMER_PASSWORD_INVALID_CHARACTER_SET);
 
         return $restResponse->addError($restErrorMessageTransfer);
     }
@@ -253,9 +259,9 @@ class RestApiError implements RestApiErrorInterface
     protected function addPasswordSequenceNotAllowed(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_PASSWORD_SEQUENCE_NOT_ALLOWED)
+            ->setCode(CustomersRestApiConnectorConfig::RESPONSE_CODE_CUSTOMER_PASSWORD_SEQUENCE_NOT_ALLOWED)
             ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_PASSWORD_SEQUENCE_NOT_ALLOWED);
+            ->setDetail(CustomersRestApiConnectorConfig::RESPONSE_MESSAGE_CUSTOMER_PASSWORD_SEQUENCE_NOT_ALLOWED);
 
         return $restResponse->addError($restErrorMessageTransfer);
     }
@@ -268,9 +274,9 @@ class RestApiError implements RestApiErrorInterface
     protected function addPasswordInDenyList(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_PASSWORD_DENY_LIST)
+            ->setCode(CustomersRestApiConnectorConfig::RESPONSE_CODE_CUSTOMER_PASSWORD_DENY_LIST)
             ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_PASSWORD_DENY_LIST);
+            ->setDetail(CustomersRestApiConnectorConfig::RESPONSE_MESSAGE_CUSTOMER_PASSWORD_DENY_LIST);
 
         return $restResponse->addError($restErrorMessageTransfer);
     }
@@ -284,9 +290,23 @@ class RestApiError implements RestApiErrorInterface
     protected function addPasswordChangeError(RestResponseInterface $restResponse, string $errorMessage): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_PASSWORD_CHANGE_FAILED)
+            ->setCode(CustomersRestApiConnectorConfig::RESPONSE_CODE_PASSWORD_CHANGE_FAILED)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail($errorMessage);
+
+        return $restResponse->addError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function addCustomerNotFoundError(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConnectorConfig::RESPONSE_CODE_CUSTOMER_NOT_FOUND)
+            ->setStatus(Response::HTTP_BAD_REQUEST);
 
         return $restResponse->addError($restErrorMessageTransfer);
     }

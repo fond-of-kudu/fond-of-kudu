@@ -68,6 +68,11 @@ interface RestApiErrorInterface
     public const ERROR_CUSTOMER_PASSWORD_DENY_LIST = 'customer.password.error.deny_list';
 
     /**
+     * @var string
+     */
+    public const ERROR_CUSTOMER_NOT_FOUND = 'customer.not.found';
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
      * @param string $passwordFieldName
      * @param string $passwordConfirmFieldName
@@ -79,6 +84,13 @@ interface RestApiErrorInterface
         string $passwordFieldName,
         string $passwordConfirmFieldName
     ): RestResponseInterface;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function addCustomerNotFoundError(RestResponseInterface $restResponse): RestResponseInterface;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse

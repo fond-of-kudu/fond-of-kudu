@@ -3,14 +3,13 @@
 namespace FondOfKudu\Glue\CustomersRestApiConnector\Processor\Customers;
 
 use FondOfKudu\Glue\CustomersRestApiConnector\Dependency\Client\CustomersRestApiConnectorToCustomerPasswordUpdateAtConnectorClientInterface;
-use FondOfKudu\Glue\CustomersRestApiConnector\Processor\Mapper\CustomerRestorePasswordResourceMapperInterface;
+use FondOfKudu\Glue\CustomersRestApiConnector\Processor\Mapper\CustomerPasswordUpdatedResourceMapperInterface;
 use FondOfKudu\Glue\CustomersRestApiConnector\Processor\Validation\RestApiErrorInterface;
-use Generated\Shared\Transfer\RestCustomerRestorePasswordAttributesTransfer;
+use Generated\Shared\Transfer\RestCustomerPasswordUpdatedAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
-use Symfony\Component\HttpFoundation\Response;
 
-class CustomerPasswordWriter implements CustomerPasswordWriterInterface
+class CustomerPasswordUpdatedProcessor implements CustomerPasswordUpdatedProcessorInterface
 {
     /**
      * @var \FondOfKudu\Glue\CustomersRestApiConnector\Dependency\Client\CustomersRestApiConnectorToCustomerPasswordUpdateAtConnectorClientInterface
@@ -23,9 +22,9 @@ class CustomerPasswordWriter implements CustomerPasswordWriterInterface
     protected RestResourceBuilderInterface $restResourceBuilder;
 
     /**
-     * @var \FondOfKudu\Glue\CustomersRestApiConnector\Processor\Mapper\CustomerRestorePasswordResourceMapperInterface
+     * @var \FondOfKudu\Glue\CustomersRestApiConnector\Processor\Mapper\CustomerPasswordUpdatedResourceMapperInterface
      */
-    protected CustomerRestorePasswordResourceMapperInterface $customerRestorePasswordResourceMapper;
+    protected CustomerPasswordUpdatedResourceMapperInterface $customerPasswordUpdatedResourceMapper;
 
     /**
      * @var \FondOfKudu\Glue\CustomersRestApiConnector\Processor\Validation\RestApiErrorInterface
@@ -35,46 +34,47 @@ class CustomerPasswordWriter implements CustomerPasswordWriterInterface
     /**
      * @param \FondOfKudu\Glue\CustomersRestApiConnector\Dependency\Client\CustomersRestApiConnectorToCustomerPasswordUpdateAtConnectorClientInterface $customerPasswordUpdateAtConnectorClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \FondOfKudu\Glue\CustomersRestApiConnector\Processor\Mapper\CustomerRestorePasswordResourceMapperInterface $customerRestorePasswordResourceMapper
+     * @param \FondOfKudu\Glue\CustomersRestApiConnector\Processor\Mapper\CustomerPasswordUpdatedResourceMapperInterface $customerPasswordUpdatedResourceMapper
      * @param \FondOfKudu\Glue\CustomersRestApiConnector\Processor\Validation\RestApiErrorInterface $restApiError
      */
     public function __construct(
         CustomersRestApiConnectorToCustomerPasswordUpdateAtConnectorClientInterface $customerPasswordUpdateAtConnectorClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        CustomerRestorePasswordResourceMapperInterface $customerRestorePasswordResourceMapper,
+        CustomerPasswordUpdatedResourceMapperInterface $customerPasswordUpdatedResourceMapper,
         RestApiErrorInterface $restApiError
     ) {
         $this->customerPasswordUpdateAtConnectorClient = $customerPasswordUpdateAtConnectorClient;
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->customerRestorePasswordResourceMapper = $customerRestorePasswordResourceMapper;
+        $this->customerPasswordUpdatedResourceMapper = $customerPasswordUpdatedResourceMapper;
         $this->restApiError = $restApiError;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCustomerRestorePasswordAttributesTransfer $restCustomerRestorePasswordAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCustomerPasswordUpdatedAttributesTransfer $restCustomerPasswordUpdatedAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function restorePassword(RestCustomerRestorePasswordAttributesTransfer $restCustomerRestorePasswordAttributesTransfer): RestResponseInterface
-    {
+    public function passwordUpdated(
+        RestCustomerPasswordUpdatedAttributesTransfer $restCustomerPasswordUpdatedAttributesTransfer
+    ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
+        $customerTransfer = $this->customerPasswordUpdatedResourceMapper
+            ->mapRestCustomerPasswordUpdatedAttributesTransferToCustomerTransfer($restCustomerPasswordUpdatedAttributesTransfer);
 
-        if ($restCustomerRestorePasswordAttributesTransfer->getPassword() !== $restCustomerRestorePasswordAttributesTransfer->getConfirmPassword()) {
-            return $this->restApiError->addPasswordsDoNotMatchError(
-                $restResponse,
-                RestCustomerRestorePasswordAttributesTransfer::PASSWORD,
-                RestCustomerRestorePasswordAttributesTransfer::CONFIRM_PASSWORD,
+        $customerPasswordUpdatedResponseTransfer = $this->customerPasswordUpdateAtConnectorClient->passwordUpdated($customerTransfer);
+
+        if (!$customerPasswordUpdatedResponseTransfer->getIsSuccess()) {
+            return $this->restApiError->addCustomerNotFoundError($restResponse);
+        }
+
+        $restResource = $this
+            ->restResourceBuilder
+            ->createRestResource(
+                'password-updated',
+                null,
+                $customerPasswordUpdatedResponseTransfer,
             );
-        }
 
-        $customerTransfer = $this->customerRestorePasswordResourceMapper
-            ->mapCustomerRestorePasswordAttributesToCustomerTransfer($restCustomerRestorePasswordAttributesTransfer);
-        $customerResponseTransfer = $this->customerPasswordUpdateAtConnectorClient->restorePassword($customerTransfer);
-
-        if (!$customerResponseTransfer->getIsSuccess()) {
-            return $this->restApiError->processCustomerErrorOnPasswordReset($restResponse, $customerResponseTransfer);
-        }
-
-        return $restResponse->setStatus(Response::HTTP_NO_CONTENT);
+        return $restResponse->addResource($restResource);
     }
 }
