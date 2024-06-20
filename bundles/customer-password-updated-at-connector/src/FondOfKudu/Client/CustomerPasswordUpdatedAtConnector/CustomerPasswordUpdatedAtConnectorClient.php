@@ -22,4 +22,16 @@ class CustomerPasswordUpdatedAtConnectorClient extends AbstractClient implements
             ->createZedCustomerStub()
             ->restorePassword($customerTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function passwordUpdated(CustomerTransfer $customerTransfer): CustomerResponseTransfer
+    {
+        return $this->getFactory()
+            ->createZedCustomerStub()
+            ->passwordUpdated($customerTransfer);
+    }
 }

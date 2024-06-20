@@ -21,4 +21,15 @@ class GatewayController extends AbstractGatewayController
         return $this->getFacade()
             ->restorePassword($customerTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function passwordUpdatedAction(CustomerTransfer $customerTransfer): CustomerResponseTransfer
+    {
+        return $this->getFacade()
+            ->passwordUpdated($customerTransfer);
+    }
 }

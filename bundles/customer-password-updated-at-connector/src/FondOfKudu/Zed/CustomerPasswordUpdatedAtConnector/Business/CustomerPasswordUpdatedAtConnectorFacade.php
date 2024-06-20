@@ -22,4 +22,16 @@ class CustomerPasswordUpdatedAtConnectorFacade extends AbstractFacade implements
             ->createCustomerRestorePassword()
             ->restorePassword($customerTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function passwordUpdated(CustomerTransfer $customerTransfer): CustomerResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCustomerPasswordUpdated()
+            ->passwordUpdated($customerTransfer);
+    }
 }

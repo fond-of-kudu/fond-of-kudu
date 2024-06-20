@@ -33,4 +33,17 @@ class CustomerPasswordUpdatedAtConnectorStub implements CustomerPasswordUpdatedA
 
         return $customerResponseTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function passwordUpdated(CustomerTransfer $customerTransfer): CustomerResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer */
+        $customerResponseTransfer = $this->zedStub->call('/customer-password-updated-at-connector/gateway/password-updated', $customerTransfer);
+
+        return $customerResponseTransfer;
+    }
 }

@@ -13,4 +13,11 @@ interface CustomerPasswordUpdatedAtConnectorStubInterface
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function restorePassword(CustomerTransfer $customerTransfer): CustomerResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function passwordUpdated(CustomerTransfer $customerTransfer): CustomerResponseTransfer;
 }
