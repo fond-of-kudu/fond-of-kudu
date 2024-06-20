@@ -4,11 +4,10 @@ namespace FondOfKudu\Glue\CustomersRestApiConnector\Processor\Customers;
 
 use FondOfKudu\Glue\CustomersRestApiConnector\Dependency\Client\CustomersRestApiConnectorToCustomerPasswordUpdateAtConnectorClientInterface;
 use FondOfKudu\Glue\CustomersRestApiConnector\Processor\Mapper\CustomerPasswordUpdatedResourceMapperInterface;
+use FondOfKudu\Glue\CustomersRestApiConnector\Processor\Validation\RestApiErrorInterface;
 use Generated\Shared\Transfer\RestCustomerPasswordUpdatedAttributesTransfer;
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 class CustomerPasswordUpdatedProcessor implements CustomerPasswordUpdatedProcessorInterface
 {
@@ -28,18 +27,26 @@ class CustomerPasswordUpdatedProcessor implements CustomerPasswordUpdatedProcess
     protected CustomerPasswordUpdatedResourceMapperInterface $customerPasswordUpdatedResourceMapper;
 
     /**
+     * @var \FondOfKudu\Glue\CustomersRestApiConnector\Processor\Validation\RestApiErrorInterface
+     */
+    protected RestApiErrorInterface $restApiError;
+
+    /**
      * @param \FondOfKudu\Glue\CustomersRestApiConnector\Dependency\Client\CustomersRestApiConnectorToCustomerPasswordUpdateAtConnectorClientInterface $customerPasswordUpdateAtConnectorClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \FondOfKudu\Glue\CustomersRestApiConnector\Processor\Mapper\CustomerPasswordUpdatedResourceMapperInterface $customerPasswordUpdatedResourceMapper
+     * @param \FondOfKudu\Glue\CustomersRestApiConnector\Processor\Validation\RestApiErrorInterface $restApiError
      */
     public function __construct(
         CustomersRestApiConnectorToCustomerPasswordUpdateAtConnectorClientInterface $customerPasswordUpdateAtConnectorClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        CustomerPasswordUpdatedResourceMapperInterface $customerPasswordUpdatedResourceMapper
+        CustomerPasswordUpdatedResourceMapperInterface $customerPasswordUpdatedResourceMapper,
+        RestApiErrorInterface $restApiError
     ) {
         $this->customerPasswordUpdateAtConnectorClient = $customerPasswordUpdateAtConnectorClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->customerPasswordUpdatedResourceMapper = $customerPasswordUpdatedResourceMapper;
+        $this->restApiError = $restApiError;
     }
 
     /**
@@ -57,14 +64,7 @@ class CustomerPasswordUpdatedProcessor implements CustomerPasswordUpdatedProcess
         $customerPasswordUpdatedResponseTransfer = $this->customerPasswordUpdateAtConnectorClient->passwordUpdated($customerTransfer);
 
         if (!$customerPasswordUpdatedResponseTransfer->getIsSuccess()) {
-            foreach ($customerPasswordUpdatedResponseTransfer->getErrors() as $error) {
-                $restResponse->addError((new RestErrorMessageTransfer())
-                    ->setCode('1000')
-                    ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
-                    ->setDetail($error->getMessage()));
-            }
-
-            return $restResponse;
+            return $this->restApiError->addCustomerNotFoundError($restResponse);
         }
 
         $restResource = $this

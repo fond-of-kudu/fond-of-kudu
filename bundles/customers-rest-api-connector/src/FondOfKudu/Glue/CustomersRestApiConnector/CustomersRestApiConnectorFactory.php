@@ -38,6 +38,7 @@ class CustomersRestApiConnectorFactory extends AbstractFactory
             $this->getCustomerPasswordUpdateAtConnectorClient(),
             $this->getResourceBuilder(),
             $this->createCustomerPasswordUpdatedResourceMapper(),
+            $this->createRestApiError(),
         );
     }
 
