@@ -2,13 +2,13 @@
 
 namespace FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\Business\Customer;
 
+use FondOfKudu\Shared\CustomerPasswordUpdatedAtConnector\Code\Messages;
 use FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\CustomerPasswordUpdatedAtConnectorConfig;
 use FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\Dependency\QueryContainer\CustomerPasswordUpdatedAtConnectorToCustomerQueryContainerInterface;
 use Generated\Shared\Transfer\CustomerErrorTransfer;
 use Generated\Shared\Transfer\CustomerPasswordUpdatedResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Propel\Runtime\Exception\PropelException;
-use Spryker\Shared\Customer\Code\Messages;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 
 class CustomerPasswordUpdated extends AbstractCustomerModel implements CustomerPasswordUpdatedInterface
@@ -48,7 +48,7 @@ class CustomerPasswordUpdated extends AbstractCustomerModel implements CustomerP
             $customerEntity = $this->getCustomer($customerTransfer);
         } catch (CustomerNotFoundException $e) {
             $customerError = new CustomerErrorTransfer();
-            $customerError->setMessage(Messages::CUSTOMER_TOKEN_INVALID);
+            $customerError->setMessage(Messages::CUSTOMER_NOT_FOUND);
 
             $customerPasswordUpdatedResponseTransfer
                 ->setIsSuccess(false)
