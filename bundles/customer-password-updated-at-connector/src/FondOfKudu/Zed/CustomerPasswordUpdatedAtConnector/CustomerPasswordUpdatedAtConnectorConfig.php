@@ -2,6 +2,8 @@
 
 namespace FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector;
 
+use DateTime;
+use FondOfKudu\Shared\CustomerPasswordUpdatedAtConnector\CustomerPasswordUpdatedAtConnectorConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CustomerPasswordUpdatedAtConnectorConfig extends AbstractBundleConfig
@@ -42,5 +44,16 @@ class CustomerPasswordUpdatedAtConnectorConfig extends AbstractBundleConfig
     public function getCustomerPasswordResetExpirationPeriod(): string
     {
         return static::CUSTOMER_PASSWORD_EXPIRATION_PERIOD;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCustomerUpdateLimit(): DateTime
+    {
+        return $this->get(
+            CustomerPasswordUpdatedAtConnectorConstants::CUSTOMER_PASSWORD_UPDATE_LIMIT,
+            new DateTime('2024-06-01'),
+        );
     }
 }

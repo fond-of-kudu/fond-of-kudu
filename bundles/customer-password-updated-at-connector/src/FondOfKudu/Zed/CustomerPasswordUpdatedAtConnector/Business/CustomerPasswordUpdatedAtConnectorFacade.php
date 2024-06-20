@@ -2,6 +2,7 @@
 
 namespace FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\Business;
 
+use Generated\Shared\Transfer\CustomerPasswordUpdatedResponseTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -21,5 +22,17 @@ class CustomerPasswordUpdatedAtConnectorFacade extends AbstractFacade implements
         return $this->getFactory()
             ->createCustomerRestorePassword()
             ->restorePassword($customerTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerPasswordUpdatedResponseTransfer
+     */
+    public function passwordUpdated(CustomerTransfer $customerTransfer): CustomerPasswordUpdatedResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCustomerPasswordUpdated()
+            ->passwordUpdated($customerTransfer);
     }
 }

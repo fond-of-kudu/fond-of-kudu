@@ -23,7 +23,7 @@ use Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRestoredPasswordConfi
 use Symfony\Component\PasswordHasher\Hasher\NativePasswordHasher;
 use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 
-class CustomerRestorePassword implements CustomerRestorePasswordInterface
+class CustomerRestorePassword extends AbstractCustomerModel implements CustomerRestorePasswordInterface
 {
     /**
      * @var int
@@ -77,7 +77,7 @@ class CustomerRestorePassword implements CustomerRestorePasswordInterface
     {
         $customerTransfer = $this->encryptPassword($customerTransfer);
 
-        $customerResponseTransfer = $this->createCustomerResponseTransfer();
+        $customerResponseTransfer = $this->createCustomerPasswordUpdatedResponseTransfer();
 
         try {
             $customerEntity = $this->getCustomer($customerTransfer);
@@ -130,6 +130,19 @@ class CustomerRestorePassword implements CustomerRestorePasswordInterface
         $customerTransfer = $this->customerExpander->expand($customerTransfer);
 
         return $customerTransfer;
+    }
+
+    /**
+     * @param bool $isSuccess
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    protected function createCustomerPasswordUpdatedResponseTransfer(bool $isSuccess = true): CustomerResponseTransfer
+    {
+        $customerResponseTransfer = new CustomerResponseTransfer();
+        $customerResponseTransfer->setIsSuccess($isSuccess);
+
+        return $customerResponseTransfer;
     }
 
     /**
@@ -238,40 +251,6 @@ class CustomerRestorePassword implements CustomerRestorePasswordInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
-     *
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomer
-     */
-    protected function getCustomer(CustomerTransfer $customerTransfer): SpyCustomer
-    {
-        $customerEntity = null;
-
-        if ($customerTransfer->getIdCustomer()) {
-            $customerEntity = $this->customerQueryContainer->queryCustomerById($customerTransfer->getIdCustomer())
-                ->findOne();
-        } elseif ($customerTransfer->getEmail()) {
-            $customerEntity = $this->customerQueryContainer->queryCustomerByEmail($customerTransfer->getEmail())
-                ->findOne();
-        } elseif ($customerTransfer->getRestorePasswordKey()) {
-            $customerEntity = $this->customerQueryContainer->queryCustomerByRestorePasswordKey($customerTransfer->getRestorePasswordKey())
-                ->findOne();
-        }
-
-        if ($customerEntity !== null) {
-            return $customerEntity;
-        }
-
-        throw new CustomerNotFoundException(sprintf(
-            'Customer not found by either ID `%s`, email `%s` or restore password key `%s`.',
-            $customerTransfer->getIdCustomer(),
-            $customerTransfer->getEmail(),
-            $customerTransfer->getRestorePasswordKey(),
-        ));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     protected function encryptPassword(CustomerTransfer $customerTransfer)
@@ -302,19 +281,6 @@ class CustomerRestorePassword implements CustomerRestorePasswordInterface
     public function createPasswordHasher(): PasswordHasherInterface
     {
         return new NativePasswordHasher(null, null, static::BCRYPT_FACTOR);
-    }
-
-    /**
-     * @param bool $isSuccess
-     *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
-     */
-    protected function createCustomerResponseTransfer(bool $isSuccess = true): CustomerResponseTransfer
-    {
-        $customerResponseTransfer = new CustomerResponseTransfer();
-        $customerResponseTransfer->setIsSuccess($isSuccess);
-
-        return $customerResponseTransfer;
     }
 
     /**

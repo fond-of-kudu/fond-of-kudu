@@ -4,6 +4,8 @@ namespace FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\Business;
 
 use FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\Business\Checker\PasswordResetExpirationChecker;
 use FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\Business\Checker\PasswordResetExpirationCheckerInterface;
+use FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\Business\Customer\CustomerPasswordUpdated;
+use FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\Business\Customer\CustomerPasswordUpdatedInterface;
 use FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\Business\Customer\CustomerRestorePassword;
 use FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\Business\Customer\CustomerRestorePasswordInterface;
 use FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\Business\CustomerExpander\CustomerExpander;
@@ -29,6 +31,14 @@ class CustomerPasswordUpdatedAtConnectorBusinessFactory extends AbstractBusiness
             $this->createCustomerExpander(),
             $this->getMailFacade(),
         );
+    }
+
+    /**
+     * @return \FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\Business\Customer\CustomerPasswordUpdatedInterface
+     */
+    public function createCustomerPasswordUpdated(): CustomerPasswordUpdatedInterface
+    {
+        return new CustomerPasswordUpdated($this->addCustomerQueryContainer(), $this->getConfig());
     }
 
     /**
