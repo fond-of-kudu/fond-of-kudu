@@ -38,7 +38,7 @@ class CustomerPasswordUpdatedAtConnectorBusinessFactory extends AbstractBusiness
      */
     public function createCustomerPasswordUpdated(): CustomerPasswordUpdatedInterface
     {
-        return new CustomerPasswordUpdated($this->addCustomerQueryContainer());
+        return new CustomerPasswordUpdated($this->addCustomerQueryContainer(), $this->getConfig());
     }
 
     /**
