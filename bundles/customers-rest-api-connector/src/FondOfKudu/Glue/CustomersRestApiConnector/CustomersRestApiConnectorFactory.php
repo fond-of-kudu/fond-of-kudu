@@ -3,8 +3,11 @@
 namespace FondOfKudu\Glue\CustomersRestApiConnector;
 
 use FondOfKudu\Glue\CustomersRestApiConnector\Dependency\Client\CustomersRestApiConnectorToCustomerPasswordUpdateAtConnectorClientInterface;
+use FondOfKudu\Glue\CustomersRestApiConnector\Processor\Customers\CustomerPasswordUpdatedProcessor;
 use FondOfKudu\Glue\CustomersRestApiConnector\Processor\Customers\CustomerPasswordWriter;
 use FondOfKudu\Glue\CustomersRestApiConnector\Processor\Customers\CustomerPasswordWriterInterface;
+use FondOfKudu\Glue\CustomersRestApiConnector\Processor\Mapper\CustomerPasswordUpdatedResourceMapper;
+use FondOfKudu\Glue\CustomersRestApiConnector\Processor\Mapper\CustomerPasswordUpdatedResourceMapperInterface;
 use FondOfKudu\Glue\CustomersRestApiConnector\Processor\Mapper\CustomerRestorePasswordResourceMapper;
 use FondOfKudu\Glue\CustomersRestApiConnector\Processor\Mapper\CustomerRestorePasswordResourceMapperInterface;
 use FondOfKudu\Glue\CustomersRestApiConnector\Processor\Validation\RestApiError;
@@ -27,6 +30,18 @@ class CustomersRestApiConnectorFactory extends AbstractFactory
     }
 
     /**
+     * @return \FondOfKudu\Glue\CustomersRestApiConnector\Processor\Customers\CustomerPasswordUpdatedProcessor
+     */
+    public function createCustomerPasswordUpdatedProcessor(): CustomerPasswordUpdatedProcessor
+    {
+        return new CustomerPasswordUpdatedProcessor(
+            $this->getCustomerPasswordUpdateAtConnectorClient(),
+            $this->getResourceBuilder(),
+            $this->createCustomerPasswordUpdatedResourceMapper(),
+        );
+    }
+
+    /**
      * @return \FondOfKudu\Glue\CustomersRestApiConnector\Dependency\Client\CustomersRestApiConnectorToCustomerPasswordUpdateAtConnectorClientInterface
      */
     protected function getCustomerPasswordUpdateAtConnectorClient(): CustomersRestApiConnectorToCustomerPasswordUpdateAtConnectorClientInterface
@@ -40,6 +55,14 @@ class CustomersRestApiConnectorFactory extends AbstractFactory
     protected function createCustomerRestorePasswordResourceMapper(): CustomerRestorePasswordResourceMapperInterface
     {
         return new CustomerRestorePasswordResourceMapper();
+    }
+
+    /**
+     * @return \FondOfKudu\Glue\CustomersRestApiConnector\Processor\Mapper\CustomerPasswordUpdatedResourceMapperInterface
+     */
+    protected function createCustomerPasswordUpdatedResourceMapper(): CustomerPasswordUpdatedResourceMapperInterface
+    {
+        return new CustomerPasswordUpdatedResourceMapper();
     }
 
     /**

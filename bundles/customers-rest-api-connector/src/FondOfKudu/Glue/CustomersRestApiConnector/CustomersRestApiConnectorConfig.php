@@ -18,6 +18,16 @@ class CustomersRestApiConnectorConfig extends AbstractBundleConfig
     public const CONTROLLER_CUSTOMER_RESTORE_PASSWORD = 'customer-restore-password-resource';
 
     /**
+     * @var string
+     */
+    public const CONTROLLER_CUSTOMER_PASSWORD_UPDATED = 'customer-password-updated';
+
+    /**
+     * @var string
+     */
+    public const RESOURCE_CUSTOMER_PASSWORD_UPDATED = 'customer-password-updated';
+
+    /**
      * @return string
      */
     public function getResourceCustomerRestorePassword(): string
