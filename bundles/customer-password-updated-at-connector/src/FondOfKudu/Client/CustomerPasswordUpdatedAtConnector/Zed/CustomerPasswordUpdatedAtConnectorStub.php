@@ -2,6 +2,7 @@
 
 namespace FondOfKudu\Client\CustomerPasswordUpdatedAtConnector\Zed;
 
+use Generated\Shared\Transfer\CustomerPasswordUpdatedResponseTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClientInterface;
@@ -37,13 +38,16 @@ class CustomerPasswordUpdatedAtConnectorStub implements CustomerPasswordUpdatedA
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerPasswordUpdatedResponseTransfer
      */
-    public function passwordUpdated(CustomerTransfer $customerTransfer): CustomerResponseTransfer
+    public function passwordUpdated(CustomerTransfer $customerTransfer): CustomerPasswordUpdatedResponseTransfer
     {
-        /** @var \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer */
-        $customerResponseTransfer = $this->zedStub->call('/customer-password-updated-at-connector/gateway/password-updated', $customerTransfer);
+        /** @var \Generated\Shared\Transfer\CustomerPasswordUpdatedResponseTransfer $customerPasswordUpdatedResponseTransfer */
+        $customerPasswordUpdatedResponseTransfer = $this->zedStub->call(
+            '/customer-password-updated-at-connector/gateway/password-updated',
+            $customerTransfer,
+        );
 
-        return $customerResponseTransfer;
+        return $customerPasswordUpdatedResponseTransfer;
     }
 }

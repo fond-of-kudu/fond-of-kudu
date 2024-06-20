@@ -2,13 +2,18 @@
 
 namespace FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\Business\Customer;
 
-use Generated\Shared\Transfer\CustomerResponseTransfer;
+use FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\Dependency\QueryContainer\CustomerPasswordUpdatedAtConnectorToCustomerQueryContainerInterface;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 
 class AbstractCustomerModel
 {
+    /**
+     * @var \FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\Dependency\QueryContainer\CustomerPasswordUpdatedAtConnectorToCustomerQueryContainerInterface
+     */
+    protected CustomerPasswordUpdatedAtConnectorToCustomerQueryContainerInterface $customerQueryContainer;
+
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
@@ -41,18 +46,5 @@ class AbstractCustomerModel
             $customerTransfer->getEmail(),
             $customerTransfer->getRestorePasswordKey(),
         ));
-    }
-
-    /**
-     * @param bool $isSuccess
-     *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
-     */
-    protected function createCustomerResponseTransfer(bool $isSuccess = true): CustomerResponseTransfer
-    {
-        $customerResponseTransfer = new CustomerResponseTransfer();
-        $customerResponseTransfer->setIsSuccess($isSuccess);
-
-        return $customerResponseTransfer;
     }
 }

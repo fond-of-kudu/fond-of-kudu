@@ -77,7 +77,7 @@ class CustomerRestorePassword extends AbstractCustomerModel implements CustomerR
     {
         $customerTransfer = $this->encryptPassword($customerTransfer);
 
-        $customerResponseTransfer = $this->createCustomerResponseTransfer();
+        $customerResponseTransfer = $this->createCustomerPasswordUpdatedResponseTransfer();
 
         try {
             $customerEntity = $this->getCustomer($customerTransfer);
@@ -130,6 +130,19 @@ class CustomerRestorePassword extends AbstractCustomerModel implements CustomerR
         $customerTransfer = $this->customerExpander->expand($customerTransfer);
 
         return $customerTransfer;
+    }
+
+    /**
+     * @param bool $isSuccess
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    protected function createCustomerPasswordUpdatedResponseTransfer(bool $isSuccess = true): CustomerResponseTransfer
+    {
+        $customerResponseTransfer = new CustomerResponseTransfer();
+        $customerResponseTransfer->setIsSuccess($isSuccess);
+
+        return $customerResponseTransfer;
     }
 
     /**

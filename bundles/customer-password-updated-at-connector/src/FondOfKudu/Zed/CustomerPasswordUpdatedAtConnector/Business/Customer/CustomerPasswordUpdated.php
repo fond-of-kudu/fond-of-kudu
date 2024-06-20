@@ -5,8 +5,9 @@ namespace FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\Business\Customer;
 use FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\CustomerPasswordUpdatedAtConnectorConfig;
 use FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\Dependency\QueryContainer\CustomerPasswordUpdatedAtConnectorToCustomerQueryContainerInterface;
 use Generated\Shared\Transfer\CustomerErrorTransfer;
-use Generated\Shared\Transfer\CustomerResponseTransfer;
+use Generated\Shared\Transfer\CustomerPasswordUpdatedResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Propel\Runtime\Exception\PropelException;
 use Spryker\Shared\Customer\Code\Messages;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 
@@ -37,11 +38,11 @@ class CustomerPasswordUpdated extends AbstractCustomerModel implements CustomerP
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerPasswordUpdatedResponseTransfer
      */
-    public function passwordUpdated(CustomerTransfer $customerTransfer): CustomerResponseTransfer
+    public function passwordUpdated(CustomerTransfer $customerTransfer): CustomerPasswordUpdatedResponseTransfer
     {
-        $customerResponseTransfer = $this->createCustomerResponseTransfer();
+        $customerPasswordUpdatedResponseTransfer = $this->createCustomerPasswordUpdatedResponseTransfer();
 
         try {
             $customerEntity = $this->getCustomer($customerTransfer);
@@ -49,30 +50,44 @@ class CustomerPasswordUpdated extends AbstractCustomerModel implements CustomerP
             $customerError = new CustomerErrorTransfer();
             $customerError->setMessage(Messages::CUSTOMER_TOKEN_INVALID);
 
-            $customerResponseTransfer
+            $customerPasswordUpdatedResponseTransfer
                 ->setIsSuccess(false)
                 ->addError($customerError);
 
-            return $customerResponseTransfer;
+            return $customerPasswordUpdatedResponseTransfer;
         }
 
-        if (!$customerResponseTransfer->getIsSuccess()) {
-            return $customerResponseTransfer;
+        if (!$customerPasswordUpdatedResponseTransfer->getIsSuccess()) {
+            return $customerPasswordUpdatedResponseTransfer;
         }
 
-        return $customerResponseTransfer;
+        try {
+            $isPasswordUpdated = $customerEntity->getPasswordUpdatedAt() >= $this->config->getCustomerUpdateLimit();
+            $passwordUpdatedAt = $customerEntity->getPasswordUpdatedAt() === null ? null : $customerEntity->getPasswordUpdatedAt()->format('Y-m-d H:i:s');
+            $customerPasswordUpdatedResponseTransfer->setIsUpdated($isPasswordUpdated);
+            $customerPasswordUpdatedResponseTransfer->setUpdatedAt($passwordUpdatedAt);
+        } catch (PropelException $propelException) {
+            $customerError = new CustomerErrorTransfer();
+            $customerError->setMessage($propelException->getMessage());
+
+            return $customerPasswordUpdatedResponseTransfer
+                ->setIsSuccess(false)
+                ->addError($customerError);
+        }
+
+        return $customerPasswordUpdatedResponseTransfer;
     }
 
     /**
      * @param bool $isSuccess
      *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerPasswordUpdatedResponseTransfer
      */
-    protected function createCustomerResponseTransfer(bool $isSuccess = true): CustomerResponseTransfer
+    protected function createCustomerPasswordUpdatedResponseTransfer(bool $isSuccess = true): CustomerPasswordUpdatedResponseTransfer
     {
-        $customerResponseTransfer = new CustomerResponseTransfer();
-        $customerResponseTransfer->setIsSuccess($isSuccess);
+        $customerPasswordUpdatedResponseTransfer = new CustomerPasswordUpdatedResponseTransfer();
+        $customerPasswordUpdatedResponseTransfer->setIsSuccess($isSuccess);
 
-        return $customerResponseTransfer;
+        return $customerPasswordUpdatedResponseTransfer;
     }
 }
