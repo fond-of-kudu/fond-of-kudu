@@ -3,6 +3,7 @@
 namespace FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\Business\Customer;
 
 use DateTime;
+use FondOfKudu\Shared\CustomerPasswordUpdatedAtConnector\Code\Messages;
 use FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\Business\Checker\PasswordResetExpirationCheckerInterface;
 use FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\Business\CustomerExpander\CustomerExpanderInterface;
 use FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\Dependency\Facade\CustomerPasswordUpdatedAtConnectorMailFacadeInterface;
@@ -17,7 +18,6 @@ use Generated\Shared\Transfer\MailTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Shared\Customer\Code\Messages;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRestoredPasswordConfirmationMailTypePlugin;
 use Symfony\Component\PasswordHasher\Hasher\NativePasswordHasher;
@@ -77,7 +77,7 @@ class CustomerRestorePassword extends AbstractCustomerModel implements CustomerR
     {
         $customerTransfer = $this->encryptPassword($customerTransfer);
 
-        $customerResponseTransfer = $this->createCustomerPasswordUpdatedResponseTransfer();
+        $customerResponseTransfer = $this->createCustomerResponseTransfer();
 
         try {
             $customerEntity = $this->getCustomer($customerTransfer);
@@ -137,7 +137,7 @@ class CustomerRestorePassword extends AbstractCustomerModel implements CustomerR
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    protected function createCustomerPasswordUpdatedResponseTransfer(bool $isSuccess = true): CustomerResponseTransfer
+    protected function createCustomerResponseTransfer(bool $isSuccess = true): CustomerResponseTransfer
     {
         $customerResponseTransfer = new CustomerResponseTransfer();
         $customerResponseTransfer->setIsSuccess($isSuccess);
