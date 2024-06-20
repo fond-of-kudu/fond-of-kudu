@@ -19,6 +19,8 @@ class CustomerPasswordUpdatedAtConnectorDependencyProvider extends AbstractDepen
      */
     public function provideServiceLayerDependencies(Container $container): Container
     {
+        $container = $this->addZedRequestClient($container);
+
         return $container;
     }
 
