@@ -2,6 +2,8 @@
 
 namespace FondOfKudu\Client\CustomerPasswordUpdatedAtConnector;
 
+use FondOfKudu\Client\CustomerPasswordUpdatedAtConnector\Dependency\Client\CustomerPasswordUpdatedAtConnectorToZedRequestClientBridge;
+use FondOfKudu\Client\CustomerPasswordUpdatedAtConnector\Dependency\Client\CustomerPasswordUpdatedAtConnectorToZedRequestClientInterface;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
@@ -10,7 +12,7 @@ class CustomerPasswordUpdatedAtConnectorDependencyProvider extends AbstractDepen
     /**
      * @var string
      */
-    public const SERVICE_ZED = 'zed service';
+    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -19,6 +21,7 @@ class CustomerPasswordUpdatedAtConnectorDependencyProvider extends AbstractDepen
      */
     public function provideServiceLayerDependencies(Container $container): Container
     {
+        $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addZedRequestClient($container);
 
         return $container;
@@ -31,9 +34,11 @@ class CustomerPasswordUpdatedAtConnectorDependencyProvider extends AbstractDepen
      */
     protected function addZedRequestClient(Container $container)
     {
-        $container->set(static::SERVICE_ZED, function (Container $container) {
-            return $container->getLocator()->zedRequest()->client();
-        });
+        $container[static::CLIENT_ZED_REQUEST] = static function (Container $container): CustomerPasswordUpdatedAtConnectorToZedRequestClientInterface {
+            return new CustomerPasswordUpdatedAtConnectorToZedRequestClientBridge(
+                $container->getLocator()->zedRequest()->client(),
+            );
+        };
 
         return $container;
     }
