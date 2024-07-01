@@ -3,18 +3,18 @@
 namespace FondOfKudu\Client\CustomerPasswordUpdatedAtConnector\Zed;
 
 use Codeception\Test\Unit;
+use FondOfKudu\Client\CustomerPasswordUpdatedAtConnector\Dependency\Client\CustomerPasswordUpdatedAtConnectorToZedRequestClientBridge;
 use Generated\Shared\Transfer\CustomerPasswordUpdatedResponseTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
-use Spryker\Client\ZedRequest\ZedRequestClientInterface;
 
 class CustomerPasswordUpdatedAtConnectorStubTest extends Unit
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ZedRequest\ZedRequestClientInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfKudu\Client\CustomerPasswordUpdatedAtConnector\Dependency\Client\CustomerPasswordUpdatedAtConnectorToZedRequestClientBridge
      */
-    protected MockObject|ZedRequestClientInterface $zedStubMock;
+    protected MockObject|CustomerPasswordUpdatedAtConnectorToZedRequestClientBridge $zedStubMock;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\Generated\Shared\Transfer\CustomerTransfer
@@ -41,7 +41,7 @@ class CustomerPasswordUpdatedAtConnectorStubTest extends Unit
      */
     protected function _before(): void
     {
-        $this->zedStubMock = $this->createMock(ZedRequestClientInterface::class);
+        $this->zedStubMock = $this->createMock(CustomerPasswordUpdatedAtConnectorToZedRequestClientBridge::class);
         $this->customerTransferMock = $this->createMock(CustomerTransfer::class);
         $this->customerResponseTransferMock = $this->createMock(CustomerResponseTransfer::class);
         $this->customerPasswordUpdatedResponseTransferMock = $this->createMock(CustomerPasswordUpdatedResponseTransfer::class);
