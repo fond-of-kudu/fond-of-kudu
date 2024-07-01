@@ -22,6 +22,6 @@ class CustomerPasswordUpdatedAtConnectorFactory extends AbstractFactory
      */
     protected function getZedRequestClient(): ZedRequestClientInterface
     {
-        return $this->getProvidedDependency(CustomerPasswordUpdatedAtConnectorDependencyProvider::SERVICE_ZED);
+        return $this->getProvidedDependency(CustomerPasswordUpdatedAtConnectorDependencyProvider::CLIENT_ZED_REQUEST);
     }
 }
