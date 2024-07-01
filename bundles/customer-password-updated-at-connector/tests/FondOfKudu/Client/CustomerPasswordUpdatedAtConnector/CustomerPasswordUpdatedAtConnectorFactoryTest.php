@@ -3,10 +3,10 @@
 namespace FondOfKudu\Client\CustomerPasswordUpdatedAtConnector;
 
 use Codeception\Test\Unit;
-use FondOfKudu\Client\CustomerPasswordUpdatedAtConnector\Dependency\Client\CustomerPasswordUpdatedAtConnectorToZedRequestClientBridge;
 use FondOfKudu\Client\CustomerPasswordUpdatedAtConnector\Zed\CustomerPasswordUpdatedAtConnectorStubInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class CustomerPasswordUpdatedAtConnectorFactoryTest extends Unit
 {
@@ -16,9 +16,9 @@ class CustomerPasswordUpdatedAtConnectorFactoryTest extends Unit
     protected MockObject|Container $containerMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfKudu\Client\CustomerPasswordUpdatedAtConnector\Dependency\Client\CustomerPasswordUpdatedAtConnectorToZedRequestClientBridge
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ZedRequest\ZedRequestClient
      */
-    protected MockObject|CustomerPasswordUpdatedAtConnectorToZedRequestClientBridge $zedRequestClientMock;
+    protected MockObject|ZedRequestClient $zedRequestClientMock;
 
     /**
      * @var \FondOfKudu\Client\CustomerPasswordUpdatedAtConnector\CustomerPasswordUpdatedAtConnectorFactory
@@ -31,7 +31,7 @@ class CustomerPasswordUpdatedAtConnectorFactoryTest extends Unit
     protected function _before(): void
     {
         $this->containerMock = $this->createMock(Container::class);
-        $this->zedRequestClientMock = $this->createMock(CustomerPasswordUpdatedAtConnectorToZedRequestClientBridge::class);
+        $this->zedRequestClientMock = $this->createMock(ZedRequestClient::class);
         $this->factory = new CustomerPasswordUpdatedAtConnectorFactory();
         $this->factory->setContainer($this->containerMock);
     }
