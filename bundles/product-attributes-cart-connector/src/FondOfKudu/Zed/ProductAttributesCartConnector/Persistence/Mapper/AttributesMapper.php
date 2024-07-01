@@ -18,11 +18,16 @@ class AttributesMapper
     protected const ID_PRODUCT_ABSTRACT = 'IdProductAbstract';
 
     /**
+     * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
+     */
+    protected UtilEncodingServiceInterface $utilEncodingService;
+
+    /**
      * @param \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface $utilEncodingService
      */
-    public function __construct(
-        protected UtilEncodingServiceInterface $utilEncodingService
-    ) {
+    public function __construct(UtilEncodingServiceInterface $utilEncodingService)
+    {
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
