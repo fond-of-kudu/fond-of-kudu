@@ -2,22 +2,22 @@
 
 namespace FondOfKudu\Client\CustomerPasswordUpdatedAtConnector\Zed;
 
+use FondOfKudu\Client\CustomerPasswordUpdatedAtConnector\Dependency\Client\CustomerPasswordUpdatedAtConnectorToZedRequestClientInterface;
 use Generated\Shared\Transfer\CustomerPasswordUpdatedResponseTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Client\ZedRequest\ZedRequestClientInterface;
 
 class CustomerPasswordUpdatedAtConnectorStub implements CustomerPasswordUpdatedAtConnectorStubInterface
 {
     /**
-     * @var \Spryker\Client\ZedRequest\ZedRequestClientInterface
+     * @var \FondOfKudu\Client\CustomerPasswordUpdatedAtConnector\Dependency\Client\CustomerPasswordUpdatedAtConnectorToZedRequestClientInterface
      */
-    protected ZedRequestClientInterface $zedStub;
+    protected CustomerPasswordUpdatedAtConnectorToZedRequestClientInterface $zedStub;
 
     /**
-     * @param \Spryker\Client\ZedRequest\ZedRequestClientInterface $zedStub
+     * @param \FondOfKudu\Client\CustomerPasswordUpdatedAtConnector\Dependency\Client\CustomerPasswordUpdatedAtConnectorToZedRequestClientInterface $zedStub
      */
-    public function __construct(ZedRequestClientInterface $zedStub)
+    public function __construct(CustomerPasswordUpdatedAtConnectorToZedRequestClientInterface $zedStub)
     {
         $this->zedStub = $zedStub;
     }
