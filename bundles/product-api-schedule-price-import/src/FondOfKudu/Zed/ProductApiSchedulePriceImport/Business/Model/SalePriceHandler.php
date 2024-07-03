@@ -3,6 +3,7 @@
 namespace FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model;
 
 use DateTime;
+use Exception;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\PriceProductScheduleMapperInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToCurrencyFacadeInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface;
@@ -80,6 +81,12 @@ class SalePriceHandler implements SalePriceHandlerInterface
             return $productAbstractTransfer;
         }
 
+        $productAttributes = $productAbstractTransfer->getAttributes();
+
+        if (!$this->isSpecialPriceToInFuture($productAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePriceTo()])) {
+            return $productAbstractTransfer;
+        }
+
         $currencyTransfer = $this->currencyFacade->getCurrent();
         $currencyTransfer = $this->currencyFacade->findCurrencyByIsoCode($currencyTransfer->getCode());
         $storeTransfer = $this->storeFacade->getCurrentStore();
@@ -113,6 +120,12 @@ class SalePriceHandler implements SalePriceHandlerInterface
     public function handleProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         if (!$this->validateSpecialPriceAttributes($productConcreteTransfer->getAttributes())) {
+            return $productConcreteTransfer;
+        }
+
+        $productAttributes = $productConcreteTransfer->getAttributes();
+
+        if (!$this->isSpecialPriceToInFuture($productAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePriceTo()])) {
             return $productConcreteTransfer;
         }
 
@@ -204,5 +217,21 @@ class SalePriceHandler implements SalePriceHandlerInterface
         }
 
         return true;
+    }
+
+    /**
+     * @param string $specialPriceTo
+     *
+     * @return bool
+     */
+    protected function isSpecialPriceToInFuture(string $specialPriceTo): bool
+    {
+        try {
+            $specialPriceTo = new DateTime($specialPriceTo);
+        } catch (Exception $exception) {
+            return false;
+        }
+
+        return $specialPriceTo >= new DateTime();
     }
 }
