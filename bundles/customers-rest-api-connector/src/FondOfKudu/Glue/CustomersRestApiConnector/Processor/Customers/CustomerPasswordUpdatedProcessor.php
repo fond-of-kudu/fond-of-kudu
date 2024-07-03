@@ -2,6 +2,7 @@
 
 namespace FondOfKudu\Glue\CustomersRestApiConnector\Processor\Customers;
 
+use FondOfKudu\Glue\CustomersRestApiConnector\CustomersRestApiConnectorConfig;
 use FondOfKudu\Glue\CustomersRestApiConnector\Dependency\Client\CustomersRestApiConnectorToCustomerPasswordUpdateAtConnectorClientInterface;
 use FondOfKudu\Glue\CustomersRestApiConnector\Processor\Mapper\CustomerPasswordUpdatedResourceMapperInterface;
 use FondOfKudu\Glue\CustomersRestApiConnector\Processor\Validation\RestApiErrorInterface;
@@ -70,7 +71,7 @@ class CustomerPasswordUpdatedProcessor implements CustomerPasswordUpdatedProcess
         $restResource = $this
             ->restResourceBuilder
             ->createRestResource(
-                'password-updated',
+                CustomersRestApiConnectorConfig::RESOURCE_CUSTOMER_PASSWORD_UPDATED,
                 null,
                 $customerPasswordUpdatedResponseTransfer,
             );
