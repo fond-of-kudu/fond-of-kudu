@@ -2,10 +2,10 @@
 
 namespace FondOfKudu\Client\CustomerPasswordUpdatedAtConnector;
 
+use FondOfKudu\Client\CustomerPasswordUpdatedAtConnector\Dependency\Client\CustomerPasswordUpdatedAtConnectorToZedRequestClientInterface;
 use FondOfKudu\Client\CustomerPasswordUpdatedAtConnector\Zed\CustomerPasswordUpdatedAtConnectorStub;
 use FondOfKudu\Client\CustomerPasswordUpdatedAtConnector\Zed\CustomerPasswordUpdatedAtConnectorStubInterface;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\ZedRequest\ZedRequestClientInterface;
 
 class CustomerPasswordUpdatedAtConnectorFactory extends AbstractFactory
 {
@@ -18,9 +18,9 @@ class CustomerPasswordUpdatedAtConnectorFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ZedRequest\ZedRequestClientInterface
+     * @return \FondOfKudu\Client\CustomerPasswordUpdatedAtConnector\Dependency\Client\CustomerPasswordUpdatedAtConnectorToZedRequestClientInterface
      */
-    protected function getZedRequestClient(): ZedRequestClientInterface
+    protected function getZedRequestClient(): CustomerPasswordUpdatedAtConnectorToZedRequestClientInterface
     {
         return $this->getProvidedDependency(CustomerPasswordUpdatedAtConnectorDependencyProvider::CLIENT_ZED_REQUEST);
     }
