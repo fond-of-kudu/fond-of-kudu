@@ -15,7 +15,7 @@ class SpecialPriceAttributesValidatorTest extends Unit
     protected MockObject|ProductApiSchedulePriceImportConfig $apiSchedulePriceImportConfigMock;
 
     /**
-     * @var SpecialPriceAttributesValidatorInterface
+     * @var \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Validator\SpecialPriceAttributesValidatorInterface
      */
     protected SpecialPriceAttributesValidatorInterface $validator;
 
