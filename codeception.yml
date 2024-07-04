@@ -8,6 +8,7 @@ include:
   - bundles/checkout-rest-api-country-connector
   - bundles/country-zipcode-restriction
   - bundles/customer-password-updated-at-connector
+  - bundles/customers-rest-api-connector
   - bundles/product-attributes-cart-connector
   - bundles/product-api-schedule-price-import
   - bundles/product-image-storage-connector

@@ -32,7 +32,7 @@
     },
     "customers-rest-api-connector": {
       "path": "bundles/customers-rest-api-connector",
-      "version": "1.0.0-alpha.1"
+      "version": "1.0.0"
     },
     "country-zipcode-restriction": {
       "path": "bundles/country-zipcode-restriction",

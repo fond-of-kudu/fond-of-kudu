@@ -4,10 +4,13 @@ namespace FondOfKudu\Glue\CustomersRestApiConnector;
 
 use FondOfKudu\Glue\CustomersRestApiConnector\Dependency\Client\CustomersRestApiConnectorToCustomerPasswordUpdateAtConnectorClientInterface;
 use FondOfKudu\Glue\CustomersRestApiConnector\Processor\Customers\CustomerPasswordUpdatedProcessor;
+use FondOfKudu\Glue\CustomersRestApiConnector\Processor\Customers\CustomerPasswordUpdatedProcessorInterface;
 use FondOfKudu\Glue\CustomersRestApiConnector\Processor\Customers\CustomerPasswordWriter;
 use FondOfKudu\Glue\CustomersRestApiConnector\Processor\Customers\CustomerPasswordWriterInterface;
 use FondOfKudu\Glue\CustomersRestApiConnector\Processor\Mapper\CustomerPasswordUpdatedResourceMapper;
 use FondOfKudu\Glue\CustomersRestApiConnector\Processor\Mapper\CustomerPasswordUpdatedResourceMapperInterface;
+use FondOfKudu\Glue\CustomersRestApiConnector\Processor\Mapper\CustomerPasswordUpdatedRestResponseMapper;
+use FondOfKudu\Glue\CustomersRestApiConnector\Processor\Mapper\CustomerPasswordUpdatedRestResponseMapperInterface;
 use FondOfKudu\Glue\CustomersRestApiConnector\Processor\Mapper\CustomerRestorePasswordResourceMapper;
 use FondOfKudu\Glue\CustomersRestApiConnector\Processor\Mapper\CustomerRestorePasswordResourceMapperInterface;
 use FondOfKudu\Glue\CustomersRestApiConnector\Processor\Validation\RestApiError;
@@ -32,14 +35,23 @@ class CustomersRestApiConnectorFactory extends AbstractFactory
     /**
      * @return \FondOfKudu\Glue\CustomersRestApiConnector\Processor\Customers\CustomerPasswordUpdatedProcessor
      */
-    public function createCustomerPasswordUpdatedProcessor(): CustomerPasswordUpdatedProcessor
+    public function createCustomerPasswordUpdatedProcessor(): CustomerPasswordUpdatedProcessorInterface
     {
         return new CustomerPasswordUpdatedProcessor(
             $this->getCustomerPasswordUpdateAtConnectorClient(),
             $this->getResourceBuilder(),
             $this->createCustomerPasswordUpdatedResourceMapper(),
+            $this->createCustomerPasswordUpdatedRestResponseMapper(),
             $this->createRestApiError(),
         );
+    }
+
+    /**
+     * @return \FondOfKudu\Glue\CustomersRestApiConnector\Processor\Mapper\CustomerPasswordUpdatedRestResponseMapperInterface
+     */
+    protected function createCustomerPasswordUpdatedRestResponseMapper(): CustomerPasswordUpdatedRestResponseMapperInterface
+    {
+        return new CustomerPasswordUpdatedRestResponseMapper();
     }
 
     /**

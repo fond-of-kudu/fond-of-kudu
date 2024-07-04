@@ -8,4 +8,16 @@
         <property name="passwordUpdatedAt" type="string" restRequestParameter="required"/>
     </transfer>
 
+    <transfer name="CustomerPasswordUpdatedResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CustomerError[]" singular="error"/>
+        <property name="updatedAt" type="string"/>
+        <property name="isUpdated" type="bool"/>
+    </transfer>
+
+    <transfer name="CustomerPasswordUpdatedRestResponse">
+        <property name="updatedAt" type="string"/>
+        <property name="isUpdated" type="bool"/>
+    </transfer>
+
 </transfers>
