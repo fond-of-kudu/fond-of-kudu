@@ -3,7 +3,6 @@
 
     <transfer name="RestCustomerRestorePasswordAttributes">
         <property name="restorePasswordKey" type="string" restRequestParameter="required"/>
-        <property name="restorePasswordKey" type="string" restRequestParameter="required"/>
         <property name="password" type="string" restRequestParameter="required"/>
         <property name="confirmPassword" type="string" restRequestParameter="required"/>
         <property name="passwordUpdatedAt" type="string" restRequestParameter="required"/>
