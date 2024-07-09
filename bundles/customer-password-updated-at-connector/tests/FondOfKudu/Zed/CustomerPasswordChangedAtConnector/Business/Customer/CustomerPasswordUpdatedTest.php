@@ -91,13 +91,16 @@ class CustomerPasswordUpdatedTest extends Unit
 
             /**
              * @param bool $isSuccess
+             * @param bool $accountExists
              *
              * @return \Generated\Shared\Transfer\CustomerPasswordUpdatedResponseTransfer
              */
             protected function createCustomerPasswordUpdatedResponseTransfer(
-                bool $isSuccess = true
+                bool $isSuccess = true,
+                bool $accountExists = true
             ): CustomerPasswordUpdatedResponseTransfer {
                 $this->customerPasswordUpdatedResponseTransfer->setIsSuccess($isSuccess);
+                $this->customerPasswordUpdatedResponseTransfer->setAccountsExists($accountExists);
 
                 return $this->customerPasswordUpdatedResponseTransfer;
             }
