@@ -2,7 +2,6 @@
 
 namespace FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\Business\Customer;
 
-use FondOfKudu\Shared\CustomerPasswordUpdatedAtConnector\Code\Messages;
 use FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\CustomerPasswordUpdatedAtConnectorConfig;
 use FondOfKudu\Zed\CustomerPasswordUpdatedAtConnector\Dependency\QueryContainer\CustomerPasswordUpdatedAtConnectorToCustomerQueryContainerInterface;
 use Generated\Shared\Transfer\CustomerErrorTransfer;
@@ -47,14 +46,7 @@ class CustomerPasswordUpdated extends AbstractCustomerModel implements CustomerP
         try {
             $customerEntity = $this->getCustomer($customerTransfer);
         } catch (CustomerNotFoundException $e) {
-            $customerError = new CustomerErrorTransfer();
-            $customerError->setMessage(Messages::CUSTOMER_NOT_FOUND);
-
-            $customerPasswordUpdatedResponseTransfer
-                ->setIsSuccess(false)
-                ->addError($customerError);
-
-            return $customerPasswordUpdatedResponseTransfer;
+            return $this->createCustomerPasswordUpdatedResponseTransfer(true, false);
         }
 
         if (!$customerPasswordUpdatedResponseTransfer->getIsSuccess()) {
@@ -80,13 +72,17 @@ class CustomerPasswordUpdated extends AbstractCustomerModel implements CustomerP
 
     /**
      * @param bool $isSuccess
+     * @param bool $accountExists
      *
      * @return \Generated\Shared\Transfer\CustomerPasswordUpdatedResponseTransfer
      */
-    protected function createCustomerPasswordUpdatedResponseTransfer(bool $isSuccess = true): CustomerPasswordUpdatedResponseTransfer
-    {
+    protected function createCustomerPasswordUpdatedResponseTransfer(
+        bool $isSuccess = true,
+        bool $accountExists = true
+    ): CustomerPasswordUpdatedResponseTransfer {
         $customerPasswordUpdatedResponseTransfer = new CustomerPasswordUpdatedResponseTransfer();
         $customerPasswordUpdatedResponseTransfer->setIsSuccess($isSuccess);
+        $customerPasswordUpdatedResponseTransfer->setAccountExists($accountExists);
 
         return $customerPasswordUpdatedResponseTransfer;
     }

@@ -13,11 +13,13 @@
         <property name="errors" type="CustomerError[]" singular="error"/>
         <property name="updatedAt" type="string"/>
         <property name="isUpdated" type="bool"/>
+        <property name="accountExists" type="bool"/>
     </transfer>
 
     <transfer name="CustomerPasswordUpdatedRestResponse">
         <property name="updatedAt" type="string"/>
         <property name="isUpdated" type="bool"/>
+        <property name="accountExists" type="bool"/>
     </transfer>
 
 </transfers>

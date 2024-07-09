@@ -122,7 +122,7 @@ class RestApiError implements RestApiErrorInterface
             }
 
             if ($customerErrorTransfer->getMessage() === static::ERROR_CUSTOMER_NOT_FOUND) {
-                $restResponse = $this->addCustomerNotFoundError($restResponse);
+                $restResponse = $this->addPasswordUpdatedError($restResponse);
 
                 continue;
             }
@@ -302,10 +302,10 @@ class RestApiError implements RestApiErrorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function addCustomerNotFoundError(RestResponseInterface $restResponse): RestResponseInterface
+    public function addPasswordUpdatedError(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConnectorConfig::RESPONSE_CODE_CUSTOMER_NOT_FOUND)
+            ->setCode(CustomersRestApiConnectorConfig::RESPONSE_CODE_PASSWORD_UPDATED_ERROR)
             ->setStatus(Response::HTTP_BAD_REQUEST);
 
         return $restResponse->addError($restErrorMessageTransfer);

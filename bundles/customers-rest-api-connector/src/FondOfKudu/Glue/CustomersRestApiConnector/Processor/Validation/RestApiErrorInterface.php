@@ -90,7 +90,7 @@ interface RestApiErrorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function addCustomerNotFoundError(RestResponseInterface $restResponse): RestResponseInterface;
+    public function addPasswordUpdatedError(RestResponseInterface $restResponse): RestResponseInterface;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse

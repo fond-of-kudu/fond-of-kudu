@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use PHPUnit\Framework\MockObject\MockObject;
+use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 
 class CustomerPasswordUpdatedTest extends Unit
 {
@@ -91,13 +92,16 @@ class CustomerPasswordUpdatedTest extends Unit
 
             /**
              * @param bool $isSuccess
+             * @param bool $accountExists
              *
              * @return \Generated\Shared\Transfer\CustomerPasswordUpdatedResponseTransfer
              */
             protected function createCustomerPasswordUpdatedResponseTransfer(
-                bool $isSuccess = true
+                bool $isSuccess = true,
+                bool $accountExists = true
             ): CustomerPasswordUpdatedResponseTransfer {
                 $this->customerPasswordUpdatedResponseTransfer->setIsSuccess($isSuccess);
+                $this->customerPasswordUpdatedResponseTransfer->setAccountExists($accountExists);
 
                 return $this->customerPasswordUpdatedResponseTransfer;
             }
@@ -297,6 +301,25 @@ class CustomerPasswordUpdatedTest extends Unit
             ->method('setUpdatedAt')
             ->with(null)
             ->willReturnSelf();
+
+        $customerPasswordUpdatedResponseTransfer = $this->customerPasswordUpdated->passwordUpdated($this->customerTransferMock);
+
+        static::assertEquals($customerPasswordUpdatedResponseTransfer, $this->customerPasswordUpdatedResponseTransferMock);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPasswordUpdatedAccountNotFound(): void
+    {
+        $this->customerTransferMock->expects(static::atLeastOnce())
+            ->method('getIdCustomer')
+            ->willReturn(99);
+
+        $this->queryContainerBridgeMock->expects(static::atLeastOnce())
+            ->method('queryCustomerById')
+            ->with(99)
+            ->willThrowException(new CustomerNotFoundException());
 
         $customerPasswordUpdatedResponseTransfer = $this->customerPasswordUpdated->passwordUpdated($this->customerTransferMock);
 

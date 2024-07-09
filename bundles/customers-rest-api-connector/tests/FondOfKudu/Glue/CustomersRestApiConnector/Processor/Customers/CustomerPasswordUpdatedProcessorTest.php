@@ -171,13 +171,46 @@ class CustomerPasswordUpdatedProcessorTest extends Unit
             ->willReturn(false);
 
         $this->restApiErrorMock->expects(static::atLeastOnce())
-            ->method('addCustomerNotFoundError')
+            ->method('addPasswordUpdatedError')
             ->with($this->restResponseMock)
             ->willReturn($this->restResponseMock);
 
         $this->customerPasswordUpdatedRestResponseMapperMock->expects(static::never())
             ->method('mapCustomerPasswordUpdatedRestResponseFromCustomerPasswordUpdatedResponse')
             ->with($this->customerPasswordUpdatedResponseTransferMock);
+
+        $this->customerPasswordUpdatedProcessor->passwordUpdated($this->restCustomerPasswordUpdatedAttributesTransferMock);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPasswordUpdatedAccountNotExists(): void
+    {
+        $this->restResourceBuilderMock->expects(static::atLeastOnce())
+            ->method('createRestResponse')
+            ->willReturn($this->restResponseMock);
+
+        $this->customerPasswordUpdatedResourceMapperMock->expects(static::atLeastOnce())
+            ->method('mapRestCustomerPasswordUpdatedAttributesTransferToCustomerTransfer')
+            ->with($this->restCustomerPasswordUpdatedAttributesTransferMock)
+            ->willReturn($this->customerTransferMock);
+
+        $this->customerPasswordUpdateAtConnectorClientMock->expects(static::atLeastOnce())
+            ->method('passwordUpdated')
+            ->with($this->customerTransferMock)
+            ->willReturn($this->customerPasswordUpdatedResponseTransferMock);
+
+        $this->customerPasswordUpdatedResponseTransferMock->expects(static::atLeastOnce())
+            ->method('getIsSuccess')
+            ->willReturn(true);
+
+        $this->customerPasswordUpdatedRestResponseMapperMock->expects(static::atLeastOnce())
+            ->method('mapCustomerPasswordUpdatedRestResponseFromCustomerPasswordUpdatedResponse')
+            ->with($this->customerPasswordUpdatedResponseTransferMock)
+            ->willReturn($this->customerPasswordUpdatedRestResponseTransferMock);
+
+        $this->customerPasswordUpdatedRestResponseTransferMock->setAccountExists(false);
 
         $this->customerPasswordUpdatedProcessor->passwordUpdated($this->restCustomerPasswordUpdatedAttributesTransferMock);
     }

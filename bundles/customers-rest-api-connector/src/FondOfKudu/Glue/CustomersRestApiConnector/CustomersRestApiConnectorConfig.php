@@ -15,7 +15,7 @@ class CustomersRestApiConnectorConfig extends AbstractBundleConfig
     /**
      * @var string
      */
-    public const RESPONSE_CODE_CUSTOMER_NOT_FOUND = '410';
+    public const RESPONSE_CODE_PASSWORD_UPDATED_ERROR = '410';
 
     /**
      * @var string
