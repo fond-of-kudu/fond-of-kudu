@@ -74,7 +74,7 @@ class CustomerPasswordUpdatedProcessor implements CustomerPasswordUpdatedProcess
         $customerPasswordUpdatedResponseTransfer = $this->customerPasswordUpdateAtConnectorClient->passwordUpdated($customerTransfer);
 
         if (!$customerPasswordUpdatedResponseTransfer->getIsSuccess()) {
-            return $this->restApiError->addCustomerNotFoundError($restResponse);
+            return $this->restApiError->addPasswordUpdatedError($restResponse);
         }
 
         $customerPasswordUpdatedRestResponseTransfer = $this->customerPasswordUpdatedRestResponseMapper

@@ -82,7 +82,7 @@ class CustomerPasswordUpdated extends AbstractCustomerModel implements CustomerP
     ): CustomerPasswordUpdatedResponseTransfer {
         $customerPasswordUpdatedResponseTransfer = new CustomerPasswordUpdatedResponseTransfer();
         $customerPasswordUpdatedResponseTransfer->setIsSuccess($isSuccess);
-        $customerPasswordUpdatedResponseTransfer->setAccountsExists($accountExists);
+        $customerPasswordUpdatedResponseTransfer->setAccountExists($accountExists);
 
         return $customerPasswordUpdatedResponseTransfer;
     }
