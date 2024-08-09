@@ -5,9 +5,6 @@ namespace FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model;
 use DateTime;
 use Exception;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Validator\SpecialPriceAttributesValidatorInterface;
-use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToCurrencyFacadeInterface;
-use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToStoreFacadeInterface;
-use FondOfKudu\Zed\ProductApiSchedulePriceImport\Persistence\ProductApiSchedulePriceImportRepositoryInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConfig;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
@@ -19,21 +16,6 @@ class SchedulePriceProductHandler implements SchedulePriceProductHandlerInterfac
   * @var \FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConfig
   */
     protected ProductApiSchedulePriceImportConfig $apiSchedulePriceImportConfig;
-
-    /**
-     * @var \FondOfKudu\Zed\ProductApiSchedulePriceImport\Persistence\ProductApiSchedulePriceImportRepositoryInterface
-     */
-    protected ProductApiSchedulePriceImportRepositoryInterface $productApiSchedulePriceImportRepository;
-
-    /**
-     * @var \FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToCurrencyFacadeInterface
-     */
-    protected ProductApiSchedulePriceImportToCurrencyFacadeInterface $currencyFacade;
-
-    /**
-     * @var \FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToStoreFacadeInterface
-     */
-    protected ProductApiSchedulePriceImportToStoreFacadeInterface $storeFacade;
 
     /**
      * @var \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Validator\SpecialPriceAttributesValidatorInterface
@@ -53,24 +35,15 @@ class SchedulePriceProductHandler implements SchedulePriceProductHandlerInterfac
     /**
      * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SchedulePriceProductAbstractModelInterface $schedulePriceProductAbstractModel
      * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SchedulePriceProductConcreteModelInterface $schedulePriceProductConcreteModel
-     * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToCurrencyFacadeInterface $currencyFacade
-     * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToStoreFacadeInterface $storeFacade
      * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Validator\SpecialPriceAttributesValidatorInterface $specialPriceAttributesValidator
-     * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Persistence\ProductApiSchedulePriceImportRepositoryInterface $productApiSchedulePriceImportRepository
      * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConfig $apiSchedulePriceImportConfig
      */
     public function __construct(
         SchedulePriceProductAbstractModelInterface $schedulePriceProductAbstractModel,
         SchedulePriceProductConcreteModelInterface $schedulePriceProductConcreteModel,
-        ProductApiSchedulePriceImportToCurrencyFacadeInterface $currencyFacade,
-        ProductApiSchedulePriceImportToStoreFacadeInterface $storeFacade,
         SpecialPriceAttributesValidatorInterface $specialPriceAttributesValidator,
-        ProductApiSchedulePriceImportRepositoryInterface $productApiSchedulePriceImportRepository,
         ProductApiSchedulePriceImportConfig $apiSchedulePriceImportConfig
     ) {
-        $this->currencyFacade = $currencyFacade;
-        $this->storeFacade = $storeFacade;
-        $this->productApiSchedulePriceImportRepository = $productApiSchedulePriceImportRepository;
         $this->apiSchedulePriceImportConfig = $apiSchedulePriceImportConfig;
         $this->specialPriceAttributesValidator = $specialPriceAttributesValidator;
         $this->schedulePriceProductAbstractModel = $schedulePriceProductAbstractModel;
@@ -88,16 +61,8 @@ class SchedulePriceProductHandler implements SchedulePriceProductHandlerInterfac
             return $productAbstractTransfer;
         }
 
-        $currencyTransfer = $this->currencyFacade->getCurrent();
-        $currencyTransfer = $this->currencyFacade->findCurrencyByIsoCode($currencyTransfer->getCode());
-        $storeTransfer = $this->storeFacade->getCurrentStore();
-
-        $priceProductScheduleTransfer = $this->productApiSchedulePriceImportRepository
-            ->findPriceProductScheduleByIdProductAbstractAndIdCurrencyAndIdStore(
-                $productAbstractTransfer->getIdProductAbstract(),
-                $currencyTransfer->getIdCurrency(),
-                $storeTransfer->getIdStore(),
-            );
+        $priceProductScheduleTransfer = $this->schedulePriceProductAbstractModel
+            ->getPriceProductScheduleTransfer($productAbstractTransfer->getIdProductAbstract());
 
         if ($priceProductScheduleTransfer === null) {
             $this->schedulePriceProductAbstractModel->create($productAbstractTransfer);
@@ -123,16 +88,8 @@ class SchedulePriceProductHandler implements SchedulePriceProductHandlerInterfac
             return $productConcreteTransfer;
         }
 
-        $currencyTransfer = $this->currencyFacade->getCurrent();
-        $currencyTransfer = $this->currencyFacade->findCurrencyByIsoCode($currencyTransfer->getCode());
-        $storeTransfer = $this->storeFacade->getCurrentStore();
-
-        $priceProductScheduleTransfer = $this->productApiSchedulePriceImportRepository
-            ->findPriceProductScheduleByIdProductConcreteAndIdCurrencyAndIdStore(
-                $productConcreteTransfer->getIdProductConcrete(),
-                $currencyTransfer->getIdCurrency(),
-                $storeTransfer->getIdStore(),
-            );
+        $priceProductScheduleTransfer = $this->schedulePriceProductConcreteModel
+            ->getPriceProductScheduleTransfer($productConcreteTransfer->getIdProductConcrete());
 
         if ($priceProductScheduleTransfer === null) {
             $this->schedulePriceProductConcreteModel->create($productConcreteTransfer);

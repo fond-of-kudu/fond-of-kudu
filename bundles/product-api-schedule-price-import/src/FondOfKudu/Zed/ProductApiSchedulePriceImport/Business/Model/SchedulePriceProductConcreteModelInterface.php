@@ -24,4 +24,11 @@ interface SchedulePriceProductConcreteModelInterface
         ProductConcreteTransfer $productConcreteTransfer,
         PriceProductScheduleTransfer $priceProductScheduleTransfer
     ): void;
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer|null
+     */
+    public function getPriceProductScheduleTransfer(int $idProductConcrete): ?PriceProductScheduleTransfer;
 }

@@ -33,10 +33,7 @@ class ProductApiSchedulePriceImportBusinessFactory extends AbstractBusinessFacto
         return new SchedulePriceProductHandler(
             $this->createSchedulePriceProductAbstractModel(),
             $this->createSchedulePriceProductConcreteModel(),
-            $this->getCurrencyFacade(),
-            $this->getStoreFacade(),
             $this->createSpecialPriceAttributesValidator(),
-            $this->getRepository(),
             $this->getConfig(),
         );
     }
@@ -70,6 +67,9 @@ class ProductApiSchedulePriceImportBusinessFactory extends AbstractBusinessFacto
         return new SchedulePriceProductAbstractModel(
             $this->createPriceProductScheduleMapper(),
             $this->getPriceProductScheduleFacade(),
+            $this->getCurrencyFacade(),
+            $this->getStoreFacade(),
+            $this->getRepository(),
         );
     }
 
@@ -81,6 +81,9 @@ class ProductApiSchedulePriceImportBusinessFactory extends AbstractBusinessFacto
         return new SchedulePriceProductConcreteModel(
             $this->createPriceProductScheduleMapper(),
             $this->getPriceProductScheduleFacade(),
+            $this->getCurrencyFacade(),
+            $this->getStoreFacade(),
+            $this->getRepository(),
         );
     }
 
