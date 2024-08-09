@@ -4,10 +4,8 @@ namespace FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model;
 
 use Codeception\Test\Unit;
 use FondOfKudu\Shared\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConstants;
-use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\PriceProductScheduleMapper;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Validator\SpecialPriceAttributesValidator;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToCurrencyFacadeBridge;
-use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductScheduleFacadeBridge;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToStoreFacadeBridge;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Persistence\ProductApiSchedulePriceImportRepository;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConfig;
@@ -20,18 +18,8 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 
-class SalePriceHandlerTest extends Unit
+class SchedulePriceProductHandlerTest extends Unit
 {
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Mapper\PriceProductScheduleMapper
-     */
-    protected MockObject|PriceProductScheduleMapper $priceProductScheduleMapperMock;
-
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductScheduleFacadeBridge
-     */
-    protected MockObject|ProductApiSchedulePriceImportToPriceProductScheduleFacadeBridge $priceProductScheduleFacadeMock;
-
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToCurrencyFacadeBridge
      */
@@ -93,17 +81,25 @@ class SalePriceHandlerTest extends Unit
     protected MockObject|SpecialPriceAttributesValidator $specialPriceAttributesValidator;
 
     /**
-     * @var \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SalePriceHandlerInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SchedulePriceProductAbstractModel
      */
-    protected SalePriceHandlerInterface $salePriceHandler;
+    protected MockObject|SchedulePriceProductAbstractModel $schedulePriceProductAbstractModelMock;
+
+    /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SchedulePriceProductConcreteModel
+     */
+    protected MockObject|SchedulePriceProductConcreteModel $schedulePriceProductConcreteModelMock;
+
+    /**
+     * @var \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SchedulePriceProductHandlerInterface
+     */
+    protected SchedulePriceProductHandlerInterface $salePriceHandler;
 
     /**
      * @return void
      */
     protected function _before(): void
     {
-        $this->priceProductScheduleMapperMock = $this->createMock(PriceProductScheduleMapper::class);
-        $this->priceProductScheduleFacadeMock = $this->createMock(ProductApiSchedulePriceImportToPriceProductScheduleFacadeBridge::class);
         $this->currencyFacadeMock = $this->createMock(ProductApiSchedulePriceImportToCurrencyFacadeBridge::class);
         $this->storeFacadeMock = $this->createMock(ProductApiSchedulePriceImportToStoreFacadeBridge::class);
         $this->productApiSchedulePriceImportRepositoryMock = $this->createMock(ProductApiSchedulePriceImportRepository::class);
@@ -116,10 +112,12 @@ class SalePriceHandlerTest extends Unit
         $this->priceProductTransferMock = $this->createMock(PriceProductTransfer::class);
         $this->moneyValueTransferMock = $this->createMock(MoneyValueTransfer::class);
         $this->specialPriceAttributesValidator = $this->createMock(SpecialPriceAttributesValidator::class);
+        $this->schedulePriceProductAbstractModelMock = $this->createMock(SchedulePriceProductAbstractModel::class);
+        $this->schedulePriceProductConcreteModelMock = $this->createMock(SchedulePriceProductConcreteModel::class);
 
-        $this->salePriceHandler = new SalePriceHandler(
-            $this->priceProductScheduleMapperMock,
-            $this->priceProductScheduleFacadeMock,
+        $this->salePriceHandler = new SchedulePriceProductHandler(
+            $this->schedulePriceProductAbstractModelMock,
+            $this->schedulePriceProductConcreteModelMock,
             $this->currencyFacadeMock,
             $this->storeFacadeMock,
             $this->specialPriceAttributesValidator,
@@ -209,19 +207,9 @@ class SalePriceHandlerTest extends Unit
             ->method('getIdStore')
             ->willReturn(1);
 
-        $this->productApiSchedulePriceImportRepositoryMock->expects(static::atLeastOnce())
-            ->method('findPriceProductScheduleByIdProductAbstractAndIdCurrencyAndIdStore')
-            ->with(1, 99, 1)
-            ->willReturn(null);
-
-        $this->priceProductScheduleMapperMock->expects(static::atLeastOnce())
-            ->method('createFromProductAbstractTransfer')
-            ->with($this->productAbstractTransferMock)
-            ->willReturn($this->priceProductScheduleTransferMock);
-
-        $this->priceProductScheduleFacadeMock->expects(static::atLeastOnce())
-            ->method('createAndApplyPriceProductSchedule')
-            ->with($this->priceProductScheduleTransferMock);
+        $this->schedulePriceProductAbstractModelMock->expects(static::atLeastOnce())
+            ->method('create')
+            ->with($this->productAbstractTransferMock);
 
         $productAbstractTransfer = $this->salePriceHandler->handleProductAbstract($this->productAbstractTransferMock);
 
@@ -316,22 +304,9 @@ class SalePriceHandlerTest extends Unit
             ->method('getGrossAmount')
             ->willReturn(2599);
 
-        $this->priceProductScheduleTransferMock->expects(static::atLeastOnce())
-            ->method('getIdPriceProductSchedule')
-            ->willReturn(10);
-
-        $this->priceProductScheduleFacadeMock->expects(static::atLeastOnce())
-            ->method('removeAndApplyPriceProductSchedule')
-            ->with(10);
-
-        $this->priceProductScheduleMapperMock->expects(static::atLeastOnce())
-            ->method('createFromProductAbstractTransfer')
-            ->with($this->productAbstractTransferMock)
-            ->willReturn($this->priceProductScheduleTransferMock);
-
-        $this->priceProductScheduleFacadeMock->expects(static::atLeastOnce())
-            ->method('createAndApplyPriceProductSchedule')
-            ->with($this->priceProductScheduleTransferMock);
+        $this->schedulePriceProductAbstractModelMock->expects(static::atLeastOnce())
+            ->method('update')
+            ->with($this->productAbstractTransferMock, $this->priceProductScheduleTransferMock);
 
         $productAbstractTransfer = $this->salePriceHandler->handleProductAbstract($this->productAbstractTransferMock);
 
@@ -419,19 +394,9 @@ class SalePriceHandlerTest extends Unit
             ->method('getIdStore')
             ->willReturn(1);
 
-        $this->productApiSchedulePriceImportRepositoryMock->expects(static::atLeastOnce())
-            ->method('findPriceProductScheduleByIdProductConcreteAndIdCurrencyAndIdStore')
-            ->with(1, 99, 1)
-            ->willReturn(null);
-
-        $this->priceProductScheduleMapperMock->expects(static::atLeastOnce())
-            ->method('createFromProductConcreteTransfer')
-            ->with($this->productConcreteTransferMock)
-            ->willReturn($this->priceProductScheduleTransferMock);
-
-        $this->priceProductScheduleFacadeMock->expects(static::atLeastOnce())
-            ->method('createAndApplyPriceProductSchedule')
-            ->with($this->priceProductScheduleTransferMock);
+        $this->schedulePriceProductConcreteModelMock->expects(static::atLeastOnce())
+            ->method('create')
+            ->with($this->productConcreteTransferMock);
 
         $productConcreteTransfer = $this->salePriceHandler->handleProductConcrete($this->productConcreteTransferMock);
 
@@ -526,22 +491,9 @@ class SalePriceHandlerTest extends Unit
             ->method('getGrossAmount')
             ->willReturn(2599);
 
-        $this->priceProductScheduleTransferMock->expects(static::atLeastOnce())
-            ->method('getIdPriceProductSchedule')
-            ->willReturn(10);
-
-        $this->priceProductScheduleFacadeMock->expects(static::atLeastOnce())
-            ->method('removeAndApplyPriceProductSchedule')
-            ->with(10);
-
-        $this->priceProductScheduleMapperMock->expects(static::atLeastOnce())
-            ->method('createFromProductConcreteTransfer')
-            ->with($this->productConcreteTransferMock)
-            ->willReturn($this->priceProductScheduleTransferMock);
-
-        $this->priceProductScheduleFacadeMock->expects(static::atLeastOnce())
-            ->method('createAndApplyPriceProductSchedule')
-            ->with($this->priceProductScheduleTransferMock);
+        $this->schedulePriceProductConcreteModelMock->expects(static::atLeastOnce())
+            ->method('update')
+            ->with($this->productConcreteTransferMock, $this->priceProductScheduleTransferMock);
 
         $productConcreteTransfer = $this->salePriceHandler->handleProductConcrete($this->productConcreteTransferMock);
 
