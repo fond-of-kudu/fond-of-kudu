@@ -24,5 +24,8 @@ class UrlProductAbstractPostCreatePlugin extends AbstractPlugin implements Produ
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function postCreate(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer {}
+    public function postCreate(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
+    {
+        return $productAbstractTransfer;
+    }
 }

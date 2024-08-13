@@ -18,5 +18,8 @@ class UrlProductAbstractAfterUpdatePlugin extends AbstractPlugin implements Prod
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function update(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer {}
+    public function update(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
+    {
+        return $productAbstractTransfer;
+    }
 }

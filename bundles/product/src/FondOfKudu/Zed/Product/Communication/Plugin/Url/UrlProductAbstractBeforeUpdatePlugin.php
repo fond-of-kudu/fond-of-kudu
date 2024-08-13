@@ -15,5 +15,6 @@ class UrlProductAbstractBeforeUpdatePlugin extends AbstractPlugin implements Pro
      */
     public function update(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
     {
+        return $productAbstractTransfer;
     }
 }

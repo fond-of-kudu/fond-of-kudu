@@ -19,5 +19,7 @@ class UrlProductAbstractBeforeCreatePlugin extends AbstractPlugin implements Pro
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     public function preCreate(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
-    {}
+    {
+        return $productAbstractTransfer;
+    }
 }
