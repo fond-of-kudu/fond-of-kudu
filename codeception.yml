@@ -17,6 +17,7 @@ include:
   - bundles/oms-retry-capture-process
   - bundles/oms-payone-error
   - bundles/discount-promotion-rest-api
+  - bundles/kletties
 
 suites:
   unit:
