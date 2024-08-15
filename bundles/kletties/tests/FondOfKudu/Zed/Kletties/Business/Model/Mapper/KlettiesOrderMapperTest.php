@@ -6,13 +6,13 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use FondOfKudu\Zed\Kletties\Dependency\Facade\KlettiesToLocaleFacadeBridge;
 use FondOfKudu\Zed\Kletties\Dependency\Facade\KlettiesToStoreFacadeBridge;
-use FondOfKudu\Zed\Kletties\Persistence\KlettiesRepository;
 use FondOfKudu\Zed\Kletties\KlettiesConfig;
+use FondOfKudu\Zed\Kletties\Persistence\KlettiesRepository;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\KlettiesOrderItemTransfer;
 use Generated\Shared\Transfer\KlettiesOrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Kletties\Persistence\FokKlettiesOrder;
 
 class KlettiesOrderMapperTest extends Unit

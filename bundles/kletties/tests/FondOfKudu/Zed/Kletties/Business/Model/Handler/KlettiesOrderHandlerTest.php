@@ -5,9 +5,9 @@ namespace FondOfKudu\Zed\Kletties\Business\Model\Handler;
 use Codeception\Test\Unit;
 use FondOfKudu\Zed\Kletties\Business\Model\Mapper\KlettiesOrderMapper;
 use FondOfKudu\Zed\Kletties\Business\Model\Writer\KlettiesOrderWriter;
+use Generated\Shared\Transfer\KlettiesOrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Generated\Shared\Transfer\KlettiesOrderTransfer;
 
 class KlettiesOrderHandlerTest extends Unit
 {

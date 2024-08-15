@@ -5,9 +5,9 @@ namespace FondOfKudu\Zed\Kletties\Communication\Plugin\Sales;
 use Codeception\Test\Unit;
 use FondOfKudu\Zed\Kletties\Business\KlettiesFacade;
 use FondOfKudu\Zed\Kletties\Business\KlettiesFacadeInterface;
+use Generated\Shared\Transfer\KlettiesOrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Generated\Shared\Transfer\KlettiesOrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**

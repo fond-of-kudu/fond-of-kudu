@@ -5,11 +5,11 @@ namespace FondOfKudu\Zed\Kletties\Communication\Plugin\Sales;
 use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Generated\Shared\Transfer\KlettiesOrderItemTransfer;
 use Generated\Shared\Transfer\KlettiesOrderTransfer;
 use Generated\Shared\Transfer\KlettiesVendorTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
 /**
  * @method \FondOfKudu\Zed\Kletties\Business\KlettiesFacadeInterface getFacade()
