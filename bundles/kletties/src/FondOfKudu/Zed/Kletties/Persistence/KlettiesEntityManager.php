@@ -129,9 +129,12 @@ class KlettiesEntityManager extends AbstractEntityManager implements KlettiesEnt
 
         $query = $this->getFactory()->createKlettiesVendorQuery();
         $entity = $query->filterByName($vendorTransfer->getName())->findOneOrCreate();
+
+        // @phpstan-ignore-next-line
         if ($entity->getIdKlettiesVendor() === null) {
             $entity->save();
         }
+
         $vendorTransfer->fromArray($entity->toArray(), true);
         $vendorTransfer->setId($entity->getIdKlettiesVendor());
 
