@@ -63,7 +63,8 @@
     "fond-of-kudu/oms-order-confirmation": "*",
     "fond-of-kudu/oms-payone-error": "*",
     "fond-of-kudu/oms-retry-capture-process": "*",
-    "fond-of-kudu/quote": "*"
+    "fond-of-kudu/quote": "*",
+    "fond-of-kudu/kletties-api": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -101,7 +102,9 @@
       "FondOfKudu\\Zed\\ProductAttributesCartConnector\\": "bundles/product-attributes-cart-connector/src/FondOfKudu/Zed/ProductAttributesCartConnector",
       "FondOfKudu\\Shared\\ProductAttributesCartConnector\\": "bundles/product-attributes-cart-connector/src/FondOfKudu/Shared/ProductAttributesCartConnector",
       "FondOfKudu\\Zed\\ProductApiSchedulePriceImport\\": "bundles/product-api-schedule-price-import/src/FondOfKudu/Zed/ProductApiSchedulePriceImport",
-      "FondOfKudu\\Shared\\ProductApiSchedulePriceImport\\": "bundles/product-api-schedule-price-import/src/FondOfKudu/Shared/ProductApiSchedulePriceImport"
+      "FondOfKudu\\Shared\\ProductApiSchedulePriceImport\\": "bundles/product-api-schedule-price-import/src/FondOfKudu/Shared/ProductApiSchedulePriceImport",
+      "FondOfKudu\\Zed\\KlettiesApi\\\\": "bundles/kletties-api/src/FondOfKudu/Zed/KlettiesApi",
+      "FondOfKudu\\Shared\\KlettiesApi\\": "bundles/kletties-api/src/FondOfKudu/Shared/KlettiesApi"
     }
   },
   "autoload-dev": {
@@ -123,6 +126,7 @@
       "FondOfKudu\\Zed\\OmsPayoneError\\": "bundles/oms-payone-error/tests/FondOfKudu/Zed/OmsPayoneError",
       "FondOfKudu\\Zed\\ProductAttributesCartConnector\\": "bundles/product-attributes-cart-connector/tests/FondOfKudu/Zed/ProductAttributesCartConnector",
       "FondOfKudu\\Zed\\ProductApiSchedulePriceImport\\": "bundles/product-api-schedule-price-import/tests/FondOfKudu/Zed/ProductConnector",
+      "FondOfKudu\\Zed\\KlettiesApi\\\\": "bundles/kletties-api/tests/FondOfKudu/Zed/KlettiesApi",
       "Generated\\": "src/Generated/",
       "Orm\\Zed\\": "src/Orm/Zed/"
     }
