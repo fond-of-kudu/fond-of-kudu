@@ -13,7 +13,7 @@
     "fond-of-kudu/kletties": "^1.0.0",
     "fond-of-oryx/product-country-restriction-checkout-connector": "^2.0.1",
     "spryker-eco/payone": "^4.4.2",
-    "spryker/api": "^0.4.3",
+    "spryker/api": "^0.4.0",
     "spryker/api-query-builder": "^0.1.5",
     "spryker/cart-extension": "^4.3",
     "spryker/carts-rest-api": "^5.0.0",
