@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiItemTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 class KlettiesApiFacadeTest extends Unit
 {

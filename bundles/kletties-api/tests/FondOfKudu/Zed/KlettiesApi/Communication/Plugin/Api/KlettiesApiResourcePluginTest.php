@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ApiItemTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\Api\Business\Exception\ApiDispatchingException;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 class KlettiesApiResourcePluginTest extends Unit
 {

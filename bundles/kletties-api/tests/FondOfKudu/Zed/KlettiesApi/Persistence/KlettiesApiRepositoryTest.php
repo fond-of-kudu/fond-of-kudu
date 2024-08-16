@@ -5,7 +5,6 @@ namespace FondOfKudu\Zed\KlettiesApi\Persistence;
 use Codeception\Test\Unit;
 use Exception;
 use FondOfKudu\Zed\Kletties\Exception\KlettiesOrderNotFoundException;
-use FondOfKudu\Zed\Kletties\Persistence\KlettiesPersistenceFactory;
 use FondOfKudu\Zed\KlettiesApi\Dependency\Facade\KlettiesApiToApiFacadeBridge;
 use FondOfKudu\Zed\KlettiesApi\Dependency\Facade\KlettiesApiToApiFacadeInterface;
 use FondOfKudu\Zed\KlettiesApi\Dependency\Facade\KlettiesApiToKlettiesFacadeBridge;
