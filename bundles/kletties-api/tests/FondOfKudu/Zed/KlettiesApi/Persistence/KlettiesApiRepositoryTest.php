@@ -6,7 +6,6 @@ use Codeception\Test\Unit;
 use Exception;
 use FondOfKudu\Zed\Kletties\Exception\KlettiesOrderNotFoundException;
 use FondOfKudu\Zed\KlettiesApi\Dependency\Facade\KlettiesApiToApiFacadeBridge;
-use FondOfKudu\Zed\KlettiesApi\Dependency\Facade\KlettiesApiToApiFacadeInterface;
 use FondOfKudu\Zed\KlettiesApi\Dependency\Facade\KlettiesApiToKlettiesFacadeBridge;
 use FondOfKudu\Zed\KlettiesApi\Dependency\Facade\KlettiesApiToKlettiesFacadeInterface;
 use FondOfKudu\Zed\KlettiesApi\Dependency\QueryContainer\KlettiesApiToApiQueryBuilderContainerBridge;
@@ -49,9 +48,9 @@ class KlettiesApiRepositoryTest extends Unit
     protected KlettiesApiToApiQueryBuilderContainerInterface|MockObject $klettiesQueryBuilderContainerMock;
 
     /**
-     * @var \FondOfKudu\Zed\KlettiesApi\Dependency\Facade\KlettiesApiToApiFacadeInterface|\PHPUnit\Framework\MockObject\MockObject
+     * @var \FondOfKudu\Zed\KlettiesApi\Dependency\Facade\KlettiesApiToApiFacadeBridge|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected KlettiesApiToApiFacadeInterface|MockObject $klettiesQueryContainerMock;
+    protected KlettiesApiToApiFacadeBridge|MockObject $apiFacadeMock;
 
     /**
      * @var \Orm\Zed\Kletties\Persistence\FokKlettiesOrderQuery|\PHPUnit\Framework\MockObject\MockObject
@@ -101,7 +100,7 @@ class KlettiesApiRepositoryTest extends Unit
     /**
      * @var \FondOfKudu\Zed\KlettiesApi\Dependency\Facade\KlettiesApiToKlettiesFacadeInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected KlettiesApiToKlettiesFacadeInterface|MockObject $facadeMock;
+    protected KlettiesApiToKlettiesFacadeInterface|MockObject $klettiesFacadeMock;
 
     /**
      * @var \Generated\Shared\Transfer\KlettiesOrderTransfer|\PHPUnit\Framework\MockObject\MockObject
@@ -119,7 +118,7 @@ class KlettiesApiRepositoryTest extends Unit
         $this->factoryMock = $this->createMock(KlettiesApiPersistenceFactory::class);
         $this->objectCollectionMock = $this->createMock(ObjectCollection::class);
         $this->klettiesQueryBuilderContainerMock = $this->createMock(KlettiesApiToApiQueryBuilderContainerBridge::class);
-        $this->klettiesQueryContainerMock = $this->createMock(KlettiesApiToApiFacadeBridge::class);
+        $this->apiFacadeMock = $this->createMock(KlettiesApiToApiFacadeBridge::class);
         $this->orderQueryMock = $this->createMock(FokKlettiesOrderQuery::class);
         $this->apiItemTransferMock = $this->createMock(ApiItemTransfer::class);
         $this->apiCollectionTransferMock = $this->createMock(ApiCollectionTransfer::class);
@@ -128,7 +127,7 @@ class KlettiesApiRepositoryTest extends Unit
         $this->transferMapperMock = $this->createMock(TransferMapper::class);
         $this->apiFilterTransferMock = $this->createMock(ApiFilterTransfer::class);
         $this->orderEntityTransferMock = $this->createMock(FokKlettiesOrderEntityTransfer::class);
-        $this->facadeMock = $this->createMock(KlettiesApiToKlettiesFacadeBridge::class);
+        $this->klettiesFacadeMock = $this->createMock(KlettiesApiToKlettiesFacadeBridge::class);
         $this->orderTransferMock = $this->createMock(KlettiesOrderTransfer::class);
 
         $this->repository = new KlettiesApiRepository();
@@ -144,10 +143,9 @@ class KlettiesApiRepositoryTest extends Unit
         $this->factoryMock->expects($this->once())->method('getKlettiesOrderQuery')->willReturn($this->orderQueryMock);
         $this->factoryMock->expects($this->once())->method('getQueryBuilderContainer')->willReturn($this->klettiesQueryBuilderContainerMock);
         $this->factoryMock->expects($this->once())->method('createTransferMapper')->willReturn($this->transferMapperMock);
-        $this->factoryMock->expects($this->once())->method('getQueryContainer')->willReturn($this->klettiesQueryContainerMock);
         $this->klettiesQueryBuilderContainerMock->expects($this->once())->method('buildQueryFromRequest')->willReturn($this->orderQueryMock);
         $this->transferMapperMock->expects($this->once())->method('toTransferCollection')->willReturn([]);
-        $this->klettiesQueryContainerMock->expects($this->once())->method('createApiCollection')->willReturn($this->apiCollectionTransferMock);
+        $this->apiFacadeMock->expects($this->once())->method('createApiCollection')->willReturn($this->apiCollectionTransferMock);
         $this->orderQueryMock->expects($this->once())->method('find')->willReturn($this->objectCollectionMock);
         $this->orderQueryMock->expects($this->once())->method('count')->willReturn(1);
         $this->objectCollectionMock->expects($this->once())->method('getData')->willReturn([]);
@@ -155,6 +153,15 @@ class KlettiesApiRepositoryTest extends Unit
         $this->apiRequestTransferMock->method('getFilter')->willReturn($this->apiFilterTransferMock);
         $this->apiFilterTransferMock->method('getLimit')->willReturn(1);
         $this->apiFilterTransferMock->method('getOffset')->willReturn(0);
+
+        $this->factoryMock->expects(static::once())
+            ->method('getApiFacade')
+            ->willReturn($this->apiFacadeMock);
+
+        $this->apiCollectionTransferMock->expects(static::once())
+            ->method('setData')
+            ->with([])
+            ->willReturn($this->apiCollectionTransferMock);
 
         $this->repository->find($this->apiRequestTransferMock);
     }
@@ -167,10 +174,10 @@ class KlettiesApiRepositoryTest extends Unit
         $this->factoryMock->expects($this->once())->method('getKlettiesOrderQuery')->willReturn($this->orderQueryMock);
         $this->factoryMock->expects($this->once())->method('getQueryBuilderContainer')->willReturn($this->klettiesQueryBuilderContainerMock);
         $this->factoryMock->expects($this->once())->method('createTransferMapper')->willReturn($this->transferMapperMock);
-        $this->factoryMock->expects($this->once())->method('getQueryContainer')->willReturn($this->klettiesQueryContainerMock);
+        //$this->factoryMock->expects($this->once())->method('getQueryContainer')->willReturn($this->klettiesQueryContainerMock);
         $this->klettiesQueryBuilderContainerMock->expects($this->once())->method('buildQueryFromRequest')->willReturn($this->orderQueryMock);
         $this->transferMapperMock->expects($this->once())->method('toTransferCollection')->willReturn([]);
-        $this->klettiesQueryContainerMock->expects($this->once())->method('createApiCollection')->willReturn($this->apiCollectionTransferMock);
+        $this->apiFacadeMock->expects($this->once())->method('createApiCollection')->willReturn($this->apiCollectionTransferMock);
         $this->orderQueryMock->expects($this->once())->method('find')->willReturn($this->objectCollectionMock);
         $this->orderQueryMock->expects($this->once())->method('count')->willReturn(1);
         $this->objectCollectionMock->expects($this->once())->method('getData')->willReturn([]);
@@ -178,6 +185,20 @@ class KlettiesApiRepositoryTest extends Unit
         $this->apiRequestTransferMock->method('getFilter')->willReturn($this->apiFilterTransferMock);
         $this->apiFilterTransferMock->method('getLimit')->willReturn(1);
         $this->apiFilterTransferMock->method('getOffset')->willReturn(1);
+
+        $this->factoryMock->expects(static::once())
+            ->method('getApiFacade')
+            ->willReturn($this->apiFacadeMock);
+
+        $this->apiFacadeMock->expects(static::once())
+            ->method('createApiCollection')
+            ->with([])
+            ->willReturn($this->apiCollectionTransferMock);
+
+        $this->apiCollectionTransferMock->expects(static::once())
+            ->method('setData')
+            ->with([])
+            ->willReturn($this->apiCollectionTransferMock);
 
         $catch = null;
         try {
@@ -195,12 +216,31 @@ class KlettiesApiRepositoryTest extends Unit
      */
     public function testConvert(): void
     {
-        $this->factoryMock->expects($this->once())->method('getKlettiesFacade')->willReturn($this->facadeMock);
-        $this->factoryMock->expects($this->once())->method('getQueryContainer')->willReturn($this->klettiesQueryContainerMock);
-        $this->facadeMock->expects($this->once())->method('findKlettiesOrderById')->willReturn($this->orderTransferMock);
-        $this->orderEntityTransferMock->expects($this->once())->method('getIdKlettiesOrder')->willReturn(1);
-        $this->orderTransferMock->expects($this->once())->method('getId')->willReturn(1);
-        $this->klettiesQueryContainerMock->expects($this->once())->method('createApiItem')->willReturn($this->apiItemTransferMock);
+        $this->factoryMock->expects(static::once())
+            ->method('getKlettiesFacade')
+            ->willReturn($this->klettiesFacadeMock);
+
+        $this->klettiesFacadeMock->expects(static::once())
+            ->method('findKlettiesOrderById')
+            ->with(1)
+            ->willReturn($this->orderTransferMock);
+
+        $this->factoryMock->expects(static::once())
+            ->method('getApiFacade')
+            ->willReturn($this->apiFacadeMock);
+
+        $this->apiFacadeMock->expects(static::once())
+            ->method('createApiItem')
+            ->with($this->orderTransferMock, '1')
+            ->willReturn($this->apiItemTransferMock);
+
+        $this->orderEntityTransferMock->expects(static::once())
+            ->method('getIdKlettiesOrder')
+            ->willReturn(1);
+
+        $this->orderTransferMock->expects(static::once())
+            ->method('getId')
+            ->willReturn(1);
 
         $this->repository->convert($this->orderEntityTransferMock);
     }
@@ -210,11 +250,11 @@ class KlettiesApiRepositoryTest extends Unit
      */
     public function testConvertThrowsException(): void
     {
-        $this->factoryMock->expects($this->once())->method('getKlettiesFacade')->willReturn($this->facadeMock);
-        $this->facadeMock->expects($this->once())->method('findKlettiesOrderById')->willReturn(null);
+        $this->factoryMock->expects($this->once())->method('getKlettiesFacade')->willReturn($this->klettiesFacadeMock);
+        $this->klettiesFacadeMock->expects($this->once())->method('findKlettiesOrderById')->willReturn(null);
         $this->orderEntityTransferMock->expects($this->exactly(2))->method('getIdKlettiesOrder')->willReturn(1);
-        $this->factoryMock->expects($this->never())->method('getQueryContainer')->willReturn($this->klettiesQueryContainerMock);
-        $this->klettiesQueryContainerMock->expects($this->never())->method('createApiItem')->willReturn($this->apiItemTransferMock);
+        //$this->factoryMock->expects($this->never())->method('getQueryContainer')->willReturn($this->klettiesQueryContainerMock);
+        $this->apiFacadeMock->expects($this->never())->method('createApiItem')->willReturn($this->apiItemTransferMock);
 
         $catch = null;
         try {

@@ -100,21 +100,6 @@ class KlettiesApiPersistenceFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testGetQueryContainer(): void
-    {
-        $this->containerMock->method('has')
-            ->willReturn(true);
-
-        $this->containerMock->method('get')
-            ->with(KlettiesApiDependencyProvider::FACADE_API)
-            ->willReturn($this->klettiesQueryContainerMock);
-
-        $this->assertInstanceOf(KlettiesApiToApiFacadeInterface::class, $this->factory->getQueryContainer());
-    }
-
-    /**
-     * @return void
-     */
     public function testGetKlettiesFacade(): void
     {
         $this->containerMock->method('has')->willReturn(true);
