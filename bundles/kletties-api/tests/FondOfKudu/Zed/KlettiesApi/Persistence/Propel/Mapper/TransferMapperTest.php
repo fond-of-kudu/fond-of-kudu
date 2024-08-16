@@ -10,7 +10,7 @@ class TransferMapperTest extends Unit
     /**
      * @var \FondOfKudu\Zed\KlettiesApi\Persistence\Propel\Mapper\TransferMapperInterface
      */
-    protected $mapper;
+    protected TransferMapperInterface $mapper;
 
     /**
      * @return void

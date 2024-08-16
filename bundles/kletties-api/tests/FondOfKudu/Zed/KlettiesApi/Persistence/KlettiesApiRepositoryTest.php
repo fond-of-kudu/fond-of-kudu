@@ -5,10 +5,15 @@ namespace FondOfKudu\Zed\KlettiesApi\Persistence;
 use Codeception\Test\Unit;
 use Exception;
 use FondOfKudu\Zed\Kletties\Exception\KlettiesOrderNotFoundException;
+use FondOfKudu\Zed\Kletties\Persistence\KlettiesPersistenceFactory;
 use FondOfKudu\Zed\KlettiesApi\Dependency\Facade\KlettiesApiToApiFacadeBridge;
+use FondOfKudu\Zed\KlettiesApi\Dependency\Facade\KlettiesApiToApiFacadeInterface;
 use FondOfKudu\Zed\KlettiesApi\Dependency\Facade\KlettiesApiToKlettiesFacadeBridge;
+use FondOfKudu\Zed\KlettiesApi\Dependency\Facade\KlettiesApiToKlettiesFacadeInterface;
 use FondOfKudu\Zed\KlettiesApi\Dependency\QueryContainer\KlettiesApiToApiQueryBuilderContainerBridge;
+use FondOfKudu\Zed\KlettiesApi\Dependency\QueryContainer\KlettiesApiToApiQueryBuilderContainerInterface;
 use FondOfKudu\Zed\KlettiesApi\Persistence\Propel\Mapper\TransferMapper;
+use FondOfKudu\Zed\KlettiesApi\Persistence\Propel\Mapper\TransferMapperInterface;
 use Generated\Shared\Transfer\ApiCollectionTransfer;
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
@@ -17,6 +22,7 @@ use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\FokKlettiesOrderEntityTransfer;
 use Generated\Shared\Transfer\KlettiesOrderTransfer;
 use Orm\Zed\Kletties\Persistence\FokKlettiesOrderQuery;
+use PHPUnit\Framework\MockObject\MockObject;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Container;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -26,82 +32,82 @@ class KlettiesApiRepositoryTest extends Unit
     /**
      * @var \FondOfKudu\Zed\KlettiesApi\Persistence\KlettiesApiRepositoryInterface
      */
-    protected $repository;
+    protected KlettiesApiRepositoryInterface $repository;
 
     /**
      * @var \Spryker\Zed\Kernel\Container|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $containerMock;
+    protected Container|MockObject $containerMock;
 
     /**
-     * @var \Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory|\PHPUnit\Framework\MockObject\MockObject
+     * @var \FondOfKudu\Zed\KlettiesApi\Persistence\KlettiesApiPersistenceFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $factoryMock;
+    protected KlettiesApiPersistenceFactory|MockObject $factoryMock;
 
     /**
      * @var \FondOfKudu\Zed\KlettiesApi\Dependency\QueryContainer\KlettiesApiToApiQueryBuilderContainerInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $klettiesQueryBuilderContainerMock;
+    protected KlettiesApiToApiQueryBuilderContainerInterface|MockObject $klettiesQueryBuilderContainerMock;
 
     /**
      * @var \FondOfKudu\Zed\KlettiesApi\Dependency\Facade\KlettiesApiToApiFacadeInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $klettiesQueryContainerMock;
+    protected KlettiesApiToApiFacadeInterface|MockObject $klettiesQueryContainerMock;
 
     /**
      * @var \Orm\Zed\Kletties\Persistence\FokKlettiesOrderQuery|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $orderQueryMock;
+    protected FokKlettiesOrderQuery|MockObject $orderQueryMock;
 
     /**
      * @var \Generated\Shared\Transfer\ApiItemTransfer|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $apiItemTransferMock;
+    protected ApiItemTransfer|MockObject $apiItemTransferMock;
 
     /**
      * @var \Generated\Shared\Transfer\ApiCollectionTransfer|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $apiCollectionTransferMock;
+    protected ApiCollectionTransfer|MockObject $apiCollectionTransferMock;
 
     /**
      * @var \Generated\Shared\Transfer\ApiDataTransfer|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $apiDataTransferMock;
+    protected ApiDataTransfer|MockObject $apiDataTransferMock;
 
     /**
      * @var \Generated\Shared\Transfer\ApiRequestTransfer|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $apiRequestTransferMock;
+    protected ApiRequestTransfer|MockObject $apiRequestTransferMock;
 
     /**
      * @var \FondOfKudu\Zed\KlettiesApi\Persistence\Propel\Mapper\TransferMapperInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $transferMapperMock;
+    protected TransferMapperInterface|MockObject $transferMapperMock;
 
     /**
      * @var \Propel\Runtime\Collection\ObjectCollection|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $objectCollectionMock;
+    protected ObjectCollection|MockObject $objectCollectionMock;
 
     /**
      * @var \Generated\Shared\Transfer\ApiFilterTransfer|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $apiFilterTransferMock;
+    protected ApiFilterTransfer|MockObject $apiFilterTransferMock;
 
     /**
      * @var \Generated\Shared\Transfer\FokKlettiesOrderEntityTransfer|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $orderEntityTransferMock;
+    protected FokKlettiesOrderEntityTransfer|MockObject $orderEntityTransferMock;
 
     /**
      * @var \FondOfKudu\Zed\KlettiesApi\Dependency\Facade\KlettiesApiToKlettiesFacadeInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $facadeMock;
+    protected KlettiesApiToKlettiesFacadeInterface|MockObject $facadeMock;
 
     /**
      * @var \Generated\Shared\Transfer\KlettiesOrderTransfer|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $orderTransferMock;
+    protected KlettiesOrderTransfer|MockObject $orderTransferMock;
 
     /**
      * @return void
@@ -110,47 +116,21 @@ class KlettiesApiRepositoryTest extends Unit
     {
         parent::_before();
 
-        $this->containerMock = $this->getMockBuilder(Container::class)->disableOriginalConstructor()->getMock();
-        $this->factoryMock = $this->getMockBuilder(KlettiesApiPersistenceFactory::class)->disableOriginalConstructor()->getMock();
-        $this->objectCollectionMock = $this->getMockBuilder(ObjectCollection::class)->disableOriginalConstructor()->getMock();
-        $this->klettiesQueryBuilderContainerMock = $this->getMockBuilder(KlettiesApiToApiQueryBuilderContainerBridge::class)->disableOriginalConstructor()->getMock();
-        $this->klettiesQueryContainerMock = $this->getMockBuilder(KlettiesApiToApiFacadeBridge::class)->disableOriginalConstructor()->getMock();
-        $this->orderQueryMock = $this->getMockBuilder(FokKlettiesOrderQuery::class)->disableOriginalConstructor()->getMock();
-        $this->apiItemTransferMock = $this->getMockBuilder(ApiItemTransfer::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->apiCollectionTransferMock = $this->getMockBuilder(ApiCollectionTransfer::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->apiDataTransferMock = $this->getMockBuilder(ApiDataTransfer::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->apiRequestTransferMock = $this->getMockBuilder(ApiRequestTransfer::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->transferMapperMock = $this->getMockBuilder(TransferMapper::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->apiFilterTransferMock = $this->getMockBuilder(ApiFilterTransfer::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->orderEntityTransferMock = $this->getMockBuilder(FokKlettiesOrderEntityTransfer::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->facadeMock = $this->getMockBuilder(KlettiesApiToKlettiesFacadeBridge::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->orderTransferMock = $this->getMockBuilder(KlettiesOrderTransfer::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->containerMock = $this->createMock(Container::class);
+        $this->factoryMock = $this->createMock(KlettiesApiPersistenceFactory::class);
+        $this->objectCollectionMock = $this->createMock(ObjectCollection::class);
+        $this->klettiesQueryBuilderContainerMock = $this->createMock(KlettiesApiToApiQueryBuilderContainerBridge::class);
+        $this->klettiesQueryContainerMock = $this->createMock(KlettiesApiToApiFacadeBridge::class);
+        $this->orderQueryMock = $this->createMock(FokKlettiesOrderQuery::class);
+        $this->apiItemTransferMock = $this->createMock(ApiItemTransfer::class);
+        $this->apiCollectionTransferMock = $this->createMock(ApiCollectionTransfer::class);
+        $this->apiDataTransferMock = $this->createMock(ApiDataTransfer::class);
+        $this->apiRequestTransferMock = $this->createMock(ApiRequestTransfer::class);
+        $this->transferMapperMock = $this->createMock(TransferMapper::class);
+        $this->apiFilterTransferMock = $this->createMock(ApiFilterTransfer::class);
+        $this->orderEntityTransferMock = $this->createMock(FokKlettiesOrderEntityTransfer::class);
+        $this->facadeMock = $this->createMock(KlettiesApiToKlettiesFacadeBridge::class);
+        $this->orderTransferMock = $this->createMock(KlettiesOrderTransfer::class);
 
         $this->repository = new KlettiesApiRepository();
         $this->repository->setContainer($this->containerMock);

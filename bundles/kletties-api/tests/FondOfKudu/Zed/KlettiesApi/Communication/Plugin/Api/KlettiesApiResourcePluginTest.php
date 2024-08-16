@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\ApiCollectionTransfer;
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiItemTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\Api\Business\Exception\ApiDispatchingException;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -18,32 +19,32 @@ class KlettiesApiResourcePluginTest extends Unit
     /**
      * @var \FondOfKudu\Zed\KlettiesApi\Communication\Plugin\Api\KlettiesApiResourcePlugin
      */
-    protected $plugin;
+    protected KlettiesApiResourcePlugin $plugin;
 
     /**
      * @var \FondOfKudu\Zed\KlettiesApi\Business\KlettiesApiFacadeInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $facadeMock;
+    protected KlettiesApiFacadeInterface|MockObject $facadeMock;
 
     /**
      * @var \Generated\Shared\Transfer\ApiItemTransfer|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $apiItemTransferMock;
+    protected ApiItemTransfer|MockObject $apiItemTransferMock;
 
     /**
      * @var \Generated\Shared\Transfer\ApiCollectionTransfer|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $apiCollectionTransferMock;
+    protected ApiCollectionTransfer|MockObject $apiCollectionTransferMock;
 
     /**
      * @var \Generated\Shared\Transfer\ApiDataTransfer|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $apiDataTransferMock;
+    protected ApiDataTransfer|MockObject $apiDataTransferMock;
 
     /**
      * @var \Generated\Shared\Transfer\ApiRequestTransfer|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $apiRequestTransferMock;
+    protected ApiRequestTransfer|MockObject $apiRequestTransferMock;
 
     /**
      * @return void
@@ -70,30 +71,8 @@ class KlettiesApiResourcePluginTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->plugin = new class ($this->facadeMock) extends KlettiesApiResourcePlugin {
-            /**
-             * @var \FondOfKudu\Zed\KlettiesApi\Business\KlettiesApiFacadeInterface
-             */
-            public $facade;
-
-            /**
-             *  constructor.
-             *
-             * @param \FondOfKudu\Zed\KlettiesApi\Business\KlettiesApiFacadeInterface $klettiesFacade
-             */
-            public function __construct(KlettiesApiFacadeInterface $klettiesFacade)
-            {
-                $this->facade = $klettiesFacade;
-            }
-
-            /**
-             * @return \FondOfKudu\Zed\KlettiesApi\Business\KlettiesApiFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
-             */
-            protected function getFacade(): AbstractFacade
-            {
-                return $this->facade;
-            }
-        };
+        $this->plugin = new KlettiesApiResourcePlugin();
+        $this->plugin->setFacade($this->facadeMock);
     }
 
     /**

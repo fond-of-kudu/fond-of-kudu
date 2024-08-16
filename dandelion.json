@@ -69,6 +69,14 @@
     "oms-retry-capture-process": {
       "path": "bundles/oms-retry-capture-process",
       "version": "1.0.3"
+    },
+    "kletties": {
+      "path": "bundles/kletties",
+      "version": "1.0.0"
+    },
+    "kletties-api": {
+      "path": "bundles/kletties-api",
+      "version": "1.0.0"
     }
   },
   "vcs": {

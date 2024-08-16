@@ -12,7 +12,7 @@ use FondOfKudu\Zed\KlettiesApi\KlettiesApiDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
- * @method \FondOfKudu\Zed\KlettiesApi\Persistence\KlettiesApiRepositoryInterface getRepository()()
+ * @method \FondOfKudu\Zed\KlettiesApi\Persistence\KlettiesApiRepositoryInterface getRepository()
  */
 class KlettiesApiBusinessFactory extends AbstractBusinessFactory
 {

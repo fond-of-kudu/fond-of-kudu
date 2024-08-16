@@ -4,11 +4,14 @@ namespace FondOfKudu\Zed\KlettiesApi\Business;
 
 use Codeception\Test\Unit;
 use FondOfKudu\Zed\KlettiesApi\Business\Model\KlettiesOrderApi;
+use FondOfKudu\Zed\KlettiesApi\Business\Model\KlettiesOrderApiInterface;
 use FondOfKudu\Zed\KlettiesApi\Business\Model\Validator\KlettiesApiValidator;
+use FondOfKudu\Zed\KlettiesApi\Business\Model\Validator\KlettiesApiValidatorInterface;
 use Generated\Shared\Transfer\ApiCollectionTransfer;
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiItemTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 class KlettiesApiFacadeTest extends Unit
@@ -16,42 +19,42 @@ class KlettiesApiFacadeTest extends Unit
     /**
      * @var \FondOfKudu\Zed\KlettiesApi\Business\KlettiesApiFacadeInterface
      */
-    protected $facade;
+    protected KlettiesApiFacadeInterface $facade;
 
     /**
      * @var \FondOfKudu\Zed\KlettiesApi\Business\KlettiesApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $factoryMock;
+    protected KlettiesApiBusinessFactory|MockObject $factoryMock;
 
     /**
      * @var \Generated\Shared\Transfer\ApiItemTransfer|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $apiItemTransferMock;
+    protected ApiItemTransfer|MockObject $apiItemTransferMock;
 
     /**
      * @var \Generated\Shared\Transfer\ApiCollectionTransfer|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $apiCollectionTransferMock;
+    protected ApiCollectionTransfer|MockObject $apiCollectionTransferMock;
 
     /**
      * @var \Generated\Shared\Transfer\ApiDataTransfer|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $apiDataTransferMock;
+    protected ApiDataTransfer|MockObject $apiDataTransferMock;
 
     /**
      * @var \Generated\Shared\Transfer\ApiRequestTransfer|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $apiRequestTransferMock;
+    protected ApiRequestTransfer|MockObject $apiRequestTransferMock;
 
     /**
      * @var \FondOfKudu\Zed\KlettiesApi\Business\Model\KlettiesOrderApiInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $klettiesApiMock;
+    protected KlettiesOrderApiInterface|MockObject $klettiesApiMock;
 
     /**
      * @var \FondOfKudu\Zed\KlettiesApi\Business\Model\Validator\KlettiesApiValidatorInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $klettiesApiValidatorMock;
+    protected KlettiesApiValidatorInterface|MockObject $klettiesApiValidatorMock;
 
     /**
      * @return void
@@ -86,30 +89,8 @@ class KlettiesApiFacadeTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->facade = new class ($this->factoryMock) extends KlettiesApiFacade {
-            /**
-             * @var \FondOfKudu\Zed\KlettiesApi\Business\KlettiesApiBusinessFactory
-             */
-            public $factory;
-
-            /**
-             *  constructor.
-             *
-             * @param \FondOfKudu\Zed\KlettiesApi\Business\KlettiesApiBusinessFactory $klettiesFactory
-             */
-            public function __construct(KlettiesApiBusinessFactory $klettiesFactory)
-            {
-                $this->factory = $klettiesFactory;
-            }
-
-            /**
-             * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory|\FondOfKudu\Zed\KlettiesApi\Business\KlettiesApiBusinessFactory
-             */
-            protected function getFactory(): AbstractBusinessFactory
-            {
-                return $this->factory;
-            }
-        };
+        $this->facade = new KlettiesApiFacade();
+        $this->facade->setFactory($this->factoryMock);
     }
 
     /**

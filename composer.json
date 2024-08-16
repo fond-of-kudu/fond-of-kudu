@@ -10,8 +10,11 @@
   ],
   "require": {
     "php": ">=8.0",
+    "fond-of-kudu/kletties": "^1.0.0",
     "fond-of-oryx/product-country-restriction-checkout-connector": "^2.0.1",
     "spryker-eco/payone": "^4.4.2",
+    "spryker/api": "^0.4.3",
+    "spryker/api-query-builder": "^0.1.5",
     "spryker/cart-extension": "^4.3",
     "spryker/carts-rest-api": "^5.0.0",
     "spryker/checkout-rest-api": "^3.0.0",
@@ -64,6 +67,7 @@
     "fond-of-kudu/oms-payone-error": "*",
     "fond-of-kudu/oms-retry-capture-process": "*",
     "fond-of-kudu/quote": "*",
+    "fond-of-kudu/kletties": "*",
     "fond-of-kudu/kletties-api": "*"
   },
   "minimum-stability": "dev",
@@ -103,7 +107,9 @@
       "FondOfKudu\\Shared\\ProductAttributesCartConnector\\": "bundles/product-attributes-cart-connector/src/FondOfKudu/Shared/ProductAttributesCartConnector",
       "FondOfKudu\\Zed\\ProductApiSchedulePriceImport\\": "bundles/product-api-schedule-price-import/src/FondOfKudu/Zed/ProductApiSchedulePriceImport",
       "FondOfKudu\\Shared\\ProductApiSchedulePriceImport\\": "bundles/product-api-schedule-price-import/src/FondOfKudu/Shared/ProductApiSchedulePriceImport",
-      "FondOfKudu\\Zed\\KlettiesApi\\\\": "bundles/kletties-api/src/FondOfKudu/Zed/KlettiesApi",
+      "FondOfKudu\\Zed\\Kletties\\": "bundles/kletties/src/FondOfKudu/Zed/Kletties",
+      "FondOfKudu\\Shared\\Kletties\\": "bundles/kletties/src/FondOfKudu/Shared/Kletties",
+      "FondOfKudu\\Zed\\KlettiesApi\\": "bundles/kletties-api/src/FondOfKudu/Zed/KlettiesApi",
       "FondOfKudu\\Shared\\KlettiesApi\\": "bundles/kletties-api/src/FondOfKudu/Shared/KlettiesApi"
     }
   },
@@ -126,7 +132,8 @@
       "FondOfKudu\\Zed\\OmsPayoneError\\": "bundles/oms-payone-error/tests/FondOfKudu/Zed/OmsPayoneError",
       "FondOfKudu\\Zed\\ProductAttributesCartConnector\\": "bundles/product-attributes-cart-connector/tests/FondOfKudu/Zed/ProductAttributesCartConnector",
       "FondOfKudu\\Zed\\ProductApiSchedulePriceImport\\": "bundles/product-api-schedule-price-import/tests/FondOfKudu/Zed/ProductConnector",
-      "FondOfKudu\\Zed\\KlettiesApi\\\\": "bundles/kletties-api/tests/FondOfKudu/Zed/KlettiesApi",
+      "FondOfKudu\\Zed\\Kletties\\": "bundles/kletties/tests/FondOfKudu/Zed/Kletties",
+      "FondOfKudu\\Zed\\KlettiesApi\\": "bundles/kletties-api/tests/FondOfKudu/Zed/KlettiesApi",
       "Generated\\": "src/Generated/",
       "Orm\\Zed\\": "src/Orm/Zed/"
     }
