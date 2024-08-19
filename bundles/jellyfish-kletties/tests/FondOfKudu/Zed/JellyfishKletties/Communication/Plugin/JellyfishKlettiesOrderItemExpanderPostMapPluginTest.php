@@ -3,8 +3,8 @@
 namespace FondOfKudu\Zed\JellyfishKletties\Communication\Plugin;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\JellyfishOrderItemTransfer;
 use Generated\Shared\Transfer\JellyfishKlettiesVendorTransfer;
+use Generated\Shared\Transfer\JellyfishOrderItemTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 class JellyfishKlettiesOrderItemExpanderPostMapPluginTest extends Unit

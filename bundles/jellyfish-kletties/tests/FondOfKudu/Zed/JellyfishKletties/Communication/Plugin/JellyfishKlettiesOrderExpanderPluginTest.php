@@ -7,9 +7,8 @@ use FondOfKudu\Zed\JellyfishKletties\Communication\JellyfishKlettiesCommunicatio
 use FondOfKudu\Zed\JellyfishKletties\Dependency\Facade\JellyfishKlettiesToKlettiesFacadeBridge;
 use Generated\Shared\Transfer\JellyfishOrderTransfer;
 use Generated\Shared\Transfer\KlettiesOrderTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Kletties\Persistence\FokKlettiesOrder;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 class JellyfishKlettiesOrderExpanderPluginTest extends Unit
 {
