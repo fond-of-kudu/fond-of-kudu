@@ -19,6 +19,7 @@ include:
   - bundles/discount-promotion-rest-api
   - bundles/kletties
   - bundles/kletties-api
+  - bundles/kletties-payment-connector
 
 suites:
   unit:
