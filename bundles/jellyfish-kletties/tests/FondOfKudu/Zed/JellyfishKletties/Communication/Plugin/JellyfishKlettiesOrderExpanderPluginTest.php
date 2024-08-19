@@ -77,30 +77,8 @@ class JellyfishKlettiesOrderExpanderPluginTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->plugin = new class ($this->factoryMock) extends JellyfishKlettiesOrderExpanderPlugin {
-            /**
-             * @var \FondOfKudu\Zed\JellyfishKletties\Communication\JellyfishKlettiesCommunicationFactory
-             */
-            protected $factory;
-
-            /**
-             *  constructor.
-             *
-             * @param \FondOfKudu\Zed\JellyfishKletties\Communication\JellyfishKlettiesCommunicationFactory $factory
-             */
-            public function __construct(JellyfishKlettiesCommunicationFactory $factory)
-            {
-                $this->factory = $factory;
-            }
-
-            /**
-             * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
-             */
-            protected function getFactory(): AbstractCommunicationFactory
-            {
-                return $this->factory;
-            }
-        };
+        $this->plugin = new JellyfishKlettiesOrderExpanderPlugin();
+        $this->plugin->setFactory($this->factoryMock);
     }
 
     /**

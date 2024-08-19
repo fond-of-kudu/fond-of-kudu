@@ -2,7 +2,7 @@
 
 namespace FondOfKudu\Zed\JellyfishKletties\Communication\Plugin;
 
-use FondOfKudu\Zed\JellyfishSalesOrderExtension\Dependency\Plugin\JellyfishOrderItemExpanderPostMapPluginInterface;
+use FondOfOryx\Zed\JellyfishSalesOrderExtension\Dependency\Plugin\JellyfishOrderItemExpanderPostMapPluginInterface;
 use Generated\Shared\Transfer\JellyfishOrderItemTransfer;
 use Generated\Shared\Transfer\JellyfishKlettiesVendorTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;

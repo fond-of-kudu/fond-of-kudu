@@ -78,8 +78,12 @@
       "path": "bundles/kletties-api",
       "version": "1.0.0"
     },
-    "kletties-api": {
+    "kletties-payment-connector": {
       "path": "bundles/kletties-payment-connector",
+      "version": "1.0.0"
+    },
+    "jellyfish-kletties": {
+      "path": "bundles/jellyfish-kletties",
       "version": "1.0.0"
     }
   },
