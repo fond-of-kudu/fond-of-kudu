@@ -73,6 +73,10 @@
     "kletties": {
       "path": "bundles/kletties",
       "version": "1.0.0"
+    },
+    "kletties-api": {
+      "path": "bundles/kletties-api",
+      "version": "1.0.0"
     }
   },
   "vcs": {

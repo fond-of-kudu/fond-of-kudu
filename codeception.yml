@@ -18,6 +18,7 @@ include:
   - bundles/oms-payone-error
   - bundles/discount-promotion-rest-api
   - bundles/kletties
+  - bundles/kletties-api
 
 suites:
   unit:
