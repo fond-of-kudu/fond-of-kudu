@@ -42,7 +42,9 @@
     "spryker/quote": "^2.0.0",
     "spryker/storage": "^3.20.0",
     "spryker/store": "^1.1.0",
-    "spryker/synchronization": "^1.16"
+    "spryker/synchronization": "^1.16",
+    "spryker/payment-extension": "^1.0.0",
+    "fond-of-oryx/prepayment": "^1.0.0 || ^2.0.0"
   },
   "require-dev": {
     "fond-of-codeception/spryker": "*",
@@ -68,7 +70,8 @@
     "fond-of-kudu/oms-retry-capture-process": "*",
     "fond-of-kudu/quote": "*",
     "fond-of-kudu/kletties": "*",
-    "fond-of-kudu/kletties-api": "*"
+    "fond-of-kudu/kletties-api": "*",
+    "fond-of-kudu/kletties-payment-connector": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -110,7 +113,9 @@
       "FondOfKudu\\Zed\\Kletties\\": "bundles/kletties/src/FondOfKudu/Zed/Kletties",
       "FondOfKudu\\Shared\\Kletties\\": "bundles/kletties/src/FondOfKudu/Shared/Kletties",
       "FondOfKudu\\Zed\\KlettiesApi\\": "bundles/kletties-api/src/FondOfKudu/Zed/KlettiesApi",
-      "FondOfKudu\\Shared\\KlettiesApi\\": "bundles/kletties-api/src/FondOfKudu/Shared/KlettiesApi"
+      "FondOfKudu\\Shared\\KlettiesApi\\": "bundles/kletties-api/src/FondOfKudu/Shared/KlettiesApi",
+      "FondOfKudu\\Zed\\KlettiesPaymentConnector\\": "bundles/kletties-payment-connector/src/FondOfKudu/Zed/KlettiesPaymentConnector",
+      "FondOfKudu\\Shared\\KlettiesPaymentConnector\\": "bundles/kletties-payment-connector/src/FondOfKudu/Shared/KlettiesPaymentConnector"
     }
   },
   "autoload-dev": {
@@ -134,6 +139,7 @@
       "FondOfKudu\\Zed\\ProductApiSchedulePriceImport\\": "bundles/product-api-schedule-price-import/tests/FondOfKudu/Zed/ProductConnector",
       "FondOfKudu\\Zed\\Kletties\\": "bundles/kletties/tests/FondOfKudu/Zed/Kletties",
       "FondOfKudu\\Zed\\KlettiesApi\\": "bundles/kletties-api/tests/FondOfKudu/Zed/KlettiesApi",
+      "FondOfKudu\\Zed\\KlettiesPaymentConnector\\": "bundles/kletties-payment-connector/tests/FondOfKudu/Zed/KlettiesPaymentConnector",
       "Generated\\": "src/Generated/",
       "Orm\\Zed\\": "src/Orm/Zed/"
     }
