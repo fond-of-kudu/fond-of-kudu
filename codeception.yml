@@ -20,6 +20,7 @@ include:
   - bundles/kletties
   - bundles/kletties-api
   - bundles/jellyfish-kletties
+  - bundles/kletties-payment-connector
 
 suites:
   unit:
