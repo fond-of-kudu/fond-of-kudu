@@ -72,8 +72,8 @@
     "fond-of-kudu/quote": "*",
     "fond-of-kudu/kletties": "*",
     "fond-of-kudu/kletties-api": "*",
-    "fond-of-kudu/kletties-payment-connector": "*"
-    "fond-of-kudu/jellyfish-kletties": "*",
+    "fond-of-kudu/kletties-payment-connector": "*",
+    "fond-of-kudu/jellyfish-kletties": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -117,7 +117,7 @@
       "FondOfKudu\\Zed\\KlettiesApi\\": "bundles/kletties-api/src/FondOfKudu/Zed/KlettiesApi",
       "FondOfKudu\\Shared\\KlettiesApi\\": "bundles/kletties-api/src/FondOfKudu/Shared/KlettiesApi",
       "FondOfKudu\\Zed\\JellyfishKletties\\": "bundles/jellyfish-kletties/src/FondOfKudu/Zed/JellyfishKletties",
-      "FondOfKudu\\Shared\\JellyfishKletties\\": "bundles/jellyfish-kletties/src/FondOfKudu/Shared/JellyfishKletties"
+      "FondOfKudu\\Shared\\JellyfishKletties\\": "bundles/jellyfish-kletties/src/FondOfKudu/Shared/JellyfishKletties",
       "FondOfKudu\\Zed\\KlettiesPaymentConnector\\": "bundles/kletties-payment-connector/src/FondOfKudu/Zed/KlettiesPaymentConnector",
       "FondOfKudu\\Shared\\KlettiesPaymentConnector\\": "bundles/kletties-payment-connector/src/FondOfKudu/Shared/KlettiesPaymentConnector"
     }
