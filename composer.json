@@ -43,6 +43,7 @@
     "spryker/storage": "^3.20.0",
     "spryker/store": "^1.1.0",
     "spryker/synchronization": "^1.16",
+    "fond-of-oryx/jellyfish-sales-order-extension": "^1.0.0 || ^2.0.0",
     "spryker/payment-extension": "^1.0.0",
     "fond-of-oryx/prepayment": "^1.0.0 || ^2.0.0"
   },
@@ -71,7 +72,8 @@
     "fond-of-kudu/quote": "*",
     "fond-of-kudu/kletties": "*",
     "fond-of-kudu/kletties-api": "*",
-    "fond-of-kudu/kletties-payment-connector": "*"
+    "fond-of-kudu/kletties-payment-connector": "*",
+    "fond-of-kudu/jellyfish-kletties": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -114,6 +116,8 @@
       "FondOfKudu\\Shared\\Kletties\\": "bundles/kletties/src/FondOfKudu/Shared/Kletties",
       "FondOfKudu\\Zed\\KlettiesApi\\": "bundles/kletties-api/src/FondOfKudu/Zed/KlettiesApi",
       "FondOfKudu\\Shared\\KlettiesApi\\": "bundles/kletties-api/src/FondOfKudu/Shared/KlettiesApi",
+      "FondOfKudu\\Zed\\JellyfishKletties\\": "bundles/jellyfish-kletties/src/FondOfKudu/Zed/JellyfishKletties",
+      "FondOfKudu\\Shared\\JellyfishKletties\\": "bundles/jellyfish-kletties/src/FondOfKudu/Shared/JellyfishKletties",
       "FondOfKudu\\Zed\\KlettiesPaymentConnector\\": "bundles/kletties-payment-connector/src/FondOfKudu/Zed/KlettiesPaymentConnector",
       "FondOfKudu\\Shared\\KlettiesPaymentConnector\\": "bundles/kletties-payment-connector/src/FondOfKudu/Shared/KlettiesPaymentConnector"
     }
@@ -139,6 +143,7 @@
       "FondOfKudu\\Zed\\ProductApiSchedulePriceImport\\": "bundles/product-api-schedule-price-import/tests/FondOfKudu/Zed/ProductConnector",
       "FondOfKudu\\Zed\\Kletties\\": "bundles/kletties/tests/FondOfKudu/Zed/Kletties",
       "FondOfKudu\\Zed\\KlettiesApi\\": "bundles/kletties-api/tests/FondOfKudu/Zed/KlettiesApi",
+      "FondOfKudu\\Zed\\JellyfishKletties\\": "bundles/jellyfish-kletties/tests/FondOfKudu/Zed/JellyfishKletties",
       "FondOfKudu\\Zed\\KlettiesPaymentConnector\\": "bundles/kletties-payment-connector/tests/FondOfKudu/Zed/KlettiesPaymentConnector",
       "Generated\\": "src/Generated/",
       "Orm\\Zed\\": "src/Orm/Zed/"
