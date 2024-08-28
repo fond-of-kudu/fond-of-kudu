@@ -73,7 +73,8 @@
     "fond-of-kudu/kletties": "*",
     "fond-of-kudu/kletties-api": "*",
     "fond-of-kudu/kletties-payment-connector": "*",
-    "fond-of-kudu/jellyfish-kletties": "*"
+    "fond-of-kudu/jellyfish-kletties": "*",
+    "fond-of-kudu/security-blocker-reset": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,

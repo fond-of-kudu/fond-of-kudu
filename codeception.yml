@@ -21,6 +21,7 @@ include:
   - bundles/kletties-api
   - bundles/jellyfish-kletties
   - bundles/kletties-payment-connector
+  - bundles/security-blocker-reset
 
 suites:
   unit:
