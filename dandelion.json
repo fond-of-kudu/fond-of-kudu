@@ -85,6 +85,10 @@
     "jellyfish-kletties": {
       "path": "bundles/jellyfish-kletties",
       "version": "1.0.0"
+    },
+    "security-blocker-reset": {
+      "path": "bundles/security-blocker-reset",
+      "version": "1.0.0"
     }
   },
   "vcs": {
