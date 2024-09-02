@@ -122,9 +122,9 @@
       "FondOfKudu\\Shared\\JellyfishKletties\\": "bundles/jellyfish-kletties/src/FondOfKudu/Shared/JellyfishKletties",
       "FondOfKudu\\Zed\\KlettiesPaymentConnector\\": "bundles/kletties-payment-connector/src/FondOfKudu/Zed/KlettiesPaymentConnector",
       "FondOfKudu\\Shared\\KlettiesPaymentConnector\\": "bundles/kletties-payment-connector/src/FondOfKudu/Shared/KlettiesPaymentConnector",
-      "FondOfKudu\\Client\\SecurityBlockerReset\\\\": "bundles/security-blocker-reset/src/FondOfKudu/Client/SecurityBlockerReset",
-      "FondOfKudu\\Glue\\SecurityBlockerReset\\\\": "bundles/security-blocker-reset/src/FondOfKudu/Glue/SecurityBlockerReset",
-      "FondOfKudu\\Shared\\SecurityBlockerReset\\\\": "bundles/security-blocker-reset/src/FondOfKudu/Shared/SecurityBlockerReset"
+      "FondOfKudu\\Client\\SecurityBlockerReset\\": "bundles/security-blocker-reset/src/FondOfKudu/Client/SecurityBlockerReset",
+      "FondOfKudu\\Glue\\SecurityBlockerReset\\": "bundles/security-blocker-reset/src/FondOfKudu/Glue/SecurityBlockerReset",
+      "FondOfKudu\\Shared\\SecurityBlockerReset\\": "bundles/security-blocker-reset/src/FondOfKudu/Shared/SecurityBlockerReset"
     }
   },
   "autoload-dev": {

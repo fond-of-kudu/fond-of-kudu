@@ -22,7 +22,7 @@ class SecurityBlockerCustomerResetControllerAfterActionPlugin extends AbstractPl
     public function afterAction(string $action, RestRequestInterface $restRequest, RestResponseInterface $restResponse): void
     {
         $this->getFactory()
-            ->createSecurityBlockerStorage()
-            ->resetIsBlocked($action, $restRequest, $restResponse);
+            ->createSecurityBlockerResetStorage()
+            ->resetLoginBlock($action, $restRequest, $restResponse);
     }
 }
