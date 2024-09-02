@@ -3,6 +3,7 @@
 namespace FondOfKudu\Glue\SecurityBlockerReset\Customer\Storage;
 
 use FondOfKudu\Client\SecurityBlockerReset\SecurityBlockerResetClientInterface;
+use FondOfKudu\Glue\SecurityBlockerReset\SecurityBlockerResetConfig;
 use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -65,7 +66,7 @@ class SecurityBlockerResetStorage implements SecurityBlockerResetStorageInterfac
         $restCustomerRestorePasswordAttributesTransfer = $restRequest->getResource()->getAttributes();
 
         return (new SecurityCheckAuthContextTransfer())
-            ->setType('customer')
+            ->setType(SecurityBlockerResetConfig::SECURITY_BLOCKER_RESET_CUSTOMER_ENTITY_TYPE)
             ->setIp($restRequest->getHttpRequest()->getClientIp())
             ->setAccount($restCustomerRestorePasswordAttributesTransfer->getUsername());
     }
