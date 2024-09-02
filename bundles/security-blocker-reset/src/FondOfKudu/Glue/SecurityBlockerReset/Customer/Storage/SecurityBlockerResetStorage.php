@@ -51,7 +51,7 @@ class SecurityBlockerResetStorage implements SecurityBlockerResetStorageInterfac
     protected function isCustomerRestoreRequest(RestRequestInterface $restRequest): bool
     {
         return $restRequest->getResource()->getType() === CustomersRestApiConfig::RESOURCE_CUSTOMER_RESTORE_PASSWORD
-            && $restRequest->getHttpRequest()->getMethod() === Request::METHOD_POST;
+            && $restRequest->getHttpRequest()->getMethod() === Request::METHOD_PATCH;
     }
 
     /**
