@@ -57,6 +57,7 @@ class SecurityBlockerResetWrapper implements SecurityBlockerResetWrapperInterfac
             $this->securityBlockerResetConfig->getRedisConnectionConfiguration(),
         );
     }
+
     /**
      * @param string $key
      *

@@ -6,5 +6,4 @@ use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 
 class SecurityBlockerResetDependencyProvider extends AbstractBundleDependencyProvider
 {
-
 }

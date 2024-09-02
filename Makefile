@@ -8,6 +8,10 @@ install:
 phpcs:
 	./vendor/bin/phpcs -d memory_limit=-1 --standard=./phpcs.xml --parallel=75 ./bundles/*
 
+.PHONY: phpcs-fix
+phpcs-fix:
+	./vendor/bin/phpcbf -d memory_limit=-1 --standard=./phpcs.xml --parallel=75 ./bundles/*
+
 .PHONY: phpcs-with-cache
 phpcs-with-cache:
 	./vendor/bin/phpcs -d memory_limit=-1 --cache=phpcs.cache --standard=./phpcs.xml --parallel=75 ./bundles/*

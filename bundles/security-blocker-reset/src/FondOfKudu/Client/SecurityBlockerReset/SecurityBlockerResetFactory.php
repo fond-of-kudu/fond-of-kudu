@@ -29,7 +29,7 @@ class SecurityBlockerResetFactory extends AbstractFactory
     {
         return new SecurityBlockerResetWrapper(
             $this->getRedisClient(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

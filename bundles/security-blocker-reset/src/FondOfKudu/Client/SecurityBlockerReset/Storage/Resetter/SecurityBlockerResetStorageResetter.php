@@ -35,7 +35,7 @@ class SecurityBlockerResetStorageResetter implements SecurityBlockerResetStorage
         $key = $this->getStorageKey($securityCheckAuthContextTransfer);
 
         $updated = $this->securityBlockerResetWrapper->del([
-            $key
+            $key,
         ]);
 
         return (bool)$updated;

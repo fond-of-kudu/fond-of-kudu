@@ -40,7 +40,6 @@ class SecurityBlockerResetStorage implements SecurityBlockerResetStorageInterfac
 
         $securityCheckAuthContextTransfer = $this->createSecurityCheckAuthContextTransfer($restRequest);
 
-
         $this->securityBlockerClient->resetLoginBlock($securityCheckAuthContextTransfer);
     }
 

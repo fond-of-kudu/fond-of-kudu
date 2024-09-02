@@ -16,7 +16,6 @@ interface SecurityBlockerResetConstants
      */
     public const SECURITY_BLOCKER_RESET_REDIS_PROTOCOL = 'SECURITY_BLOCKER_REDIS:SECURITY_BLOCKER_REDIS_PROTOCOL';
 
-
     /**
      * Specification:
      * - Defines a scheme|protocol (tcp:// or redis://) for Redis connection.
