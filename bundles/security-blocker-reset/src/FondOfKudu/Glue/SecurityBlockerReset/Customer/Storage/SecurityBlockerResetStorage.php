@@ -5,7 +5,6 @@ namespace FondOfKudu\Glue\SecurityBlockerReset\Customer\Storage;
 use FondOfKudu\Client\SecurityBlockerReset\SecurityBlockerResetClientInterface;
 use FondOfKudu\Glue\SecurityBlockerReset\SecurityBlockerResetConfig;
 use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
-use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -50,7 +49,7 @@ class SecurityBlockerResetStorage implements SecurityBlockerResetStorageInterfac
      */
     protected function isCustomerRestoreRequest(RestRequestInterface $restRequest): bool
     {
-        return $restRequest->getResource()->getType() === CustomersRestApiConfig::RESOURCE_CUSTOMER_RESTORE_PASSWORD
+        return $restRequest->getResource()->getType() === SecurityBlockerResetConfig::RESOURCE_CUSTOMER_RESTORE_PASSWORD
             && $restRequest->getHttpRequest()->getMethod() === Request::METHOD_PATCH;
     }
 
