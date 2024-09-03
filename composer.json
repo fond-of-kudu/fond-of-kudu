@@ -150,6 +150,8 @@
       "FondOfKudu\\Zed\\KlettiesApi\\": "bundles/kletties-api/tests/FondOfKudu/Zed/KlettiesApi",
       "FondOfKudu\\Zed\\JellyfishKletties\\": "bundles/jellyfish-kletties/tests/FondOfKudu/Zed/JellyfishKletties",
       "FondOfKudu\\Zed\\KlettiesPaymentConnector\\": "bundles/kletties-payment-connector/tests/FondOfKudu/Zed/KlettiesPaymentConnector",
+      "FondOfKudu\\Client\\SecurityBlockerReset\\": "bundles/security-blocker-reset/tests/FondOfKudu/Client/SecurityBlockerReset",
+      "FondOfKudu\\Glue\\SecurityBlockerReset\\": "bundles/security-blocker-reset/tests/FondOfKudu/Glue/SecurityBlockerReset",
       "Generated\\": "src/Generated/",
       "Orm\\Zed\\": "src/Orm/Zed/"
     }
