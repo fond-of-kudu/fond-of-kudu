@@ -20,8 +20,10 @@ class VerifiedCustomerConfig extends AbstractBundleConfig
             'customers',
             'addresses',
             'carts',
+            'cart-items',
             'wishlists',
+            'wishlist-items',
             'orders',
-            ];
+        ];
     }
 }

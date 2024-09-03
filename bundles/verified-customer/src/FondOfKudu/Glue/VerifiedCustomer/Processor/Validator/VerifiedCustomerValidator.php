@@ -7,7 +7,7 @@ use FondOfKudu\Glue\VerifiedCustomer\VerifiedCustomerConfig;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequest;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class VerifiedCustomerValidator implements VerifiedCustomerValidatorInterface
@@ -35,11 +35,11 @@ class VerifiedCustomerValidator implements VerifiedCustomerValidatorInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequest $restRequest
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
      */
-    public function isVerified(RestRequest $restRequest): ?RestErrorCollectionTransfer
+    public function isVerified(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
         if (!in_array($restRequest->getResource()->getType(), $this->config->getResourcesToBlock())) {
             return null;
