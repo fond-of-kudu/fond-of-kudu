@@ -9,8 +9,8 @@ interface VerifiedCustomerToCustomerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return mixed
+     * 
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function findCustomerByReference(CustomerTransfer $customerTransfer): CustomerResponseTransfer;
 }
