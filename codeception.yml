@@ -22,6 +22,7 @@ include:
   - bundles/jellyfish-kletties
   - bundles/kletties-payment-connector
   - bundles/security-blocker-reset
+  - bundles/verified-customer
 
 suites:
   unit:

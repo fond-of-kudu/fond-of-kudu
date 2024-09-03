@@ -75,7 +75,8 @@
     "fond-of-kudu/kletties-api": "*",
     "fond-of-kudu/kletties-payment-connector": "*",
     "fond-of-kudu/jellyfish-kletties": "*",
-    "fond-of-kudu/security-blocker-reset": "*"
+    "fond-of-kudu/security-blocker-reset": "*",
+    "fond-of-kudu/verified-customer": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -124,7 +125,8 @@
       "FondOfKudu\\Shared\\KlettiesPaymentConnector\\": "bundles/kletties-payment-connector/src/FondOfKudu/Shared/KlettiesPaymentConnector",
       "FondOfKudu\\Client\\SecurityBlockerReset\\": "bundles/security-blocker-reset/src/FondOfKudu/Client/SecurityBlockerReset",
       "FondOfKudu\\Glue\\SecurityBlockerReset\\": "bundles/security-blocker-reset/src/FondOfKudu/Glue/SecurityBlockerReset",
-      "FondOfKudu\\Shared\\SecurityBlockerReset\\": "bundles/security-blocker-reset/src/FondOfKudu/Shared/SecurityBlockerReset"
+      "FondOfKudu\\Shared\\SecurityBlockerReset\\": "bundles/security-blocker-reset/src/FondOfKudu/Shared/SecurityBlockerReset",
+      "FondOfKudu\\Glue\\VerifiedCustomer\\": "bundles/verified-customer/src/FondOfKudu/Glue/VerifiedCustomer"
     }
   },
   "autoload-dev": {
@@ -150,6 +152,7 @@
       "FondOfKudu\\Zed\\KlettiesApi\\": "bundles/kletties-api/tests/FondOfKudu/Zed/KlettiesApi",
       "FondOfKudu\\Zed\\JellyfishKletties\\": "bundles/jellyfish-kletties/tests/FondOfKudu/Zed/JellyfishKletties",
       "FondOfKudu\\Zed\\KlettiesPaymentConnector\\": "bundles/kletties-payment-connector/tests/FondOfKudu/Zed/KlettiesPaymentConnector",
+      "FondOfKudu\\Glue\\VerifiedCustomer\\": "bundles/verified-customer/src/FondOfKudu/Glue/VerifiedCustomer",
       "Generated\\": "src/Generated/",
       "Orm\\Zed\\": "src/Orm/Zed/"
     }
