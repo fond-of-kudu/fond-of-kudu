@@ -7,9 +7,6 @@ use FondOfKudu\Glue\VerifiedCustomer\Processor\Validator\VerifiedCustomerValidat
 use FondOfKudu\Glue\VerifiedCustomer\Processor\Validator\VerifiedCustomerValidatorInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
-/**
- * @method \FondOfKudu\Glue\VerifiedCustomer\VerifiedCustomerConfig getConfig()
- */
 class VerifiedCustomerFactory extends AbstractFactory
 {
     /**
@@ -18,7 +15,6 @@ class VerifiedCustomerFactory extends AbstractFactory
     public function createVerifiedCustomerValidator(): VerifiedCustomerValidatorInterface
     {
         return new VerifiedCustomerValidator(
-            $this->getConfig(),
             $this->getCustomerClient(),
         );
     }

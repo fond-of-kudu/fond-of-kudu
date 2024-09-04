@@ -12,18 +12,7 @@ class VerifiedCustomerConfig extends AbstractBundleConfig
     public const CUSTOMER_NOT_VERIFIED_ERROR_CODE = '1';
 
     /**
-     * @return array<string>
+     * @var string
      */
-    public function getResourcesToBlock(): array
-    {
-        return [
-            'customers',
-            'addresses',
-            'carts',
-            'cart-items',
-            'wishlists',
-            'wishlist-items',
-            'orders',
-        ];
-    }
+    public const RESOURCE_CUSTOMERS = 'customers';
 }

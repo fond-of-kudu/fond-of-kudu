@@ -37,31 +37,23 @@ class VerifiedCustomerValidatorTest extends Unit
     protected RestRequest|MockObject $requestMock;
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResource|\PHPUnit\Framework\MockObject\MockObject
-     */
-    private RestResource|MockObject $restResourceMock;
-
-    /**
      * @return void
      */
     protected function _before(): void
     {
-        $this->restResourceMock = $this->makeEmpty(RestResource::class);
         $this->requestMock = $this->makeEmpty(RestRequest::class);
-        $this->configMock = $this->makeEmpty(VerifiedCustomerConfig::class);
         $this->customerClientMock = $this->makeEmpty(VerifiedCustomerToCustomerInterface::class);
-        $this->validator = new VerifiedCustomerValidator($this->configMock, $this->customerClientMock);
+        $this->validator = new VerifiedCustomerValidator($this->customerClientMock);
     }
 
     /**
      * @return void
      */
-    public function testIsVerifiedReturnsNullWhenResourceTypeNotBlocked(): void
+    public function testIsVerifiedReturnsNullWhenResourceIsUnprotected(): void
     {
-        $this->restResourceMock->method('getType')->willReturn('unblocked_resource');
-        $this->requestMock->method('getResource')->willReturn($this->restResourceMock);
-
-        $this->configMock->method('getResourcesToBlock')->willReturn(['blocked_resource']);
+        $this->requestMock->method('getRestUser')->willReturn(
+            (new RestUserTransfer())->setNaturalIdentifier('customer_reference'),
+        );
 
         $result = $this->validator->isVerified($this->requestMock);
 
@@ -73,12 +65,7 @@ class VerifiedCustomerValidatorTest extends Unit
      */
     public function testIsVerifiedReturnsNullWhenRestUserIsNull(): void
     {
-        $this->restResourceMock->method('getType')->willReturn('unblocked_resource');
-        $this->requestMock->method('getResource')->willReturn($this->restResourceMock);
         $this->requestMock->method('getRestUser')->willReturn(null);
-
-        $this->configMock->method('getResourcesToBlock')->willReturn(['blocked_resource']);
-
         $result = $this->validator->isVerified($this->requestMock);
 
         $this->assertNull($result);
@@ -89,13 +76,10 @@ class VerifiedCustomerValidatorTest extends Unit
      */
     public function testIsVerifiedReturnsErrorCollectionWhenCustomerNotVerified(): void
     {
-        $this->restResourceMock->method('getType')->willReturn('blocked_resource');
-        $this->requestMock->method('getResource')->willReturn($this->restResourceMock);
+        $this->requestMock->method('findParentResourceByType')->willReturn(new RestResource('customers', 'customer_reference'));
         $this->requestMock->method('getRestUser')->willReturn(
             (new RestUserTransfer())->setNaturalIdentifier('customer_reference'),
         );
-
-        $this->configMock->method('getResourcesToBlock')->willReturn(['blocked_resource']);
 
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setCustomerReference('customer_reference');
@@ -121,13 +105,10 @@ class VerifiedCustomerValidatorTest extends Unit
      */
     public function testIsVerifiedReturnsNullWhenCustomerIsVerified(): void
     {
-        $this->restResourceMock->method('getType')->willReturn('blocked_resource');
-        $this->requestMock->method('getResource')->willReturn($this->restResourceMock);
+        $this->requestMock->method('findParentResourceByType')->willReturn(new RestResource('customers', 'customer_reference'));
         $this->requestMock->method('getRestUser')->willReturn(
             (new RestUserTransfer())->setNaturalIdentifier('customer_reference'),
         );
-
-        $this->configMock->method('getResourcesToBlock')->willReturn(['blocked_resource']);
 
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setCustomerReference('customer_reference');

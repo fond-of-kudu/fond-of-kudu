@@ -23,15 +23,12 @@ class VerifiedCustomerValidator implements VerifiedCustomerValidatorInterface
     protected VerifiedCustomerConfig $config;
 
     /**
-     * @param \FondOfKudu\Glue\VerifiedCustomer\VerifiedCustomerConfig $config
      * @param \FondOfKudu\Glue\VerifiedCustomer\Dependency\Client\VerifiedCustomerToCustomerInterface $customerClient
      */
     public function __construct(
-        VerifiedCustomerConfig $config,
         VerifiedCustomerToCustomerInterface $customerClient
     ) {
         $this->customerClient = $customerClient;
-        $this->config = $config;
     }
 
     /**
@@ -41,7 +38,7 @@ class VerifiedCustomerValidator implements VerifiedCustomerValidatorInterface
      */
     public function isVerified(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
-        if (!in_array($restRequest->getResource()->getType(), $this->config->getResourcesToBlock())) {
+        if ($this->isProtectedResource($restRequest) === false) {
             return null;
         }
 
@@ -71,10 +68,31 @@ class VerifiedCustomerValidator implements VerifiedCustomerValidatorInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setStatus(Response::HTTP_FORBIDDEN)
-            ->setCode($this->config::CUSTOMER_NOT_VERIFIED_ERROR_CODE)
+            ->setCode(VerifiedCustomerConfig::CUSTOMER_NOT_VERIFIED_ERROR_CODE)
             ->setDetail('Customer is not verified.');
 
         return (new RestErrorCollectionTransfer())
             ->addRestError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return bool
+     */
+    protected function isProtectedResource(RestRequestInterface $restRequest): bool
+    {
+        $restUser = $restRequest->getRestUser();
+        if (!$restUser) {
+            return false;
+        }
+
+        $customerResource = $restRequest->findParentResourceByType(VerifiedCustomerConfig::RESOURCE_CUSTOMERS);
+
+        if (!$customerResource) {
+            return false;
+        }
+
+        return $restUser->getNaturalIdentifier() === $customerResource->getId();
     }
 }
