@@ -12,11 +12,6 @@ class VerifiedCustomerConfig extends AbstractBundleConfig
     public const CUSTOMER_NOT_VERIFIED_ERROR_CODE = '1';
 
     /**
-     * @var string
-     */
-    public const RESOURCE_CUSTOMERS = 'customers';
-
-    /**
      * @return array
      */
     public function getWhiteListedResources(): array

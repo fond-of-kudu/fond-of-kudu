@@ -52,7 +52,7 @@ class VerifiedCustomerValidatorTest extends Unit
      */
     public function testIsVerifiedReturnsNullWhenResourceIsUnprotected(): void
     {
-        $this->configMock->method('getProtectedResources')->willReturn(['customers' ]);
+        $this->configMock->method('getProtectedResources')->willReturn(['customers']);
         $this->requestMock->method('getResource')->willReturn(new RestResource('customers', 'product_reference'));
         $this->requestMock->method('getRestUser')->willReturn(
             (new RestUserTransfer())->setNaturalIdentifier('customer_reference'),

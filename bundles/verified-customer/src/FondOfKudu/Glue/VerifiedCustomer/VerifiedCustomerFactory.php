@@ -18,7 +18,7 @@ class VerifiedCustomerFactory extends AbstractFactory
     public function createVerifiedCustomerValidator(): VerifiedCustomerValidatorInterface
     {
         return new VerifiedCustomerValidator(
-            $this->getConfig().
+            $this->getConfig(),
             $this->getCustomerClient(),
         );
     }
