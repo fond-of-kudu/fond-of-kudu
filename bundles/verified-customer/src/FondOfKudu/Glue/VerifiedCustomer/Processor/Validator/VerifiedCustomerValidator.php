@@ -5,7 +5,6 @@ namespace FondOfKudu\Glue\VerifiedCustomer\Processor\Validator;
 use FondOfKudu\Glue\VerifiedCustomer\Dependency\Client\VerifiedCustomerToCustomerInterface;
 use FondOfKudu\Glue\VerifiedCustomer\VerifiedCustomerConfig;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,12 +22,15 @@ class VerifiedCustomerValidator implements VerifiedCustomerValidatorInterface
     protected VerifiedCustomerConfig $config;
 
     /**
+     * @param \FondOfKudu\Glue\VerifiedCustomer\VerifiedCustomerConfig $config
      * @param \FondOfKudu\Glue\VerifiedCustomer\Dependency\Client\VerifiedCustomerToCustomerInterface $customerClient
      */
     public function __construct(
+        VerifiedCustomerConfig $config,
         VerifiedCustomerToCustomerInterface $customerClient
     ) {
         $this->customerClient = $customerClient;
+        $this->config = $config;
     }
 
     /**
@@ -36,7 +38,7 @@ class VerifiedCustomerValidator implements VerifiedCustomerValidatorInterface
      *
      * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
      */
-    public function isVerified(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
+    public function isVerified(RestRequestInterface $restRequest): ?RestErrorMessageTransfer
     {
         if ($this->isProtectedResource($restRequest) === false) {
             return null;
@@ -62,17 +64,14 @@ class VerifiedCustomerValidator implements VerifiedCustomerValidatorInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
      */
-    protected function createRestErrorCollection(): RestErrorCollectionTransfer
+    protected function createRestErrorCollection(): RestErrorMessageTransfer
     {
-        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+        return (new RestErrorMessageTransfer())
             ->setStatus(Response::HTTP_FORBIDDEN)
             ->setCode(VerifiedCustomerConfig::CUSTOMER_NOT_VERIFIED_ERROR_CODE)
             ->setDetail('Customer is not verified.');
-
-        return (new RestErrorCollectionTransfer())
-            ->addRestError($restErrorMessageTransfer);
     }
 
     /**
@@ -87,12 +86,10 @@ class VerifiedCustomerValidator implements VerifiedCustomerValidatorInterface
             return false;
         }
 
-        $customerResource = $restRequest->findParentResourceByType(VerifiedCustomerConfig::RESOURCE_CUSTOMERS);
-
-        if (!$customerResource) {
+        if (in_array($restRequest->getResource()->getType(), $this->config->getWhiteListedResources())) {
             return false;
         }
 
-        return $restUser->getNaturalIdentifier() === $customerResource->getId();
+        return true;
     }
 }

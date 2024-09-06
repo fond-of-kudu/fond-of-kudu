@@ -43,7 +43,8 @@ class VerifiedCustomerValidatorTest extends Unit
     {
         $this->requestMock = $this->makeEmpty(RestRequest::class);
         $this->customerClientMock = $this->makeEmpty(VerifiedCustomerToCustomerInterface::class);
-        $this->validator = new VerifiedCustomerValidator($this->customerClientMock);
+        $this->configMock = $this->makeEmpty(VerifiedCustomerConfig::class);
+        $this->validator = new VerifiedCustomerValidator($this->configMock, $this->customerClientMock);
     }
 
     /**
@@ -51,6 +52,8 @@ class VerifiedCustomerValidatorTest extends Unit
      */
     public function testIsVerifiedReturnsNullWhenResourceIsUnprotected(): void
     {
+        $this->configMock->method('getProtectedResources')->willReturn(['customers' ]);
+        $this->requestMock->method('getResource')->willReturn(new RestResource('customers', 'product_reference'));
         $this->requestMock->method('getRestUser')->willReturn(
             (new RestUserTransfer())->setNaturalIdentifier('customer_reference'),
         );

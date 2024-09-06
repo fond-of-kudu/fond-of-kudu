@@ -2,7 +2,7 @@
 
 namespace FondOfKudu\Glue\VerifiedCustomer\Processor\Validator;
 
-use Generated\Shared\Transfer\RestErrorCollectionTransfer;
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface VerifiedCustomerValidatorInterface
@@ -12,5 +12,5 @@ interface VerifiedCustomerValidatorInterface
      *
      * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
      */
-    public function isVerified(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer;
+    public function isVerified(RestRequestInterface $restRequest): ?RestErrorMessageTransfer;
 }

@@ -15,4 +15,12 @@ class VerifiedCustomerConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_CUSTOMERS = 'customers';
+
+    /**
+     * @return array
+     */
+    public function getWhiteListedResources(): array
+    {
+        return [];
+    }
 }
