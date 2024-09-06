@@ -10,7 +10,7 @@ interface VerifiedCustomerValidatorInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
      */
     public function isVerified(RestRequestInterface $restRequest): ?RestErrorMessageTransfer;
 }
