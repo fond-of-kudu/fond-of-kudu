@@ -9,6 +9,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
  * @method \FondOfKudu\Glue\VerifiedCustomer\VerifiedCustomerFactory getFactory()
+ * @method \FondOfKudu\Glue\VerifiedCustomer\VerifiedCustomerConfig getConfig()
  */
 class IsCustomerVerifiedValidatorPlugin extends AbstractPlugin implements RestUserValidatorPluginInterface
 {
