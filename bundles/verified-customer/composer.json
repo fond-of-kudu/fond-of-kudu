@@ -1,0 +1,41 @@
+{
+  "name": "fond-of-kudu/verified-customer",
+  "description": "",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "FOND OF",
+      "email": "spryker@fondof.de"
+    }
+  ],
+  "require": {
+    "php": ">=8.0",
+    "spryker/glue-application-extension": "^1.0.0",
+    "spyrker/customer": "^7.0.0"
+  },
+  "require-dev": {
+    "fond-of-codeception/spryker": "*",
+    "spryker/code-sniffer": "*",
+    "spryker-sdk/phpstan-spryker": "*"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "FondOfKudu\\": "src/FondOfKudu/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "FondOfKudu\\": "tests/FondOfKudu/",
+      "Generated\\": "src/Generated/",
+      "Orm\\Zed\\": "src/Orm/Zed/"
+    }
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  }
+}
