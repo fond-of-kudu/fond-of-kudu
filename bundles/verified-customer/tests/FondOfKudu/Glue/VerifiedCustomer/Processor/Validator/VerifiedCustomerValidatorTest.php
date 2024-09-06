@@ -7,7 +7,7 @@ use FondOfKudu\Glue\VerifiedCustomer\Dependency\Client\VerifiedCustomerToCustome
 use FondOfKudu\Glue\VerifiedCustomer\VerifiedCustomerConfig;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\RestErrorCollectionTransfer;
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestUserTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResource;
@@ -52,7 +52,7 @@ class VerifiedCustomerValidatorTest extends Unit
      */
     public function testIsVerifiedReturnsNullWhenResourceIsUnprotected(): void
     {
-        $this->configMock->method('getProtectedResources')->willReturn(['customers']);
+        $this->configMock->method('getWhiteListedResources')->willReturn(['customers']);
         $this->requestMock->method('getResource')->willReturn(new RestResource('customers', 'product_reference'));
         $this->requestMock->method('getRestUser')->willReturn(
             (new RestUserTransfer())->setNaturalIdentifier('customer_reference'),
@@ -79,7 +79,6 @@ class VerifiedCustomerValidatorTest extends Unit
      */
     public function testIsVerifiedReturnsErrorCollectionWhenCustomerNotVerified(): void
     {
-        $this->requestMock->method('findParentResourceByType')->willReturn(new RestResource('customers', 'customer_reference'));
         $this->requestMock->method('getRestUser')->willReturn(
             (new RestUserTransfer())->setNaturalIdentifier('customer_reference'),
         );
@@ -96,11 +95,10 @@ class VerifiedCustomerValidatorTest extends Unit
 
         $result = $this->validator->isVerified($this->requestMock);
 
-        $this->assertInstanceOf(RestErrorCollectionTransfer::class, $result);
-        $this->assertCount(1, $result->getRestErrors());
-        $this->assertEquals(Response::HTTP_FORBIDDEN, $result->getRestErrors()[0]->getStatus());
-        $this->assertEquals(VerifiedCustomerConfig::CUSTOMER_NOT_VERIFIED_ERROR_CODE, $result->getRestErrors()[0]->getCode());
-        $this->assertEquals('Customer is not verified.', $result->getRestErrors()[0]->getDetail());
+        $this->assertInstanceOf(RestErrorMessageTransfer::class, $result);
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $result->getStatus());
+        $this->assertEquals(VerifiedCustomerConfig::CUSTOMER_NOT_VERIFIED_ERROR_CODE, $result->getCode());
+        $this->assertEquals(VerifiedCustomerConfig::CUSTOMER_NOT_VERIFIED_ERROR_DETAIL, $result->getDetail());
     }
 
     /**
@@ -108,7 +106,6 @@ class VerifiedCustomerValidatorTest extends Unit
      */
     public function testIsVerifiedReturnsNullWhenCustomerIsVerified(): void
     {
-        $this->requestMock->method('findParentResourceByType')->willReturn(new RestResource('customers', 'customer_reference'));
         $this->requestMock->method('getRestUser')->willReturn(
             (new RestUserTransfer())->setNaturalIdentifier('customer_reference'),
         );

@@ -36,7 +36,7 @@ class VerifiedCustomerValidator implements VerifiedCustomerValidatorInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
      */
     public function isVerified(RestRequestInterface $restRequest): ?RestErrorMessageTransfer
     {
@@ -71,7 +71,7 @@ class VerifiedCustomerValidator implements VerifiedCustomerValidatorInterface
         return (new RestErrorMessageTransfer())
             ->setStatus(Response::HTTP_FORBIDDEN)
             ->setCode(VerifiedCustomerConfig::CUSTOMER_NOT_VERIFIED_ERROR_CODE)
-            ->setDetail('Customer is not verified.');
+            ->setDetail(VerifiedCustomerConfig::CUSTOMER_NOT_VERIFIED_ERROR_DETAIL);
     }
 
     /**
