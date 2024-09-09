@@ -7,7 +7,7 @@ use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreSavePluginInterfa
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \FondOfKudu\Zed\CustomerMergeGuestOrder\Business\CustomerMergeGuestOrderBusinessFactory getFactory()
+ * @method \FondOfKudu\Zed\CustomerMergeGuestOrder\Business\CustomerMergeGuestOrderFacade getFacade()
  */
 class CustomerMergeGuestOrderPreSavePlugin extends AbstractPlugin implements CheckoutPreSavePluginInterface
 {
@@ -18,6 +18,6 @@ class CustomerMergeGuestOrderPreSavePlugin extends AbstractPlugin implements Che
      */
     public function preSave(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        return $this->getFactory()->createOrderPreSaveHook()->updateCustomerReference($quoteTransfer);
+        return $this->getFacade()->updateCustomerReference($quoteTransfer);
     }
 }
