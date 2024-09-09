@@ -2,7 +2,6 @@
 
 namespace FondOfKudu\Zed\CustomerMergeGuestOrder\Business;
 
-use FondOfKudu\Zed\CustomerMergeGuestOrder\Business\Checkout\OrderPreSaveHook;
 use FondOfKudu\Zed\CustomerMergeGuestOrder\Business\Processor\OrderUpdater;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -17,14 +16,9 @@ class CustomerMergeGuestOrderBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderUpdater(): OrderUpdater
     {
-        return new OrderUpdater($this->getEntityManager());
-    }
-
-    /**
-     * @return \FondOfKudu\Zed\CustomerMergeGuestOrder\Business\Checkout\OrderPreSaveHook
-     */
-    public function createOrderPreSaveHook(): OrderPreSaveHook
-    {
-        return new OrderPreSaveHook($this->getRepository());
+        return new OrderUpdater(
+            $this->getRepository(),
+            $this->getEntityManager()
+        );
     }
 }

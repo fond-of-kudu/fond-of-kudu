@@ -11,15 +11,15 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CustomerMergeGuestOrderRepository extends AbstractRepository implements CustomerMergeGuestOrderRepositoryInterface
 {
     /**
-     * @param string $email
+     * @param string $customerReference
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomerByEmail(string $email): ?CustomerTransfer
+    public function getCustomerByCustomerReference(string $customerReference): ?CustomerTransfer
     {
         $customerEntity = $this->getFactory()
             ->createCustomerQuery()
-            ->findOneByEmail($email);
+            ->findOneByCustomerReference($customerReference);
 
         if ($customerEntity === null) {
             return null;

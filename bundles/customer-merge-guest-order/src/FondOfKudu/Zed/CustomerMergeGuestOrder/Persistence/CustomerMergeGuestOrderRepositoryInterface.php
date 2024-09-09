@@ -11,5 +11,5 @@ interface CustomerMergeGuestOrderRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomerByEmail(string $email): ?CustomerTransfer;
+    public function getCustomerByCustomerReference(string $email): ?CustomerTransfer;
 }
