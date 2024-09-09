@@ -1,29 +1,22 @@
 <?php
 
+namespace FondOfKudu\Client\CustomerMergeGuestOrder;
 
-
-use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method \Spryker\Client\CartsRestApi\CustomerMergeGuestOrderFactory getFactory()
+ * @method \FondOfKudu\Client\CustomerMergeGuestOrder\CustomerMergeGuestOrderFactory getFactory()
  */
-class CustomerMergeGuestOrderClient extends AbstractClient implements CartsRestApiClientInterface
+class CustomerMergeGuestOrderClient extends AbstractClient implements CustomerMergeGuestOrderClientInterface
 {
     /**
-     * {@inheritDoc}
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return void
      */
-    public function updateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function updateGuestOrder(CustomerTransfer $customerTransfer): void
     {
-        return $this->getFactory()
-            ->createCartsRestApiZedStub()
-            ->updateQuote($quoteTransfer);
+        $this->getFactory()->createCustomerMergeGuestOrderZedStub()->updateGuestOrder($customerTransfer);
     }
 }

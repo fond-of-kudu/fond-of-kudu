@@ -1,15 +1,9 @@
 <?php
 
-/**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
- */
-
-namespace Spryker\Client\CartsRestApi\Zed;
+namespace FondOfKudu\Client\CustomerMergeGuestOrder\Zed;
 
 use FondOfKudu\Client\CustomerMergeGuestOrder\Dependency\Client\CustomerMergeGuestOrderToZedRequestClientInterface;
-use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 class CustomerMergeGuestOrderZedStub implements CustomerMergeGuestOrderZedStubInterface
 {
@@ -27,17 +21,12 @@ class CustomerMergeGuestOrderZedStub implements CustomerMergeGuestOrderZedStubIn
     }
 
     /**
-     * @uses \Spryker\Zed\CartsRestApi\Communication\Controller\GatewayController::findQuoteByUuidAction()
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return void
      */
-    public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function updateGuestOrder(CustomerTransfer $customerTransfer): void
     {
-        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
-        $quoteResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/find-quote-by-uuid', $quoteTransfer);
-
-        return $quoteResponseTransfer;
+        $this->zedRequestClient->call('/customer-merge-guest-order/gateway/update-guest-order', $customerTransfer);
     }
 }

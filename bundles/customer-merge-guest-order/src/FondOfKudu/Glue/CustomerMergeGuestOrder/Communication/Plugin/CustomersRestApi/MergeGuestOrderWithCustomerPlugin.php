@@ -1,12 +1,16 @@
 <?php
 
+namespace FondOfKudu\Glue\CustomerMergeGuestOrder\Communication\Plugin\CustomersRestApi;
+
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostCreatePluginInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
+/**
+ * @method \FondOfKudu\Glue\CustomerMergeGuestOrder\CustomerMergeGuestOrderFactory getFactory()
+ */
 class MergeGuestOrderWithCustomerPlugin implements CustomerPostCreatePluginInterface
 {
-
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -15,6 +19,8 @@ class MergeGuestOrderWithCustomerPlugin implements CustomerPostCreatePluginInter
      */
     public function postCreate(RestRequestInterface $restRequest, CustomerTransfer $customerTransfer): CustomerTransfer
     {
-        // TODO: Implement postCreate() method.
+        $this->getFactory()->createOrderUpdater()->updateGuestOrder($customerTransfer);
+
+        return $customerTransfer;
     }
 }

@@ -2,18 +2,17 @@
 
 namespace FondOfKudu\Client\CustomerMergeGuestOrder;
 
-
 use FondOfKudu\Client\CustomerMergeGuestOrder\Dependency\Client\CustomerMergeGuestOrderToZedRequestClientInterface;
-use Spryker\Client\CartsRestApi\Zed\CustomerMergeGuestOrderZedStub;
-use Spryker\Client\CartsRestApi\Zed\CustomerMergeGuestOrderZedStubInterface;
+use FondOfKudu\Client\CustomerMergeGuestOrder\Zed\CustomerMergeGuestOrderZedStub;
+use FondOfKudu\Client\CustomerMergeGuestOrder\Zed\CustomerMergeGuestOrderZedStubInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class CustomerMergeGuestOrderFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\CartsRestApi\Zed\CustomerMergeGuestOrderZedStubInterface
+     * @return \FondOfKudu\Client\CustomerMergeGuestOrder\Zed\CustomerMergeGuestOrderZedStubInterface
      */
-    public function createCartsRestApiZedStub(): CustomerMergeGuestOrderZedStubInterface
+    public function createCustomerMergeGuestOrderZedStub(): CustomerMergeGuestOrderZedStubInterface
     {
         return new CustomerMergeGuestOrderZedStub($this->getZedRequestClient());
     }

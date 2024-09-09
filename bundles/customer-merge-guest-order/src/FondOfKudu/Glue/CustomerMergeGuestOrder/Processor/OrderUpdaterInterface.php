@@ -1,10 +1,10 @@
 <?php
 
-namespace FondOfKudu\Client\CustomerMergeGuestOrder;
+namespace FondOfKudu\Glue\CustomerMergeGuestOrder\Processor;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 
-interface CustomerMergeGuestOrderClientInterface
+interface OrderUpdaterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer

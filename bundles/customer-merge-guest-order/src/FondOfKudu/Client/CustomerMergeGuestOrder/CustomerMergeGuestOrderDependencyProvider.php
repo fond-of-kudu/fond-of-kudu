@@ -1,11 +1,6 @@
 <?php
 
-/**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
- */
-
-namespace Spryker\Client\CartsRestApi;
+namespace FondOfKudu\Client\CustomerMergeGuestOrder;
 
 use Spryker\Client\CartsRestApi\Dependency\Client\CustomerMergeGuestOrderToZedRequestClientBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
@@ -26,9 +21,8 @@ class CustomerMergeGuestOrderDependencyProvider extends AbstractDependencyProvid
     public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = parent::provideServiceLayerDependencies($container);
-        $container = $this->addZedRequestClient($container);
 
-        return $container;
+        return $this->addZedRequestClient($container);
     }
 
     /**
