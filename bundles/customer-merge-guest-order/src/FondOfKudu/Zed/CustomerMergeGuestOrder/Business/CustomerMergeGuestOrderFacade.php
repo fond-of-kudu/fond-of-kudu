@@ -22,14 +22,4 @@ class CustomerMergeGuestOrderFacade extends AbstractFacade
     {
         $this->getFactory()->createOrderUpdater()->updateGuestOrder($customerTransfer);
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function updateCustomerReference(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        return $this->getFactory()->createOrderPreSaveHook()->updateCustomerReference($quoteTransfer);
-    }
 }

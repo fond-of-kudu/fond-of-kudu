@@ -129,6 +129,7 @@
       "FondOfKudu\\Shared\\SecurityBlockerReset\\": "bundles/security-blocker-reset/src/FondOfKudu/Shared/SecurityBlockerReset",
       "FondOfKudu\\Glue\\VerifiedCustomer\\": "bundles/verified-customer/src/FondOfKudu/Glue/VerifiedCustomer",
       "FondOfKudu\\Glue\\CustomerMergeGuestOrder\\": "bundles/customer-merge-guest-order/src/FondOfKudu/Glue/CustomerMergeGuestOrder",
+      "FondOfKudu\\Client\\CustomerMergeGuestOrder\\": "bundles/customer-merge-guest-order/src/FondOfKudu/Client/CustomerMergeGuestOrder",
       "FondOfKudu\\Zed\\CustomerMergeGuestOrder\\": "bundles/customer-merge-guest-order/src/FondOfKudu/Zed/CustomerMergeGuestOrder",
       "FondOfKudu\\Shared\\CustomerMergeGuestOrder\\": "bundles/customer-merge-guest-order/src/FondOfKudu/Shared/CustomerMergeGuestOrder"
     }
@@ -160,6 +161,7 @@
       "FondOfKudu\\Glue\\SecurityBlockerReset\\": "bundles/security-blocker-reset/tests/FondOfKudu/Glue/SecurityBlockerReset",
       "FondOfKudu\\Glue\\VerifiedCustomer\\": "bundles/verified-customer/src/FondOfKudu/Glue/VerifiedCustomer",
       "FondOfKudu\\Glue\\CustomerMergeGuestOrder\\": "bundles/customer-merge-guest-order/src/FondOfKudu/Glue/CustomerMergeGuestOrder",
+      "FondOfKudu\\Client\\CustomerMergeGuestOrder\\": "bundles/customer-merge-guest-order/src/FondOfKudu/Client/CustomerMergeGuestOrder",
       "FondOfKudu\\Zed\\CustomerMergeGuestOrder\\": "bundles/customer-merge-guest-order/src/FondOfKudu/Zed/CustomerMergeGuestOrder",
       "Generated\\": "src/Generated/",
       "Orm\\Zed\\": "src/Orm/Zed/"
