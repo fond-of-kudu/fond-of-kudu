@@ -76,7 +76,8 @@
     "fond-of-kudu/kletties-payment-connector": "*",
     "fond-of-kudu/jellyfish-kletties": "*",
     "fond-of-kudu/security-blocker-reset": "*",
-    "fond-of-kudu/verified-customer": "*"
+    "fond-of-kudu/verified-customer": "*",
+    "fond-of-kudu/customer-merge-guest-order": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -126,7 +127,10 @@
       "FondOfKudu\\Client\\SecurityBlockerReset\\": "bundles/security-blocker-reset/src/FondOfKudu/Client/SecurityBlockerReset",
       "FondOfKudu\\Glue\\SecurityBlockerReset\\": "bundles/security-blocker-reset/src/FondOfKudu/Glue/SecurityBlockerReset",
       "FondOfKudu\\Shared\\SecurityBlockerReset\\": "bundles/security-blocker-reset/src/FondOfKudu/Shared/SecurityBlockerReset",
-      "FondOfKudu\\Glue\\VerifiedCustomer\\": "bundles/verified-customer/src/FondOfKudu/Glue/VerifiedCustomer"
+      "FondOfKudu\\Glue\\VerifiedCustomer\\": "bundles/verified-customer/src/FondOfKudu/Glue/VerifiedCustomer",
+      "FondOfKudu\\Glue\\CustomerMergeGuestOrder\\": "bundles/customer-merge-guest-order/src/FondOfKudu/Glue/CustomerMergeGuestOrder",
+      "FondOfKudu\\Zed\\CustomerMergeGuestOrder\\": "bundles/customer-merge-guest-order/src/FondOfKudu/Zed/CustomerMergeGuestOrder",
+      "FondOfKudu\\Shared\\CustomerMergeGuestOrder\\": "bundles/customer-merge-guest-order/src/FondOfKudu/Shared/CustomerMergeGuestOrder"
     }
   },
   "autoload-dev": {
@@ -155,6 +159,8 @@
       "FondOfKudu\\Client\\SecurityBlockerReset\\": "bundles/security-blocker-reset/tests/FondOfKudu/Client/SecurityBlockerReset",
       "FondOfKudu\\Glue\\SecurityBlockerReset\\": "bundles/security-blocker-reset/tests/FondOfKudu/Glue/SecurityBlockerReset",
       "FondOfKudu\\Glue\\VerifiedCustomer\\": "bundles/verified-customer/src/FondOfKudu/Glue/VerifiedCustomer",
+      "FondOfKudu\\Glue\\CustomerMergeGuestOrder\\": "bundles/customer-merge-guest-order/src/FondOfKudu/Glue/CustomerMergeGuestOrder",
+      "FondOfKudu\\Zed\\CustomerMergeGuestOrder\\": "bundles/customer-merge-guest-order/src/FondOfKudu/Zed/CustomerMergeGuestOrder",
       "Generated\\": "src/Generated/",
       "Orm\\Zed\\": "src/Orm/Zed/"
     }
