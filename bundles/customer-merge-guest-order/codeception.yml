@@ -1,4 +1,4 @@
-namespace: fond-of-kudu/product
+namespace: fond-of-kudu/customer-merge-guest-order
 
 suites:
   unit:
