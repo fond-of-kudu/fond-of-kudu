@@ -16,7 +16,7 @@ class GatewayController extends AbstractGatewayController
      *
      * @return void
      */
-    public function updateGuestOrder(CustomerTransfer $customerTransfer): void
+    public function updateGuestOrderAction(CustomerTransfer $customerTransfer): void
     {
         $this->getFacade()->updateGuestOrder($customerTransfer);
     }
