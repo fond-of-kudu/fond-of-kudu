@@ -8,12 +8,7 @@
         <property name="email" type="string" />
     </transfer>
 
-    <transfer name="Quote">
-        <property name="customer" type="Customer" />
-    </transfer>
-
-    <transfer name="Customer" type="Customer">
-        <property name="customerReference" type="string" />
-        <property name="email" type="string" />
+    <transfer name="CustomerMergeGuestOrderResponse">
+        <property name="isSuccess" type="bool" />
     </transfer>
 </transfers>

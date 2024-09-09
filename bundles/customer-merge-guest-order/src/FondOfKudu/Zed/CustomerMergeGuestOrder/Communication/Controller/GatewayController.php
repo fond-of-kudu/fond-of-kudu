@@ -2,6 +2,7 @@
 
 namespace FondOfKudu\Zed\CustomerMergeGuestOrder\Communication\Controller;
 
+use Generated\Shared\Transfer\CustomerMergeGuestOrderResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
@@ -14,10 +15,10 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CustomerMergeGuestOrderResponseTransfer
      */
-    public function updateGuestOrderAction(CustomerTransfer $customerTransfer): void
+    public function updateGuestOrderAction(CustomerTransfer $customerTransfer): CustomerMergeGuestOrderResponseTransfer
     {
-        $this->getFacade()->updateGuestOrder($customerTransfer);
+        return $this->getFacade()->updateGuestOrder($customerTransfer);
     }
 }

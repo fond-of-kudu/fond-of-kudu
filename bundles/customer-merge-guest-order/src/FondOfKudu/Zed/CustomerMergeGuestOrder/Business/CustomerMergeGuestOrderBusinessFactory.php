@@ -18,7 +18,7 @@ class CustomerMergeGuestOrderBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderUpdater(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 }
