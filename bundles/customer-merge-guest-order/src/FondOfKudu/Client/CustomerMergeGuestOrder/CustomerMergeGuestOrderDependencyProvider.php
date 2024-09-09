@@ -2,7 +2,7 @@
 
 namespace FondOfKudu\Client\CustomerMergeGuestOrder;
 
-use Spryker\Client\CartsRestApi\Dependency\Client\CustomerMergeGuestOrderToZedRequestClientBridge;
+use FondOfKudu\Client\CustomerMergeGuestOrder\Dependency\Client\CustomerMergeGuestOrderToZedRequestClientBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
