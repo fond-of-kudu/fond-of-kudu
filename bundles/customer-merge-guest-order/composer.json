@@ -10,8 +10,11 @@
   ],
   "require": {
     "php": ">=8.0",
-    "spryker/checkout-extension": "^1.0.0",
-    "spryker/auth-rest-api-extension": "^1.0.0"
+    "spryker/auth-rest-api-extension": "^1.0.0",
+    "spryker/customer": "^7.0.0",
+    "spryker/customers-rest-api-extension": "^1.0.0",
+    "spryker/glue-application": "^1.0.0",
+    "spryker/sales": "^11.0.0"
   },
   "require-dev": {
     "fond-of-codeception/spryker": "*",
