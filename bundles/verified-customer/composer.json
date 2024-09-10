@@ -11,7 +11,8 @@
   "require": {
     "php": ">=8.0",
     "spryker/glue-application-extension": "^1.0.0",
-    "spryker/customer": "^7.0.0"
+    "spryker/glue-application": "^1.0.0",
+    "spyrker/customer": "^7.0.0"
   },
   "require-dev": {
     "fond-of-codeception/spryker": "*",
