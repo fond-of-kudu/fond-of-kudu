@@ -1,0 +1,41 @@
+{
+  "name": "fond-of-kudu/customer-merge-guest-order",
+  "description": "",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "FOND OF",
+      "email": "spryker@fondof.de"
+    }
+  ],
+  "require": {
+    "php": ">=8.0",
+    "spryker/checkout-extension": "^1.0.0",
+    "spryker/auth-rest-api-extension": "^1.0.0"
+  },
+  "require-dev": {
+    "fond-of-codeception/spryker": "*",
+    "spryker/code-sniffer": "*",
+    "spryker-sdk/phpstan-spryker": "*"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "FondOfKudu\\": "src/FondOfKudu/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "FondOfKudu\\": "tests/FondOfKudu/",
+      "Generated\\": "src/Generated/",
+      "Orm\\Zed\\": "src/Orm/Zed/"
+    }
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  }
+}

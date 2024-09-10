@@ -23,6 +23,7 @@ include:
   - bundles/kletties-payment-connector
   - bundles/security-blocker-reset
   - bundles/verified-customer
+  - bundles/customer-merge-guest-order
 
 suites:
   unit:
