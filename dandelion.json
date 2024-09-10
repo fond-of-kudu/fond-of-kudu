@@ -89,6 +89,14 @@
     "security-blocker-reset": {
       "path": "bundles/security-blocker-reset",
       "version": "1.0.0-beta.0"
+    },
+    "customer-merge-guest-order": {
+      "path": "bundles/customer-merge-guest-order",
+      "version": "1.0.0"
+    },
+    "verified-customer": {
+      "path": "bundles/verified-customer",
+      "version": "1.0.0"
     }
   },
   "vcs": {
