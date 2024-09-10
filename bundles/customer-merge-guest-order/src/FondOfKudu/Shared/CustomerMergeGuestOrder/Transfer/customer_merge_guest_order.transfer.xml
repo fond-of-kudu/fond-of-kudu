@@ -11,4 +11,8 @@
     <transfer name="CustomerMergeGuestOrderResponse">
         <property name="isSuccess" type="bool" />
     </transfer>
+
+    <transfer name="OauthResponse">
+        <property name="customerReference" type="string" />
+    </transfer>
 </transfers>
