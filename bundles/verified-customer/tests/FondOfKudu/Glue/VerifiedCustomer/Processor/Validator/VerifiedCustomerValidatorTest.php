@@ -66,6 +66,21 @@ class VerifiedCustomerValidatorTest extends Unit
     /**
      * @return void
      */
+    public function testIsAnonymousUser(): void
+    {
+        $this->requestMock->method('getResource')->willReturn(new RestResource('customers', 'product_reference'));
+        $this->requestMock->method('getRestUser')->willReturn(
+            (new RestUserTransfer())->setNaturalIdentifier('anonymous:123456'),
+        );
+
+        $result = $this->validator->isVerified($this->requestMock);
+
+        $this->assertNull($result);
+    }
+
+    /**
+     * @return void
+     */
     public function testIsVerifiedReturnsNullWhenRestUserIsNull(): void
     {
         $this->requestMock->method('getRestUser')->willReturn(null);
