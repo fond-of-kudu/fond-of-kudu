@@ -49,7 +49,7 @@ class VerifiedCustomerValidator implements VerifiedCustomerValidatorInterface
             return null;
         }
 
-        if (str_starts_with('anonymous', $restUser->getNaturalIdentifier())) {
+        if (str_starts_with($restUser->getNaturalIdentifier(), 'anonymous')) {
             return null;
         }
 
