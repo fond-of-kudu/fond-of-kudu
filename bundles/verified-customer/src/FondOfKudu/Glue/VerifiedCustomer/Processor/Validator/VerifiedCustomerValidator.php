@@ -49,6 +49,10 @@ class VerifiedCustomerValidator implements VerifiedCustomerValidatorInterface
             return null;
         }
 
+        if (str_starts_with('anonymous', $restUser->getNaturalIdentifier())) {
+            return null;
+        }
+
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setCustomerReference($restUser->getNaturalIdentifier());
 
