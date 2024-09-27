@@ -2,9 +2,8 @@
 
 namespace FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model;
 
-use DateTime;
-use Exception;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Validator\SpecialPriceAttributesValidatorInterface;
+use FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface;
 use FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConfig;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
@@ -12,9 +11,9 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 class SchedulePriceProductHandler implements SchedulePriceProductHandlerInterface
 {
- /**
-  * @var \FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConfig
-  */
+    /**
+     * @var \FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConfig
+     */
     protected ProductApiSchedulePriceImportConfig $apiSchedulePriceImportConfig;
 
     /**
@@ -33,17 +32,25 @@ class SchedulePriceProductHandler implements SchedulePriceProductHandlerInterfac
     protected SchedulePriceProductConcreteModelInterface $schedulePriceProductConcreteModel;
 
     /**
+     * @var \FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface
+     */
+    protected ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface $priceProductScheduleFacade;
+
+    /**
+     * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Dependency\Facade\ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface $priceProductScheduleFacade
      * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SchedulePriceProductAbstractModelInterface $schedulePriceProductAbstractModel
      * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Model\SchedulePriceProductConcreteModelInterface $schedulePriceProductConcreteModel
      * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\Business\Validator\SpecialPriceAttributesValidatorInterface $specialPriceAttributesValidator
      * @param \FondOfKudu\Zed\ProductApiSchedulePriceImport\ProductApiSchedulePriceImportConfig $apiSchedulePriceImportConfig
      */
     public function __construct(
+        ProductApiSchedulePriceImportToPriceProductScheduleFacadeInterface $priceProductScheduleFacade,
         SchedulePriceProductAbstractModelInterface $schedulePriceProductAbstractModel,
         SchedulePriceProductConcreteModelInterface $schedulePriceProductConcreteModel,
         SpecialPriceAttributesValidatorInterface $specialPriceAttributesValidator,
         ProductApiSchedulePriceImportConfig $apiSchedulePriceImportConfig
     ) {
+        $this->priceProductScheduleFacade = $priceProductScheduleFacade;
         $this->apiSchedulePriceImportConfig = $apiSchedulePriceImportConfig;
         $this->specialPriceAttributesValidator = $specialPriceAttributesValidator;
         $this->schedulePriceProductAbstractModel = $schedulePriceProductAbstractModel;
@@ -57,21 +64,24 @@ class SchedulePriceProductHandler implements SchedulePriceProductHandlerInterfac
      */
     public function handleProductAbstract(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
     {
-        if (!$this->specialPriceAttributesValidator->validate($productAbstractTransfer->getAttributes())) {
-            return $productAbstractTransfer;
-        }
-
+        $productAttributes = $productAbstractTransfer->getAttributes();
+        $hasRequiredProductAttributes = $this->specialPriceAttributesValidator->hasRequiredProductAttributes($productAttributes);
+        $areProductAttributesValid = $this->specialPriceAttributesValidator->validateProductAttributeValues($productAttributes);
         $priceProductScheduleTransfer = $this->schedulePriceProductAbstractModel
             ->getPriceProductScheduleTransfer($productAbstractTransfer->getIdProductAbstract());
 
-        if ($priceProductScheduleTransfer === null) {
+        if ($priceProductScheduleTransfer === null && $hasRequiredProductAttributes && $areProductAttributesValid) {
             $this->schedulePriceProductAbstractModel->create($productAbstractTransfer);
 
             return $productAbstractTransfer;
         }
 
-        if ($this->hasDataChanged($priceProductScheduleTransfer, $productAbstractTransfer->getAttributes())) {
-            $this->schedulePriceProductAbstractModel->update($productAbstractTransfer, $priceProductScheduleTransfer);
+        $hasDataChanged = $this->hasDataChanged($priceProductScheduleTransfer, $productAttributes);
+
+        if ($hasRequiredProductAttributes && $areProductAttributesValid && $hasDataChanged) {
+            $this->schedulePriceProductAbstractModel->update($productAbstractTransfer);
+
+            return $productAbstractTransfer;
         }
 
         return $productAbstractTransfer;
@@ -84,48 +94,46 @@ class SchedulePriceProductHandler implements SchedulePriceProductHandlerInterfac
      */
     public function handleProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
-        if (!$this->specialPriceAttributesValidator->validate($productConcreteTransfer->getAttributes())) {
-            return $productConcreteTransfer;
-        }
-
+        $productAttributes = $productConcreteTransfer->getAttributes();
+        $hasRequiredProductAttributes = $this->specialPriceAttributesValidator->hasRequiredProductAttributes($productAttributes);
+        $areProductAttributesValid = $this->specialPriceAttributesValidator->validateProductAttributeValues($productAttributes);
         $priceProductScheduleTransfer = $this->schedulePriceProductConcreteModel
             ->getPriceProductScheduleTransfer($productConcreteTransfer->getIdProductConcrete());
 
-        if ($priceProductScheduleTransfer === null) {
+        if ($priceProductScheduleTransfer === null && $hasRequiredProductAttributes && $areProductAttributesValid) {
             $this->schedulePriceProductConcreteModel->create($productConcreteTransfer);
 
             return $productConcreteTransfer;
         }
 
-        if ($this->hasDataChanged($priceProductScheduleTransfer, $productConcreteTransfer->getAttributes())) {
+        $hasDataChanged = $this->hasDataChanged($priceProductScheduleTransfer, $productAttributes);
+
+        if ($hasRequiredProductAttributes && $areProductAttributesValid && $hasDataChanged) {
             $this->schedulePriceProductConcreteModel->update($productConcreteTransfer, $priceProductScheduleTransfer);
+
+            return $productConcreteTransfer;
         }
 
         return $productConcreteTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer|null $priceProductScheduleTransfer
      * @param array $productAttributes
      *
      * @return bool
      */
-    protected function hasDataChanged(PriceProductScheduleTransfer $priceProductScheduleTransfer, array $productAttributes): bool
+    protected function hasDataChanged(?PriceProductScheduleTransfer $priceProductScheduleTransfer, array $productAttributes): bool
     {
-        try {
-            $specialPriceFrom = new DateTime($productAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePriceFrom()]);
-            $specialPriceTo = new DateTime($productAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePriceTo()]);
-            $priceProductScheduleActiveFrom = new DateTime($priceProductScheduleTransfer->getActiveFrom());
-            $priceProductScheduleActiveTo = new DateTime($priceProductScheduleTransfer->getActiveTo());
-        } catch (Exception $e) {
-            return false;
+        if ($this->specialPriceAttributesValidator->hasSpecialPriceChanged($priceProductScheduleTransfer, $productAttributes)) {
+            // Whenever the data has changed, the existing price must be deleted.
+            $this->priceProductScheduleFacade->removeAndApplyPriceProductSchedule(
+                $priceProductScheduleTransfer->getIdPriceProductSchedule(),
+            );
+
+            return true;
         }
 
-        $specialPrice = (int)$productAttributes[$this->apiSchedulePriceImportConfig->getProductAttributeSalePrice()];
-        $priceProductScheduleGrossAmount = $priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getGrossAmount();
-
-        return $specialPriceFrom->getTimestamp() !== $priceProductScheduleActiveFrom->getTimestamp()
-            || $specialPriceTo->getTimestamp() !== $priceProductScheduleActiveTo->getTimestamp()
-            || $specialPrice !== $priceProductScheduleGrossAmount;
+        return false;
     }
 }
