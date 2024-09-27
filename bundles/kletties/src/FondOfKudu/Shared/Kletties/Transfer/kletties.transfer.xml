@@ -22,6 +22,7 @@
         <property name="sku" type="string"/>
         <property name="shopSku" type="string"/>
         <property name="qty" type="int"/>
+        <property name="printjobId" type="string"/>
         <property name="createdAt" type="int"/>
         <property name="updatedAt" type="int"/>
     </transfer>
