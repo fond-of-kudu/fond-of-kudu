@@ -7,7 +7,6 @@ use Generated\Shared\Transfer\VerifiedCustomerResponseTransfer;
 
 interface VerifiedCustomerZedStubInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
