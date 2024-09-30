@@ -171,8 +171,9 @@ class SchedulePriceProductHandler implements SchedulePriceProductHandlerInterfac
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param array $productAttributes
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer|null $priceProductScheduleTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     protected function handleExistingProductConcrete(
         ProductConcreteTransfer $productConcreteTransfer,
