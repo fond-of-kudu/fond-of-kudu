@@ -2,6 +2,7 @@
 
 namespace FondOfKudu\Glue\VerifiedCustomer\Controller;
 
+use Generated\Shared\Transfer\RestCustomerVerificationResendAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
@@ -29,11 +30,13 @@ class CustomerVerificationResendResourceController extends AbstractController
      * })
      *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestCustomerVerificationResendAttributesTransfer $restCustomerVerificationResendAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function postAction(
-        RestRequestInterface $restRequest
+        RestRequestInterface $restRequest,
+        RestCustomerVerificationResendAttributesTransfer $restCustomerVerificationResendAttributesTransfer
     ): RestResponseInterface {
         return $this->getFactory()
             ->createCustomerVerificactionSender()
