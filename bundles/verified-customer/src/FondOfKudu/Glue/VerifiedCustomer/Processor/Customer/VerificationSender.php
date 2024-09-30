@@ -75,6 +75,11 @@ class VerificationSender implements VerificationSenderInterface
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
     }
 
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return bool
+     */
     protected function isSameCustomerReference(RestRequestInterface $restRequest): bool
     {
         $restUser = $restRequest->getRestUser();
