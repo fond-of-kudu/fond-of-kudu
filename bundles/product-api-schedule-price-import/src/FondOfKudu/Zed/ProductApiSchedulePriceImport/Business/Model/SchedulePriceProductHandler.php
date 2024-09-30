@@ -76,7 +76,7 @@ class SchedulePriceProductHandler implements SchedulePriceProductHandlerInterfac
             return $productAbstractTransfer;
         }
 
-        $hasDataChanged = $this->hasDataChanged($priceProductScheduleTransfer, $productAttributes);
+        $hasDataChanged = $this->checkIfDataHasChangedAndDeleteSchedulePrice($priceProductScheduleTransfer, $productAttributes);
 
         if ($hasRequiredProductAttributes && $areProductAttributesValid && $hasDataChanged) {
             $this->schedulePriceProductAbstractModel->update($productAbstractTransfer);
@@ -106,7 +106,7 @@ class SchedulePriceProductHandler implements SchedulePriceProductHandlerInterfac
             return $productConcreteTransfer;
         }
 
-        $hasDataChanged = $this->hasDataChanged($priceProductScheduleTransfer, $productAttributes);
+        $hasDataChanged = $this->checkIfDataHasChangedAndDeleteSchedulePrice($priceProductScheduleTransfer, $productAttributes);
 
         if ($hasRequiredProductAttributes && $areProductAttributesValid && $hasDataChanged) {
             $this->schedulePriceProductConcreteModel->update($productConcreteTransfer, $priceProductScheduleTransfer);
@@ -123,10 +123,10 @@ class SchedulePriceProductHandler implements SchedulePriceProductHandlerInterfac
      *
      * @return bool
      */
-    protected function hasDataChanged(?PriceProductScheduleTransfer $priceProductScheduleTransfer, array $productAttributes): bool
+    protected function checkIfDataHasChangedAndDeleteSchedulePrice(?PriceProductScheduleTransfer $priceProductScheduleTransfer, array $productAttributes): bool
     {
         if ($this->specialPriceAttributesValidator->hasSpecialPriceChanged($priceProductScheduleTransfer, $productAttributes)) {
-            // Whenever the data has changed, the existing price must be deleted.
+            // Whenever the data has changed, even it is invalid to create a new one, the existing price must be deleted.
             $this->priceProductScheduleFacade->removeAndApplyPriceProductSchedule(
                 $priceProductScheduleTransfer->getIdPriceProductSchedule(),
             );
