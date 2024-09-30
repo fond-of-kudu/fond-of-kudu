@@ -12,7 +12,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 /**
  * @method \FondOfKudu\Zed\VerifiedCustomer\VerifiedCustomerConfig getConfig()
  */
-class CustomerVerificationResendResourceRoute extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
+class CustomerVerificationResendResourceRoute extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface $resourceRouteCollection
