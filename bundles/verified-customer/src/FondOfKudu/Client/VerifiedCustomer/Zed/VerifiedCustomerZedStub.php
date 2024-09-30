@@ -4,6 +4,7 @@ namespace FondOfKudu\Client\VerifiedCustomer\Zed;
 
 use FondOfKudu\Client\VerifiedCustomer\Dependency\Client\VerifiedCustomerToZedRequestClientInterface;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\VerifiedCustomerResponseTransfer;
 
 class VerifiedCustomerZedStub implements VerifiedCustomerZedStubInterface
 {
@@ -27,6 +28,9 @@ class VerifiedCustomerZedStub implements VerifiedCustomerZedStubInterface
      */
     public function resendAccountVerification(CustomerTransfer $customerTransfer): VerifiedCustomerResponseTransfer
     {
-        return $this->zedRequestClient->call('/verified-customer/gateway/resend-account-verification', $customerTransfer);
+        /** @var \Generated\Shared\Transfer\VerifiedCustomerResponseTransfer $response */
+        $response = $this->zedRequestClient->call('/verified-customer/gateway/resend-account-verification', $customerTransfer);
+
+        return $response;
     }
 }

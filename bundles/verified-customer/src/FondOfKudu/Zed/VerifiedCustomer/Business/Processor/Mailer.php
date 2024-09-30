@@ -5,6 +5,7 @@ namespace FondOfKudu\Zed\VerifiedCustomer\Business\Processor;
 use FondOfKudu\Zed\VerifiedCustomer\Persistence\VerifiedCustomerRepositoryInterface;
 use FondOfKudu\Zed\VerifiedCustomer\VerifiedCustomerConfig;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\VerifiedCustomerResponseTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Customer\Dependency\Facade\VerifiedCustomerToMailInterface;
@@ -51,18 +52,18 @@ class Mailer implements MailerInterface
         try {
             $customerTransfer->requireCustomerReference();
         } catch (RequiredTransferPropertyException $e) {
-            return (new VerifiedCustomerResponseTransfer())->setIsSuccess(false);
+            return (new VerifiedCustomerResponseTransfer())->setSuccess(false);
         }
 
         $customerTransfer = $this->repository->getCustomerByCustomerReference($customerTransfer->getCustomerReference());
 
         if ($customerTransfer === null || $customerTransfer->getRegistrationKey() === null) {
-            return (new VerifiedCustomerResponseTransfer())->setIsSuccess(false);
+            return (new VerifiedCustomerResponseTransfer())->setSuccess(false);
         }
 
         $this->sendRegistrationToken($customerTransfer);
 
-        return (new VerifiedCustomerResponseTransfer())->setIsSuccess(true);
+        return (new VerifiedCustomerResponseTransfer())->setSuccess(true);
     }
 
     /**

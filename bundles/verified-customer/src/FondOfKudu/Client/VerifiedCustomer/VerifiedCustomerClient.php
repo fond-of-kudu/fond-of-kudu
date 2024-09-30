@@ -3,6 +3,7 @@
 namespace FondOfKudu\Client\VerifiedCustomer;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\VerifiedCustomerResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**

@@ -43,7 +43,7 @@ class VerificationSender implements VerificationSenderInterface
     {
         $verifiedCustomerResponseTransfer = $this->verifiedCustomerClient->resendAccountVerification();
 
-        return $verifiedCustomerResponseTransfer->getIsSuccess() ? $this->createNoContentResponse() : $this->createRestError();
+        return $verifiedCustomerResponseTransfer->getSuccess() ? $this->createNoContentResponse() : $this->createRestError();
     }
 
     /**
