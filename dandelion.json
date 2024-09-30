@@ -48,7 +48,7 @@
     },
     "product-api-schedule-price-import": {
       "path": "bundles/product-api-schedule-price-import",
-      "version": "1.0.3"
+      "version": "1.0.4"
     },
     "product-image-storage-connector": {
       "path": "bundles/product-image-storage-connector",
