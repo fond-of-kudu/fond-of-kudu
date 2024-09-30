@@ -3,6 +3,7 @@
 namespace FondOfKudu\Glue\VerifiedCustomer\Communication\Plugin\ResourceRoute;
 
 use FondOfKudu\Glue\VerifiedCustomer\VerifiedCustomerConfig;
+use Generated\Shared\Transfer\RestCustomerVerificationResendAttributesTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
@@ -46,14 +47,6 @@ class CustomerVerificationResendResourceRoute extends AbstractPlugin implements 
      */
     public function getResourceAttributesClassName(): string
     {
-        return '';
-    }
-
-    /**
-     * @return string
-     */
-    public function getParentResourceType(): string
-    {
-        return VerifiedCustomerConfig::RESOURCE_CUSTOMERS;
+        return RestCustomerVerificationResendAttributesTransfer::class;
     }
 }

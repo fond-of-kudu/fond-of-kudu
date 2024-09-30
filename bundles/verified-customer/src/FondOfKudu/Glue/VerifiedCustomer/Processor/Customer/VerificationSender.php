@@ -42,10 +42,6 @@ class VerificationSender implements VerificationSenderInterface
      */
     public function resendAccountVerification(RestRequestInterface $restRequest): RestResponseInterface
     {
-        if (!$this->isSameCustomerReference($restRequest)) {
-            return $this->createRestError();
-        }
-
         $customer = (new CustomerTransfer())->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
 
         $verifiedCustomerResponseTransfer = $this->verifiedCustomerClient->resendAccountVerification($customer);
@@ -73,26 +69,5 @@ class VerificationSender implements VerificationSenderInterface
             ->setDetail(VerifiedCustomerConfig::CUSTOMER_ALREADY_VERIFIED_DETAIL);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return bool
-     */
-    protected function isSameCustomerReference(RestRequestInterface $restRequest): bool
-    {
-        $restUser = $restRequest->getRestUser();
-        if ($restUser === null) {
-            return false;
-        }
-
-        $customerResource = $restRequest->findParentResourceByType(VerifiedCustomerConfig::RESOURCE_CUSTOMERS);
-
-        if ($customerResource === null) {
-            return false;
-        }
-
-        return $restUser->getNaturalIdentifier() === $customerResource->getId();
     }
 }
