@@ -65,26 +65,23 @@ class SchedulePriceProductHandler implements SchedulePriceProductHandlerInterfac
     public function handleProductAbstract(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
     {
         $productAttributes = $productAbstractTransfer->getAttributes();
-        $hasRequiredProductAttributes = $this->specialPriceAttributesValidator->hasRequiredProductAttributes($productAttributes);
-        $areProductAttributesValid = $this->specialPriceAttributesValidator->validateProductAttributeValues($productAttributes);
+
+        if (!$this->specialPriceAttributesValidator->hasRequiredProductAttributes($productAttributes)) {
+            return $productAbstractTransfer;
+        }
+
         $priceProductScheduleTransfer = $this->schedulePriceProductAbstractModel
             ->getPriceProductScheduleTransfer($productAbstractTransfer->getIdProductAbstract());
 
-        if ($priceProductScheduleTransfer === null && $hasRequiredProductAttributes && $areProductAttributesValid) {
-            $this->schedulePriceProductAbstractModel->create($productAbstractTransfer);
-
-            return $productAbstractTransfer;
+        if ($priceProductScheduleTransfer === null) {
+            return $this->handleNewProductAbstract($productAbstractTransfer, $productAttributes);
         }
 
-        $hasDataChanged = $this->checkIfDataHasChangedAndDeleteSchedulePrice($priceProductScheduleTransfer, $productAttributes);
-
-        if ($hasRequiredProductAttributes && $areProductAttributesValid && $hasDataChanged) {
-            $this->schedulePriceProductAbstractModel->update($productAbstractTransfer);
-
-            return $productAbstractTransfer;
-        }
-
-        return $productAbstractTransfer;
+        return $this->handleExistingProductAbstract(
+            $productAbstractTransfer,
+            $productAttributes,
+            $priceProductScheduleTransfer,
+        );
     }
 
     /**
@@ -95,23 +92,103 @@ class SchedulePriceProductHandler implements SchedulePriceProductHandlerInterfac
     public function handleProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         $productAttributes = $productConcreteTransfer->getAttributes();
-        $hasRequiredProductAttributes = $this->specialPriceAttributesValidator->hasRequiredProductAttributes($productAttributes);
-        $areProductAttributesValid = $this->specialPriceAttributesValidator->validateProductAttributeValues($productAttributes);
-        $priceProductScheduleTransfer = $this->schedulePriceProductConcreteModel
-            ->getPriceProductScheduleTransfer($productConcreteTransfer->getIdProductConcrete());
 
-        if ($priceProductScheduleTransfer === null && $hasRequiredProductAttributes && $areProductAttributesValid) {
-            $this->schedulePriceProductConcreteModel->create($productConcreteTransfer);
-
+        if (!$this->specialPriceAttributesValidator->hasRequiredProductAttributes($productAttributes)) {
             return $productConcreteTransfer;
         }
 
-        $hasDataChanged = $this->checkIfDataHasChangedAndDeleteSchedulePrice($priceProductScheduleTransfer, $productAttributes);
+        $priceProductScheduleTransfer = $this->schedulePriceProductConcreteModel
+            ->getPriceProductScheduleTransfer($productConcreteTransfer->getIdProductConcrete());
 
-        if ($hasRequiredProductAttributes && $areProductAttributesValid && $hasDataChanged) {
+        if ($priceProductScheduleTransfer === null) {
+            return $this->handleNewProductConcrete($productConcreteTransfer, $productAttributes);
+        }
+
+        return $this->handleExistingProductConcrete(
+            $productConcreteTransfer,
+            $productAttributes,
+            $priceProductScheduleTransfer,
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $productAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function handleNewProductAbstract(ProductAbstractTransfer $productAbstractTransfer, array $productAttributes): ProductAbstractTransfer
+    {
+        if ($this->specialPriceAttributesValidator->validateProductAttributeValues($productAttributes)) {
+            $this->schedulePriceProductAbstractModel->create($productAbstractTransfer);
+        }
+
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $productAttributes
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer|null $priceProductScheduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function handleExistingProductAbstract(
+        ProductAbstractTransfer $productAbstractTransfer,
+        array $productAttributes,
+        ?PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): ProductAbstractTransfer {
+        $hasDataChanged = $this->checkIfDataHasChangedAndDeleteSchedulePrice(
+            $priceProductScheduleTransfer,
+            $productAttributes,
+        );
+
+        if (
+            $this->specialPriceAttributesValidator->validateProductAttributeValues($productAttributes) &&
+            $hasDataChanged
+        ) {
+            $this->schedulePriceProductAbstractModel->update($productAbstractTransfer);
+        }
+
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param array $productAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function handleNewProductConcrete(ProductConcreteTransfer $productConcreteTransfer, array $productAttributes): ProductConcreteTransfer
+    {
+        if ($this->specialPriceAttributesValidator->validateProductAttributeValues($productAttributes)) {
+            $this->schedulePriceProductConcreteModel->create($productConcreteTransfer);
+        }
+
+        return $productConcreteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param array $productAttributes
+     *
+     * @return void
+     */
+    protected function handleExistingProductConcrete(
+        ProductConcreteTransfer $productConcreteTransfer,
+        array $productAttributes,
+        ?PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): ProductConcreteTransfer {
+        $hasDataChanged = $this->checkIfDataHasChangedAndDeleteSchedulePrice(
+            $priceProductScheduleTransfer,
+            $productAttributes,
+        );
+
+        if (
+            $this->specialPriceAttributesValidator->validateProductAttributeValues($productAttributes) &&
+            $hasDataChanged
+        ) {
             $this->schedulePriceProductConcreteModel->update($productConcreteTransfer, $priceProductScheduleTransfer);
-
-            return $productConcreteTransfer;
         }
 
         return $productConcreteTransfer;
