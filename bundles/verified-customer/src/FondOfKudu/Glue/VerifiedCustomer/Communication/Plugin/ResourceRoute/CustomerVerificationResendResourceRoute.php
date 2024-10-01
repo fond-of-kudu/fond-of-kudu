@@ -6,7 +6,6 @@ use FondOfKudu\Glue\VerifiedCustomer\VerifiedCustomerConfig;
 use Generated\Shared\Transfer\RestCustomerVerificationResendAttributesTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
