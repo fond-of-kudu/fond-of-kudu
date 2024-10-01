@@ -15,4 +15,9 @@
         <property name="name" type="string"/>
         <property name="sku" type="string"/>
     </transfer>
+
+    <transfer name="SalesOrder">
+        <property name="name" type="string"/>
+        <property name="sku" type="string"/>
+    </transfer>
 </transfers>
