@@ -48,4 +48,8 @@
         <property name="abstractAttributes" singular="abstractAttribute" type="array"/>
     </transfer>
 
+    <transfer name="CartItemRequest">
+        <property name="printjobId" type="string"/>
+    </transfer>
+
 </transfers>
