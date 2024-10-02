@@ -24,6 +24,8 @@ class VerifiedCustomerConfig extends AbstractBundleConfig
      */
     public function getRegisterConfirmTokenUrl(string $token): string
     {
-        return sprintf($this->get(VerifiedCustomerConstants::REGISTRATION_CONFIRMATION_TOKEN_URL), $token);
+        $fallback = $this->getHostYves() . '/register/confirm?token=%s';
+
+        return sprintf($this->get(VerifiedCustomerConstants::REGISTRATION_CONFIRMATION_TOKEN_URL, $fallback), $token);
     }
 }
