@@ -2,6 +2,7 @@
 
 namespace FondOfKudu\Zed\VerifiedCustomer;
 
+use FondOfKudu\Zed\VerifiedCustomer\Dependency\Facade\VerifiedCustomerToMailBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -30,7 +31,7 @@ class VerifiedCustomerDependencyProvider extends AbstractBundleDependencyProvide
     protected function addMailFacade(Container $container): Container
     {
         $container[static::FACADE_MAIL] = function (Container $container) {
-            return $container->getLocator()->mail()->facade();
+            return new VerifiedCustomerToMailBridge($container->getLocator()->mail()->facade());
         };
 
         return $container;

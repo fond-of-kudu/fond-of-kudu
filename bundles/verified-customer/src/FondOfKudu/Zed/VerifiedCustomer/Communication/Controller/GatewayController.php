@@ -17,7 +17,7 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\VerifiedCustomerResponseTransfer
      */
-    public function resendAccountVerificatonAction(CustomerTransfer $customerTransfer): VerifiedCustomerResponseTransfer
+    public function resendAccountVerificationAction(CustomerTransfer $customerTransfer): VerifiedCustomerResponseTransfer
     {
         return $this->getFacade()->resendAccountVerification($customerTransfer);
     }

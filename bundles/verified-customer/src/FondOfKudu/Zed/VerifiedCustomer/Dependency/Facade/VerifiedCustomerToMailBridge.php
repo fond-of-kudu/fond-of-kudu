@@ -1,25 +1,21 @@
 <?php
 
-/**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
- */
-
-namespace Spryker\Zed\Customer\Dependency\Facade;
+namespace FondOfKudu\Zed\VerifiedCustomer\Dependency\Facade;
 
 use Generated\Shared\Transfer\MailTransfer;
+use Spryker\Zed\Mail\Business\MailFacadeInterface;
 
 class VerifiedCustomerToMailBridge implements VerifiedCustomerToMailInterface
 {
     /**
      * @var \Spryker\Zed\Mail\Business\MailFacadeInterface
      */
-    protected $mailFacade;
+    protected MailFacadeInterface $mailFacade;
 
     /**
      * @param \Spryker\Zed\Mail\Business\MailFacadeInterface $mailFacade
      */
-    public function __construct($mailFacade)
+    public function __construct(MailFacadeInterface $mailFacade)
     {
         $this->mailFacade = $mailFacade;
     }
