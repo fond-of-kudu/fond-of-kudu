@@ -2,13 +2,13 @@
 
 namespace FondOfKudu\Zed\VerifiedCustomer\Business\Processor;
 
+use FondOfKudu\Zed\VerifiedCustomer\Dependency\Facade\VerifiedCustomerToMailInterface;
 use FondOfKudu\Zed\VerifiedCustomer\Persistence\VerifiedCustomerRepositoryInterface;
 use FondOfKudu\Zed\VerifiedCustomer\VerifiedCustomerConfig;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\VerifiedCustomerResponseTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
-use Spryker\Zed\Customer\Dependency\Facade\VerifiedCustomerToMailInterface;
 
 class Mailer implements MailerInterface
 {
@@ -18,7 +18,7 @@ class Mailer implements MailerInterface
     protected VerifiedCustomerRepositoryInterface $repository;
 
     /**
-     * @var \Spryker\Zed\Customer\Dependency\Facade\VerifiedCustomerToMailInterface
+     * @var \FondOfKudu\Zed\VerifiedCustomer\Dependency\Facade\VerifiedCustomerToMailInterface
      */
     protected VerifiedCustomerToMailInterface $mailFacade;
 
@@ -30,7 +30,7 @@ class Mailer implements MailerInterface
     /**
      * @param \FondOfKudu\Zed\VerifiedCustomer\VerifiedCustomerConfig $verifiedCustomerConfig
      * @param \FondOfKudu\Zed\VerifiedCustomer\Persistence\VerifiedCustomerRepositoryInterface $repository
-     * @param \Spryker\Zed\Customer\Dependency\Facade\VerifiedCustomerToMailInterface $mailFacade
+     * @param \FondOfKudu\Zed\VerifiedCustomer\Dependency\Facade\VerifiedCustomerToMailInterface $mailFacade
      */
     public function __construct(
         VerifiedCustomerConfig $verifiedCustomerConfig,

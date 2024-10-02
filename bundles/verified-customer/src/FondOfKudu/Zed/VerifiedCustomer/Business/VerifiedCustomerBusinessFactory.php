@@ -3,8 +3,8 @@
 namespace FondOfKudu\Zed\VerifiedCustomer\Business;
 
 use FondOfKudu\Zed\VerifiedCustomer\Business\Processor\Mailer;
+use FondOfKudu\Zed\VerifiedCustomer\Dependency\Facade\VerifiedCustomerToMailInterface;
 use FondOfKudu\Zed\VerifiedCustomer\VerifiedCustomerDependencyProvider;
-use Spryker\Zed\Customer\Dependency\Facade\VerifiedCustomerToMailInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -26,7 +26,7 @@ class VerifiedCustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Dependency\Facade\VerifiedCustomerToMailInterface
+     * @return \FondOfKudu\Zed\VerifiedCustomer\Dependency\Facade\VerifiedCustomerToMailInterface
      */
     public function getMailFacade(): VerifiedCustomerToMailInterface
     {
