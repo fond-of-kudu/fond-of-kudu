@@ -12,5 +12,5 @@ class VerifiedCustomerConstants
     /**
      * @var string
      */
-    pubclic const BASE_URL_YVES = 'BASE_URL_YVES';
+    public const BASE_URL_YVES = 'BASE_URL_YVES';
 }
