@@ -112,6 +112,9 @@ class VerifiedCustomerValidator implements VerifiedCustomerValidatorInterface
      */
     private function setCurrentStoreLocale(RestRequestInterface $restRequest): void
     {
+        if (Store::isDynamicStoreMode() === true) {
+            return;
+        }
         // Sets locale to whole current store, RPC calls to Zed will also receive this locale.
         Store::getInstance()
             ->setCurrentLocale(
