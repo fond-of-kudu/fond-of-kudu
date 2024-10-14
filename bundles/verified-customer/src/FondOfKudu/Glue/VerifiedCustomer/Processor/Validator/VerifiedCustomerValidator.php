@@ -5,8 +5,10 @@ namespace FondOfKudu\Glue\VerifiedCustomer\Processor\Validator;
 use FondOfKudu\Glue\VerifiedCustomer\Dependency\Client\VerifiedCustomerToCustomerInterface;
 use FondOfKudu\Glue\VerifiedCustomer\VerifiedCustomerConfig;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Shared\Kernel\Store;
 use Symfony\Component\HttpFoundation\Response;
 
 class VerifiedCustomerValidator implements VerifiedCustomerValidatorInterface
@@ -53,6 +55,8 @@ class VerifiedCustomerValidator implements VerifiedCustomerValidatorInterface
             return null;
         }
 
+        $this->setCurrentStoreLocale($restRequest);
+
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setCustomerReference($restUser->getNaturalIdentifier());
 
@@ -95,5 +99,24 @@ class VerifiedCustomerValidator implements VerifiedCustomerValidatorInterface
         }
 
         return true;
+    }
+
+    /**
+     * @deprecated Will be replaced with dynamic multi store
+     *
+     * We need to set this locale here because the
+     * actual plugin is called to late
+     *
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return void
+     */
+    private function setCurrentStoreLocale(RestRequestInterface $restRequest): void
+    {
+        // Sets locale to whole current store, RPC calls to Zed will also receive this locale.
+        Store::getInstance()
+            ->setCurrentLocale(
+                $restRequest->getMetadata()->getLocale(),
+            );
     }
 }
