@@ -72,7 +72,7 @@
     },
     "kletties": {
       "path": "bundles/kletties",
-      "version": "1.0.2"
+      "version": "1.0.3"
     },
     "kletties-api": {
       "path": "bundles/kletties-api",
