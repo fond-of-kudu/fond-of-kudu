@@ -32,7 +32,7 @@ class KlettiesCartItemMapperPlugin extends AbstractPlugin implements CartItemMap
 
             $itemTransfer
                 ->setPrintjobId($cartItemRequestTransfer->getPrintjobId())
-                ->setKlettiesPreviewImageUrl($cartItemRequestTransfer->getKlettiesPreviewImageUrl());
+                ->setPreviewImageUrl($cartItemRequestTransfer->getPreviewImageUrl());
         }
 
         return $persistentCartChangeTransfer;
