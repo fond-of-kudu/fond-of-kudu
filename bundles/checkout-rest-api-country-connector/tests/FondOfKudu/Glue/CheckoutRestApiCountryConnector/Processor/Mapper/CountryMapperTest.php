@@ -94,7 +94,7 @@ class CountryMapperTest extends Unit
 
         $this->countryTransferMock->expects(static::atLeastOnce())
             ->method('getIso2Code')
-            ->willReturnOnConsecutiveCalls('DE', 'FR');
+            ->willReturnOnConsecutiveCalls('DE', 'FR', 'DE', 'FR');
 
         $this->localeClientMock->expects(static::atLeastOnce())
             ->method('getCurrentLocale')
