@@ -158,7 +158,6 @@ class KlettiesOrderMapperTest extends Unit
         $this->quoteTransferMock->expects($this->once())->method('getItems')->willReturn($items);
         $this->itemTransferMock->expects($this->once())->method('getAbstractAttributes')->willReturn($abstractAttributes);
         $this->itemTransferMock->expects($this->atLeastOnce())->method('getGroupKey')->willReturn('123');
-        //$this->itemTransferMock->expects($this->atLeastOnce())->method('getFkSalesOrderItem')->willReturn(1);
         $this->storeFacadeMock->expects($this->once())->method('getCurrentStoreName')->willReturn('testStore');
         $this->itemTransferMock->expects($this->never())->method('setQuantity');
 
@@ -192,13 +191,11 @@ class KlettiesOrderMapperTest extends Unit
         $this->quoteTransferMock->expects($this->once())->method('getItems')->willReturn($items);
         $this->itemTransferMock->expects($this->once())->method('getAbstractAttributes')->willReturn($abstractAttributes);
         $this->itemTransferMock->expects($this->atLeastOnce())->method('getGroupKey')->willReturn('123');
-        //$this->itemTransferMock->expects($this->atLeastOnce())->method('getFkSalesOrderItem')->willReturn(1);
         $this->storeFacadeMock->expects($this->once())->method('getCurrentStoreName')->willReturn('testStore');
         $this->itemTransferMock->expects($this->never())->method('setQuantity');
 
         $itemClone->expects($this->once())->method('getAbstractAttributes')->willReturn($abstractAttributes);
         $itemClone->expects($this->atLeastOnce())->method('getGroupKey')->willReturn('456');
-        //$itemClone->expects($this->atLeastOnce())->method('getFkSalesOrderItem')->willReturn(2);
 
         $transfer = $this->mapper->fromQuote($this->quoteTransferMock);
 
@@ -230,7 +227,6 @@ class KlettiesOrderMapperTest extends Unit
         $this->quoteTransferMock->expects($this->once())->method('getItems')->willReturn($items);
         $this->itemTransferMock->expects($this->once())->method('getAbstractAttributes')->willReturn($abstractAttributes);
         $this->itemTransferMock->expects($this->atLeastOnce())->method('getGroupKey')->willReturn('123');
-        //$this->itemTransferMock->expects($this->never())->method('getFkSalesOrderItem')->willReturn(1);
         $this->storeFacadeMock->expects($this->never())->method('getCurrentStoreName')->willReturn('testStore');
         $this->itemTransferMock->expects($this->never())->method('setQuantity');
 
@@ -260,7 +256,6 @@ class KlettiesOrderMapperTest extends Unit
         $this->quoteTransferMock->expects($this->once())->method('getItems')->willReturn($items);
         $this->itemTransferMock->expects($this->once())->method('getAbstractAttributes')->willReturn($abstractAttributes);
         $this->itemTransferMock->expects($this->atLeastOnce())->method('getGroupKey')->willReturn('123');
-        //$this->itemTransferMock->expects($this->atLeastOnce())->method('getFkSalesOrderItem')->willReturn(1);
         $this->storeFacadeMock->expects($this->once())->method('getCurrentStoreName')->willReturn('testStore');
         $this->itemTransferMock->expects($this->never())->method('setQuantity');
 
@@ -294,13 +289,11 @@ class KlettiesOrderMapperTest extends Unit
         $this->quoteTransferMock->expects($this->once())->method('getItems')->willReturn($items);
         $this->itemTransferMock->expects($this->once())->method('getAbstractAttributes')->willReturn($abstractAttributes);
         $this->itemTransferMock->expects($this->atLeastOnce())->method('getGroupKey')->willReturn('123');
-        //$this->itemTransferMock->expects($this->atLeastOnce())->method('getFkSalesOrderItem')->willReturn(1);
         $this->storeFacadeMock->expects($this->once())->method('getCurrentStoreName')->willReturn('testStore');
         $this->itemTransferMock->expects($this->once())->method('setQuantity');
 
         $itemClone->expects($this->once())->method('getAbstractAttributes')->willReturn($abstractAttributes);
         $itemClone->expects($this->atLeastOnce())->method('getGroupKey')->willReturn('123');
-        //$itemClone->expects($this->atLeastOnce())->method('getFkSalesOrderItem')->willReturn(1);
 
         $transfer = $this->mapper->fromQuote($this->quoteTransferMock);
 
