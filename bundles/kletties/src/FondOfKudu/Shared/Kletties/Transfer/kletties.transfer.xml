@@ -46,6 +46,7 @@
     <transfer name="Item">
         <property name="printjobId" type="string"/>
         <property name="previewImageUrl" type="string"/>
+        <property name="groupKey" type="string"/>
         <property name="fkSalesOrderItem" type="int" />
         <property name="abstractAttributes" singular="abstractAttribute" type="array"/>
     </transfer>
@@ -62,6 +63,7 @@
 
     <transfer name="SpySalesOrderItemEntity">
         <property name="sku" type="string"/>
+        <property name="groupKey" type="string"/>
         <property name="vendor" type="string"/>
         <property name="vendorSku" type="string"/>
     </transfer>
