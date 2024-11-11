@@ -62,6 +62,7 @@
     </transfer>
 
     <transfer name="SpySalesOrderItemEntity">
+        <property name="fkSalesOrder" type="int"/>
         <property name="sku" type="string"/>
         <property name="groupKey" type="string"/>
         <property name="vendor" type="string"/>
