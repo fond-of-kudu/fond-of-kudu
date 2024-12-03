@@ -52,7 +52,7 @@ class AvailableQueryExpanderPluginTest extends Unit
             ->method('addSort')
             ->with([
                 PageIndexMap::INTEGER_SORT . '.' . CatalogSearchConnectorConstants::ATTR_AVAILABLE => [
-                    'order' => SortConfig::DIRECTION_ASC,
+                    'order' => SortConfig::DIRECTION_DESC,
                     'mode' => 'min',
                 ],
             ]);

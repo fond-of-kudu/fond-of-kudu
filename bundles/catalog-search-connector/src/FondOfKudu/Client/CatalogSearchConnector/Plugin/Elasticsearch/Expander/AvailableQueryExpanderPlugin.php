@@ -38,7 +38,7 @@ class AvailableQueryExpanderPlugin extends AbstractPlugin implements QueryExpand
     {
         $searchQuery->addSort([
             PageIndexMap::INTEGER_SORT . '.' . CatalogSearchConnectorConstants::ATTR_AVAILABLE => [
-                'order' => SortConfig::DIRECTION_ASC,
+                'order' => SortConfig::DIRECTION_DESC,
                 'mode' => 'min',
             ],
         ]);
