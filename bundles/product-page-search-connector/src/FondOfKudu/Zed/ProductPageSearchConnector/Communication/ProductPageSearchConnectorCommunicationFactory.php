@@ -2,9 +2,9 @@
 
 namespace FondOfKudu\Zed\ProductPageSearchConnector\Communication;
 
-use FondOfKudu\Zed\ProductPageSearchConnector\ProductPageSearchConnectorDependencyProvider;
 use FondOfKudu\Zed\ProductPageSearchConnector\Dependency\Facade\ProductPageSearchConnectorToAvailabilityFacadeInterface;
 use FondOfKudu\Zed\ProductPageSearchConnector\Dependency\Facade\ProductPageSearchConnectorToStoreFacadeInterface;
+use FondOfKudu\Zed\ProductPageSearchConnector\ProductPageSearchConnectorDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 class ProductPageSearchConnectorCommunicationFactory extends AbstractCommunicationFactory
