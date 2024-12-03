@@ -6,10 +6,6 @@
       "path": "bundles/carts-rest-api",
       "version": "1.2.2"
     },
-    "checkout-rest-api": {
-      "path": "bundles/checkout-rest-api",
-      "version": "1.1.0"
-    },
     "checkout-data-gift-cart-payment-country-filter": {
       "path": "bundles/checkout-data-gift-cart-payment-country-filter",
       "version": "1.0.0"
@@ -18,12 +14,24 @@
       "path": "bundles/checkout-data-product-country-filter",
       "version": "1.0.0"
     },
+    "checkout-rest-api": {
+      "path": "bundles/checkout-rest-api",
+      "version": "1.1.0"
+    },
     "checkout-rest-api-country-connector": {
       "path": "bundles/checkout-rest-api-country-connector",
       "version": "2.0.0"
     },
     "checkout-rest-api-country-extension": {
       "path": "bundles/checkout-rest-api-country-extension",
+      "version": "1.0.0"
+    },
+    "country-zipcode-restriction": {
+      "path": "bundles/country-zipcode-restriction",
+      "version": "1.0.0-alpha.0"
+    },
+    "customer-merge-guest-order": {
+      "path": "bundles/customer-merge-guest-order",
       "version": "1.0.0"
     },
     "customer-password-updated-at-connector": {
@@ -34,32 +42,24 @@
       "path": "bundles/customers-rest-api-connector",
       "version": "1.0.1"
     },
-    "country-zipcode-restriction": {
-      "path": "bundles/country-zipcode-restriction",
-      "version": "1.0.0-alpha.0"
-    },
     "discount-promotion-rest-api": {
       "path": "bundles/discount-promotion-rest-api",
       "version": "1.1.0"
     },
-    "product-attributes-cart-connector": {
-      "path": "bundles/product-attributes-cart-connector",
+    "jellyfish-kletties": {
+      "path": "bundles/jellyfish-kletties",
       "version": "1.0.0"
     },
-    "product-api-schedule-price-import": {
-      "path": "bundles/product-api-schedule-price-import",
-      "version": "1.0.4"
+    "kletties": {
+      "path": "bundles/kletties",
+      "version": "1.0.6"
     },
-    "product-image-storage-connector": {
-      "path": "bundles/product-image-storage-connector",
-      "version": "1.0.4"
-    },
-    "catalog-search-connector": {
-      "path": "bundles/catalog-search-connector",
+    "kletties-api": {
+      "path": "bundles/kletties-api",
       "version": "1.0.0"
     },
-    "quote": {
-      "path": "bundles/quote",
+    "kletties-payment-connector": {
+      "path": "bundles/kletties-payment-connector",
       "version": "1.0.0"
     },
     "oms-order-confirmation": {
@@ -74,29 +74,29 @@
       "path": "bundles/oms-retry-capture-process",
       "version": "1.0.3"
     },
-    "kletties": {
-      "path": "bundles/kletties",
-      "version": "1.0.6"
+    "product-api-schedule-price-import": {
+      "path": "bundles/product-api-schedule-price-import",
+      "version": "1.0.4"
     },
-    "kletties-api": {
-      "path": "bundles/kletties-api",
+    "product-attributes-cart-connector": {
+      "path": "bundles/product-attributes-cart-connector",
       "version": "1.0.0"
     },
-    "kletties-payment-connector": {
-      "path": "bundles/kletties-payment-connector",
+    "product-image-storage-connector": {
+      "path": "bundles/product-image-storage-connector",
+      "version": "1.0.4"
+    },
+    "product-page-search-connector": {
+      "path": "bundles/product-page-search-connector",
       "version": "1.0.0"
     },
-    "jellyfish-kletties": {
-      "path": "bundles/jellyfish-kletties",
+    "quote": {
+      "path": "bundles/quote",
       "version": "1.0.0"
     },
     "security-blocker-reset": {
       "path": "bundles/security-blocker-reset",
       "version": "1.0.0-beta.0"
-    },
-    "customer-merge-guest-order": {
-      "path": "bundles/customer-merge-guest-order",
-      "version": "1.0.0"
     },
     "verified-customer": {
       "path": "bundles/verified-customer",

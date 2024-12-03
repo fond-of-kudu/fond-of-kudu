@@ -2,29 +2,29 @@ namespace: fond-of-kudu/fond-of-kudu
 
 include:
   - bundles/carts-rest-api
-  - bundles/catalog-search-connector
   - bundles/checkout-data-gift-cart-payment-country-filter
   - bundles/checkout-data-product-country-filter
   - bundles/checkout-rest-api
   - bundles/checkout-rest-api-country-connector
   - bundles/country-zipcode-restriction
+  - bundles/customer-merge-guest-order
   - bundles/customer-password-updated-at-connector
   - bundles/customers-rest-api-connector
-  - bundles/product-attributes-cart-connector
-  - bundles/product-api-schedule-price-import
-  - bundles/product-image-storage-connector
-  - bundles/quote
-  - bundles/oms-order-confirmation
-  - bundles/oms-retry-capture-process
-  - bundles/oms-payone-error
   - bundles/discount-promotion-rest-api
+  - bundles/jellyfish-kletties
   - bundles/kletties
   - bundles/kletties-api
-  - bundles/jellyfish-kletties
   - bundles/kletties-payment-connector
+  - bundles/oms-order-confirmation
+  - bundles/oms-payone-error
+  - bundles/oms-retry-capture-process
+  - bundles/product-api-schedule-price-import
+  - bundles/product-attributes-cart-connector
+  - bundles/product-image-storage-connector
+  - bundles/product-page-search-connector
+  - bundles/quote
   - bundles/security-blocker-reset
   - bundles/verified-customer
-  - bundles/customer-merge-guest-order
 
 suites:
   unit:
