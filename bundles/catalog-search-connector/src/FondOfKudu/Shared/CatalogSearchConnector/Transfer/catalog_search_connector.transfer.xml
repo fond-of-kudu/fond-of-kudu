@@ -14,4 +14,11 @@
         <property name="available" type="int"/>
         <property name="isSoldOut" type="string"/>
     </transfer>
+
+    <transfer name="Store" />
+
+    <transfer name="ProductAbstractAvailability">
+        <property name="isNeverOutOfStock" type="bool"/>
+        <property name="availability" type="decimal"/>
+    </transfer>
 </transfers>

@@ -9,6 +9,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapExpanderPluginInterface;
 
+/**
+ * @method \FondOfKudu\Zed\CatalogSearchConnector\Communication\CatalogSearchConnectorCommunicationFactory getFactory()
+ */
 class AvailableSortMapExpanderPlugin extends AbstractPlugin implements ProductAbstractMapExpanderPluginInterface
 {
     /**
