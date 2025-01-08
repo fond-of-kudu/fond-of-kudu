@@ -13,22 +13,22 @@ use PHPUnit\Framework\MockObject\MockObject;
 class OrderItemPrintjobIdExpanderTest extends Unit
 {
     /**
-     * @var KlettiesRepository|MockObject
+     * @var \FondOfKudu\Zed\Kletties\Persistence\KlettiesRepository|\PHPUnit\Framework\MockObject\MockObject
      */
     protected KlettiesRepository|MockObject $klettiesRepositoryMock;
 
     /**
-     * @var ItemTransfer|MockObject
+     * @var \Generated\Shared\Transfer\ItemTransfer|\PHPUnit\Framework\MockObject\MockObject
      */
     protected ItemTransfer|MockObject $itemTransferMock;
 
     /**
-     * @var KlettiesOrderItemTransfer|MockObject
+     * @var \Generated\Shared\Transfer\KlettiesOrderItemTransfer|\PHPUnit\Framework\MockObject\MockObject
      */
     protected KlettiesOrderItemTransfer|MockObject $klettiesOrderItemTransferMock;
 
     /**
-     * @var OrderItemPrintjobIdExpanderInterface
+     * @var \FondOfKudu\Zed\Kletties\Business\Expander\OrderItemPrintjobIdExpanderInterface
      */
     protected OrderItemPrintjobIdExpanderInterface $orderItemPrintjobIdExpander;
 
