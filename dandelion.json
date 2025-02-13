@@ -100,7 +100,7 @@
     },
     "verified-customer": {
       "path": "bundles/verified-customer",
-      "version": "1.0.0"
+      "version": "1.0.1"
     }
   },
   "vcs": {

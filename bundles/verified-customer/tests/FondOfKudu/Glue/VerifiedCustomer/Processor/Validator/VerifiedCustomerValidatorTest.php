@@ -139,4 +139,28 @@ class VerifiedCustomerValidatorTest extends Unit
 
         $this->assertNull($result);
     }
+
+    /**
+     * @return void
+     */
+    public function testIsVerifiedReturnsNullWhenCustomerIsNull(): void
+    {
+        $this->requestMock->method('getRestUser')->willReturn(
+            (new RestUserTransfer())->setNaturalIdentifier('customer_reference'),
+        );
+
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer->setCustomerReference('customer_reference');
+        $customerTransfer->setRegistered('2021-01-01');
+        $customerTransfer->setRegistrationKey(null);
+
+        $customerResponseTransfer = new CustomerResponseTransfer();
+        $customerResponseTransfer->setCustomerTransfer(null);
+
+        $this->customerClientMock->method('findCustomerByReference')->willReturn($customerResponseTransfer);
+
+        $result = $this->validator->isVerified($this->requestMock);
+
+        $this->assertNull($result);
+    }
 }

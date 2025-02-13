@@ -63,6 +63,10 @@ class VerifiedCustomerValidator implements VerifiedCustomerValidatorInterface
 
         $customerTransfer = $customerResponseTransfer->getCustomerTransfer();
 
+        if ($customerTransfer === null) {
+            return null;
+        }
+
         if ($customerTransfer->getRegistered() === null && $customerTransfer->getRegistrationKey() !== null) {
             return $this->createRestErrorCollection();
         }
