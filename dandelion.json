@@ -86,10 +86,6 @@
       "path": "bundles/product-image-storage-connector",
       "version": "1.0.4"
     },
-    "product-page-search-connector": {
-      "path": "bundles/product-page-search-connector",
-      "version": "1.0.0"
-    },
     "quote": {
       "path": "bundles/quote",
       "version": "1.0.0"

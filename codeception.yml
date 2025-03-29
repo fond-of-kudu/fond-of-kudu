@@ -21,7 +21,6 @@ include:
   - bundles/product-api-schedule-price-import
   - bundles/product-attributes-cart-connector
   - bundles/product-image-storage-connector
-  - bundles/product-page-search-connector
   - bundles/quote
   - bundles/security-blocker-reset
   - bundles/verified-customer
