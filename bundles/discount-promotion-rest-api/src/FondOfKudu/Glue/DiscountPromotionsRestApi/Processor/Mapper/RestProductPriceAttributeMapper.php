@@ -39,7 +39,7 @@ class RestProductPriceAttributeMapper implements RestProductPriceAttributeMapper
 
         return (new RestProductPriceAttributesTransfer())
             ->setGrossAmount($productViewTransfer->getPrice())
-            ->setPriceTypeName(array_key_first($productViewTransfer->getPrices()))
+            ->setPriceTypeName('ORIGINAL')
             ->setCurrency($restCurrencyTransfer);
     }
 }
