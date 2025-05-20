@@ -75,14 +75,14 @@ class RestProductPriceAttributeMapperTest extends Unit
 
         $this->productViewTransferMock->expects(static::atLeastOnce())
             ->method('getPrices')
-            ->willReturn(['DEFAULT' => 2000]);
+            ->willReturn(['ORIGINAL' => 2000]);
 
         $restProductPriceAttributesTransfer = $this->restProductPriceAttributeMapper->mapFromProductViewTransfer(
             $this->productViewTransferMock,
         );
 
         static::assertEquals($restProductPriceAttributesTransfer->getGrossAmount(), 2000);
-        static::assertEquals($restProductPriceAttributesTransfer->getPriceTypeName(), 'DEFAULT');
+        static::assertEquals($restProductPriceAttributesTransfer->getPriceTypeName(), 'ORIGINAL');
         static::assertEquals($restProductPriceAttributesTransfer->getCurrency()->getCode(), 'EUR');
         static::assertEquals($restProductPriceAttributesTransfer->getCurrency()->getName(), 'Euro');
         static::assertEquals($restProductPriceAttributesTransfer->getCurrency()->getSymbol(), '€');
