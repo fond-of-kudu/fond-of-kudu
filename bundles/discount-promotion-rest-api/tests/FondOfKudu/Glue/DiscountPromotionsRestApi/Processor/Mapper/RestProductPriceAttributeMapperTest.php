@@ -72,11 +72,7 @@ class RestProductPriceAttributeMapperTest extends Unit
         $this->productViewTransferMock->expects(static::atLeastOnce())
             ->method('getPrice')
             ->willReturn(2000);
-
-        $this->productViewTransferMock->expects(static::atLeastOnce())
-            ->method('getPrices')
-            ->willReturn(['ORIGINAL' => 2000]);
-
+        
         $restProductPriceAttributesTransfer = $this->restProductPriceAttributeMapper->mapFromProductViewTransfer(
             $this->productViewTransferMock,
         );
